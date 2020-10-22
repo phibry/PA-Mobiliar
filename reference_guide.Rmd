@@ -1,0 +1,94 @@
+---
+output: pdf_document
+---
+
+## Section 12. Reference Guide
+
+### Section 12.1. Equation Reference {#equation-section}
+
+
+\begin{equation}
+  \label{eq:asd}
+  x_{t}=t_{t}*s_{t}*c_{t}*e_{t}
+\end{equation}
+
+\begin{equation}
+  x_{t}=t_{t}+s_{t}+c_{t}+e_{t}
+\end{equation}
+
+\begin{equation}
+  E[x_{t}]=\mu
+\end{equation}
+
+\begin{equation}
+  \label{eq:asdf}
+  Var(x_{t})=\sigma_{x}^{2}
+\end{equation}
+
+\begin{equation}
+  \label{eq:asdfg}
+  Cov(x_{t}, x_{t-k}=R(k))
+\end{equation}
+
+#### Section 12.1.1. Ref to Equation
+
+If we want to refer to an equation we need to implement the command
+
+-   `\ref{eq:asd}`
+
+Here we refer to equation \ref{eq:asd} or to equation \ref{eq:asdfg}.
+
+### Section 12.2. Section Reference
+
+Here I refer to another section [12.1](#equation-section).
+
+### Section 12.3. Plot Reference
+
+First we create a plot:
+
+You can also embed plots, for example:
+
+```{r histir, echo=TRUE, fig.cap="Captionerino Uno"}
+hist(iris[[2]], main="HELLOO kjsahdlhsjkd")
+```
+
+Here I refer to Figure \ref{fig:histir}.
+
+### Section 12.4. Table Reference
+
+```{r carserino, echo=TRUE}
+knitr::kable(mtcars[1:5, 1:5], caption="The mtcars data.", format="latex")
+```
+
+Here I refer to the Table \ref{tab:carserino}
+
+### Section 12.5. Bibliography Reference
+
+In order to use bibliography reference, we need to add a specific `.bib`-file in which add the literature we use for this paper.
+
+The objects in the `.bib`-file have to be formated correctly:
+
+    @inbook{source1,
+        author = "Philipp Rieser",
+        title = {The Book of Phil},
+        year = "2019",
+        publisher = "ZHAW", 
+        address="Winterthur",
+        pages = {113}
+    }
+
+    @online{source2,
+        author="Pascal Bühler",
+        title="Webpage of the Rings",
+        url="www.webpagerino-of-the-rings.org",
+        year="2020",
+        note={[Stand: 19.09.2020]}
+    }
+
+No we can refer to each of these `.bib`-objects. You can use `[@source1]` to refer at the first source.
+
+E.g.: Philipp Rieser says in this book dbl a hd hdj dhasd hda sdahjk dhsd [@source1, pp. 33-35]
+
+Source Reference [@source2]. Or we refer to the third source [@source3]
+
+Markdown/LaTeX will create automatically a list of the used `.bib`-objects at the end of the file, which can be used as the Reference List at the end of the paper.

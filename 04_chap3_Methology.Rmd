@@ -4,31 +4,8 @@ output: pdf_document
 
 ## 3. Results
 
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates cum atque, fuga id vitae est a? Qui nobis illum reiciendis minima, adipisci rerum ab mollitia et ea? Quos vero odit soluta reiciendis beatae ipsum ipsa doloribus molestias praesentium explicabo maxime placeat excepturi, cumque quis delectus in esse vitae. Sint, ea. Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates cum atque, fuga id vitae est a? Qui nobis illum reiciendis minima, adipisci rerum ab mollitia et ea? Quos vero odit soluta reiciendis beatae ipsum ipsa doloribus molestias praesentium explicabo maxime placeat excepturi, cumque quis delectus in esse vitae. Sint, ea. Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates cum atque, fuga id vitae est a? Qui nobis illum reiciendis minima, adipisci rerum ab mollitia et ea? Quos vero odit soluta reiciendis beatae ipsum ipsa doloribus molestias praesentium explicabo maxime placeat excepturi, cumque quis delectus in esse vitae. Sint, ea.
-
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates cum atque, fuga id vitae est a? Qui nobis illum reiciendis minima, adipisci rerum ab mollitia et ea? Quos vero odit soluta reiciendis beatae ipsum ipsa doloribus molestias praesentium explicabo maxime placeat excepturi, cumque quis delectus in esse vitae. Sint, ea.
-
 ### 3.1. Carry
-
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates cum atque, fuga id vitae est a? Qui nobis illum reiciendis minima, adipisci rerum ab mollitia et ea? Quos vero odit soluta reiciendis beatae ipsum ipsa doloribus molestias praesentium explicabo maxime placeat excepturi, cumque quis delectus in esse vitae. Sint, ea.
-
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates cum atque, fuga id vitae est a? Qui nobis illum reiciendis minima, adipisci rerum ab mollitia et ea? Quos vero odit soluta reiciendis beatae ipsum ipsa doloribus molestias praesentium explicabo maxime placeat excepturi, cumque quis delectus in esse vitae. Sint, ea. Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates cum atque, fuga id vitae est a? Qui nobis illum reiciendis minima, adipisci rerum ab mollitia et ea? Quos vero odit soluta reiciendis beatae ipsum ipsa doloribus molestias praesentium explicabo maxime placeat excepturi, cumque quis delectus in esse vitae. Sint, ea.
 
 ### 3.2. Value
 
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates cum atque, fuga id vitae est a? Qui nobis illum reiciendis minima, adipisci rerum ab mollitia et ea? Quos vero odit soluta reiciendis beatae ipsum ipsa doloribus molestias praesentium explicabo maxime placeat excepturi, cumque quis delectus in esse vitae. Sint, ea.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates cum atque, fuga id vitae est a? Qui nobis illum reiciendis minima, adipisci rerum ab mollitia et ea? Quos vero odit soluta reiciendis beatae ipsum ipsa doloribus molestias praesentium explicabo maxime placeat excepturi, cumque quis delectus in esse vitae. Sint, ea.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates cum atque, fuga id vitae est a? Qui nobis illum reiciendis minima, adipisci rerum ab mollitia et ea? Quos vero odit soluta reiciendis beatae ipsum ipsa doloribus molestias praesentium explicabo maxime placeat excepturi, cumque quis delectus in esse vitae. Sint, ea.
-
-```{r cars}
-summary(cars)
-```
-
-You can also embed plots, for example:
-
-```{r chap3, echo=FALSE, fig.cap="Captionerino lorem asjkldh ahsd aj sdhajs dahjsd aj dj."}
-plot(pressure, main="HELLOO kjsahdlhsjkd")
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot [@source2].
 

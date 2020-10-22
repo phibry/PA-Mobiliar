@@ -4,15 +4,13 @@ output:
     toc: no
     toc_depth: 4
 bibliography: add/doc.bib
+linkcolor: blue
 header-includes:
 - \usepackage{pdfpages}
 ---
 
 ```{r knitr.global_options, include=F}
 knitr::opts_chunk$set(out.width = "70%", fig.align = "center", echo=FALSE, warning=FALSE, message=FALSE, tidy.opts=list(width.cutoff=60), tidy=TRUE)
-
-# didnt work from beginning, may include or exlude ->   fig.path='Figs/'
-
 ```
 
 \pagenumbering{gobble}
@@ -32,30 +30,35 @@ knitr::opts_chunk$set(out.width = "70%", fig.align = "center", echo=FALSE, warni
 
 \pagenumbering{arabic}
 
-```{r child = '02_chap1.Rmd'}
+```{r child = '02_chap1_Introduction.Rmd'}
 ```
 
 \newpage
 
-```{r child = '03_chap2.Rmd'}
+```{r child = '03_chap2_theoretical-background.Rmd'}
 ```
 
 \newpage
 
-```{r child = '04_chap3.Rmd'}
+```{r child = '04_chap3_Methology.Rmd'}
 ```
 
 \newpage
 
-```{r child = '05_chap4.Rmd'}
+```{r child = '05_chap4_Results.Rmd'}
 ```
 
 \newpage
 
-```{r child = '06_chap5.Rmd'}
+```{r child = '06_chap5_Conclusion.Rmd'}
 ```
 
 \newpage
 
 ```{r child = '07_attachment.Rmd'}
+```
+
+\newpage
+
+```{r child = 'reference_guide.Rmd'}
 ```
