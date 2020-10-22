@@ -1,0 +1,12 @@
+---
+output: pdf_document
+geometry: margin = 1in
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Abstract
+
+[@source1, pp. 10-12]

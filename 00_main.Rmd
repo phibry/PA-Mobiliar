@@ -1,0 +1,61 @@
+---
+output: 
+  pdf_document:
+    toc: no
+    toc_depth: 4
+bibliography: add/doc.bib
+header-includes:
+- \usepackage{pdfpages}
+---
+
+```{r knitr.global_options, include=F}
+knitr::opts_chunk$set(out.width = "70%", fig.align = "center", echo=FALSE, warning=FALSE, message=FALSE, tidy.opts=list(width.cutoff=60), tidy=TRUE)
+
+# didnt work from beginning, may include or exlude ->   fig.path='Figs/'
+
+```
+
+\pagenumbering{gobble}
+
+```{=tex}
+\includepdf{add/titelblatt.pdf}
+\includepdf{add/Erklaerung_BA.pdf}
+```
+\tableofcontents
+
+\newpage
+
+```{r child = '01_abstract.Rmd'}
+```
+
+\newpage
+
+\pagenumbering{arabic}
+
+```{r child = '02_chap1.Rmd'}
+```
+
+\newpage
+
+```{r child = '03_chap2.Rmd'}
+```
+
+\newpage
+
+```{r child = '04_chap3.Rmd'}
+```
+
+\newpage
+
+```{r child = '05_chap4.Rmd'}
+```
+
+\newpage
+
+```{r child = '06_chap5.Rmd'}
+```
+
+\newpage
+
+```{r child = '07_attachment.Rmd'}
+```

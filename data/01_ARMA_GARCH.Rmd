@@ -1,0 +1,14 @@
+---
+title: "01_ARMA_GARCH"
+output: html_document
+---
+
+# 1. Load Data
+```{r setup, include=FALSE}
+library(xts)
+library(zoo)
+load("data_mobi")
+
+head(data)
+```
+
