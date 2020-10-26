@@ -16,7 +16,7 @@ ts.plot(diff(log(data[,3])), col="green", main="TimeSeries")
 ts.plot(diff(log(data[,4])), col="purple", main="TimeSeries")
 
 row.names(data[,1])
-
+# d
 # Jeder der 4 Indexes möchte man traden.
 # MA-Filter auf jeder Reihe (univariat). Jeder der 4 Reihen ist ein target.
 # Evtl.

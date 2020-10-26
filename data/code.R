@@ -12,6 +12,7 @@ library(xts)
 library(zoo)
 load("data/data_mobi")
 
+load("/Users/phili/Desktop/7.Sem/PA-Mobiliar/data/data_mobi")
 
 head(data)
 
@@ -20,7 +21,7 @@ par(mfrow=c(1,1))
 ind <- data[,1:4]
 int <- data[,5:12]
 
-plot(int, col=tsRainbow, lwd=1)
+plot(int, lwd=1)
 
 # First Look####
 ## Plot Index
@@ -35,8 +36,7 @@ addLegend("topleft",
 
 # Index               Index 1         Index 2         
 # Min.   :2003-10-30   Min.   :606.3   Min.   : 683.7  
-# 1st Qu.:2007-12-14   1st Qu.:697.3   1st Qu.: 811.2  
-# Median :2012-01-30   Median :781.5   Median :1019.3  
+# 1st Qu.:2007-12-14   0   Median :781.5   Median :1019.3  
 # Mean   :2012-01-29   Mean   :748.9   Mean   : 950.7  
 # 3rd Qu.:2016-03-15   3rd Qu.:803.1   3rd Qu.:1077.7  
 # Max.   :2020-04-30   Max.   :874.3   Max.   :1231.4 
