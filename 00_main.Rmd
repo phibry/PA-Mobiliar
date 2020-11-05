@@ -4,7 +4,7 @@ output:
     toc: no
     toc_depth: 4
 bibliography: add/doc.bib
-linkcolor: blue
+linkcolor: red
 header-includes:
 - \usepackage{pdfpages}
 ---
@@ -40,7 +40,7 @@ knitr::opts_chunk$set(out.width = "70%", fig.align = "center", echo=FALSE, warni
 
 \newpage
 
-```{r child = '04_chap3_Methology.Rmd'}
+```{r child = '04_chap3_Methodology.Rmd'}
 ```
 
 \newpage
@@ -56,9 +56,4 @@ knitr::opts_chunk$set(out.width = "70%", fig.align = "center", echo=FALSE, warni
 \newpage
 
 ```{r child = '07_attachment.Rmd'}
-```
-
-\newpage
-
-```{r child = 'reference_guide.Rmd'}
 ```

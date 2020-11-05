@@ -5,4 +5,60 @@ geometry: margin = 1in
 
 ## 1. Introduction
 
+The main purpose of trading is buying and selling stocks, bonds, or other financial instruments with increasing the returns of the investments in mind while maintaining relatively low risk. With the help of a trading strategy, an investor can try to improve his performance. One can simply divide the strategies into passive and active. The praised and well established passive strategy buy-and-hold takes no short price movements into account. Positioning and trading based on these short price movements are considered active trading.
 
+This paper applies time-series analysis to these short price movements to create active trading strategies. The objective of these developed strategies is to outperform the buy-and-hold strategy.
+
+### 1.1. The data used in this paper
+
+The dataset which will be analyzed in this paper contains 4 tradeable indexes, a visualization of the data is shown below in figure \ref{fig:chap1.1}.
+
+```{r chap1.1, echo=FALSE, fig.cap="Visualization of the 4 indexes"}
+library(xts)
+load("data/data_mobi")
+
+ind <- data[,1:4]
+int <- data[,5:12]
+
+par(mfrow=c(1,1))
+plot(ind, main="Indexes 1-4", col=2:5, lwd=1)
+for (i in 1:ncol(ind)) {
+  i
+  mtext(paste("Index ", i), side=3, line=-i,col=i+1)
+}
+```
+
+Each time-series has `r nrow(ind)` observations and starts from October 2003 to April 2020. In all indexes is an upward drift observable, during the time period of the great recession (2008) is a slight bump visible. Also later in 2013 and 2016 are small break-ins evident. More interesting is the up and down behavior at the end of the series during the Covid19 pandemic.
+
+\newpage
+
+In addition, to the indexes, the dataset contains 8 different interest rates of treasury bonds which will be used for further analysis. A few key-values of the interest rates are shown in the following table \ref{tab:inttable}.
+
+```{r inttable, echo=FALSE}
+library(kableExtra)
+library(dplyr)
+int.maturity <- c("3M", "6M", "1Y", "2Y", "3Y", "5Y", "7Y", "10Y")
+int.mean <- round(apply(int, MARGIN=2, FUN=mean), 2)
+int.sd <- round(apply(int, MARGIN=2, FUN=sd), 2)
+int.min <- round(apply(int, MARGIN=2, FUN=min), 2)
+int.max <- round(apply(int, MARGIN=2, FUN=max), 2)
+
+int.table <- data.frame(int.maturity, int.mean, int.sd, int.min, int.max)
+colnames(int.table) <- c("Maturity", "Mean", "Volatility", "Min.", "Max.")
+
+kbl(int.table, caption="Summary of the 8 interest rates.", booktabs = T) %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
+```
+A typical characteristic of interest rates is shown in the given data. A bond with longer maturities is often associated with higher returns compared with those with shorter maturities. An investor which invests his money in short-term treasury bonds will have his money earlier back but will be confronted with a lower return.
+
+A more in depth analysis of the given dataset will follow in section [3.1](#ts-analysis).
+
+### 1.2. Ojective of this paper
+
+The objective of this paper is to trade these 4 indexes with an active trading strategy. The main objective is to outperform the passive buy-and-hold strategy. A few different methods will be used to develop an active trading strategy. Methods such as the Moving-Average-Filter or the ARMA-GARCH-Model provide signals for either long or short the position to maximize the return of the investments in these indexes.
+
+The performance of these strategies are build open various different parameters and conditions. The lengths of the filters applied to a Moving-Average may result in different solutions. Models could perform differently for any given length of the in-sample or out-of-sample scope. The necessity of including a historical crisis in the starting-sample can decide if a model performs better or worse than another. The correct validation of model parameters could have a significant impact on the forecasts.
+
+In addition to all criteria and conditions, the strategies can be further adjusted by composing different weighted portfolios. Estimated predicted volatility can be used to modulate the position size to mitigate the risk.
+
+Challenging will be finding the most optimal model in this wide field of conditions and parameters. The buy-and-hold strategy will be used as a benchmark for the developed models. Computing and comparing the Sharpe ratios of each model can serve as an indicator to rely on for better or worse models.

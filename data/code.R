@@ -9,7 +9,6 @@
 # 3m, 6m, 1y, 2y, 3y, 5y, 7y, 10y,
 # Imports####
 library(xts)
-library(zoo)
 load("data/data_mobi")
 
 load("/Users/phili/Desktop/7.Sem/PA-Mobiliar/data/data_mobi")
@@ -23,16 +22,43 @@ int <- data[,5:12]
 
 plot(int, lwd=1)
 
+## Create Table
+summary(int)
+# 3m, 6m, 1y, 2y, 3y, 5y, 7y, 10y,
+int.maturity <- c("3m", "6m", "1y", "2y", "3y", "5y", "7y", "10y")
+int.mean <- round(apply(int, MARGIN=2, FUN=mean), 2)
+int.sd <- round(apply(int, MARGIN=2, FUN=sd), 2)
+
+int.table <- data.frame(int.maturity, int.mean, int.sd)
+colnames(int.table) <- c("Maturity", "Mean", "Volatility")
+
+int.table
+
 # First Look####
 ## Plot Index
 # Creating Color scheme with rainbow()
-tsRainbow = rainbow(ncol(as.zoo(ind)))
 par(mfrow=c(1,1))
-plot(ind, main="Indexes 1-4", col=tsRainbow, lwd=1)
-addLegend("topleft",
-          legend.names=c("Index 1", "Index 2", "Index 3", "Index 4"),
-          lty=c(1,1,1,1),
-          col=tsRainbow)
+ts.plot(ind, main="Indexes 1-4", col=2:5, lwd=1)
+for (i in 1:ncol(ind)) {
+  i
+  mtext(paste("Index ", i), side=3, line=-i,col=i+1)
+}
+index(head(ind,5))
+index(tail(ind,5))
+nrow(ind)
+ind["2019-01-01/"]
+
+par(mfrow=c(1,1))
+par(bg = "yellow")
+plot(ind["2019-01-01/"], main="Indexes 1-4", col=2:5, lwd=1, grid.col = NA)
+for (i in 1:ncol(ind)) {
+  i
+  mtext(paste("Index ", i), side=3, line=-i,col=i+1)
+}
+
+par(bg="lightgray")
+plot(rnorm(100))
+
 
 # Index               Index 1         Index 2         
 # Min.   :2003-10-30   Min.   :606.3   Min.   : 683.7  
@@ -86,10 +112,14 @@ ind4 <- ind.lr[,4]
 startdate <- "2014-01-01"
 insample <- "2017-01-01"
 
+ind.all <- ind[paste(startdate,"/",sep="")]
 ind.lr.all <- ind.lr[paste(startdate,"/",sep="")]
 
 ind.lr.in <- ind.lr.all[paste("/",insample,sep="")]
+ind.in <- ind.all[paste(startdate,"/",sep="")]
+
 ind.lr.out <- ind.lr.all[paste(insample,"/",sep="")]
+ind.out <- ind.all[paste(startdate,"/",sep="")]
 
 # 1. Index 1####
 par(mfrow=c(2,1))
@@ -112,62 +142,9 @@ ind1.in <- ind1.all[paste("/",insample,sep="")]
 # out-of sample
 ind1.out <- ind1.all[paste(insample,"/",sep="")]
 
-
-# 1.2. Fit ARMA####
-par(mfrow=c(2,1))
-acf(ind1, main="Index 1")
-acf(ind1, main="Index 1", type="partial")
-
-ind1_obj <- arima(ind1, order=c(5,0,4))
-tsdiag(ind1_obj)
-
-aic_bic(ind1)
-# The BIC-Criteria suggests to fit a ARMA(5,4)-model. We would have to fit
-# 9 parameters. In order to
-
 #.####
-# 1.2. ARMA???? DROP####
-# Very difficult to display volaclusters with ARMA-models
+# 1.2. ARMA-GARCH####
 # 1.2.1. Index 1####
-par(mfrow=c(1,2))
-acf(ind.lr.in[,1], main="Index 1")
-acf(ind.lr.in[,1], main="Index 1", type="partial")
-arma_bic(ind.lr.in[,1])
-# AR(2), MA(2)
-
-test_obj <- arima(ind.lr.in[,1], order=c(0, 0, 1))
-tsdiag(test_obj)
-
-# 1.2.2. Index 2####
-acf(ind.lr.in[,2], main="Index 2")
-acf(ind.lr.in[,2], main="Index 2", type="partial")
-arma_bic(ind.lr.in[,2])
-# AR(2), Ma(2)
-test_obj <- arima(ind.lr.in[,2], order=c(0, 0, 1))
-tsdiag(test_obj)
-
-# 1.2.3. Index 3####
-acf(ind.lr.in[,3], main="Index 3")
-acf(ind.lr.in[,3], main="Index 3", type="partial")
-arma_bic(ind.lr.in[,3])
-# MA(1)
-test_obj <- arima(ind.lr.in[,3], order=c(0, 0, 1))
-tsdiag(test_obj)
-
-# 1.2.4. Index 4####
-acf(ind.lr.in[,4], main="Index 4")
-acf((ind.lr.in[,4]), main="Index 4", type="partial")
-arma_bic(ind.lr.in[,4])
-# MA(1)
-test_obj <- arima(ind.lr.in[,4], order=c(0, 0, 1))
-tsdiag(test_obj)
-
-# Something special with dependency on the second and 7th lag
-
-
-#.####
-# 1.3. ARMA-GARCH####
-# 1.3.1. Index 1####
 library(fGarch)
 par(mfrow=c(2,1))
 plot(ind.in[,1])
@@ -177,7 +154,7 @@ plot(ind.lr.in[,1])
 # Probleme mit dem Index 1 -> neue Zeitperiode
 
 ind1.garch_11 <- garchFit(~garch(1,1), data=ind.lr.in[,1], delta=2,
-                       include.delta=F, include.mean=T)
+                       include.delta=F, include.mean=T, trace=F)
 
 summary(ind1.garch_11)
 # Mu nicht signifkant ->include.mean=F, knapp mit den R -> ARMA-Teil
@@ -197,7 +174,7 @@ ind1.garch_11_ar <- garchFit(~arma(1,1) + garch(1,1), data=ind.lr.in[,1], delta=
 
 summary(ind1.garch_11_ar)
 
-# 1.3.2. Index 2####
+# 1.2.2. Index 2####
 plot(ind.in[,2])
 plot(ind.lr.in[,2])
 ind2.garch_11 <- garchFit(~garch(1,1), data=ind.lr.in[,2], delta=2,
@@ -216,7 +193,7 @@ summary(ind2.garch_11)
 sum(ind2.garch_11@fit$coef["alpha1"], ind2.garch_11@fit$coef["beta1"])
 
 
-# 1.3.3. Index 3####
+# 1.2.3. Index 3####
 plot(ind.in[,3])
 plot(ind.lr.in[,3])
 ind3.garch_11 <- garchFit(~garch(1,1), data=ind.lr.in[,3], delta=2,
@@ -238,7 +215,7 @@ sum(ind3.garch_11@fit$coef["alpha1"], ind3.garch_11@fit$coef["beta1"])
 # Ljung-Box für R^2's. evtl Probleme beim R^2 Q(20)
 
 
-# 1.3.4. Index 4####
+# 1.2.4. Index 4####
 plot(ind.in[,4])
 plot(ind.lr.in[,4])
 # Volacluster wirken fast schon wie Rauschen
@@ -260,63 +237,3 @@ sum(ind4.garch_11@fit$coef["alpha1"], ind4.garch_11@fit$coef["beta1"])
 # GARCH-Teil:
 # Ljung-Box für R^2's sind alle > 0.05 -> gut
 
-
-
-# Funerino####
-aic_bic <- function(x) {
-  len <- length(x)
-  maxarorder<-5
-  maxmaorder<-5
-  sigma_jk<-matrix(rep(0,(maxmaorder+1)*(maxarorder+1)),
-                   ncol=maxmaorder+1,nrow=maxarorder+1)
-  
-  sigma_jk[1,1] <- var(x)
-  arma_mat <- matrix(rep(0,(maxmaorder+1)*(maxarorder+1)),
-                     ncol=5, nrow=(maxmaorder+1)*(maxarorder+1))
-  
-  dimnames(arma_mat)[[2]] <- c("AR", "MA", "R-AIC", "AIC", "BIC")
-  dimnames(arma_mat)[[1]] <- seq(1,36,1)
-  
-  iter <- 1
-  for (j in 0:maxarorder)
-  {
-    for (k in 0:maxmaorder)
-    {
-      ARMA_obj<-arima(x,order=c(j,0,k))
-      sigma_jk[j+1,k+1] <- ARMA_obj$sigma
-      arma_mat[iter,1] <- j
-      arma_mat[iter,2] <- k
-      arma_mat[iter,3] <- ARMA_obj$aic
-      iter <- iter + 1
-    }
-  }
-  
-  
-  log_sigma_jk <- log(sigma_jk)
-  
-  iter <- 1
-  for (j in 0:maxarorder)
-  {
-    for (k in 0:maxmaorder)
-    {
-      arma_mat[iter, 4] <- log_sigma_jk[j+1,k+1]+2*(j+k)/len
-      arma_mat[iter, 5] <- log_sigma_jk[j+1,k+1]+log(len)*(j+k)/len
-      
-      iter <- iter + 1
-    }
-  }
-  
-  # ARIMA-AIC
-  r_aic <- arma_mat[which(arma_mat==min(arma_mat[,3]), arr.ind=TRUE)[1],][1:2]
-  r_aic_val <- arma_mat[which(arma_mat==min(arma_mat[,3]), arr.ind=TRUE)[1],][3]
-  
-  # Theoretical AIC
-  t_aic <- arma_mat[which(arma_mat==min(arma_mat[,4]), arr.ind=TRUE)[1],][1:2]
-  t_aic_val <- arma_mat[which(arma_mat==min(arma_mat[,4]), arr.ind=TRUE)[1],][4]
-  
-  # Theoretical BIC
-  t_bic <- arma_mat[which(arma_mat==min(arma_mat[,5]), arr.ind=TRUE)[1],][1:2]
-  t_bic_val <- arma_mat[which(arma_mat==min(arma_mat[,5]), arr.ind=TRUE)[1],][5]
-  
-  return(list("R-AIC"=c(r_aic, r_aic_val), "AIC"=c(t_aic, t_aic_val), "BIC"=c(t_bic, t_bic_val)))
-}

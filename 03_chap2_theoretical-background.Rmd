@@ -4,14 +4,69 @@ output: pdf_document
 
 ## 2. Theory
 
-It is assumed that the reader of this paper already has basic knowledge of the mathematical principles of time series analysis. Therefore, this section only briefly describes the mathematical models and processes
+It is assumed that the reader of this paper already has basic knowledge of the mathematical principles of time series analysis. Therefore, this section will only briefly describe the mathematical models and processes
 
-### 2.1. Bollinger Bands
+### 2.1. Time-Series
 
-### 2.2. Real Strength Index
+### 2.1.1. Stationarity
 
-### 2.3. Forecasting
+&nbsp;
 
-#### 2.3.1. Univariat (ARIMA-GARCH)
+\begin{equation}
+  \label{eq:mean}
+  E[x_{t}]=\mu
+\end{equation}
 
-#### 2.3.2. Multivariat
+\begin{equation}
+  \label{eq:var}
+  Var(x_{t})=\sigma_{x}^{2}
+\end{equation}
+
+\begin{equation}
+  \label{eq:cov}
+  Cov(x_{t}, x_{t-k})=R(k)
+\end{equation}
+
+### 2.2. Moving Average
+
+**Identify trends, smooth out price fluctuations.**
+
+#### 2.2.1. Equally-weighted Moving Average
+
+&nbsp;
+
+EqMA
+
+\begin{equation}
+  \label{eq:eqma}
+  y_{t}=\frac{1}{L}\sum_{k=0}^{L-1}x_{t-k}
+\end{equation}
+
+#### 2.2.2. Exponentially-weighted Moving Average
+
+&nbsp;
+
+EMA
+
+\begin{equation}
+  \label{eq:ema}
+  y_{t}=\frac{1}{\sum_{k=0}^{m}\alpha^{k}}\sum_{k=0}^{L-1}\alpha^{k}x_{t-k}
+\end{equation}
+
+#### 2.2.3. Moving Average Crossings
+
+#### 2.2.4. Bollinger Bands
+
+### 2.3. Real Strength Index
+
+### 2.4. Sharpe Ratio
+
+### 2.5. Forecasting
+
+#### 2.5.1. Univariat (ARIMA-GARCH)
+
+#### 2.5.2. Multivariat Regression
+
+### 2.6. Carry
+
+### 2.7. Value
