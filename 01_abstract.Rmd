@@ -8,5 +8,3 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Abstract
-
-[@source1, pp. 10-12]

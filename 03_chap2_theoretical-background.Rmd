@@ -4,13 +4,19 @@ output: pdf_document
 
 ## 2. Theory
 
-It is assumed that the reader of this paper already has basic knowledge of the mathematical principles of time series analysis. Therefore, this section will only briefly describe the mathematical models and processes
+It is assumed that the reader of this paper already has basic knowledge of the mathematical principles of time series analysis. Therefore, this section will only briefly describe the mathematical models and processes.
 
 ### 2.1. Time-Series
 
-### 2.1.1. Stationarity
+Almost anything with a data point to a given timestamp can be named a time-series. The monthly gross domestic product, the weekly US gasoline production, or daily stock price movements. In this paper lies the focus of the analysis of financial time series. Due to trades often only take place during the week, there are gaps in the time series on the weekends, an exception would be the trading of cryptocurrencies like Bitcoin which are also tradeable at the weekends.
+
+A series of data points with more or less equidistant time points $t$ with the sample length of $T$, is called a time-series $x_{t}, t=1,...,T$ [@eco1]. The analysis of a time-series $x_{t}$ involves creating a reasonable model that can be utilized to perform forecast predictions.
+
+#### 2.1.1. Stationarity
 
 &nbsp;
+
+In order to fit a suitable model with a given time series $x_{t}$, the assumptions of stationarity must be met. In this practical application, only the following weak-stationarity are required.
 
 \begin{equation}
   \label{eq:mean}
@@ -26,6 +32,8 @@ It is assumed that the reader of this paper already has basic knowledge of the m
   \label{eq:cov}
   Cov(x_{t}, x_{t-k})=R(k)
 \end{equation}
+
+Many financial time-series are subject to shift, trends or changing volatility. 
 
 ### 2.2. Moving Average
 
@@ -61,12 +69,8 @@ EMA
 
 ### 2.4. Sharpe Ratio
 
-### 2.5. Forecasting
+### 2.X. ARMA, ARCH, GARCH, ARCH-GARCH, GARCH-M
 
-#### 2.5.1. Univariat (ARIMA-GARCH)
+### 2.X. Carry
 
-#### 2.5.2. Multivariat Regression
-
-### 2.6. Carry
-
-### 2.7. Value
+### 2.X. Value
