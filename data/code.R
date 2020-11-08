@@ -237,3 +237,11 @@ sum(ind4.garch_11@fit$coef["alpha1"], ind4.garch_11@fit$coef["beta1"])
 # GARCH-Teil:
 # Ljung-Box für R^2's sind alle > 0.05 -> gut
 
+
+
+library(quantmod)
+SMI <- getSymbols("GOOGL", auto.assign=F)
+plot(SMI[,6])
+par(mfrow=c(1,2))
+acf(SMI[,6])
+pacf(SMI[,6])

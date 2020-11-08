@@ -4,15 +4,15 @@ output:
     toc: no
     toc_depth: 4
 bibliography: add/doc.bib
+linkcolor: red
 csl: add/ieee.csl
 header-includes:
 - \usepackage{pdfpages}
+- \usepackage{amsmath}
 ---
 
 ```{r knitr.global_options, include=F}
 knitr::opts_chunk$set(out.width = "70%", fig.align = "center", echo=FALSE, warning=FALSE, message=FALSE, tidy.opts=list(width.cutoff=60), tidy=TRUE)
-
-#linkcolor: red
 ```
 
 \pagenumbering{gobble}
