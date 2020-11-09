@@ -3,9 +3,3 @@ output: pdf_document
 ---
 
 ## 4. Conclusion
-
-I make spme changes
-
-Change Phild dfg dfg d
-
-oh no nen
