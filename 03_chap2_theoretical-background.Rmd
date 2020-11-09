@@ -54,7 +54,7 @@ The result is the so-called log-returns.
 SMI.lr <- na.exclude(diff(log(SMI)))
 plot(SMI.lr, main="Log-Returns of Adj. Prices ~ GOOGL")
 ```
-Applying the transformation to the data causes the drift to disappear, but the series still contains stronger and weaker volatile phases. This effect often occurs in non-stationary financial data and is called volatility cluster. This special property is used for the modelling of forecast models, which will be discussed in chapter [2](#models-section).
+Applying the transformation to the data causes the drift to disappear, but the series still contains stronger and weaker volatile phases. This effect often occurs in non-stationary financial data and is called volatility cluster. This special property is used for the modelling of forecast models, which will be discussed in chapter [2.2](#models-section).
 
 #### 2.1.2. Autocorrelation
 
