@@ -15,17 +15,18 @@ The dataset which will be analyzed in this paper contains 4 tradeable indexes, a
 
 ```{r chap1.1, echo=FALSE, fig.cap="Visualization of the 4 indexes"}
 library(xts)
+
 load("data/data_mobi")
 
 ind <- data[,1:4]
 int <- data[,5:12]
 
 par(mfrow=c(1,1))
-plot(ind, main="Indexes 1-4", col=2:5, lwd=1)
-for (i in 1:ncol(ind)) {
-  i
-  mtext(paste("Index ", i), side=3, line=-i,col=i+1)
-}
+plot(ind, main="Indexes 1-4", col=2:5, lwd=1,legend.loc="topleft")
+
+# for (i in 1:ncol(ind)) {
+#  i
+#  mtext(paste("Index ", i), side=3, line=-i,col=i+1)}
 ```
 
 Each time-series has `r nrow(ind)` observations and starts from October 2003 to April 2020. In all indexes is an upward drift observable, during the time period of the great recession (2008) is a slight bump visible. Also later in 2013 and 2016 are small break-ins evident. More interesting is the up and down behavior at the end of the series during the Covid19 pandemic.

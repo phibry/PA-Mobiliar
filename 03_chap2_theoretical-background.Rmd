@@ -147,9 +147,10 @@ Is called the variance-equation \ref{eq:arma-garch2}
 
 \newpage
 
-### 2.3. Moving Average
+### 2.3. Moving Average Filters
 
-**Identify trends, smooth out price fluctuations.**
+moving average filters are basically used to identify trends and smooth out price fluctuations. As a commonly used tool moving average filters are very simple in its usage, historical data was summarized and divided bi the length of the filter. The actual challenge in using Moving average filters is to figure out which length of the filter brings the most useful information. 
+
 
 #### 2.3.1. Equally-weighted Moving Average
 
