@@ -98,10 +98,7 @@ The mean of an ARIMA-process can be computed as:
 $$\mu=\frac{c}{1-a_{1}-...-a_{p}}$$
 ARIMA processes can be divided into 4 different models Choosing a model that best represents the time series is a difficult task. The goal is to find the best possible model with as few parameters as possible.
 
-The previously introduced ACF and PACF can help to choose simple models. Provided that the time series is stationary, the model orders can be determined directly. For an AR(p)-process (ARIMA(p, 0, 0))
-
-[@arima]
-
+The previously introduced ACF and PACF can help to choose simple models. Provided that the time series is stationary, the model orders can be determined directly. For an AR(*p*)-process (ARIMA(*p*,*0*,*0*)), the ACF plot will gradually decrease and simultaneously the PACF should have a sharp drop after *p* significant lags. For an MA(*q*)-process (ARIMA(*0*,*0*.*q*)) the opposite is true, the ACF should show a sharp drop after a certain *q* number of lags while PACF should show a gradual decreasing trend. If both ACF and PACF show a gradual decreasing pattern, then the ARMA-process should be considered for modeling [@arima].
 
 #### 2.2.2. ARCH & GARCH {#arch-garch-section}
 
