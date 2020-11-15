@@ -115,3 +115,37 @@ par(mfrow=c(3,1))
 plot(g.adj)
 plot(g.adj.lr)
 plot(cumsum(g.adj.lr))
+
+
+
+library(forecast)
+x <- g.adj
+h <- 5
+vis <- 200
+
+# For Visualization
+in_sample <- x[1:(length(x)-h)]
+out_sample <- x[((length(x)-h)+1):(length(x))]
+
+# find best model
+fit <- auto.arima(x)
+
+# perform a forecast
+fore <- forecast(fit, h=h)
+
+# Create xts-Object for the forecast
+fcast <- data.frame("LowerBand" = fore$lower[,2],
+                    "UpperBand" = fore$upper[,2],
+                    "PointForecast" = fore$mean)
+rownames(fcast) <- index(out_sample)
+fcast <- as.xts(fcast)
+
+
+
+plot(tail(x, 6), ylim=c(1650, 1800))
+#plot(x)
+points(fcast[1,1], col="red", pch=16)
+points(fcast[1,2], col="red", pch=16)
+points(fcast[,3], col="blue", pch=16)
+points(out_sample, col="green", pch=16)
+
