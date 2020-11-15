@@ -3,6 +3,14 @@ output: pdf_document
 geometry: margin = 1in
 ---
 
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(xts)
+library(PerformanceAnalytics)
+library(kableExtra)
+library(dplyr)
+library(quantmod)
+```
+
 ## 1. Introduction
 
 The main purpose of trading is buying and selling stocks, bonds, or other financial instruments with increasing the returns of the investments in mind while maintaining relatively low risk. With the help of a trading strategy, an investor can try to improve his performance. One can simply divide the strategies into passive and active. The praised and well established passive strategy buy-and-hold takes no short price movements into account. Positioning and trading based on these short price movements are considered active trading.
@@ -14,8 +22,6 @@ This paper applies time-series analysis to these short price movements to create
 The dataset which will be analyzed in this paper contains 4 tradeable indexes, a visualization of the data is shown below in figure \ref{fig:chap1.1}.
 
 ```{r chap1.1, echo=FALSE, fig.cap="Visualization of the 4 indexes"}
-library(xts)
-
 load("data/data_mobi")
 
 ind <- data[,1:4]
@@ -36,8 +42,6 @@ Each time-series has `r nrow(ind)` observations and starts from October 2003 to 
 In addition, to the indexes, the dataset contains 8 different interest rates of treasury bonds which will be used for further analysis. A few key-values of the interest rates are shown in the following table \ref{tab:inttable}.
 
 ```{r inttable, echo=FALSE}
-library(kableExtra)
-library(dplyr)
 int.maturity <- c("3M", "6M", "1Y", "2Y", "3Y", "5Y", "7Y", "10Y")
 int.mean <- round(apply(int, MARGIN=2, FUN=mean), 2)
 int.sd <- round(apply(int, MARGIN=2, FUN=sd), 2)

@@ -36,11 +36,10 @@ In order to fit a suitable model with a given time series $x_{t}$, the assumptio
 Many financial time-series are subject to shift, trends or changing volatility. In figure \ref{fig:chap2.1} are the stock prices of Alphabet Inc Class A (Google) visualized. This time-series shows a clear upwards drift and towards the end the volatility increases.
 
 ```{r chap2.1, echo=FALSE, fig.cap="Visualization of the adjusted prices of the Alphabet Inc Class A Stock."}
-library(quantmod)
-SMI <- getSymbols("GOOGL", auto.assign=F)
-SMI <- SMI[,6]
+GOOGL <- getSymbols("GOOGL", auto.assign=F)
+g.adj <- GOOGL[,6]
 par(mfrow=c(1,1))
-plot(SMI, main="Adjusted Prices ~ GOOGL")
+plot(g.adj, main="Adjusted Prices ~ GOOGL")
 ```
 \newpage
 
@@ -51,8 +50,8 @@ $$\mathrm{LogReturn} = \mathrm{log}(x_{t})-\mathrm{log}(x_{t-1})$$
 The result is the so-called log-returns.
 
 ```{r chap2.2, echo=FALSE, fig.cap="Visualization of the Log-Returns"}
-SMI.lr <- na.exclude(diff(log(SMI)))
-plot(SMI.lr, main="Log-Returns of Adj. Prices ~ GOOGL")
+g.adj.lr <- na.exclude(diff(log(g.adj)))
+plot(g.adj.lr, main="Log-Returns of Adj. Prices ~ GOOGL")
 ```
 Applying the transformation to the data causes the drift to disappear, but the series still contains stronger and weaker volatile phases. This effect often occurs in non-stationary financial data and is called volatility cluster. This special property is used for the modelling of forecast models, which will be discussed in chapter [2.2](#models-section).
 
@@ -68,8 +67,8 @@ Later in section [2.2.2.](#arch-garch-section) the characteristics of the autoco
 
 ```{r chap2.3, echo=FALSE, fig.cap="Acf and Pacf of the LogReturns of GOOGL."}
 par(mfrow=c(1,2))
-acf(SMI, main="Adjusted Prices ~ GOOGL")
-acf(SMI.lr, main="LogReturns ~ GOOGL")
+chart.ACF(g.adj, maxlag=20, main="Adjusted Prices ~ GOOGL")
+chart.ACF(g.adj.lr, maxlag=20, main="LogReturns ~ GOOGL")
 ```
 
 \newpage
