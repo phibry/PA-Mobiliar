@@ -203,7 +203,7 @@ chartSeries(GOOGL,type="line",subset="2007::2009",
 addSMA(n=n1,on=1,col = "blue")
 addSMA(n=n2,on=1,col = "red")
 ```
-
+ciao anlksjdläjkayFOUJISDOUFJSD
 \newpage
 
 ### 2.4. Real Strength Index
