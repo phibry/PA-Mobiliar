@@ -156,12 +156,10 @@ moving average filters are basically used to identify trends and smooth out pric
 
 
 #### 2.3.1. Equally-weighted Moving Average
-SMA stands for Simple Moving Average which. depending on the length of the filter(l) l obervations since the last noted observation will be considered. theyre getting summarized and divided by the filterlength equals the EqMA. For every timestep a new observation is considered and the last one eliminated.
-
-
-
 
 &nbsp;
+
+SMA stands for Simple Moving Average which. depending on the length of the filter(l) l obervations since the last noted observation will be considered. theyre getting summarized and divided by the filterlength equals the EqMA. For every timestep a new observation is considered and the last one eliminated.
 
 EqMA
 
