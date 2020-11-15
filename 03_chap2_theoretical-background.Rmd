@@ -145,7 +145,7 @@ y_{t}&=&\mu + a_{1}y_{t-1}+...+a_{p}y_{t-p}+\epsilon_{t}+b_{1}\epsilon_{t-1}+...
 Is called the mean-equation \ref{eq:arima-garch1}
 
 Is called the variance-equation \ref{eq:arima-garch2}
-asdasd
+
 [@eco2]
 
 \newpage
@@ -156,6 +156,10 @@ moving average filters are basically used to identify trends and smooth out pric
 
 
 #### 2.3.1. Equally-weighted Moving Average
+SMA stands for Simple Moving Average which. depending on the length of the filter(l) l obervations since the last noted observation will be considered. theyre getting summarized and divided by the filterlength equals the EqMA. For every timestep a new observation is considered and the last one eliminated.
+
+
+
 
 &nbsp;
 
@@ -170,6 +174,10 @@ EqMA
 
 &nbsp;
 
+Since not all observations are having the same influence of future value we can apply a weight to past observations. One method will be exponentially weighted Moving average. So we chose an optimal parameter to give past observations weights decreasing by alpha
+
+A skillfull trader chose an optimal to increase the performace of the measurment. Weights could also be given individually by adding a w vector to the filter
+
 EMA
 
 \begin{equation}
@@ -178,6 +186,23 @@ EMA
 \end{equation}
 
 #### 2.3.3. Moving Average Crossings
+
+&nbsp;
+
+Moving average crossings are basically just different MA's with different lengths applied to a timeseries. The points the filters then cross will be used as a trading signal to go long, short or hold.
+
+An easy example of Ma average crossings with an eqMA and and SMA is visualized in }
+
+
+```{r,chap2.3.3 , echo=FALSE,warning=FALSE, message=FALSE}
+par(mfrow=c(1,2))#\ref{fig:chap2.1
+n1=30
+n2=200
+chartSeries(GOOGL,type="line",subset="2007::2009",
+            theme=chartTheme("white"))
+addSMA(n=n1,on=1,col = "blue")
+addSMA(n=n2,on=1,col = "red")
+```
 
 \newpage
 
