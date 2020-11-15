@@ -1,0 +1,17 @@
+Pull from main to branch
+This will update the branch with all changed made in main
+branch name: phils
+
+$ git checkout phils
+$ git pull origin main
+
+
+
+
+
+
+
+Merge branch to main
+branch name: phils
+
+$ git merge phils -m 'comment'
