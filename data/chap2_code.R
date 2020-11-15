@@ -86,6 +86,9 @@ par(mfrow=c(2,1))
 acf(g.adj) 
 acf(g.adj, type="partial")
 
+chart.ACFplus(g.adj, maxlag=20, main="Adjusted Prices ~ Google", elementcolor = "gray")
+chart.ACF(g.adj, maxlag=20, main="LogReturns ~ Google", type="partial")
+
 par(mfrow=c(2,1))
 acf(g.adj.lr) 
 acf(g.adj.lr, type="partial")
@@ -119,9 +122,9 @@ plot(cumsum(g.adj.lr))
 
 
 library(forecast)
+library(PerformanceAnalytics)
 x <- g.adj
-h <- 5
-vis <- 200
+h <- 1
 
 # For Visualization
 in_sample <- x[1:(length(x)-h)]
@@ -139,13 +142,14 @@ fcast <- data.frame("LowerBand" = fore$lower[,2],
                     "PointForecast" = fore$mean)
 rownames(fcast) <- index(out_sample)
 fcast <- as.xts(fcast)
+index(fcast) <- index(out_sample)
 
 
+x[index(tail(x, h))] <- NA
 
-plot(tail(x, 6), ylim=c(1650, 1800))
-#plot(x)
-points(fcast[1,1], col="red", pch=16)
-points(fcast[1,2], col="red", pch=16)
+plot(tail(x, 10), ylim=c(1550, 1800), main="ARIMA(1,1,0) Forecast")
+points(fcast[,1], col="red", pch=16)
+points(fcast[,2], col="red", pch=16)
 points(fcast[,3], col="blue", pch=16)
 points(out_sample, col="green", pch=16)
 

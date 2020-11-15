@@ -61,14 +61,13 @@ Applying the transformation to the data causes the drift to disappear, but the s
 
 The autocorrelation function (ACF) reveals how the correlation between any two data points of the time series changes as their separation changes [@acf]. More precisely, acf measures the dependence between $x_{t}$ and $x_{t \pm k}$ at lag $k$. The partial autocorrelation (PACF) measures the dependency between $x_{t}$ and $x_{t-k}$ at lag $k$ [@eco1]. For stationary time series, ACF can be used to identify the model order of a MA-process, PACF for AR-processes.
 
-In the following figure \ref{fig:chap2.3} are acf's of the non-stationary adjusted Google stock and their log-returns visualized. Both graphics show the typical pattern of a non-stationary time series. The left plot shows the dependence structure of the time series. This means that it takes a long time until the series changes. Often a large value is followed by another large value, which indicates a strong trend. This property of the series can be seen in figure \ref{fig:chap2.1}. In the right plot the acf of the log-returns are visualized. Remember figure \ref{fig:chap2.2}, there is no trend visible and therefore no long dependency structures are visible, only slight dependencies can be seen.
+In the following figure \ref{fig:chap2.1.2} are ACF and PACF of the non-stationary adjusted Google stock visualized. Both graphics show the typical pattern of a non-stationary time series. The plot above shows the dependence structure of the time series. This means that it takes a long time until the series changes. Often a large value is followed by another large value, which indicates a strong trend. This property of the series can be seen in figure \ref{fig:chap2.1} as the long upward drift. The plot below indicates a significant partial autocorrelation at lag $k=1$.
 
 In the following section [2.2.](#models-section) the characteristics of the autocorrelation function can be used for the verification of ARIMA and ARCH-processes.
 
-```{r chap2.3, echo=FALSE, fig.cap="Acf and Pacf of the LogReturns of Google"}
-par(mfrow=c(1,2))
-chart.ACF(g.adj, maxlag=20, main="Adjusted Prices ~ Google")
-chart.ACF(g.adj.lr, maxlag=20, main="LogReturns ~ Google")
+```{r chap2.1.2, echo=FALSE, fig.cap="Acf and Pacf of the Adjusted Prizes of Google."}
+par(mfrow=c(1,1))
+chart.ACFplus(g.adj, maxlag=20, main="Adjusted Prices ~ Google")
 ```
 
 \newpage
@@ -101,6 +100,42 @@ ARIMA processes can be divided into 4 different models. Choosing a model that be
 
 The previously introduced ACF and PACF can help to determine the orders of simple models. Provided that the time series is stationary, the model orders can be determined directly. For an AR(*p*)-process (ARIMA(*p*,*0*,*0*)), the ACF plot will gradually decrease and simultaneously the PACF should have a sharp drop after *p* significant lags. For an MA(*q*)-process (ARIMA(*0*,*0*.*q*)) the opposite is true, the ACF should show a sharp drop after a certain *q* number of lags while PACF should show a gradual decreasing trend. If both ACF and PACF show a gradual decreasing pattern, then the ARIMA(*p*,*0*,*q*)-process should be considered for modeling [@arima]. If the time series is not stationary, differentiation can be considered (ARIMA(*p*,*d*,*q*)).
 
+\newpage
+
+The application of an analysis method to Google prices finds an ARIMA(*1*,*1*,*0*) as the optimal model. This makes sense if you look back at figure \ref{fig:chap2.1.2}. Long dependency structures in the ACF plot indicating an AR(*p*) process and at the same time after lag=$1$=*p* the PACF has a strong drop. The differential operator *d*=$1$ transforms the non-stationary series into a stationary one.
+
+
+```{r chap2.2.1, echo=FALSE, fig.cap="ARIMA-Forecast"}
+x <- g.adj
+h <- 5
+
+# For Visualization
+in_sample <- x[1:(length(x)-h)]
+out_sample <- x[((length(x)-h)+1):(length(x))]
+
+# find best model
+fit <- auto.arima(x)
+
+# perform a forecast
+fore <- forecast(fit, h=h)
+
+# Create xts-Object for the forecast
+fcast <- data.frame("LowerBand" = fore$lower[,2],
+                    "UpperBand" = fore$upper[,2],
+                    "PointForecast" = fore$mean)
+rownames(fcast) <- index(out_sample)
+fcast <- as.xts(fcast)
+index(fcast) <- index(out_sample)
+
+
+x[index(tail(x, h))] <- NA
+
+#plot(tail(x, 10), ylim=c(1600, 1820), main="ARIMA(1,1,0)")
+#points(fcast[,1], col="red", pch=16)
+#points(fcast[,2], col="red", pch=16)
+#points(fcast[,3], col="blue", pch=16)
+#points(out_sample, col="green", pch=16)
+```
 
 
 #### 2.2.2. ARCH & GARCH {#arch-garch-section}

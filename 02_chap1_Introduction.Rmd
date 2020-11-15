@@ -9,6 +9,7 @@ library(PerformanceAnalytics)
 library(kableExtra)
 library(dplyr)
 library(quantmod)
+library(forecast)
 ```
 
 ## 1. Introduction
