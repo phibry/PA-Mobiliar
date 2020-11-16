@@ -242,6 +242,9 @@ Sharpe ratio is a very powerful and widely used ratio to measure performance. It
 
 ### 2.6. Carry
 
+carry trades are trading strategies where usually money is borrowed at a lower intrest rate than the investment is gioving in return.
+the risk of this strategy is base din the curency risk
+
 ### 2.7. Value
 
 ### 2.8  Bollinger bands
