@@ -211,12 +211,14 @@ An easy example of Ma average crossings with 2 mas of different length is visual
 
 ```{r,chap2.3.3 , echo=FALSE,warning=FALSE, message=FALSE}
 par(mfrow=c(1,2))
-n1=30
-n2=200
-chartSeries(GOOGL,type="line",subset="2007::2009",
-            theme=chartTheme("white"))
+n1=2
+n2=20
+chartSeries(GOOGL,type="line",subset="2020-3::2020-10",
+            theme=chartTheme("white"),name= "MA Crossings Google Nasdag")
 addSMA(n=n1,on=1,col = "blue")
 addSMA(n=n2,on=1,col = "red")
+?chartSeries
+
 ```
 
 
