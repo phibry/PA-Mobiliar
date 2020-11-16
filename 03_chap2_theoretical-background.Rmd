@@ -263,6 +263,8 @@ addSMA(n=n2,on=1,col = "red")
 
 ### 2.5. Sharpe Ratio
 
+&nbsp;
+ 
 Sharpe ratio is a very powerful and widely used ratio to measure performance. It describes return per risk 
 
 \begin{equation}
@@ -277,10 +279,34 @@ Sharpe ratio is a very powerful and widely used ratio to measure performance. It
 ### 2.6. Carry
 
 carry trades are trading strategies where usually money is borrowed at a lower intrest rate than the investment is gioving in return.
-the risk of this strategy is base din the curency risk
+the risk of this strategy is based in the currency risk.
 
 ### 2.7. Value
 
 ### 2.8  Bollinger bands
+
+Bollinger bands are a analysis tool founded by John Bollinger. It contains a moving average and an upper and lower band . The bands are defined by adding  a constant${K}$ times a standard deviation $\sigma_t$ to the *Moving Average* for the upper , and subtracting it for the lower band.
+
+\begin{equation}
+  \label{eq:lower and upper bollingerbands}
+  \mathrm{U_t}=MA_{t}+K\sigma
+  \mathrm{L_t}=MA_{t}-K\sigma
+\end{equation}
+
+the variance from bollingers theory is calculated by:
+
+\begin{equation}
+  \label{eq:variance bollingerbands}
+  \mathrm{\sigma_{t}^2}=\frac{1}{N}\sum_{k=0}^{N-1}(x_{t-k} -MA_t)^2
+\end{equation}
+
+the calculated \sigma_t could be problematic because its derived from the original series and increases with the level. Therefore an other method to calculate the standart deviation could be used.
+
+
+- ${N}$ = 
+- ${K}$ = Constant usually equals 2
+- $\sigma_p$ = standard deviation of the series
+- ${U_t}$ = upper band
+- ${L_t}$ = lower band
 
 Try other github branch
