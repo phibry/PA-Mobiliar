@@ -143,6 +143,7 @@ fcast <- data.frame("LowerBand" = fore$lower[,2],
 rownames(fcast) <- index(out_sample)
 fcast <- as.xts(fcast)
 index(fcast) <- index(out_sample)
+fcast <- merge(fcast, out_sample)
 
 
 x[index(tail(x, h))] <- NA
@@ -151,5 +152,5 @@ plot(tail(x, 10), ylim=c(1550, 1800), main="ARIMA(1,1,0) Forecast")
 points(fcast[,1], col="red", pch=16)
 points(fcast[,2], col="red", pch=16)
 points(fcast[,3], col="blue", pch=16)
-points(out_sample, col="green", pch=16)
+points(fcast[,4], col="green", pch=16)
 

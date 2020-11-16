@@ -105,9 +105,9 @@ The previously introduced ACF and PACF can help to determine the orders of simpl
 The application of an analysis method to Google prices finds an ARIMA(*1*,*1*,*0*) as the optimal model. This makes sense if you look back at figure \ref{fig:chap2.1.2}. Long dependency structures in the ACF plot indicating an AR(*p*) process and at the same time after lag=$1$=*p* the PACF has a strong drop. The differential operator *d*=$1$ transforms the non-stationary series into a stationary one.
 
 
-```{r chap2.2.1, echo=FALSE, fig.cap="ARIMA-Forecast"}
+```{r chap2.2.1, echo=FALSE, fig.cap="ARIMA-Forecast", fig.keep = 'last'}
 x <- g.adj
-h <- 5
+h <- 1
 
 # For Visualization
 in_sample <- x[1:(length(x)-h)]
@@ -130,11 +130,11 @@ index(fcast) <- index(out_sample)
 
 x[index(tail(x, h))] <- NA
 
-#plot(tail(x, 10), ylim=c(1600, 1820), main="ARIMA(1,1,0)")
-#points(fcast[,1], col="red", pch=16)
-#points(fcast[,2], col="red", pch=16)
-#points(fcast[,3], col="blue", pch=16)
-#points(out_sample, col="green", pch=16)
+plot(tail(x, 7), ylim=c(1600, 1820), main="ARIMA(1,1,0)")
+points(fcast[,1], col="red", pch=16)
+points(fcast[,2], col="red", pch=16)
+points(fcast[,3], col="blue", pch=16)
+points(out_sample, col="green", pch=16)
 ```
 
 
@@ -228,7 +228,7 @@ Moving average crossings are basically just different MA's with different length
 An easy example of Ma average crossings with an eqMA and and SMA is visualized in }
 
 
-```{r,chap2.3.3 , echo=FALSE,warning=FALSE, message=FALSE}
+```{r message=FALSE, warning=FALSE, , echo=FALSE, fig.keep = 'last'}
 par(mfrow=c(1,2))#\ref{fig:chap2.1
 n1=30
 n2=200
