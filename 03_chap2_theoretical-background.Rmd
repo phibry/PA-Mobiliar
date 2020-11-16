@@ -232,7 +232,7 @@ EMA
 &nbsp;
 
 \begin{equation}
-  \label{eq:eqma}
+  \label{eq:mac}
   y_{t}=\frac{1}{L_1}\sum_{k=0}^{L_1-1}x_{t-k} - \frac{1}{L_2}\sum_{k=0}^{L_2-1}x_{t-k}
 \end{equation}
 
@@ -245,25 +245,14 @@ Moving average crossings are basically just different MA's with different length
 An easy example of Ma average crossings with 2 mas of different length is visualized in # \ref{fig:chap2.1}.
 
 
-<<<<<<< HEAD
-```{r message=FALSE, warning=FALSE, , echo=FALSE, fig.keep = 'last'}
-par(mfrow=c(1,2))#\ref{fig:chap2.1
-n1=30
-n2=200
-chartSeries(GOOGL,type="line",subset="2007::2009",
-            theme=chartTheme("white"))
-=======
-```{r,chap2.3.3 , echo=FALSE,warning=FALSE, message=FALSE}
+```{r,chap2.3.3 , echo=FALSE,warning=FALSE, message=FALSE, fig.keep = 'last'}
 par(mfrow=c(1,2))
 n1=2
 n2=20
 chartSeries(GOOGL,type="line",subset="2020-3::2020-10",
             theme=chartTheme("white"),name= "MA Crossings Google Nasdag")
->>>>>>> pascals
 addSMA(n=n1,on=1,col = "blue")
 addSMA(n=n2,on=1,col = "red")
-?chartSeries
-
 ```
 
 
@@ -278,7 +267,7 @@ Sharpe ratio is a very powerful and widely used ratio to measure performance. It
 
 \begin{equation}
   \label{eq:Sharperatio}
-  sharperatio_p=\frac{R_{p}-R_{f}}{\sigma}
+  \mathrm{SharpeRatio}=\frac{R_{p}-R_{f}}{\sigma}
 \end{equation}
 
 - ${R_p}$ = Return of Portfolio
