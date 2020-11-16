@@ -15,3 +15,12 @@ Merge branch to main
 branch name: phils
 
 $ git merge phils -m 'comment'
+
+
+
+
+
+HARD RESET
+git fetch --all
+git reset --hard origin/main
+git pull origin main
