@@ -139,6 +139,10 @@ points(fcast[,3], col="blue", pch=16)
 points(out_sample, col="green", pch=16)
 ```
 
+In figure \ref{fig:chap2.2.1} you can see the prediction of the model. The whole representation is shifted by one day so that one can compare the model with a true value.
+The green dot is the actual value of the time series.
+The red dots indicate the upper and lower 95% interval limits respectively. These indicate that a future value will be within this band. The blue dot is the point forecast predicted by the model.
+
 
 #### 2.2.2. ARCH & GARCH {#arch-garch-section}
 
@@ -167,6 +171,10 @@ The ARCH-process can be generalized by adding the lagged conditional variances t
   \epsilon_{t} &= \sigma_{t}u_{t} \\
   \sigma_{t}^{2} &=c \sigma^{2}+\sum_{j=1}^{n}\alpha_{j}\sigma_{t-j}^{2}+\sum_{k=1}^{m}\beta_{k}\epsilon_{t-k}^{2} \nonumber
 \end{align}
+
+```{r chap2.2.2, echo=FALSE, fig.cap="GARCH-Forecast", fig.keep = 'last'}
+
+```
 
 #### 2.2.3. ARIMA-GARCH
 

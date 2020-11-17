@@ -15,6 +15,8 @@ plot(g.adj, main="Adjusted Prices ~ GOOGL")
 
 
 g.adj.lr <- na.exclude(diff(log(g.adj)))
+
+plot(g.adj, main="Adjusted Prices ~ GOOGL")
 plot(g.adj.lr, main="Log-Returns of Adj. Prices ~ GOOGL")
 
 
@@ -154,3 +156,55 @@ points(fcast[,2], col="red", pch=16)
 points(fcast[,3], col="blue", pch=16)
 points(fcast[,4], col="green", pch=16)
 
+
+
+
+
+
+
+
+
+# GARCH GOOGLE####
+par(mfrow=c(2,1))
+plot(g.adj, main="Adjusted Prices ~ GOOGL")
+plot(g.adj.lr, main="Log-Returns of Adj. Prices ~ GOOGL")
+
+# ACF
+par(mfrow=c(1,2))
+acf(g.adj, main="Adjusted Prices ~ GOOGL")
+acf(g.adj.lr, main="LogReturns ~ GOOGL")
+
+
+# ACF
+par(mfrow=c(3,1))
+chart.ACF(g.adj.lr, main="logReturns", maxlag=30)
+chart.ACF(g.adj.lr^2, main="logReturns^2", maxlag=30)
+chart.ACF(abs(g.adj.lr), main="abs(logReturns)", maxlag=30)
+
+# Modell
+y.garch_11 <- garchFit(~garch(1,1), data=g.adj.lr, delta=2, include.delta=F, 
+                       include.mean=F, trace=F); summary(y.garch_11)
+
+# Summe der Parameter
+y.garch_11@fit$coef["alpha1"] + y.garch_11@fit$coef["beta1"]
+
+
+# Stand. Residuals
+eps <- y.garch_11@residuals
+eps
+# u's
+u <- eps/y.garch_11@sigma.t
+
+par(mfrow=c(2,1))
+ts.plot(eps, main="epsilon"); abline(h=0)
+ts.plot(u, main="u"); abline(h=0)
+
+# ACF u and eps
+par(mfrow=c(2,2))
+chart.ACF(eps, main="eps")
+chart.ACF(eps^2, main="eps^2")
+chart.ACF(u, main="u")
+chart.ACF(u^2, main="u^2")
+
+# eps zeigen die Cluster, Abhängigkeitstrukturen
+# us eigen white noise
