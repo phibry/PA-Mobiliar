@@ -4,6 +4,11 @@ output: pdf_document
 
 ## 3. Methodology
 
+In this section models were created trying to outperform the buy and hold strategy.
+starting with the usage of the simplest models , diffrent aproaches were chosen to fullfill the goal.
+
 ### 3.1. Time-Series Analysis {#ts-analysis}
 
 Plots of the timeseries, decomposition. Stationarity (refer to the theory section)
+
+### 3.2 using simple methods

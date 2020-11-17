@@ -107,7 +107,6 @@ The previously introduced ACF and PACF can help to determine the orders of simpl
 
 The application of an analysis method to Google prices finds an ARIMA(*1*,*1*,*0*) as the optimal model. This makes sense if you look back at figure \ref{fig:chap2.1.2}. Long dependency structures in the ACF plot indicating an AR(*p*) process and at the same time after lag=$1$=*p* the PACF has a strong drop. The differential operator *d*=$1$ transforms the non-stationary series into a stationary one.
 
-
 ```{r chap2.2.1, echo=FALSE, fig.cap="ARIMA-Forecast", fig.keep = 'last'}
 x <- g.adj
 h <- 1
@@ -225,7 +224,7 @@ EMA
 \end{equation}
 
 - ${m}$    = filterlength
-- $\alpha$ = Parameter to weigh the observations
+- ${\alpha}$ = Parameter to weigh the observations
 
 
 #### 2.3.3. Moving Average Crossings
@@ -239,7 +238,7 @@ EMA
 
 - ${L_1}$    = filterlength 1
 - ${L_2}$    = filterlength 2
-- $0 < \alpha < 1$  = Parameter to weigh the observations 
+- ${0 < \alpha < 1}$  = Parameter to weigh the observations 
 
 Moving average crossings are basically just different MA's with different lengths applied to a time-series. The points the filters then cross will be used as a trading signal to go long, short or hold.
 
@@ -275,7 +274,7 @@ Sharpe ratio is a very powerful and widely used ratio to measure performance. It
 
 - ${R_p}$ = Return of Portfolio
 - ${R_p}$ = Risk free Rate, mostly treasury bonds
-- $\sigma_p$ = standard deviation of portfolios excess return (risk)
+- ${\sigma_p}$ = standard deviation of portfolios excess return (risk)
 
 ### 2.6. Carry
 
@@ -289,12 +288,11 @@ the risk of this strategy is based in the currency risk.
 
 &nbsp;
 
-Bollinger bands are a analysis tool founded by John Bollinger. It contains a moving average and an upper and lower band . The bands are defined by adding  a constant${K}$ times a standard deviation $\sigma_t$ to the *Moving Average* for the upper , and subtracting it for the lower band.
+Bollinger bands are a analysis tool founded by John Bollinger. It contains a moving average and an upper and lower band . The bands are defined by adding  a constant${K}$ times a standard deviation ${\sigma_t}$ to the *Moving Average* for the upper , and subtracting it for the lower band.
 
 \begin{equation}
   \label{eq:lower and upper bollingerbands}
-  \mathrm{U_t}=MA_{t}+K\sigma
-  \mathrm{L_t}=MA_{t}-K\sigma
+  \mathrm{U_t}=MA_{t}+K\sigma, L_{t}=MA_{t}-K\sigma
 \end{equation}
 
 the variance from bollingers theory is calculated by:
@@ -304,21 +302,22 @@ the variance from bollingers theory is calculated by:
   \mathrm{\sigma_{t}^2}=\frac{1}{N}\sum_{k=0}^{N-1}(x_{t-k} -MA_t)^2
 \end{equation}
 
-the calculated \sigma_t could be problematic because its derived from the original series and increases with the level. Therefore an other method to calculate the standart deviation could be used.
+the calculated ${\sigma_t}$ could be problematic because its derived from the original series and increases with the level. Therefore an other method to calculate the standart deviation could be used.
 
 
-- ${N}$ = usually the filterlength and the lentgh considered for \sigma the same
+- ${N}$ = usually the filterlength and the lentgh considered for ${\sigma}$ the same
 - ${K}$ = Constant usually equals 2
 - $\sigma_p$ = standard deviation of the series
 - ${U_t}$ = upper band
 - ${L_t}$ = lower band
 
 
-```{r,chap2.8 , echo=FALSE,warning=FALSE, message=FALSE, fig.keep = 'last'}
+```{r,chap2.8 , echo=FALSE, warning=FALSE, message=FALSE, fig.keep = 'last'}
 n=20
 k=2
 chartSeries(GOOGL,subset="2007-05::2009-01",theme=chartTheme("white"),name= "MA Crossings Google Nasdag")
 addBBands(n=n,sd=k,maType = "SMA", draw = 'bands', on = -1)
-?addTA()
-addTA(signal,type="S",col="red")
+#addTA(signal,type="S",col="red")
+      
+      
 ```
