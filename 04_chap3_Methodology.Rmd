@@ -7,8 +7,20 @@ output: pdf_document
 In this section models were created trying to outperform the buy and hold strategy.
 starting with the usage of the simplest models , diffrent aproaches were chosen to fullfill the goal.
 
+
+
 ### 3.1. Time-Series Analysis {#ts-analysis}
 
 Plots of the timeseries, decomposition. Stationarity (refer to the theory section)
 
 ### 3.2 using simple methods
+
+
+```{r chap3.2, echo=FALSE, fig.cap="conversion data"}
+
+load("data/data_mobi") 
+n=20
+k=2
+chartSeries(data[,1],subset="2007-05::2009-01",theme=chartTheme("white"),name= "bollinger bands",type="")
+addBBands(n=n,sd=k,maType = "SMA", draw = 'bands', on = -1)
+```
