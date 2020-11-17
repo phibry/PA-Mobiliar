@@ -138,7 +138,7 @@ ind1.all <- ind1[paste(startdate,"/",sep="")]
 
 # in-sample
 ind1.in <- ind1.all[paste("/",insample,sep="")]
-
+head(ind1.in)
 # out-of sample
 ind1.out <- ind1.all[paste(insample,"/",sep="")]
 
@@ -169,7 +169,7 @@ summary(ind1.garch_11)
 sum(ind1.garch_11@fit$coef["alpha1"], ind1.garch_11@fit$coef["beta1"])
 
 # ARMA-Teil hinzufügen
-ind1.garch_11_ar <- garchFit(~arma(1,1) + garch(1,1), data=ind.lr.in[,1], delta=2,
+ind1.garch_11_ar <- garchFit(~arma(1,0) + garch(1,1), data=ind.lr.in[,1], delta=2,
                           include.delta=F, include.mean=F)
 
 summary(ind1.garch_11_ar)
@@ -245,3 +245,4 @@ plot(SMI[,6])
 par(mfrow=c(1,2))
 acf(SMI[,6])
 pacf(SMI[,6])
+
