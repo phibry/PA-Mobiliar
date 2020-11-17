@@ -315,9 +315,10 @@ the calculated ${\sigma_t}$ could be problematic because its derived from the or
 ```{r,chap2.8 , echo=FALSE, warning=FALSE, message=FALSE, fig.keep = 'last'}
 n=20
 k=2
-chartSeries(GOOGL,subset="2007-05::2009-01",theme=chartTheme("white"),name= "MA Crossings Google Nasdag")
+chartSeries(GOOGL,subset="2007-05::2009-01",theme=chartTheme("white"),name= "bollinger bands")
 addBBands(n=n,sd=k,maType = "SMA", draw = 'bands', on = -1)
 #addTA(signal,type="S",col="red")
       
-      
 ```
+
+
