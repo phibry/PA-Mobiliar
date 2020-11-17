@@ -115,7 +115,7 @@ chart.ACF(g.adj.lr, maxlag=20)
 acf(g.adj)
 chart.ACF(g.adj, maxlag=20)
 
-
+?chart.ACF
 par(mfrow=c(3,1))
 plot(g.adj)
 plot(g.adj.lr)
@@ -134,7 +134,32 @@ out_sample <- x[((length(x)-h)+1):(length(x))]
 
 # find best model
 fit <- auto.arima(x)
+tsdiag(fit)
+fit$residuals
 
+ljungplot <- function(x, lag=10) {
+  testerino <- rep(NA, lag)
+  for (i in 1:lag) {
+    testerino[i] <- Box.test(fit$residuals, lag = i, type = c("Ljung-Box"), fitdf = 0)$p.value
+  }
+
+  plot(x=1:lag, y=testerino, main="Ljung-Box statistic",
+       xlab = "lag", ylab = "p value", axes = FALSE)
+  box(col="gray")
+  axis(2, col="gray", cex.axis=0.8)
+  axis(1, col="gray", cex.axis=0.8)
+  abline(h=0.05, lty=2, col="blue")
+}
+
+ljungplot(fit$residuals)
+
+?box
+?axis
+chart.ACF(x)
+plot(x=1:10, y=testerino, main="Ljung-Box statistic",
+     xlab = "lag", ylab = "p value")
+?barplot
+?type
 # perform a forecast
 fore <- forecast(fit, h=h)
 
