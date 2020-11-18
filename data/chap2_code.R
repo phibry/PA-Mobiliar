@@ -137,14 +137,15 @@ fit <- auto.arima(x)
 tsdiag(fit)
 fit$residuals
 
-ljungplot <- function(x, lag=10) {
+ljungplot <- function(resid, lag=10) {
   testerino <- rep(NA, lag)
   for (i in 1:lag) {
-    testerino[i] <- Box.test(fit$residuals, lag = i, type = c("Ljung-Box"), fitdf = 0)$p.value
+    testerino[i] <- Box.test(resid, lag = i, type = c("Ljung-Box"), fitdf = 0)$p.value
   }
-
+  
   plot(x=1:lag, y=testerino, main="Ljung-Box statistic",
-       xlab = "lag", ylab = "p value", axes = FALSE)
+       xlab = "lag", ylab = "p value", axes = FALSE,
+       ylim=c(0,1))
   box(col="gray")
   axis(2, col="gray", cex.axis=0.8)
   axis(1, col="gray", cex.axis=0.8)
@@ -207,8 +208,52 @@ chart.ACF(g.adj.lr^2, main="logReturns^2", maxlag=30)
 chart.ACF(abs(g.adj.lr), main="abs(logReturns)", maxlag=30)
 
 # Modell
+library(fGarch)
+library(PerformanceAnalytics)
 y.garch_11 <- garchFit(~garch(1,1), data=g.adj.lr, delta=2, include.delta=F, 
                        include.mean=F, trace=F); summary(y.garch_11)
+y.garch_11@residuals
+par(mfrow=c(2,1))
+ljungplot(y.garch_11@residuals/y.garch_11@sigma.t, lag=20)
+ljungplot((y.garch_11@residuals/y.garch_11@sigma.t)^2, lag=20)
+
+
+
+ljungplotGarch <- function(resid, sig) {
+  p1 <- rep(NA, 20)
+  p2 <- rep(NA, 20)
+  for (i in 1:20) {
+    p1[i] <- Box.test(resid/sig, lag = i, type = c("Ljung-Box"), fitdf = 0)$p.value
+    p2[i] <- Box.test(resid/sig^2, lag = i, type = c("Ljung-Box"), fitdf = 0)$p.value
+  }
+  
+  par(mfrow=c(1,2))
+  plot(x=1:20, y=p1, main=expression(paste("Ljung-Box statistic: ", R)),
+       xlab = "lag", ylab = "p value", axes = FALSE,
+       ylim=c(0,1))
+  box(col="gray")
+  axis(2, col="gray", cex.axis=0.8)
+  axis(1, col="gray", cex.axis=0.8)
+  abline(h=0.05, lty=2, col="blue")
+  points(x=10, y=p1[10], pch=16, col="red")
+  points(x=15, y=p1[15], pch=16, col="red")
+  points(x=20, y=p1[20], pch=16, col="red")
+  
+  plot(x=1:20, y=p2, main=expression(paste("Ljung-Box statistic: ", R^2)),
+       xlab = "lag", ylab = "p value", axes = FALSE,
+       ylim=c(0,1))
+  box(col="gray")
+  axis(2, col="gray", cex.axis=0.8)
+  axis(1, col="gray", cex.axis=0.8)
+  abline(h=0.05, lty=2, col="blue")
+  points(x=10, y=p2[10], pch=16, col="red")
+  points(x=15, y=p2[15], pch=16, col="red")
+  points(x=20, y=p2[20], pch=16, col="red")
+}
+ljungplotGarch(y.garch_11@residuals, y.garch_11@sigma.t)
+chart.ACF(y.garch_11@residuals/y.garch_11@sigma.t)
+pacf(y.garch_11@residuals/y.garch_11@sigma.t)
+
 
 # Summe der Parameter
 y.garch_11@fit$coef["alpha1"] + y.garch_11@fit$coef["beta1"]
