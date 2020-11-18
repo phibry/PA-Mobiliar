@@ -1,30 +1,8 @@
----
-output: pdf_document
----
-
-## 3. Methodology
-
-In this section models were created trying to outperform the buy and hold strategy.
-starting with the usage of the simplest models , diffrent aproaches were chosen to fullfill the goal.
-
-
-
-### 3.1. Time-Series Analysis {#ts-analysis}
-
-Plots of the timeseries, decomposition. Stationarity (refer to the theory section)
-
-### 3.2 using simple methods
-### 3.2.1 sma signals to trade 
-
-
-
-```{r chap3.2, echo=FALSE, fig.cap="conversion data"}
-
 load("data/data_mobi") 
 n=20
 
-n1=10
-n2 =50
+n1=30
+n2 =200
 k=2
 
 
@@ -78,8 +56,5 @@ names(ret)="filter"
 chart.Bar(ret,main="returns daily")
 chart.CumReturns(ret, main="Naive Rule: Cum Returns")
 chart.Drawdown(ret,main="Naive Rule: Percentage Drawdown")
-charts.PerformanceSummary(ret, main="Naive Buy Rule")
+charts.PerformanceSummary(ret, main="-ç Naive Buy Rule")
 
-
-
-```
