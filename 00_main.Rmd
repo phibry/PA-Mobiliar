@@ -15,6 +15,10 @@ header-includes:
 knitr::opts_chunk$set(out.width = "70%", fig.align = "center", echo=FALSE, warning=FALSE, message=FALSE, tidy.opts=list(width.cutoff=60), tidy=TRUE)
 ```
 
+```{r }
+source("data/libraries.R")
+
+```
 \pagenumbering{gobble}
 
 ```{=tex}
@@ -27,6 +31,7 @@ knitr::opts_chunk$set(out.width = "70%", fig.align = "center", echo=FALSE, warni
 
 ```{r child = '01_abstract.Rmd'}
 ```
+
 
 \newpage
 
