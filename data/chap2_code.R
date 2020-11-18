@@ -250,6 +250,8 @@ ljungplotGarch <- function(resid, sig) {
   points(x=15, y=p2[15], pch=16, col="red")
   points(x=20, y=p2[20], pch=16, col="red")
 }
+
+
 ljungplotGarch(y.garch_11@residuals, y.garch_11@sigma.t)
 chart.ACF(y.garch_11@residuals/y.garch_11@sigma.t)
 pacf(y.garch_11@residuals/y.garch_11@sigma.t)
