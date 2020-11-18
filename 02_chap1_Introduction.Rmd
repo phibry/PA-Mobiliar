@@ -10,6 +10,7 @@ library(kableExtra)
 library(dplyr)
 library(quantmod)
 library(forecast)
+library(fGarch)
 ```
 
 ## 1. Introduction

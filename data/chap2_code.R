@@ -15,6 +15,8 @@ plot(g.adj, main="Adjusted Prices ~ GOOGL")
 
 
 g.adj.lr <- na.exclude(diff(log(g.adj)))
+
+plot(g.adj, main="Adjusted Prices ~ GOOGL")
 plot(g.adj.lr, main="Log-Returns of Adj. Prices ~ GOOGL")
 
 
@@ -113,7 +115,7 @@ chart.ACF(g.adj.lr, maxlag=20)
 acf(g.adj)
 chart.ACF(g.adj, maxlag=20)
 
-
+?chart.ACF
 par(mfrow=c(3,1))
 plot(g.adj)
 plot(g.adj.lr)
@@ -132,7 +134,32 @@ out_sample <- x[((length(x)-h)+1):(length(x))]
 
 # find best model
 fit <- auto.arima(x)
+tsdiag(fit)
+fit$residuals
 
+ljungplot <- function(x, lag=10) {
+  testerino <- rep(NA, lag)
+  for (i in 1:lag) {
+    testerino[i] <- Box.test(fit$residuals, lag = i, type = c("Ljung-Box"), fitdf = 0)$p.value
+  }
+
+  plot(x=1:lag, y=testerino, main="Ljung-Box statistic",
+       xlab = "lag", ylab = "p value", axes = FALSE)
+  box(col="gray")
+  axis(2, col="gray", cex.axis=0.8)
+  axis(1, col="gray", cex.axis=0.8)
+  abline(h=0.05, lty=2, col="blue")
+}
+
+ljungplot(fit$residuals)
+
+?box
+?axis
+chart.ACF(x)
+plot(x=1:10, y=testerino, main="Ljung-Box statistic",
+     xlab = "lag", ylab = "p value")
+?barplot
+?type
 # perform a forecast
 fore <- forecast(fit, h=h)
 
@@ -154,3 +181,55 @@ points(fcast[,2], col="red", pch=16)
 points(fcast[,3], col="blue", pch=16)
 points(fcast[,4], col="green", pch=16)
 
+
+
+
+
+
+
+
+
+# GARCH GOOGLE####
+par(mfrow=c(2,1))
+plot(g.adj, main="Adjusted Prices ~ GOOGL")
+plot(g.adj.lr, main="Log-Returns of Adj. Prices ~ GOOGL")
+
+# ACF
+par(mfrow=c(1,2))
+acf(g.adj, main="Adjusted Prices ~ GOOGL")
+acf(g.adj.lr, main="LogReturns ~ GOOGL")
+
+
+# ACF
+par(mfrow=c(3,1))
+chart.ACF(g.adj.lr, main="logReturns", maxlag=30)
+chart.ACF(g.adj.lr^2, main="logReturns^2", maxlag=30)
+chart.ACF(abs(g.adj.lr), main="abs(logReturns)", maxlag=30)
+
+# Modell
+y.garch_11 <- garchFit(~garch(1,1), data=g.adj.lr, delta=2, include.delta=F, 
+                       include.mean=F, trace=F); summary(y.garch_11)
+
+# Summe der Parameter
+y.garch_11@fit$coef["alpha1"] + y.garch_11@fit$coef["beta1"]
+
+
+# Stand. Residuals
+eps <- y.garch_11@residuals
+eps
+# u's
+u <- eps/y.garch_11@sigma.t
+
+par(mfrow=c(2,1))
+ts.plot(eps, main="epsilon"); abline(h=0)
+ts.plot(u, main="u"); abline(h=0)
+
+# ACF u and eps
+par(mfrow=c(2,2))
+chart.ACF(eps, main="eps")
+chart.ACF(eps^2, main="eps^2")
+chart.ACF(u, main="u")
+chart.ACF(u^2, main="u^2")
+
+# eps zeigen die Cluster, Abhängigkeitstrukturen
+# us eigen white noise
