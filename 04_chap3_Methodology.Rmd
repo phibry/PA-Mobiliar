@@ -79,7 +79,4 @@ chart.Bar(ret,main="returns daily")
 chart.CumReturns(ret, main="Naive Rule: Cum Returns")
 chart.Drawdown(ret,main="Naive Rule: Percentage Drawdown")
 charts.PerformanceSummary(ret, main="Naive Buy Rule")
-
-
-
 ```

@@ -194,8 +194,45 @@ The ARCH-process can be generalized by adding the lagged conditional variances t
   \sigma_{t}^{2} &=c \sigma^{2}+\sum_{j=1}^{n}\alpha_{j}\sigma_{t-j}^{2}+\sum_{k=1}^{m}\beta_{k}\epsilon_{t-k}^{2} \nonumber
 \end{align}
 
-```{r chap2.2.2, echo=FALSE, fig.cap="GARCH-Forecast", fig.keep = 'last'}
+```{r chap2.2.2, echo=FALSE, fig.cap="Ljung-Box statistic of the standardized residuals.", fig.keep = 'last'}
+ljungplotGarch <- function(resid, sig) {
+  p1 <- rep(NA, 20)
+  p2 <- rep(NA, 20)
+  for (i in 1:20) {
+    p1[i] <- Box.test(resid/sig, lag = i, type = c("Ljung-Box"), fitdf = 0)$p.value
+    p2[i] <- Box.test(resid/sig^2, lag = i, type = c("Ljung-Box"), fitdf = 0)$p.value
+  }
+  
+  par(mfrow=c(1,2))
+  plot(x=1:20, y=p1, main=expression(paste("Ljung-Box statistic: ", R)),
+       xlab = "lag", ylab = "p value", axes = FALSE,
+       ylim=c(0,1))
+  box(col="gray")
+  axis(2, col="gray", cex.axis=0.8)
+  axis(1, col="gray", cex.axis=0.8)
+  abline(h=0.05, lty=2, col="blue")
+  points(x=10, y=p1[10], pch=16, col="red")
+  points(x=15, y=p1[15], pch=16, col="red")
+  points(x=20, y=p1[20], pch=16, col="red")
+  
+  plot(x=1:20, y=p2, main=expression(paste("Ljung-Box statistic: ", R^2)),
+       xlab = "lag", ylab = "p value", axes = FALSE,
+       ylim=c(0,1))
+  box(col="gray")
+  axis(2, col="gray", cex.axis=0.8)
+  axis(1, col="gray", cex.axis=0.8)
+  abline(h=0.05, lty=2, col="blue")
+  points(x=10, y=p2[10], pch=16, col="red")
+  points(x=15, y=p2[15], pch=16, col="red")
+  points(x=20, y=p2[20], pch=16, col="red")
+}
+y.garch_11 <- garchFit(~garch(1,1), data=g.adj.lr, delta=2, include.delta=F, 
+                       include.mean=F, trace=F)
+ljungplotGarch(y.garch_11@residuals, y.garch_11@sigma.t)
+```
 
+```{r}
+y.garch_11@fit$coef["alpha1"] + y.garch_11@fit$coef["beta1"]
 ```
 
 #### 2.2.3. ARIMA-GARCH
