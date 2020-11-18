@@ -20,7 +20,9 @@ Plots of the timeseries, decomposition. Stationarity (refer to the theory sectio
 
 load("data/data_mobi") 
 n=20
+n1=20
 k=2
 chartSeries(data[,1],subset="2007-05::2009-01",theme=chartTheme("white"),name= "bollinger bands",type="")
-addBBands(n=n,sd=k,maType = "SMA", draw = 'bands', on = -1)
+#addSMA(n=n1,on=1,col = "blue")
+addBBands(n=n,sd=k,maType = "SMA", draw = 'bands', on = 0)
 ```
