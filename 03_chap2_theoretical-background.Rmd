@@ -368,7 +368,7 @@ addSMA(n=n2,on=1,col = "red")
 
 &nbsp;
  
-Sharpe ratio is a very powerful and widely used ratio to measure performance. It describes return per risk 
+Sharpe ratio is a very powerful and widely used ratio to measure performance. It describes return per risk.
 
 \begin{equation}
   \label{eq:Sharperatio}
@@ -381,7 +381,7 @@ Sharpe ratio is a very powerful and widely used ratio to measure performance. It
 
 ### 2.6. Carry
 
-carry trades are trading strategies where usually money is borrowed at a lower intrest rate than the investment is gioving in return.
+carry trades are trading strategies were usually money is borrowed at a lower interest rate, than the investment is giving in return.
 the risk of this strategy is based in the currency risk.
 
 
@@ -405,7 +405,7 @@ the variance from bollingers theory is calculated by:
   \mathrm{\sigma_{t}^2}=\frac{1}{N}\sum_{k=0}^{N-1}(x_{t-k} -MA_t)^2
 \end{equation}
 
-the calculated ${\sigma_t}$ could be problematic because its derived from the original series and increases with the level, its non stationary. Therefore an other method to calculate the standart deviation could be used. As done in  section [2.2.2.](#GARCH) the standart deviation could be pürovided by a GARCH wich means it would handel the volatility.
+the calculated ${\sigma_t}$ could be problematic because its derived from the original series and increases with the level, its non stationary. Therefore an other method to calculate the standart deviation could be used. As done in  section [2.2.2.](#GARCH) the standart deviation could be provided by a GARCH which means it would handle the volatility.
 
 
 - ${N}$ = usually the filterlength and the length considered for ${\sigma}$ the same
@@ -458,3 +458,10 @@ addMACD(fast=12,slow=26,signal=9,type="EMA")
       
 ```
 &nbsp;
+
+
+#### 3.1 Trading Signals
+
+Using signals to trade
+
+in Section 2 we've learned different indicators and models for timeseries. these Models and indicators are now used to trade the underlying asset. As an example we're taking the ma crossings, as mentioned [2.3.3.](#GARCH) the points where the two MAs cross are now used to create a signal. when the longer MA comes from below to the crosspoint we are going to sell the asset and if it approaches the point from above were going to sell. We apply a 1 to a vector at each crosspoint where we intend to buy and apply a -1 at the points we want to sell.
