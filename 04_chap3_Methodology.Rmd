@@ -17,24 +17,16 @@ Plots of the timeseries, decomposition. Stationarity (refer to the theory sectio
 ### 3.2.1 sma signals to trade 
 
 
-
-```{r chap3.2, echo=FALSE, fig.cap="conversion data"}
+```{r chap3.2 ma crossover, echo=FALSE, fig.cap="conversion data"}
 
 load("data/data_mobi") 
 n=20
-
+# lentgths
 n1=10
 n2 =50
 k=2
 
-
-
-mobidat= data[,4]
-head(mobidat)
-tail(mobidat)
-
-
-
+mobidat= data[,4] # chose the row and horizon
 start="2015-10-30"
 end="2020-04-30"
 
@@ -59,10 +51,6 @@ signal=reclass(signal,sma1)
 
 
 chartSeries(mobidat,subset=horizon,theme=chartTheme("white"),name= "sna",type="")
-
-#addSMA(n=n1,on=1,col = "blue")
-
-
 addSMA(n=n1,on=1,col = "blue")
 addSMA(n=n2,on=1,col = "red")
 addTA(signal,type="S",col="red")
@@ -80,3 +68,7 @@ chart.CumReturns(ret, main="Naive Rule: Cum Returns")
 chart.Drawdown(ret,main="Naive Rule: Percentage Drawdown")
 charts.PerformanceSummary(ret, main="Naive Buy Rule")
 ```
+
+
+
+
