@@ -1,23 +1,49 @@
+
+
+# function for generating bb
+# input price = series of a price can be xts
+# n = filterlength of MA ,note: in this function we use a SMA
+# sd = factor how bollinger bands should be scaled ussually = 2
+# return upper lower mavg and pcTB = 101% price is 1% over upper band, -1% price is exactly under lower band 1%
+
+
+myBBands <- function (price,n,sd){
+  mavg <- SMA(price,n)
+  sdev <- rep(0,n)
+  N <- nrow(price)
+  for (i in (n+1):N){
+    sdev[i]<- sd(price[(i-n+1):i])
+  }
+  sdev <- sqrt((n-1)/n)*sdev
+  up <- mavg + sd*sdev
+  dn <- mavg - sd*sdev
+  pctB <- (price - dn)/(up - dn)
+  output <- cbind(dn, mavg, up, pctB)
+  colnames(output) <- c("dn", "mavg", "up", 
+                        "pctB")
+  return(output)
+}
+
 # generating a signal for addta in bollinger bands
 # input bb = bollinger bands from Mybbfunction 
-# input AAPL = an xts times series 
+# input data = an xts times series 
 # needs libraries qauntmod and performance analytics
 
-generate_signal_bb<-function(bb,AAPL)
-{
+generate_signal_bb<-function(bb,data){
+  
   signal <-rep(0,length(bb$up)) # first date has no signal
   # Detect crossings of upper band  
-  signal[which(Cl(AAPL)>bb$up&lag(Cl(AAPL))<lag(bb$up))]<-1
+  signal[which(data>bb$up&lag(data)<lag(bb$up))]=1
   # Detect crossings of lower band  
-  signal[which(Cl(AAPL)<bb$dn&lag(Cl(AAPL))>lag(bb$dn))]<--1
+  signal[which(data<bb$dn&lag(data)>lag(bb$dn))]=-1
   # The problem is: we might observe several upper crossings before the next lower crossing occurs
   # A buy signal goes from the smallest upper crossing (greater than lower crossing) to the smallest lower crossing (greater than this upper crossing): see example below
   new_sig<-signal
   # Specify trading signal
-  up_cross<-which(Cl(AAPL)>bb$up&lag(Cl(AAPL))<lag(bb$up)) 
-  down_cross<-which(Cl(AAPL)<bb$dn&lag(Cl(AAPL))>lag(bb$dn))
-  end_sig<-min(up_cross,down_cross)
-  start_sig<-1
+  up_cross<-which(data>bb$up&lag(data)<lag(bb$up)) 
+  down_cross<-which(data<bb$dn&lag(data)>lag(bb$dn))
+  end_sig=min(up_cross,down_cross)
+  start_sig=1
   for (i in 1:max(length(up_cross),length(down_cross)))#i<-1
   {
     # Check end of sample (NA)    

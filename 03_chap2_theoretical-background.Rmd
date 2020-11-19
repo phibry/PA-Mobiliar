@@ -455,7 +455,6 @@ $_1$ short and long in the meaning s<l, not buy sell
 ```{r,chap2.9, echo=FALSE, warning=FALSE, message=FALSE, fig.keep = 'last'}
 chartSeries(Cl(GOOGL),subset="2007-05::2009-01",theme=chartTheme("white"),name= "MACD EMA GOOGL Closing")
 addMACD(fast=12,slow=26,signal=9,type="EMA")
-      
 ```
 &nbsp;
 
