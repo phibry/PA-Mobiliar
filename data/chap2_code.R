@@ -125,7 +125,7 @@ plot(cumsum(g.adj.lr))
 
 library(forecast)
 library(PerformanceAnalytics)
-x <- g.adj
+x <- g.adj["2010-01-01/"]
 h <- 1
 
 # For Visualization
@@ -163,6 +163,7 @@ plot(x=1:10, y=testerino, main="Ljung-Box statistic",
 ?type
 # perform a forecast
 fore <- forecast(fit, h=h)
+fit
 
 # Create xts-Object for the forecast
 fcast <- data.frame("LowerBand" = fore$lower[,2],
@@ -210,8 +211,33 @@ chart.ACF(abs(g.adj.lr), main="abs(logReturns)", maxlag=30)
 # Modell
 library(fGarch)
 library(PerformanceAnalytics)
-y.garch_11 <- garchFit(~garch(1,1), data=g.adj.lr, delta=2, include.delta=F, 
-                       include.mean=F, trace=F); summary(y.garch_11)
+
+#g.subset.lr <- g.adj.lr["2010-01-01/"]
+g.subset.lr <- head(g.adj.lr, length(g.adj.lr)-100)
+
+y.garch_11 <- garchFit(~garch(1,1), data=g.subset.lr, delta=2, include.delta=F, 
+                       include.mean=F, trace=F)
+
+summary(y.garch_11)
+
+y.garch_11@title
+
+y.garch_11@fit$coef
+#omega       alpha1        beta1 
+#1.110707e-05 7.473398e-02 8.936598e-01 
+
+(y.garch_11@fit$matcoef)
+y.garch_11@fit$matcoef[,1]
+
+estimate <- round(y.garch_11@fit$matcoef[,1], 6)
+stderror <- round(y.garch_11@fit$matcoef[,2], 6)
+(pvalue <- round(y.garch_11@fit$matcoef[,4], 16))
+
+paras <- data.frame(estimate, stderror, pvalue)
+colnames(paras) <- c("Estimate", "Std. Error", "p-Value")
+rownames(paras) <- c("$\\omega$", "$\\alpha_{1}$", "$\\beta_{1}$")
+
+
 y.garch_11@residuals
 par(mfrow=c(2,1))
 ljungplot(y.garch_11@residuals/y.garch_11@sigma.t, lag=20)
@@ -280,3 +306,85 @@ chart.ACF(u^2, main="u^2")
 
 # eps zeigen die Cluster, Abhängigkeitstrukturen
 # us eigen white noise
+
+
+
+# vola####
+var(g.adj.lr)
+var(y.garch_11@residuals)
+
+# Ist besser wenn die Parameterrestriktionen erfüllt sind
+# Schätzer für die unbedingte Varianz wenn die Parameterrestriktionen erfüllt sind
+omega <- y.garch_11@fit$coef["omega"]
+names(omega) <- NULL
+
+alpha1 <- y.garch_11@fit$coef["alpha1"]
+names(alpha1) <- NULL
+
+beta1 <- y.garch_11@fit$coef["beta1"]
+names(beta1) <- NULL
+
+sig <- sqrt(y.garch_11@fit$coef["omega"]/(1-y.garch_11@fit$coef["alpha1"]-y.garch_11@fit$coef["beta1"]))
+
+c <- omega/sig^2
+c
+1-alpha1-beta1
+
+restr <- c + alpha1 + beta1
+restr
+
+sig
+# GARCH-Forecast####
+h <- 20
+y.garch_11.pred <- predict(y.garch_11, n.ahead=h)
+
+
+
+fcast_grach <- data.frame("MeanForecast" = y.garch_11.pred[,1],
+                          "MeanError" = y.garch_11.pred[,2],
+                          "Std.Deviation" = y.garch_11.pred[,3])
+rownames(fcast_grach) <- index(tail(g.adj.lr["2010-01-01/"], h))
+fcast_grach <- as.xts(fcast_grach)
+index(fcast_grach) <- index(tail(g.adj.lr["2010-01-01/"], h))
+
+
+tail(g.adj.lr["2010-01-01/"], h)
+
+par(mfrow=c(1,1))
+plot(g.adj.lr["2020-01-01/"], main="GARCH(1,1)")
+lines(tail(g.adj.lr["2020-01-01/"], h), col="green", lwd=1.5)
+lines(fcast_grach[,1], col="blue", lwd=1.5)
+lines(fcast_grach[,1] + 1.96 * fcast_grach[,3], col="red", lwd=1.5)
+lines(fcast_grach[,1] - 1.96 * fcast_grach[,3], col="red", lwd=1.5)
+
+
+
+tail(g.adj.lr["2020-01-01/"])
+tail(fcast_grach[,1])
+
+
+# Create a list of Dates, longer than forecast horizon (We snip weekends later)
+future <- seq(as.Date(tail(index(g.adj.lr),1)+1), length=h*2, by="days")
+
+#we <- sapply(future, function(d) {as.POSIXlt(d)$wday}) %in% c(0,6)
+
+# Snip weekends
+future <- future[! sapply(future, function(d) {as.POSIXlt(d)$wday}) %in% c(0,6)]
+
+# Length of the forecast horizon
+future <- head(future, h)
+
+# Create an xts object with the prediction
+fcast_grach <- data.frame("MeanForecast" = y.garch_11.pred[,1],
+                          "MeanError" = y.garch_11.pred[,2],
+                          "Std.Deviation" = y.garch_11.pred[,3])
+rownames(fcast_grach) <- future
+fcast_grach <- as.xts(fcast_grach)
+
+# Create a fake series for the forecast
+fakeNA <- xts(rep(NA, h), index(fcast_grach))
+
+plot(rbind(g.adj.lr["2018-01-01/"], as.matrix(fakeNA)), main="GARCH(1,1)")
+lines(fcast_grach[,1], col="blue")
+lines(fcast_grach[,1] + 1.96 * fcast_grach[,3], col="red")
+lines(fcast_grach[,1] - 1.96 * fcast_grach[,3], col="red")
