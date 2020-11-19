@@ -257,14 +257,18 @@ Is called the variance-equation \ref{eq:arima-garch2}
 
 ### 2.3. Moving Average Filters
 
-moving average filters are basically used to identify trends and smooth out price fluctuations. As a commonly used tool moving average filters are very simple in its usage, historical data was summarized and divided bi the length of the filter. The actual challenge in using Moving average filters is to figure out which length of the filter brings the most useful information. 
+moving average filters are basically used to identify trends and smooth out price fluctuations. As a commonly used tool moving average filters are very simple in its usage, historical data was summarized and divided bi the length of the filter. 
+Many differnt indicators are built on the Moving average principle, mostly theyre used in combinations of different lengths to create new indicators. in the following section we introduce some of the popular indicators based on the MA principle.
+
+The actual challenge in using Moving average filters is to figure out which length of the filter brings the most useful information. 
 
 
-#### 2.3.1. Equally-weighted Moving Average
+#### 2.3.1. Equally-weighted Moving Average or SMA
 
 &nbsp;
 
 SMA stands for Simple Moving Average which. depending on the length of the filter(l) l obervations since the last noted observation will be considered. theyre getting summarized and divided by the filterlength equals the EqMA. For every timestep a new observation is considered and the last one eliminated.
+
 
 EqMA
 
@@ -274,6 +278,38 @@ EqMA
 \end{equation}
 
 - ${L}$ = filterlength
+- ${x}$ = original series price e.g.
+
+\newpage
+
+
+
+###  2.3.1.1 Momentum
+Momentum is an indicator wether a market is bullish or bearish, it measures the "speed" of the trend direction in the market.
+for a timespan $k$ the last price $p_k$, $k$ timesteps ago is subtractet from the last price. This is equivalent to applying and EqMA to the price differences. 
+
+
+Momentum
+
+\begin{equation}
+  \label{eq:momentum}
+  y_{t}=p_t - p_{t-K}
+\end{equation}
+
+- ${p_t}$ = prices of the series
+- ${K}$   = Lag
+
+
+```{r,chap2.3.1.1 , echo=FALSE,warning=FALSE, message=FALSE}
+#head(GOOGL)
+#googleclose=SMA( diff(Cl(GOOGL["2020-3::2020-4"])),10)
+#chartSeries(googleclose,theme=chartTheme("white"))
+
+chartSeries(diff(GOOGL[,4],lag =10),subset="2020-3::2020-4",theme=chartTheme("white"),name= "Momentum")
+
+```
+
+
 
 #### 2.3.2. Exponentially-weighted Moving Average
 
@@ -350,7 +386,7 @@ the risk of this strategy is based in the currency risk.
 
 
 ### 2.7. Value
-
+\newpage
 ### 2.8  Bollinger bands
 
 &nbsp;
@@ -369,10 +405,10 @@ the variance from bollingers theory is calculated by:
   \mathrm{\sigma_{t}^2}=\frac{1}{N}\sum_{k=0}^{N-1}(x_{t-k} -MA_t)^2
 \end{equation}
 
-the calculated ${\sigma_t}$ could be problematic because its derived from the original series and increases with the level. Therefore an other method to calculate the standart deviation could be used.
+the calculated ${\sigma_t}$ could be problematic because its derived from the original series and increases with the level, its non stationary. Therefore an other method to calculate the standart deviation could be used. As done in  section [2.2.2.](#GARCH) the standart deviation could be pürovided by a GARCH wich means it would handel the volatility.
 
 
-- ${N}$ = usually the filterlength and the lentgh considered for ${\sigma}$ the same
+- ${N}$ = usually the filterlength and the length considered for ${\sigma}$ the same
 - ${K}$ = Constant usually equals 2
 - $\sigma_p$ = standard deviation of the series
 - ${U_t}$ = upper band
@@ -388,4 +424,37 @@ addBBands(n=n,sd=k,maType = "SMA", draw = 'bands', on = -1)
       
 ```
 
+\newpage
+### 2.9 MACD
 
+The Macd is also a commonly used filter. The basic principle is to Subtract a longer EMA with length $L$ as in section   [2.3.3](#EMA) from a shorter EMA from length $S$  then smooth the result with another EMA with length $R$. As a result with can use the crossing of the 2 generated curves for trading. As an alternative we could use SMA's instead of EMA's
+
+\begin{equation}
+  \label{eq:MACD}
+  \mathrm macd_t =\frac{1}{\sum_{k=0}^{t-1}\alpha^{k}} \sum_{k=0}^{t-1}\alpha^{k}x-{t-k}-\frac{1}{\sum_{k=0}^{t-1}\beta^{k}}\sum_{k=0}^{t-1}\beta^{k}x-{t-k}
+\end{equation}
+
+
+\begin{equation}
+  \label{eq:signal MACD}
+\mathrm  MACD signal_t=   \frac{1}{\sum_{k=0}^{t-1}\gamma^{k}}\sum_{k=0}^{t-1}\gamma^{k}x-{t-k}
+\end{equation}
+
+
+
+- $x_t$ = prices or log prices
+- $S$   = length of the $short_1$ EMA           usually 12
+- $L$   = length of the $long_1$  EMA           usually 26
+- $R$   = length of the "double smoothing ema"  usually 9
+- $\alpha$ = $1-\frac{1}{S}$
+- $\beta$  = $1-\frac{1}{L}$
+- $\gamma$ = $1-\frac{1}{R}$
+
+$_1$ short and long in the meaning s<l, not buy sell
+
+```{r,chap2.9, echo=FALSE, warning=FALSE, message=FALSE, fig.keep = 'last'}
+chartSeries(Cl(GOOGL),subset="2007-05::2009-01",theme=chartTheme("white"),name= "MACD EMA GOOGL Closing")
+addMACD(fast=12,slow=26,signal=9,type="EMA")
+      
+```
+&nbsp;
