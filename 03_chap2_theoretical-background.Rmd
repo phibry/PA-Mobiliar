@@ -498,10 +498,10 @@ the variance from bollingers theory is calculated by:
   \mathrm{\sigma_{t}^2}=\frac{1}{N}\sum_{k=0}^{N-1}(x_{t-k} -MA_t)^2
 \end{equation}
 
-the calculated ${\sigma_t}$ could be problematic because its derived from the original series and increases with the level, its non stationary. Therefore an other method to calculate the standart deviation could be used. As done in  section [2.2.2.](#GARCH) the standart deviation could be provided by a GARCH which means it would handle the volatility.
+The calculated ${\sigma_t}$ could be problematic because its derived from the original series and increases with the level, its non stationary. Therefore an other method to calculate the standart deviation could be used. As done in  section [2.2.2.](#GARCH) \sigma could be provided by a GARCH, which would handle the volatility.
 
 
-- ${N}$ = usually the filterlength and the length considered for ${\sigma}$ the same
+- ${N}$ = usually the filterlength and the length considered for ${\sigma}$ are the same
 - ${K}$ = Constant usually equals 2
 - $\sigma_p$ = standard deviation of the series
 - ${U_t}$ = upper band
@@ -518,9 +518,9 @@ addBBands(n=n,sd=k,maType = "SMA", draw = 'bands', on = -1)
 ```
 
 \newpage
-### 2.9 MACD
+### 2.9 Moving Average Convergence Divergence
 
-The Macd is also a commonly used filter. The basic principle is to Subtract a longer EMA with length $L$ as in section   [2.3.3](#EMA) from a shorter EMA from length $S$  then smooth the result with another EMA with length $R$. As a result with can use the crossing of the 2 generated curves for trading. As an alternative we could use SMA's instead of EMA's
+The MACD is also a commonly used filter. The basic principle is to Subtract a longer EMA with length $L$ as in section   [2.3.3](#EMA) from a shorter EMA from length $S$  then smooth the result with another EMA with length $R$. As a result with can use the crossing of the 2 generated curves for trading. As an alternative we could use SMA's instead of EMA's
 
 \begin{equation}
   \label{eq:MACD}
@@ -556,4 +556,4 @@ addMACD(fast=12,slow=26,signal=9,type="EMA")
 
 Using signals to trade
 
-in Section 2 we've learned different indicators and models for timeseries. these Models and indicators are now used to trade the underlying asset. As an example we're taking the ma crossings, as mentioned [2.3.3.](#GARCH) the points where the two MAs cross are now used to create a signal. when the longer MA comes from below to the crosspoint we are going to sell the asset and if it approaches the point from above were going to sell. We apply a 1 to a vector at each crosspoint where we intend to buy and apply a -1 at the points we want to sell.
+in Section 2 we've learned different indicators and models for timeseries. these models and indicators are now used to trade the underlying asset. As an example we're taking the ma crossings, as mentioned [2.3.3.](#GARCH) the points where the two MAs cross, are now used to create a trading signal. when the longer MA comes from below to the crossing we are going long the asset and if it approaches the point from above we're shorting the position. Technically We apply a 1 to a vector at each crossing, where we intend to buy and apply a -1 at the points we want to sell. 
