@@ -483,9 +483,7 @@ for (i in 1:ncol(ind)) {
   mtext(paste("Index ", i), side=3, line=-i,col=i+1)
 }
 
-par(bg="lightgray")
-plot(rnorm(100))
-
+apply(ind, MARGIN = 2, FUN = sd)
 
 # Index               Index 1         Index 2         
 # Min.   :2003-10-30   Min.   :606.3   Min.   : 683.7  
@@ -531,12 +529,17 @@ plot(ind.lr[,4], main=paste("Index", 4))
 # All LogReturns show the same pattern. In 2008 we can see high volatility
 # cluster due to the global recession.
 
-ind1 <- ind.lr[,1]
-ind2 <- ind.lr[,2]
-ind3 <- ind.lr[,3]
-ind4 <- ind.lr[,4]
+ind.lr.1 <- ind.lr[,1]
+ind.lr.2 <- ind.lr[,2]
+ind.lr.3 <- ind.lr[,3]
+ind.lr.4 <- ind.lr[,4]
 
-startdate <- "2014-01-01"
+ind.1 <- ind[,1]
+ind.2 <- ind[,2]
+ind.3 <- ind[,3]
+ind.4 <- ind[,4]
+
+startdate <- "2010-01-01"
 insample <- "2017-01-01"
 
 ind.all <- ind[paste(startdate,"/",sep="")]
@@ -569,108 +572,5 @@ head(ind1.in)
 # out-of sample
 ind1.out <- ind1.all[paste(insample,"/",sep="")]
 
-#.####
-# 1.2. ARMA-GARCH####
-# 1.2.1. Index 1####
-library(fGarch)
-par(mfrow=c(2,1))
-plot(ind.in[,1])
-plot(ind.lr.in[,1])
-# Trend vorhanden, auch wenn nur von 750-790
-# Volacluster vorhanden
-# Probleme mit dem Index 1 -> neue Zeitperiode
-
-ind1.garch_11 <- garchFit(~garch(1,1), data=ind.lr.in[,1], delta=2,
-                          include.delta=F, include.mean=T, trace=F)
-
-summary(ind1.garch_11)
-# Mu nicht signifkant ->include.mean=F, knapp mit den R -> ARMA-Teil
-
-ind1.garch_11 <- garchFit(~garch(1,1), data=ind.lr.in[,1], delta=2,
-                          include.delta=F, include.mean=F)
-
-summary(ind1.garch_11)
-# Ljung-Box zu den R's -> ARMA-Teil
-# Knapp über dem 0.05-Niveau, könnte zu Problemen führen
-
-sum(ind1.garch_11@fit$coef["alpha1"], ind1.garch_11@fit$coef["beta1"])
-
-# ARMA-Teil hinzufügen
-ind1.garch_11_ar <- garchFit(~arma(1,0) + garch(1,1), data=ind.lr.in[,1], delta=2,
-                             include.delta=F, include.mean=F)
-
-summary(ind1.garch_11_ar)
-
-# 1.2.2. Index 2####
-plot(ind.in[,2])
-plot(ind.lr.in[,2])
-ind2.garch_11 <- garchFit(~garch(1,1), data=ind.lr.in[,2], delta=2,
-                          include.delta=F, include.mean=T)
-
-summary(ind2.garch_11)
-# mu nicht signifkant: ->include.mean=F
-# Probleme mit dem ARMA-Teil
-
-ind2.garch_11 <- garchFit(~arma(3,0)+garch(1,1), data=ind.lr.in[,2], delta=2,
-                          include.delta=F, include.mean=F)
-
-summary(ind2.garch_11)
-
-
-sum(ind2.garch_11@fit$coef["alpha1"], ind2.garch_11@fit$coef["beta1"])
-
-
-# 1.2.3. Index 3####
-plot(ind.in[,3])
-plot(ind.lr.in[,3])
-ind3.garch_11 <- garchFit(~garch(1,1), data=ind.lr.in[,3], delta=2,
-                          include.delta=F, include.mean=T)
-
-summary(ind3.garch_11)
-# Alle Parameter sind auf dem 5%-Niveau signifkant
-
-# Paramterrestriktion: kleiner als 1
-sum(ind3.garch_11@fit$coef["alpha1"], ind3.garch_11@fit$coef["beta1"])
-
-# Normalverteilung:
-# Jarque-Beta und Shapiro < 0.05 -> gut
-
-# ARMA-Teil:
-# Ljung-Box für R's sind alle > 0.05 -> gut
-
-# GARCH-Teil:
-# Ljung-Box für R^2's. evtl Probleme beim R^2 Q(20)
-
-
-# 1.2.4. Index 4####
-plot(ind.in[,4])
-plot(ind.lr.in[,4])
-# Volacluster wirken fast schon wie Rauschen
-ind4.garch_11 <- garchFit(~garch(1,1), data=ind.lr.in[,4], delta=2,
-                          include.delta=F, include.mean=T)
-
-summary(ind4.garch_11)
-# Alle Parameter sind auf dem 5%-Niveau signifkant
-
-# Paramterrestriktion: kleiner als 1
-sum(ind4.garch_11@fit$coef["alpha1"], ind4.garch_11@fit$coef["beta1"])
-
-# Normalverteilung
-# Jarque-Beta und Shapiro < 0.05 -> gut
-
-# ARMA-Teil:
-# Ljung-Box für R's sind alle > 0.05 -> gut
-
-# GARCH-Teil:
-# Ljung-Box für R^2's sind alle > 0.05 -> gut
-
-
-
-library(quantmod)
-SMI <- getSymbols("GOOGL", auto.assign=F)
-plot(SMI[,6])
-par(mfrow=c(1,2))
-acf(SMI[,6])
-pacf(SMI[,6])
 
 

@@ -5,16 +5,18 @@ output: pdf_document
 ## 3. Methodology
 
 In this section models were created trying to outperform the buy and hold strategy.
-starting with the usage of the simplest models , diffrent aproaches were chosen to fullfill the goal.
+starting with the usage of the simplest models , different approaches were chosen to fulfill the goal.
 
+### 3.1. Trading Signals
 
+&nbsp;
 
-### 3.1. Time-Series Analysis {#ts-analysis}
+Using signals to trade
 
-Plots of the timeseries, decomposition. Stationarity (refer to the theory section)
+in Section 2 we have learned different indicators and models for timeseries. these models and indicators are now used to trade the underlying asset. As an example we are taking the MA Crossings, as mentioned [2.3.3.](#GARCH) the points where the two MAs cross, are now used to create a trading signal. when the longer MA comes from below to the crossing we are going long the asset and if it approaches the point from above we're shorting the position. Technically we apply a 1 to a vector at each crossing, where we intend to buy and apply a -1 at the points we want to sell. 
 
-### 3.2 using simple methods
-### 3.2.1 sma signals to trade 
+### 3.2. using simple methods
+#### 3.2.1. sma signals to trade 
 
 
 ```{r chap3.2 ma crossover, echo=FALSE, fig.cap="conversion data"}

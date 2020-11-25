@@ -298,8 +298,6 @@ This model contains now 4 different model orders: *p*,*q*,*n* and *m*. Experienc
 
 The equation \ref{eq:arma-garch1} is called the *mean-equation* and describes the conditional mean of the process, which is used to obtain optimal point forecast. The equation \ref{eq:arma-garch2} defines the variance of the process and is called *variance-equation*, which is used for the forecast error variance [@eco2].
 
-#### 2.2.4. M-GARCH
-
 \newpage
 
 ### 2.3. Moving Average Filters
@@ -410,7 +408,11 @@ addSMA(n=n2,on=1,col = "red")
 
 \newpage
 
-### 2.4. Real Strength Index
+### 2.4. Relative Strength Index
+
+&nbsp;
+
+Work in Progress [@slide_trading_indicators_univariate].
 
 ### 2.5. Sharpe Ratio
 
@@ -435,7 +437,7 @@ the risk of this strategy is based in the currency risk.
 
 ### 2.7. Value
 \newpage
-### 2.8  Bollinger bands
+### 2.8.  Bollinger bands
 
 &nbsp;
 
@@ -475,6 +477,8 @@ addBBands(n=n,sd=k,maType = "SMA", draw = 'bands', on = -1)
 \newpage
 ### 2.9 Moving Average Convergence Divergence
 
+&nbsp;
+
 The MACD is also a commonly used filter. The basic principle is to Subtract a longer EMA with length $L$ as in section   [2.3.3](#EMA) from a shorter EMA from length $S$  then smooth the result with another EMA with length $R$. As a result with can use the crossing of the 2 generated curves for trading. As an alternative we could use SMA's instead of EMA's
 
 \begin{equation}
@@ -504,11 +508,3 @@ $_1$ short and long in the meaning s<l, not buy sell
 chartSeries(Cl(GOOGL),subset="2007-05::2009-01",theme=chartTheme("white"),name= "MACD EMA GOOGL Closing")
 addMACD(fast=12,slow=26,signal=9,type="EMA")
 ```
-&nbsp;
-
-
-#### 3.1 Trading Signals
-
-Using signals to trade
-
-in Section 2 we've learned different indicators and models for timeseries. these models and indicators are now used to trade the underlying asset. As an example we're taking the ma crossings, as mentioned [2.3.3.](#GARCH) the points where the two MAs cross, are now used to create a trading signal. when the longer MA comes from below to the crossing we are going long the asset and if it approaches the point from above we're shorting the position. Technically We apply a 1 to a vector at each crossing, where we intend to buy and apply a -1 at the points we want to sell. 

@@ -2,7 +2,7 @@
 output: 
   pdf_document:
     toc: no
-    toc_depth: 4
+    toc_depth: 5
 bibliography: add/doc.bib
 linkcolor: red
 csl: add/ieee.csl
