@@ -2,7 +2,7 @@
 output: 
   pdf_document:
     toc: no
-    toc_depth: 4
+    toc_depth: 5
 bibliography: add/doc.bib
 linkcolor: red
 csl: add/ieee.csl
@@ -22,8 +22,8 @@ source("add/functions_PA.R")
 \pagenumbering{gobble}
 
 ```{=tex}
-\includepdf{add/titelblatt.pdf}
-\includepdf{add/Erklaerung_BA.pdf}
+\includepdf{add/titlepage.pdf}
+\includepdf{add/declaration.pdf}
 ```
 \tableofcontents
 

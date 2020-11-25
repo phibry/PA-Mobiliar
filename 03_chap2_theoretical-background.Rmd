@@ -168,15 +168,15 @@ with
 
 - $x_{t}$ is the original data (often non-stationary)
 - $\epsilon_{t}$ is the stationary log-return
-- $u_{t}$ is independent and identically distributed (iid) and standardized random variable
+- $u_{t}$ is independent and identically distributed (iid) and a standardized random variable
 - $\sigma^{2}$ is the unconditional variance of the process $\epsilon_{t}$.
 - $\sigma_{t}^{2}$ is the conditional variance of the process $\epsilon_{t}$.
 
-With a GARCH(*n*,*m*)-process it is possible to model the volaclusters of a time series. The GARCH(*1*, *1*) model has become widely used in financial time series modelling and is implemented in most statistics and econometric software packages. Those models are favored over other stochastic volatility models by many economists due to their relatively simple implementation [@garch11].
+With a GARCH(*n*,*m*)-process it is possible to model the volaclusters of a time series. The GARCH(*1*,*1*) model has become widely used in financial time series modelling and is implemented in most statistics and econometric software packages. Those models are favored over other stochastic volatility models by many economists due to their relatively simple implementation [@garch11].
 
 \newpage
 
-For an optimal model some conditions must be fulfilled. Suppose you want to model the Google time series with a GARCH(1,1).
+For an optimal model some conditions must be fulfilled. Suppose you want to model the Google time series with a GARCH(*1*,*1*).
 
 In table \ref{tab:coeftable} the estimated coefficients of the process can be seen. The p-values are all lower than 0.05 and thus indicate that they are essential for the model. (Note: $\omega=c\sigma^{2}$)
 
@@ -215,7 +215,7 @@ $$c=\frac{\omega}{\sigma^{2}}$$
 
 and then check for the restriction in \ref{eq:para_restriction}.
 
-For the coefficients of GARCH(1,1) the restrictions are fulfilled. You can see that $c = 1-\alpha_{1}-\beta_{1}$. So this restriction can be determined easily with:
+For the coefficients of GARCH(*1*,*1*) the restrictions are fulfilled. You can see that $c = 1-\alpha_{1}-\beta_{1}$. So this restriction can be determined easily with:
 
 \begin{equation} \label{eq:para_moments_easy}
   \sum_{j=1}^{n}\alpha_{j}+\sum_{k=1}^{m}\beta_{k} < 1
@@ -231,13 +231,13 @@ Furthermore, the Ljung-Box statistics are important for the standardized residua
 ljungplotGarch(y.garch_11@residuals, y.garch_11@sigma.t)
 ```
 
-The plot shows reliable statistics for forecasts from the Google-GARCH(1,1) model. For all lags up to 20, the p-values are above the 5% line and thus hypothesis tests are discarded. However, if for a given lag=k the p-values would fall below the 5% line, then forecasts would only be reliable up to a forecast horizon k.
+The plot shows reliable statistics for forecasts from the Google-GARCH(*1*,*1*) model. For all lags up to 20, the p-values are above the 5% line and thus hypothesis tests are discarded. However, if for a given lag=k the p-values would fall below the 5% line, then forecasts would only be reliable up to a forecast horizon k.
 
 If one wants to improve the the standardized residuals $\hat{u}_{t}$ (if autocorrelations exists in the $\hat{u}_{t}$), an ARMA part would have to be added to the existing model (see [2.2.3](#arma-garch-section)). This can again be optimized with different model orders. If you want to improve the squared standardized residuals $\hat{u}^{2}_{t}$ (if volaclustering exists within the $\hat{u}^{2}_{t}$), then you should modify the GARCH model order.
 
-Now an optimal model has been found and a forecast can be made. Since a GARCH(n,m) process is white noise sequence the expected value $E[\epsilon_{T+h} | \epsilon_{T},...,\epsilon_{1}]=\mu=0$ can be assumed (if the mean value in the fit object was also estimated and is significant, then the expected value is the estimated $\mu$).
+Now an optimal model has been found and a forecast can be made. Since a GARCH(*n*,*m*) process is white noise sequence the expected value $E[\epsilon_{T+h} | \epsilon_{T},...,\epsilon_{1}]=\mu=0$ can be assumed (if the mean value in the fit object was also estimated and is significant, then the expected value is the estimated $\mu$).
 
-Calculating the forecast variance is a recursive process. With increasing model order the calculation becomes more and more difficult. For this work the rather simple calculation for a GARCH(1,1) model is sufficient. One receives:
+Calculating the forecast variance is a recursive process. With increasing model order the calculation becomes more and more difficult. For this work the rather simple calculation for a GARCH(*1*,*1*) model is sufficient. One receives:
 
 $$\hat{\sigma}_{T+h}^{2}=\omega+(\alpha_{1}+\beta_{1})^{2}\hat{\sigma}_{T+h-1}^{2}$$
 
@@ -251,7 +251,7 @@ The 95% forecast interval is calculated as follows:
 
 $$E[\epsilon_{T+h} | \epsilon_{T},...,\epsilon_{1}]\pm 1.96\sqrt{\hat{\sigma}_{T+h}^{2}}$$
 
-Figure \ref{fig:chap2.2.3} shows the GARCH(1,1) forecast for 20 days. The blue line represents the expected value of the time series. Reds are the two 95%-interval limits and green shows the actual values of the series.
+Figure \ref{fig:chap2.2.3} shows the GARCH(*1*,*1*) forecast for 20 days. The blue line represents the expected value of the time series. Reds are the two 95%-interval limits and green shows the actual values of the series.
 
 ```{r chap2.2.3, echo=FALSE, fig.cap="GARCH-Forecast.", fig.keep = 'last'}
 sig <- sqrt(y.garch_11@fit$coef["omega"]/(1-y.garch_11@fit$coef["alpha1"]-y.garch_11@fit$coef["beta1"]))
@@ -297,8 +297,6 @@ y_{t}&=&\mu + a_{1}y_{t-1}+...+a_{p}y_{t-p}+\epsilon_{t}+b_{1}\epsilon_{t-1}+...
 This model contains now 4 different model orders: *p*,*q*,*n* and *m*. Experience shows that for financial time series, a model order of *n*=*m*=$1$ and *p*,*q*$\leq 1$ is often sufficient to fit the data to an ARMA-GARCH model.
 
 The equation \ref{eq:arma-garch1} is called the *mean-equation* and describes the conditional mean of the process, which is used to obtain optimal point forecast. The equation \ref{eq:arma-garch2} defines the variance of the process and is called *variance-equation*, which is used for the forecast error variance [@eco2].
-
-#### 2.2.4. M-GARCH
 
 \newpage
 
@@ -410,7 +408,11 @@ addSMA(n=n2,on=1,col = "red")
 
 \newpage
 
-### 2.4. Real Strength Index
+### 2.4. Relative Strength Index
+
+&nbsp;
+
+Work in Progress [@slide_trading_indicators_univariate].
 
 ### 2.5. Sharpe Ratio
 
@@ -435,7 +437,7 @@ the risk of this strategy is based in the currency risk.
 
 ### 2.7. Value
 \newpage
-### 2.8  Bollinger bands
+### 2.8.  Bollinger bands
 
 &nbsp;
 
@@ -475,6 +477,8 @@ addBBands(n=n,sd=k,maType = "SMA", draw = 'bands', on = -1)
 \newpage
 ### 2.9 Moving Average Convergence Divergence
 
+&nbsp;
+
 The MACD is also a commonly used filter. The basic principle is to Subtract a longer EMA with length $L$ as in section   [2.3.3](#EMA) from a shorter EMA from length $S$  then smooth the result with another EMA with length $R$. As a result with can use the crossing of the 2 generated curves for trading. As an alternative we could use SMA's instead of EMA's
 
 \begin{equation}
@@ -504,11 +508,3 @@ $_1$ short and long in the meaning s<l, not buy sell
 chartSeries(Cl(GOOGL),subset="2007-05::2009-01",theme=chartTheme("white"),name= "MACD EMA GOOGL Closing")
 addMACD(fast=12,slow=26,signal=9,type="EMA")
 ```
-&nbsp;
-
-
-#### 3.1 Trading Signals
-
-Using signals to trade
-
-in Section 2 we've learned different indicators and models for timeseries. these models and indicators are now used to trade the underlying asset. As an example we're taking the ma crossings, as mentioned [2.3.3.](#GARCH) the points where the two MAs cross, are now used to create a trading signal. when the longer MA comes from below to the crossing we are going long the asset and if it approaches the point from above we're shorting the position. Technically We apply a 1 to a vector at each crossing, where we intend to buy and apply a -1 at the points we want to sell. 
