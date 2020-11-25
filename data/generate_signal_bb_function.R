@@ -29,6 +29,7 @@ myBBands <- function (price,n,sd){
 # input data = an xts times series 
 # needs libraries qauntmod and performance analytics
 
+
 generate_signal_bb<-function(bb,data){
   
   signal <-rep(0,length(bb$up)) # first date has no signal

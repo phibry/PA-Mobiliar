@@ -18,7 +18,7 @@ The main purpose of trading is buying and selling stocks, bonds, or other financ
 
 This paper applies time-series analysis to these short price movements to create active trading strategies. The objective of these developed strategies is to outperform the buy-and-hold strategy.
 
-### 1.1. The data used in this paper
+### 1.1. Data Analysis
 
 The dataset which will be analyzed in this paper contains 4 tradeable indexes, a visualization of the data is shown below in figure \ref{fig:chap1.1}.
 
@@ -28,8 +28,11 @@ load("data/data_mobi")
 ind <- data[,1:4]
 int <- data[,5:12]
 
+log_ind <-    log(ind)      #logarithm of the series
+log_ret_ind<- diff(log_ind) #log returns of the series
+
 par(mfrow=c(1,1))
-plot(ind, main="Indexes 1-4", col=2:5, lwd=1,legend.loc="topleft")
+plot(ind, main="Indexes 1-4", col=2:5, lwd=1,legend.loc="topleft") #plotting original data
 
 # for (i in 1:ncol(ind)) {
 #  i
@@ -37,6 +40,33 @@ plot(ind, main="Indexes 1-4", col=2:5, lwd=1,legend.loc="topleft")
 ```
 
 Each time-series has `r nrow(ind)` observations and starts from October 2003 to April 2020. In all indexes is an upward drift observable, during the time period of the great recession (2008) is a slight bump visible. Also later in 2013 and 2016 are small break-ins evident. More interesting is the up and down behavior at the end of the series during the Covid19 pandemic.
+
+One could nearly tell just by looking at the indexes how strong they're correlated. The correlation matrix confirms the 
+assumption, the correlation is nearly 1 for every index.
+
+
+```{r chap1.1.2,  echo=FALSE,include=T,fig.align='center'}
+x<-as.data.frame(log_ind)
+
+c=as.data.frame(cor(x))
+
+kbl(c, caption="Correlations oft the four indexes", booktabs = T) %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
+```
+
+####1.1.1. transformation, volatility and clusters
+
+```{r chap1.1.1,  echo=FALSE, fig.cap="Visualization of the 4 indexes"}
+log_ind <-    log(ind)
+plot(log_ind,col=2:5, lwd=1,legend.loc="topleft")
+log_ret_ind<- diff(log_ind)
+
+
+# for (i in 1:ncol(ind)) {
+#  i
+#  mtext(paste("Index ", i), side=3, line=-i,col=i+1)}
+```
+
 
 \newpage
 
