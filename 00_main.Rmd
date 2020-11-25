@@ -22,8 +22,8 @@ source("add/functions_PA.R")
 \pagenumbering{gobble}
 
 ```{=tex}
-\includepdf{add/titelblatt.pdf}
-\includepdf{add/Erklaerung_BA.pdf}
+\includepdf{add/titlepage.pdf}
+\includepdf{add/declaration.pdf}
 ```
 \tableofcontents
 
