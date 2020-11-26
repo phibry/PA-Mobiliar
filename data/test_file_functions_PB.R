@@ -68,16 +68,12 @@ n= 20
 class(Cl(GOOGL))
 class(mobisub)
 
-bb <-BBands(mobisub,n=20, sd=2)
 bb= myBBands(mobisub,n,k)
-bb= myBBands(Cl(GOOGL),n,k)
 
-bb
 signal=generate_signal_bb(bb,mobisub)
+signal<-reclass(signal,bb$up)
+ 
 
-head(bb)
-
-class(signal)
 
 length(signal)
 
@@ -85,10 +81,52 @@ length(mobisub)
 
 chartSeries(mobisub,theme=chartTheme("white"),name= "bollinger",type="")
 addBBands(n=n,sd=k)
-addTA(signal)
+addTA(signal,type="S",col="red")
 
 
+trade <- Lag(signal[from_to],1)
+return <- diff(log(mobisub))
+ret<-(return)*trade
+names(ret)<-"filter"
 
+
+charts.PerformanceSummary(ret, main="Classic BB-rule")
+# macd####-------------------------------------------------------------------------------
+
+
+# analyzing data####-------------------------
+load("data/data_mobi")
+
+ind <- data[,1:4]
+int <- data[,5:12]
+
+par(mfrow=c(2,1))
+
+plot(ind, main="Indexes 1-4", col=2:5, lwd=1,legend.loc="topleft")
+plot(log_ind,main="LOG_Indexes 1-4",col=2:5, lwd=1,legend.loc="topleft")
+
+log_ind <-    log(ind)
+
+
+par(mfrow=c(4,1))
+log_ret_ind<- diff(log_ind)
+
+plot(log_ret_ind[,1],main="Log_returns index 1",col = 2)
+plot(log_ret_ind[,2],main="Log_returns index 2",col = 3)
+plot(log_ret_ind[,3],main="Log_returns index 3",col = 4)
+plot(log_ret_ind[,4],main="Log_returns index 4",col = 5)
+
+x<-as.data.frame(log_ind)
+
+pairs(x)
+cor(x)
+
+c=as.data.frame(cor(x))
+c
+start_date="2010-01-01"
+in_sample ="2010-01-01"
+  
+x<-log_ind[paste(start_date,"/",sep="")]
 
 
 

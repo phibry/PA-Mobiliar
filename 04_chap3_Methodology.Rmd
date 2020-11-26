@@ -2,20 +2,127 @@
 output: pdf_document
 ---
 
+
+
+```{r, echo=FALSE, fig.cap="Visualization of the 4 indexes",message=F,warning=F}
+
+
+#########################################attenzione !!!  this chunk is only to kniot this chapter can be deleted afterwards####
+load("data/data_mobi")
+source("add/libraries.R")
+
+ind <- data[,1:4]
+int <- data[,5:12]
+
+```
+
+
+
 ## 3. Methodology
 
-In this section models were created trying to outperform the buy and hold strategy.
-starting with the usage of the simplest models , different approaches were chosen to fulfill the goal.
+In this section models were created, trying to outperform the buy and hold strategy.
 
-### 3.1. Trading Signals
+starting by analyzing the data and using simple models, more complex models and combined tools are added step by step in different approaches.
+
+### 3.1. Data Analysis
+
+As mentioned in section [1.1](#ts-analysis) We are now going to analyze the data further to gain as much information as possible just by using some simple tools and comparisons.
+
+#### 3.1.1. correlation
+&nbsp;
+
+One could nearly tell just by looking at the indexes how strong they're correlated. The correlation matrix confirms the 
+assumption, the correlation is nearly 1 for every index to each other.
+
+
+
+
+```{r chap3.1.1. ,  echo=FALSE,include=T,fig.align='center'}
+log_ind <-    log(ind)      #logarithm of the series
+log_ret_ind<- diff(log_ind) #log returns of the series
+
+x<-as.data.frame(log_ind)
+c=as.data.frame(cor(x))  # showing corelations
+
+kbl(c, caption="Correlations oft the four indexes", booktabs = T) %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
+```
+
+
+#### 3.1.2. transformation, volatility and clusters
 
 &nbsp;
 
-Using signals to trade
+Applying the natural logarithm to the series is an approach to cancel out increasing volatility \ref{fig:chap3.1.2.}. 
+
+
+```{r,chap 3.1.2. ,include=T, echo = F,fig.dim=c(7,3.5),message=F, fig.cap="Visualization log_indizes"}
+plot(log_ind, main="Log_Indexes 1-4", col=2:5, lwd=1,legend.loc="topleft") #plotting log data
+
+```
+
+\newpage
+
+By taking the returns of the transformed series we can visualize volatility clusters as seen in figure \ref{fig:chap3.1.3.},
+clearly visible are the increasng volatiliy clusters in the finbanacial crisis, due the ghigh correaltion the indezes look pretty similir
+
+```{r,chap 3.1.3,include=T, echo = F,message=F,fig.dim=c(15,15), fig.cap="Visualization log returns"}
+par(mfrow=c(4,1))
+
+
+plot(log_ret_ind[,1],main="Log_returns index 1",col = 2)
+plot(log_ret_ind[,2],main="Log_returns index 2",col = 3)
+plot(log_ret_ind[,3],main="Log_returns index 3",col = 4)
+plot(log_ret_ind[,4],main="Log_returns index 4",col = 5)
+
+
+start_date="2015-08-01"
+in_sample ="2018-01-01"
+  
+x_ind<-log_ret_ind[paste(start_date,"/",sep="")]
+
+```
+```{r,chap 3.1.4,include=T, echo = F,message=F,fig.dim=c(15,15), fig.cap="Visualization log returns"}
+par(mfrow=c(4,2))
+
+start_date="2018-01-01"
+in_sample ="2018-01-01"
+
+x_ind<-log_ret_ind[paste(start_date,"/",sep="")]
+y_ind<-log_ind[paste(start_date,"/",sep="")]
+vola_y_ind=format(round(diag(as.matrix(var(y_ind))),5),scientific= T)
+    
+plot(x_ind[,1],main="Log_returns index 1",col = 2)
+plot(y_ind[,1],main=paste("Log index 1,","vola=",vola_y_ind[1],sep=" "),col = 2)
+plot(x_ind[,2],main="Log_returns index 2",col = 3)
+plot(y_ind[,2],main=paste("Log index 2,","vola=",vola_y_ind[2],sep=" "),col = 3)
+plot(x_ind[,3],main="Log_returns index 3",col = 4)
+plot(y_ind[,3],main=paste("Log index 3,","vola=",vola_y_ind[3],sep=" "),col = 4)
+plot(x_ind[,4],main="Log_returns index 4",col = 5)
+plot(y_ind[,4],main=paste("Log index 4,","vola=",vola_y_ind[4],sep=" "),col = 5)
+
+```
+
+#### 3.1.5 periodicity
+```{r,chap 3.1.5,include=T, echo = F,message=F,fig.dim=c(15,15), fig.cap="peridodogramm ",warning= F}
+source("add/periodogramm.R")
+per(x_ind[,1],T)
+
+charts.PerformanceSummary(x_ind[,1], main="Naive Buy Rule")
+
+```
+
+
+
+\newpage
+
+### 3.2. using simple methods
 
 in Section 2 we have learned different indicators and models for timeseries. these models and indicators are now used to trade the underlying asset. As an example we are taking the MA Crossings, as mentioned [2.3.3.](#GARCH) the points where the two MAs cross, are now used to create a trading signal. when the longer MA comes from below to the crossing we are going long the asset and if it approaches the point from above we're shorting the position. Technically we apply a 1 to a vector at each crossing, where we intend to buy and apply a -1 at the points we want to sell. 
 
-### 3.2. using simple methods
+
+
+
 #### 3.2.1. sma signals to trade 
 
 
@@ -64,6 +171,7 @@ ret = return*trade
 
 mean(ret,na.rm=T)
 names(ret)="filter"
+
 
 chart.Bar(ret,main="returns daily")
 chart.CumReturns(ret, main="Naive Rule: Cum Returns")
