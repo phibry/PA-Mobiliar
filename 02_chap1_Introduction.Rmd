@@ -9,9 +9,9 @@ The main purpose of trading is buying and selling stocks, bonds, or other financ
 
 This paper applies time-series analysis to these short price movements to create active trading strategies. The objective of these developed strategies is to outperform the buy-and-hold strategy.
 
-### 1.1. The data used in this paper
+### 1.1. Data Analysis
 
-The dataset which will be analyzed in this paper contains 4 tradeable indexes, a visualization of the data is shown below in figure \ref{fig:chap1.1}.
+The dataset which will be analyzed in this paper contains 4 tradeable indexes, a visualization of the data is shown below in figure \ref{fig:chap1.1.}.
 
 ```{r chap1.1, echo=FALSE, fig.cap="Visualization of the 4 indexes"}
 load("data/data_mobi")
@@ -20,14 +20,12 @@ ind <- data[,1:4]
 int <- data[,5:12]
 
 par(mfrow=c(1,1))
-plot(ind, main="Indexes 1-4", col=2:5, lwd=1,legend.loc="topleft")
+plot(ind, main="Indexes 1-4", col=2:5, lwd=1,legend.loc="topleft") #plotting original data
 
-# for (i in 1:ncol(ind)) {
-#  i
-#  mtext(paste("Index ", i), side=3, line=-i,col=i+1)}
 ```
 
 Each time-series has `r nrow(ind)` observations and starts from October 2003 to April 2020. In all indexes is an upward drift observable, during the time period of the great recession (2008) is a slight bump visible. Also later in 2013 and 2016 are small break-ins evident. More interesting is the up and down behavior at the end of the series during the Covid19 pandemic.
+
 
 \newpage
 
@@ -47,9 +45,12 @@ colnames(int.table) <- c("Maturity", "Mean", "Volatility", "Min.", "Max.")
 kbl(int.table, caption="Summary of the 8 interest rates.", booktabs = T) %>%
   kable_styling(latex_options = c("striped", "hold_position"))
 ```
+
+
 A typical characteristic of interest rates is shown in the given data. A bond with longer maturities is often associated with higher returns compared with those with shorter maturities. An investor which invests in short-term treasury bonds will have his gain earlier but will be confronted with a lower return.
 
 A more in depth analysis of the given dataset will follow in section [3.1](#ts-analysis).
+
 
 ### 1.2. Ojective of this paper
 
