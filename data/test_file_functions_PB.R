@@ -123,6 +123,11 @@ cor(x)
 
 c=as.data.frame(cor(x))
 c
+start_date="2010-01-01"
+in_sample ="2010-01-01"
+  
+x<-log_ind[paste(start_date,"/",sep="")]
+
 
 
 
