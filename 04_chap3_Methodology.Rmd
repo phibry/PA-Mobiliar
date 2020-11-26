@@ -103,7 +103,16 @@ plot(y_ind[,4],main=paste("Log index 4,","vola=",vola_y_ind[4],sep=" "),col = 5)
 
 ```
 
-#### 3.1.4 periodicity
+#### 3.1.5 periodicity
+```{r,chap 3.1.5,include=T, echo = F,message=F,fig.dim=c(15,15), fig.cap="peridodogramm ",warning= F}
+source("add/periodogramm.R")
+per(x_ind[,1],T)
+
+charts.PerformanceSummary(x_ind[,1], main="Naive Buy Rule")
+
+```
+
+
 
 \newpage
 
@@ -162,6 +171,7 @@ ret = return*trade
 
 mean(ret,na.rm=T)
 names(ret)="filter"
+
 
 chart.Bar(ret,main="returns daily")
 chart.CumReturns(ret, main="Naive Rule: Cum Returns")
