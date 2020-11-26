@@ -5,13 +5,58 @@ output: pdf_document
 ## 3. Methodology
 
 In this section models were created trying to outperform the buy and hold strategy.
-starting with the usage of the simplest models , diffrent aproaches were chosen to fullfill the goal.
-
+starting by analyzing the data and using simple models, more complex models and combined tools are added step by step in different approaches.
 
 
 ### 3.1. Time-Series Analysis {#ts-analysis}
 
-Plots of the timeseries, decomposition. Stationarity (refer to the theory section)
+As mentioned in section [1.1](#ts-analysis) We are now going to analyze the data further to gain as much information as possiple just by using som e simple tools and comparisons.
+
+#### 3.1.1. correlation
+
+One could nearly tell just by looking at the indexes how strong they're correlated. The correlation matrix confirms the 
+assumption, the correlation is nearly 1 for every index to each other.
+
+```{r chap3.1.1,  echo=FALSE,include=T,fig.align='center'}
+log_ind <-    log(ind)      #logarithm of the series
+log_ret_ind<- diff(log_ind) #log returns of the series
+
+x<-as.data.frame(log_ind)
+c=as.data.frame(cor(x))  # showing corelations
+
+kbl(c, caption="Correlations oft the four indexes", booktabs = T) %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
+```
+
+
+#### 3.1.2. transformation, volatility and clusters
+
+&nbsp;
+
+Applying the natural logarithm to the series is an approach to cancel out increasing volatility \ref{fig:chap3.1.3.}. 
+
+
+```{r,chap 3.1.1,include=T, echo = F,message=F,fig.dim=c(15,20), fig.cap="Visualization log returns"}
+plot(log_ind, main="Log_Indexes 1-4", col=2:5, lwd=1,legend.loc="topleft") #plotting log data
+
+```
+
+\newpage
+By taking the returns of the transformed series we can visualize volatility clusters as seen in figure \ref{fig:chap3.1.3.}
+```{r,chap 3.1.3,include=T, echo = F,message=F,fig.dim=c(15,20), fig.cap="Visualization log returns"}
+
+par(mfrow=c(4,1))
+plot(log_ret_ind[,1],main="Log_returns index 1",col = 2)
+plot(log_ret_ind[,2],main="Log_returns index 2",col = 3)
+plot(log_ret_ind[,3],main="Log_returns index 3",col = 4)
+plot(log_ret_ind[,4],main="Log_returns index 4",col = 5)
+
+```
+
+
+
+
+
 
 ### 3.2 using simple methods
 ### 3.2.1 sma signals to trade 

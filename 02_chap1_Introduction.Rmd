@@ -28,9 +28,6 @@ load("data/data_mobi")
 ind <- data[,1:4]
 int <- data[,5:12]
 
-log_ind <-    log(ind)      #logarithm of the series
-log_ret_ind<- diff(log_ind) #log returns of the series
-
 par(mfrow=c(1,1))
 plot(ind, main="Indexes 1-4", col=2:5, lwd=1,legend.loc="topleft") #plotting original data
 
