@@ -109,20 +109,7 @@ The application of an analysis method to Google prices finds an ARIMA(*1*,*1*,*0
 To convince yourself of the quality of the model, you can use the Ljung-Box statistics shown in figure \ref{fig:chap2.2.1_1}. For the lags where the p-values are above the 5% line, the forecasts are reliable. Here the values from the 6 lag are below the significant line, but since one only wants to make short-term forecasts (for example 1 day into the future), the lag is sufficient up to 5. If you want to forecast further than 5 days into the future, you might have to adjust the ARIMA model.
 
 ```{r chap2.2.1_1, echo=FALSE, fig.cap="Ljung-Box statistic of Google log returns.", fig.keep = 'last'}
-ljungplot <- function(x, lag=10) {
-  testerino <- rep(NA, lag)
-  for (i in 1:lag) {
-    testerino[i] <- Box.test(fit$residuals, lag = i, type = c("Ljung-Box"), fitdf = 0)$p.value
-  }
-
-  plot(x=1:lag, y=testerino, main="Ljung-Box statistic",
-       xlab = "lag", ylab = "p value", axes = FALSE)
-  box(col="gray")
-  axis(2, col="gray", cex.axis=0.8)
-  axis(1, col="gray", cex.axis=0.8)
-  abline(h=0.05, lty=2, col="blue")
-}
-x <- g.adj["2010-01-01/"]
+x <- na.exclude(g.adj["2010-01-01/"])
 
 # find best model
 fit <- auto.arima(x)
@@ -165,27 +152,11 @@ points(fcast[,3], col="blue", pch=16)
 points(out_sample, col="green", pch=16)
 ```
 
-#### 2.2.2. ARCH & GARCH {#arch-garch-section}
+#### 2.2.2. GARCH {#garch-section}
 
 &nbsp;
 
-The volatility clustering mentioned in section [2.1.1](#stationarity) can be handled with an auto-regressive conditional heteroscedastic process.
-
-\begin{align} \label{eq:arch}
-  \epsilon_{t} &= \mathrm{log}(x_{t})-\mathrm{log}(x_{t-1}) \nonumber \\
-  \epsilon_{t} &= \sigma_{t}u_{t} \\
-  \sigma_{t}^{2} &=c \sigma^{2}+\sum_{k=1}^{m}\beta_{k}\epsilon_{t-k}^{2} \nonumber
-\end{align}
-
-with
-
-- $x_{t}$ is the original data (often non-stationary)
-- $\epsilon_{t}$ is the stationary log-return
-- $u_{t}$ is independent and identically distributed (iid) and standardized random variable
-- $\sigma^{2}$ is the unconditional variance of the process $\epsilon_{t}$.
-- $\sigma_{t}^{2}$ is the conditional variance of the process $\epsilon_{t}$.
-
-The ARCH(*m*)-process can be generalized by adding the lagged conditional variances to the equation \ref{eq:arch}. One gets the GARCH(*n*,*m*)-process.
+The volatility clustering mentioned in section [2.1.1](#stationarity) can be handled with an generalized auto-regressive conditional heteroscedastic process.
 
 \begin{align} \label{eq:garch}
   \epsilon_{t} &= \mathrm{log}(x_{t})-\mathrm{log}(x_{t-1}) \nonumber \\
@@ -193,9 +164,19 @@ The ARCH(*m*)-process can be generalized by adding the lagged conditional varian
   \sigma_{t}^{2} &=c \sigma^{2}+\sum_{j=1}^{n}\alpha_{j}\sigma_{t-j}^{2}+\sum_{k=1}^{m}\beta_{k}\epsilon_{t-k}^{2} \nonumber
 \end{align}
 
-With a GARCH(*n*,*m*)-process it is possible to model the volaclusters of a time series. The GARCH(*1*, *1*) model has become widely used in financial time series modelling and is implemented in most statistics and econometric software packages. Those models are favored over other stochastic volatility models by many economists due to their relatively simple implementation [@garch11].
+with
 
-For an optimal model some conditions must be fulfilled. Suppose you want to model the Google time series with a GARCH(1,1).
+- $x_{t}$ is the original data (often non-stationary)
+- $\epsilon_{t}$ is the stationary log-return
+- $u_{t}$ is independent and identically distributed (iid) and a standardized random variable
+- $\sigma^{2}$ is the unconditional variance of the process $\epsilon_{t}$.
+- $\sigma_{t}^{2}$ is the conditional variance of the process $\epsilon_{t}$.
+
+With a GARCH(*n*,*m*)-process it is possible to model the volaclusters of a time series. The GARCH(*1*,*1*) model has become widely used in financial time series modelling and is implemented in most statistics and econometric software packages. Those models are favored over other stochastic volatility models by many economists due to their relatively simple implementation [@garch11].
+
+\newpage
+
+For an optimal model some conditions must be fulfilled. Suppose you want to model the Google time series with a GARCH(*1*,*1*).
 
 In table \ref{tab:coeftable} the estimated coefficients of the process can be seen. The p-values are all lower than 0.05 and thus indicate that they are essential for the model. (Note: $\omega=c\sigma^{2}$)
 
@@ -234,7 +215,7 @@ $$c=\frac{\omega}{\sigma^{2}}$$
 
 and then check for the restriction in \ref{eq:para_restriction}.
 
-For the coefficients of GARCH(1,1) the restrictions are fulfilled. You can see that $c = 1-\alpha_{1}-\beta_{1}$. So this restriction can be determined easily with:
+For the coefficients of GARCH(*1*,*1*) the restrictions are fulfilled. You can see that $c = 1-\alpha_{1}-\beta_{1}$. So this restriction can be determined easily with:
 
 \begin{equation} \label{eq:para_moments_easy}
   \sum_{j=1}^{n}\alpha_{j}+\sum_{k=1}^{m}\beta_{k} < 1
@@ -244,63 +225,33 @@ If the parameter restrictions are not fulfilled, complications may arise, the fo
 
 \newpage
 
-Furthermore, the Ljung-Box statistics are important for the standardized residuals. Looking back at formula \ref{eq:garch} standardized residuals $u_{t}$ are proportional to the conditional volatilities $\sigma_{t}$, which should lead to the log returns $\epsilon_{t}$.  The conditional volatilities map the volacluster in the time series. To achieve the best possible model, one does not want to find these volacluster effects in the standardized residuals, but only in the conditional volatilities. The Ljung-Box statistics check this property. In figure \ref{fig:chap2.2.2} Ljung-Box statistics of the $u_{t}$ and the $u^{2}_{t}$ are shown.
+Furthermore, the Ljung-Box statistics are important for the standardized residuals. Looking back at formula \ref{eq:garch} standardized residuals $u_{t}$ are proportional to the conditional volatilities $\sigma_{t}$, which should lead to the log returns $\epsilon_{t}$.  The conditional volatilities map the volacluster in the time series. To achieve the best possible model, one does not want to find these volacluster effects in the standardized residuals, but only in the conditional volatilities. The Ljung-Box statistics check this property. In figure \ref{fig:chap2.2.2} Ljung-Box statistics of the $\hat{u}_{t}$ and the $\hat{u}^{2}_{t}$ are shown.
 
 ```{r chap2.2.2, echo=FALSE, fig.cap="Ljung-Box statistic of the standardized residuals.", fig.keep = 'last'}
-ljungplotGarch <- function(resid, sig) {
-  p1 <- rep(NA, 20)
-  p2 <- rep(NA, 20)
-  for (i in 1:20) {
-    p1[i] <- Box.test(resid/sig, lag = i, type = c("Ljung-Box"), fitdf = 0)$p.value
-    p2[i] <- Box.test(resid/sig^2, lag = i, type = c("Ljung-Box"), fitdf = 0)$p.value
-  }
-  
-  par(mfrow=c(1,2))
-  plot(x=1:20, y=p1, main=expression(paste("Ljung-Box statistic: ", u)),
-       xlab = "lag", ylab = "p value", axes = FALSE,
-       ylim=c(0,1))
-  box(col="gray")
-  axis(2, col="gray", cex.axis=0.8)
-  axis(1, col="gray", cex.axis=0.8)
-  abline(h=0.05, lty=2, col="blue")
-  points(x=10, y=p1[10], pch=16, col="red")
-  points(x=15, y=p1[15], pch=16, col="red")
-  points(x=20, y=p1[20], pch=16, col="red")
-  
-  plot(x=1:20, y=p2, main=expression(paste("Ljung-Box statistic: ", u^2)),
-       xlab = "lag", ylab = "p value", axes = FALSE,
-       ylim=c(0,1))
-  box(col="gray")
-  axis(2, col="gray", cex.axis=0.8)
-  axis(1, col="gray", cex.axis=0.8)
-  abline(h=0.05, lty=2, col="blue")
-  points(x=10, y=p2[10], pch=16, col="red")
-  points(x=15, y=p2[15], pch=16, col="red")
-  points(x=20, y=p2[20], pch=16, col="red")
-}
 ljungplotGarch(y.garch_11@residuals, y.garch_11@sigma.t)
 ```
 
-The plot shows reliable statistics for forecasts from the Google-GARCH(1,1) model. For all lags up to 20, the p-values are above the 5% line and thus hypothesis tests are discarded. However, if for a given lag=k the p-values would fall below the 5% line, then forecasts would only be reliable up to a forecast horizon k.
+The plot shows reliable statistics for forecasts from the Google-GARCH(*1*,*1*) model. For all lags up to 20, the p-values are above the 5% line and thus hypothesis tests are discarded. However, if for a given lag=k the p-values would fall below the 5% line, then forecasts would only be reliable up to a forecast horizon k.
 
-If one wants to improve the the standardized residuals $u_{t}$, an ARIMA part would have to be added to the existing model (see [2.2.3](#stationarity)). This can again be optimized with different model orders. If you want to improve the squared standardized residuals $u^{2}_{t}$, then you should modify the GARCH model order.
+If one wants to improve the the standardized residuals $\hat{u}_{t}$ (if autocorrelations exists in the $\hat{u}_{t}$), an ARMA part would have to be added to the existing model (see [2.2.3](#arma-garch-section)). This can again be optimized with different model orders. If you want to improve the squared standardized residuals $\hat{u}^{2}_{t}$ (if volaclustering exists within the $\hat{u}^{2}_{t}$), then you should modify the GARCH model order.
 
-Now an optimal model has been found and a forecast can be made. Since a GARCH(n,m) process is white noise sequence the expected value $E[\epsilon_{T+h} | \epsilon_{T},...,\epsilon_{1}]=\mu=0$ can be assumed (if the mean value in the fit object was also estimated and is significant, then the expected value is the estimated $\mu$).
+Now an optimal model has been found and a forecast can be made. Since a GARCH(*n*,*m*) process is white noise sequence the expected value $E[\epsilon_{T+h} | \epsilon_{T},...,\epsilon_{1}]=\mu=0$ can be assumed (if the mean value in the fit object was also estimated and is significant, then the expected value is the estimated $\mu$).
 
-Calculating the forecast variance is a recursive process. With increasing model order the calculation becomes more and more difficult. For this work the rather simple calculation for a GARCH(1,1) model is sufficient. One receives:
+Calculating the forecast variance is a recursive process. With increasing model order the calculation becomes more and more difficult. For this work the rather simple calculation for a GARCH(*1*,*1*) model is sufficient. One receives:
 
 $$\hat{\sigma}_{T+h}^{2}=\omega+(\alpha_{1}+\beta_{1})^{2}\hat{\sigma}_{T+h-1}^{2}$$
 
 If the parameter restriction from formula \ref{eq:para_moments_easy} is true, the forecast variance converges with the increasing forecast horizon to the unconditional variance of the process.
 
 $$\hat{\sigma}_{T+h}^{2}=\frac{\omega}{1-\alpha_{1}-\beta_{1}}=\sigma^{2}$$
+
+\newpage
+
 The 95% forecast interval is calculated as follows:
 
 $$E[\epsilon_{T+h} | \epsilon_{T},...,\epsilon_{1}]\pm 1.96\sqrt{\hat{\sigma}_{T+h}^{2}}$$
 
-Applying
-
-bla bla blublibli
+Figure \ref{fig:chap2.2.3} shows the GARCH(*1*,*1*) forecast for 20 days. The blue line represents the expected value of the time series. Reds are the two 95%-interval limits and green shows the actual values of the series.
 
 ```{r chap2.2.3, echo=FALSE, fig.cap="GARCH-Forecast.", fig.keep = 'last'}
 sig <- sqrt(y.garch_11@fit$coef["omega"]/(1-y.garch_11@fit$coef["alpha1"]-y.garch_11@fit$coef["beta1"]))
@@ -324,36 +275,37 @@ lines(tail(g.adj.lr["2020-01-01/"], h), col="green", lwd=1.5)
 lines(fcast_grach[,1], col="blue", lwd=1.5)
 lines(fcast_grach[,1] + 1.96 * fcast_grach[,3], col="red", lwd=1.5)
 lines(fcast_grach[,1] - 1.96 * fcast_grach[,3], col="red", lwd=1.5)
+
+lines(fcast_grach[,1] + 1.96 * sig, col="black", lwd=1, lty=2)
+lines(fcast_grach[,1] - 1.96 * sig, col="black", lwd=1, lty=2)
 ```
 
-One can see the divergence to the unconditional standard deviation $\sigma=$ asd `r round(sig, 6)`
+You can see how the red lines are approaching the black dotted lines ($0 \pm 1.96*\sqrt{\sigma^{2}}$) as the forecast horizon increases. This means that the forecast variance converges to the unconditional variance and thus there is another proof for the satisfaction of the parameter restrictions.
 
-#### 2.2.3. ARIMA-GARCH {#arima-garch-section}
+#### 2.2.3. ARMA-GARCH {#arma-garch-section}
 
 &nbsp;
 
-Another process is the combination of ARIMA and GARCH processes.
+If you want to adopt a GARCH model and you discover non-vanishing autocorrelations in the standardized residuals $\hat{u}_{t}$, the model can be extended with an ARMA part.
 
 \begin{eqnarray}
-y_{t}&=&\mu + a_{1}y_{t-1}+...+a_{p}y_{t-p}+\epsilon_{t}+b_{1}\epsilon_{t-1}+...+b_{q}\epsilon_{t-q} \label{eq:arima-garch1} \\
+y_{t}&=&\mu + a_{1}y_{t-1}+...+a_{p}y_{t-p}+\epsilon_{t}+b_{1}\epsilon_{t-1}+...+b_{q}\epsilon_{t-q} \label{eq:arma-garch1} \\
 \epsilon_{t}&=&\sigma_{t}u_{t} \nonumber \\
-\sigma_{t}^{2}&=&c\sigma^{2}+\sum_{j=1}^{n}\alpha_{j}\sigma_{t-j}^{2}+\sum_{k=1}^{m}\beta_{k}\epsilon_{t-k}^{2} \label{eq:arima-garch2}
+\sigma_{t}^{2}&=&c\sigma^{2}+\sum_{j=1}^{n}\alpha_{j}\sigma_{t-j}^{2}+\sum_{k=1}^{m}\beta_{k}\epsilon_{t-k}^{2} \label{eq:arma-garch2}
 \end{eqnarray}
 
-Is called the mean-equation \ref{eq:arima-garch1}
+This model contains now 4 different model orders: *p*,*q*,*n* and *m*. Experience shows that for financial time series, a model order of *n*=*m*=$1$ and *p*,*q*$\leq 1$ is often sufficient to fit the data to an ARMA-GARCH model.
 
-Is called the variance-equation \ref{eq:arima-garch2}
-
-[@eco2]
+The equation \ref{eq:arma-garch1} is called the *mean-equation* and describes the conditional mean of the process, which is used to obtain optimal point forecast. The equation \ref{eq:arma-garch2} defines the variance of the process and is called *variance-equation*, which is used for the forecast error variance [@eco2].
 
 \newpage
 
 ### 2.3. Moving Average Filters
 
-moving average filters are basically used to identify trends and smooth out price fluctuations. As a commonly used tool moving average filters are very simple in its usage, historical data was summarized and divided bi the length of the filter. 
-Many differnt indicators are built on the Moving average principle, mostly theyre used in combinations of different lengths to create new indicators. in the following section we introduce some of the popular indicators based on the MA principle.
+Moving average filters are basically used to identify trends and smooth out price fluctuations. As a commonly used tool moving average filters are very simple in their usage, historical data was summarized and divided by the length of the filter. 
+Many different indicators are built on the Moving Average principle, mostly they are used in combinations of different lengths to create new indicators. in the following section, we introduce some of the popular indicators based on the MA principle.
 
-The actual challenge in using Moving average filters is to figure out which length of the filter brings the most useful information. 
+The actual challenge in using Moving average filters is to figure out which length of the filter brings the most useful information.
 
 
 #### 2.3.1. Equally-weighted Moving Average or SMA
@@ -456,7 +408,11 @@ addSMA(n=n2,on=1,col = "red")
 
 \newpage
 
-### 2.4. Real Strength Index
+### 2.4. Relative Strength Index
+
+&nbsp;
+
+Work in Progress [@slide_trading_indicators_univariate].
 
 ### 2.5. Sharpe Ratio
 
@@ -481,7 +437,7 @@ the risk of this strategy is based in the currency risk.
 
 ### 2.7. Value
 \newpage
-### 2.8  Bollinger bands
+### 2.8.  Bollinger bands
 
 &nbsp;
 
@@ -521,6 +477,8 @@ addBBands(n=n,sd=k,maType = "SMA", draw = 'bands', on = -1)
 \newpage
 ### 2.9 Moving Average Convergence Divergence
 
+&nbsp;
+
 The MACD is also a commonly used filter. The basic principle is to Subtract a longer EMA with length $L$ as in section   [2.3.3](#EMA) from a shorter EMA from length $S$  then smooth the result with another EMA with length $R$. As a result with can use the crossing of the 2 generated curves for trading. As an alternative we could use SMA's instead of EMA's
 
 \begin{equation}
@@ -550,11 +508,3 @@ $_1$ short and long in the meaning s<l, not buy sell
 chartSeries(Cl(GOOGL),subset="2007-05::2009-01",theme=chartTheme("white"),name= "MACD EMA GOOGL Closing")
 addMACD(fast=12,slow=26,signal=9,type="EMA")
 ```
-&nbsp;
-
-
-#### 3.1 Trading Signals
-
-Using signals to trade
-
-in Section 2 we've learned different indicators and models for timeseries. these models and indicators are now used to trade the underlying asset. As an example we're taking the ma crossings, as mentioned [2.3.3.](#GARCH) the points where the two MAs cross, are now used to create a trading signal. when the longer MA comes from below to the crossing we are going long the asset and if it approaches the point from above we're shorting the position. Technically We apply a 1 to a vector at each crossing, where we intend to buy and apply a -1 at the points we want to sell. 

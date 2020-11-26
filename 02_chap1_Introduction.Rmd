@@ -3,15 +3,6 @@ output: pdf_document
 geometry: margin = 1in
 ---
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
-library(xts)
-library(PerformanceAnalytics)
-library(kableExtra)
-library(dplyr)
-library(quantmod)
-library(forecast)
-```
-
 ## 1. Introduction
 
 The main purpose of trading is buying and selling stocks, bonds, or other financial instruments with increasing the returns of the investments in mind while maintaining relatively low risk. With the help of a trading strategy, an investor can try to improve his performance. One can simply divide the strategies into passive and active. The praised and well established passive strategy buy-and-hold takes no short price movements into account. Positioning and trading based on these short price movements are considered active trading.
