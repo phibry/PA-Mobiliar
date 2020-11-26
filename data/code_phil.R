@@ -593,8 +593,8 @@ plot(ind.lr)
 
 # Sample-Sizing
 # Can be iterated to find the best model
-startdate <- "2010-01-01"
-insample <- "2017-01-01"
+startdate <- "2018-01-01"
+insample <- "2019-01-01"
 
 # time-window
 ind.all <- ind[paste(startdate,"/",sep="")]
@@ -626,9 +626,13 @@ ind.lr.out[,1]
 chart.ACFplus(ind.lr.in[,1])
 pacf(ind.lr.in[,1])
 
-ind1.arma <- arima(ind.lr.in[,1], order=c(7,0,0))
+ind1.arma <- arima(ind.lr.in[,1], order=c(1,0,0))
 tsdiag(ind1.arma)
 ind1.arma$coef
+
+mat_out1 <- cbind(ind.lr.out[,1],
+                  lag(ind.lr.out[,1], k=1))
+head(mat_out1, 10)
 
 mat_out1 <- cbind(ind.lr.out[,1],
                   lag(ind.lr.out[,1], k=1),
@@ -647,7 +651,7 @@ arima_pred1 <- ind1.arma$coef[length(ind1.arma$coef)] +
 # Compare Out-Of-Sample with AR(7)
 par(mfrow=c(2,1))
 plot(ind.lr.out[,1])
-plot(as.xts(arima_pred), type="l")
+plot(as.xts(arima_pred1), type="l")
 
 
 # Trading: Signum
@@ -663,7 +667,7 @@ par(mfrow=c(2,1))
 plot(cumsum(ind.lr.out[,1]),main=paste("Buy & Hold: Sharpe=",round(sharpe_bnh,2),sep=""))
 plot(cumsum(na.exclude(ret1_arima)),main=paste("ARIMA: Sharpe=",round(sharpe1_arima,2),sep=""))
 
-
+sum(is.na(ind.lr.in[,1]))
 
 ## GARCH
 ind1.garch_1111 <- garchFit(~garch(1,1), data=ind.lr.in[,1], delta=2,
@@ -674,6 +678,10 @@ plot(ind.lr.in[,1])
 ind.lr.in[,1]
 
 mean(ind.lr.in[,1])
+
+
+auto.arima(ind.lr.in[,1])
+
 #.####
 ## Index 2####
 # ARMA
@@ -734,6 +742,51 @@ ljungplotGarch(ind3.garch@residuals, ind3.garch@sigma.t)
 
 #.####
 ## Index 4####
+# ARMA####
+ind.lr.out[,4]
+
+chart.ACFplus(ind.lr.in[,4])
+pacf(ind.lr.in[,4])
+
+ind4.arma <- arima(ind.lr.in[,4], order=c(2,0,0))
+# auto.arima(ind.lr.in[,4])
+
+tsdiag(ind4.arma)
+ind4.arma$coef
+
+mat_out4 <- cbind(ind.lr.out[,4],
+                  lag(ind.lr.out[,4], k=1),
+                  lag(ind.lr.out[,4], k=2))
+head(mat_out4, 10)
+
+
+arima_pred4 <- ind4.arma$coef[length(ind4.arma$coef)] +
+  as.matrix(mat_out4[,2:ncol(mat_out4)])%*%ind4.arma$coef[1:(length(ind4.arma$coef)-1)]
+
+
+# Compare Out-Of-Sample with AR(7)
+par(mfrow=c(2,1))
+plot(ind.lr.out[,4])
+plot(as.xts(arima_pred4), type="l")
+
+
+# Trading: Signum
+ret4_arima <- sign(arima_pred1)*ind.lr.out[,4]
+
+# Sharpe
+sharpe_bnh <- as.double(sqrt(250) * mean(ind.lr.out[,4]) / sqrt(var(ind.lr.out[,4])))
+sharpe4_arima <- as.double(sqrt(250) * mean(ret4_arima, na.rm=T) / sqrt(var(ret4_arima, na.rm=T)))
+
+
+# Plot
+par(mfrow=c(2,1))
+plot(cumsum(ind.lr.out[,4]),main=paste("Buy & Hold: Sharpe=",round(sharpe_bnh,2),sep=""))
+plot(cumsum(na.exclude(ret4_arima)),main=paste("ARIMA: Sharpe=",round(sharpe4_arima,2),sep=""))
+
+acf(ind.lr.out[,4])
+
+
+# GARCH####
 ind4.garch <- garchFit(~garch(1,1), data=ind.lr.in[,4], delta=2,
                        include.delta=F, include.mean=F, trace=F)
 summary(ind4.garch)
