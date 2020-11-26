@@ -90,20 +90,16 @@ in_sample ="2018-01-01"
 
 x_ind<-log_ret_ind[paste(start_date,"/",sep="")]
 y_ind<-log_ind[paste(start_date,"/",sep="")]
-var(y_ind)
-
+vola_y_ind=format(round(diag(as.matrix(var(y_ind))),5),scientific= T)
     
 plot(x_ind[,1],main="Log_returns index 1",col = 2)
-plot(y_ind[,1],main="Log_returns index 1",col = 2)
+plot(y_ind[,1],main=paste("Log index 1,","vola=",vola_y_ind[1],sep=" "),col = 2)
 plot(x_ind[,2],main="Log_returns index 2",col = 3)
-plot(y_ind[,2],main="Log_returns index 2",col = 3)
+plot(y_ind[,2],main=paste("Log index 2,","vola=",vola_y_ind[2],sep=" "),col = 3)
 plot(x_ind[,3],main="Log_returns index 3",col = 4)
-plot(y_ind[,3],main="Log_returns index 3",col = 4)
+plot(y_ind[,3],main=paste("Log index 3,","vola=",vola_y_ind[3],sep=" "),col = 4)
 plot(x_ind[,4],main="Log_returns index 4",col = 5)
-plot(y_ind[,4],main="Log_returns index 4",col = 5)
-
-
-
+plot(y_ind[,4],main=paste("Log index 4,","vola=",vola_y_ind[4],sep=" "),col = 5)
 
 ```
 
