@@ -1,6 +1,22 @@
 ---
 output: pdf_document
 ---
+```{r, echo=FALSE, fig.cap="Visualization of the 4 indexes",message=F,warning=F}
+
+
+#########################################attenzione !!!  this chunk is only to kniot this chapter can be deleted afterwards####
+### bei m ir geht der knit nicht mit ljungplotgarch darum werden hier die funktionen nicht aufgerufen
+load("data/data_mobi")
+source("add/libraries.R")
+
+ind <- data[,1:4]
+int <- data[,5:12]
+```
+
+
+
+
+
 
 ## 2. Theory
 
@@ -115,7 +131,7 @@ x <- na.exclude(g.adj["2010-01-01/"])
 fit <- auto.arima(x)
 
 # Plot LjungBox statistic
-ljungplot(fit$residuals)
+#ljungplot(fit$residuals)
 ```
 
 In figure \ref{fig:chap2.2.1_2} you can see the prediction of the model. The whole representation is shifted by one day so that one can compare the model with a true value.
@@ -228,7 +244,7 @@ If the parameter restrictions are not fulfilled, complications may arise, the fo
 Furthermore, the Ljung-Box statistics are important for the standardized residuals. Looking back at formula \ref{eq:garch} standardized residuals $u_{t}$ are proportional to the conditional volatilities $\sigma_{t}$, which should lead to the log returns $\epsilon_{t}$.  The conditional volatilities map the volacluster in the time series. To achieve the best possible model, one does not want to find these volacluster effects in the standardized residuals, but only in the conditional volatilities. The Ljung-Box statistics check this property. In figure \ref{fig:chap2.2.2} Ljung-Box statistics of the $\hat{u}_{t}$ and the $\hat{u}^{2}_{t}$ are shown.
 
 ```{r chap2.2.2, echo=FALSE, fig.cap="Ljung-Box statistic of the standardized residuals.", fig.keep = 'last'}
-ljungplotGarch(y.garch_11@residuals, y.garch_11@sigma.t)
+#ljungplotGarch(y.garch_11@residuals, y.garch_11@sigma.t)
 ```
 
 The plot shows reliable statistics for forecasts from the Google-GARCH(*1*,*1*) model. For all lags up to 20, the p-values are above the 5% line and thus hypothesis tests are discarded. However, if for a given lag=k the p-values would fall below the 5% line, then forecasts would only be reliable up to a forecast horizon k.
@@ -302,17 +318,22 @@ The equation \ref{eq:arma-garch1} is called the *mean-equation* and describes th
 
 ### 2.3. Moving Average Filters
 
-Moving average filters are basically used to identify trends and smooth out price fluctuations. As a commonly used tool moving average filters are very simple in their usage, historical data was summarized and divided by the length of the filter. 
-Many different indicators are built on the Moving Average principle, mostly they are used in combinations of different lengths to create new indicators. in the following section, we introduce some of the popular indicators based on the MA principle.
+Moving average filters are basically used to identify trends and smooth out price fluctuations. As a commonly used tool, moving average filters are very simple in their usage, historical data from a timeframe L gets summarized and divided by the length of the filter (L). 
+Many different indicators are built upon the Moving Average principle, mostly they are used in combinations of different lengths to create signals. In the following section, we introduce some of the most popular indicators based on the MA principle.
 
-The actual challenge in using Moving average filters is to figure out which length of the filter brings the most useful information.
+The actual challenge in using Moving average filters, is to figure out which length of the filter brings the most useful information.
+
+
+
+
 
 
 #### 2.3.1. Equally-weighted Moving Average or SMA
 
+
 &nbsp;
 
-SMA stands for Simple Moving Average which. depending on the length of the filter(l) l obervations since the last noted observation will be considered. theyre getting summarized and divided by the filterlength equals the EqMA. For every timestep a new observation is considered and the last one eliminated.
+SMA stands for Simple Moving Average, depending on the length of the filter(L), L observations since the last noted observation will be considered. The observations are getting summarized and divided by the filterlength L. As stated in the name, all past observations are weighted equally. For every timestep, a new observation is considered and the last one eliminated [@SMA]. SMA's are very easily customized by changeing the length of the filter.
 
 
 EqMA
@@ -325,13 +346,13 @@ EqMA
 - ${L}$ = filterlength
 - ${x}$ = original series price e.g.
 
-\newpage
+
 
 
 
 ###  2.3.1.1 Momentum
 Momentum is an indicator wether a market is bullish or bearish, it measures the "speed" of the trend direction in the market.
-for a timespan $k$ the last price $p_k$, $k$ timesteps ago is subtractet from the last price. This is equivalent to applying and EqMA to the price differences. 
+for a timespan $k$ the last price $p_k$, $k$ timesteps ago is subtracted from the last price. This is equivalent to applying and EqMA on the returns of a series. 
 
 
 Momentum
@@ -349,20 +370,18 @@ Momentum
 #head(GOOGL)
 #googleclose=SMA( diff(Cl(GOOGL["2020-3::2020-4"])),10)
 #chartSeries(googleclose,theme=chartTheme("white"))
-
-chartSeries(diff(GOOGL[,4],lag =10),subset="2020-3::2020-4",theme=chartTheme("white"),name= "Momentum")
-
+#chartSeries(diff(GOOGL[,4],lag =10),subset="2020-3::2020-4",theme=chartTheme("white"),name= "Momentum")
 ```
 
-
+\newpage
 
 #### 2.3.2. Exponentially-weighted Moving Average
 
 &nbsp;
 
-Since not all observations are having the same influence of future value we can apply a weight to past observations. One method will be exponentially weighted Moving average. So we chose an optimal parameter to give past observations weights decreasing by alpha
+Since not all observations are having the same influence of future value, we can apply a weight to past observations. One method will be exponentially weighted Moving average. So we chose an optimal parameter to give past observations weights decreasing by $\alpha^k$. In comparison to the SMA [2.3.1.](#SMA) [@EMA] ,a EMA from the same length L, reacts faster than to Price changes.
 
-A skillfull trader chose an optimal $\alpha$ to increase the performance of the measurement. Weights could also be given individually by adding a weight vector to the filter.
+A skillfull trader choses an optimal $\alpha$ to increase the performance of the measurement. Weights could also be given individually by adding a weight vector to the filter.
 
 EMA
 
@@ -374,11 +393,18 @@ EMA
 - ${m}$    = filterlength
 - ${\alpha}$ = Parameter to weigh the observations
 
-\newpage
+&nbsp;
 
 #### 2.3.3. Moving Average Crossings
 
 &nbsp;
+
+Moving average crossings are basically just different MA's with different lengths applied to a time-series. The points the filters then cross, will be used as a trading signal to go long, short or hold.
+The "death" and "golden" cross are very popular trading patterns [@EMA]. If a shorter MA crosses the longer MA from above, its called a "golden cross" it is an indicator that the price will rise in the future and can be used to created the buy signal. In contrast stands the "death cross" vise versa, a shorter MA (popular L = 50) crosses a longer  MA(popular L = 200) from below, signalizing that further losses are in store.
+
+
+
+Moving Average Crossing
 
 \begin{equation}
   \label{eq:mac}
@@ -389,19 +415,20 @@ EMA
 - ${L_2}$    = filterlength 2
 - ${0 < \alpha < 1}$  = Parameter to weigh the observations 
 
-Moving average crossings are basically just different MA's with different lengths applied to a time-series. The points the filters then cross will be used as a trading signal to go long, short or hold.
+\newpage
 
-An easy example of Ma average crossings with 2 mas of different length is visualized in # \ref{fig:chap2.1}.
+An example of MA average crossings with 2 SMAs of different length is visualized in # \ref{fig:chap2.3.3.}. As mentioned earlier, finding the right length of the filter depends on each timeseries and their behaviour. 
 
+&nbsp;
 
-```{r,chap2.3.3 , echo=FALSE,warning=FALSE, message=FALSE, fig.keep = 'last'}
+```{r,chap2.3.3 ,fig.cap="Moving Average Crossing", echo=FALSE,warning=FALSE, message=FALSE, fig.keep = 'last'}
 par(mfrow=c(1,2))
-n1=2
-n2=20
-chartSeries(GOOGL,type="line",subset="2020-3::2020-10",
-            theme=chartTheme("white"),name= "MA Crossings Google Nasdag")
+n1=50
+n2=250
+chartSeries(GOOGL,type="line",subset="2019-3::2020-10",theme=chartTheme("white"),name= "MA Crossings Google Nasdag")
 addSMA(n=n1,on=1,col = "blue")
 addSMA(n=n2,on=1,col = "red")
+
 ```
 
 
