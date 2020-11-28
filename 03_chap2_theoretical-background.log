@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.11.14)  28 NOV 2020 11:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.11.14)  28 NOV 2020 14:31
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -743,27 +743,27 @@ File: 03_chap2_theoretical-background_files/figure-latex/chap2.2.1_2-1.pdf Grap
 hic file (type pdf)
 <use 03_chap2_theoretical-background_files/figure-latex/chap2.2.1_2-1.pdf>
 Package pdftex.def Info: 03_chap2_theoretical-background_files/figure-latex/cha
-p2.2.1_2-1.pdf  used on input line 289.
+p2.2.1_2-1.pdf  used on input line 290.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [7pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) 
 has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.334 \newpage
+l.335 \newpage
                <./03_chap2_theoretical-background_files/figure-latex/chap2.2.1_
 2-1.pdf>] [8] [9pdfTeX warning (ext4): destination with the same identifier (na
 me{table.1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.396 \newpage
+l.397 \newpage
               ]
 
-LaTeX Warning: Reference `fig:chap2.2.2' on page 10 undefined on input line 406
+LaTeX Warning: Reference `fig:chap2.2.2' on page 10 undefined on input line 407
 .
 
 [10]
 
-LaTeX Warning: Reference `fig:chap2.2.3' on page 11 undefined on input line 449
+LaTeX Warning: Reference `fig:chap2.2.3' on page 11 undefined on input line 450
 .
 
 <03_chap2_theoretical-background_files/figure-latex/chap2.2.3-1.pdf, id=163, 46
@@ -772,18 +772,23 @@ File: 03_chap2_theoretical-background_files/figure-latex/chap2.2.3-1.pdf Graphi
 c file (type pdf)
 <use 03_chap2_theoretical-background_files/figure-latex/chap2.2.3-1.pdf>
 Package pdftex.def Info: 03_chap2_theoretical-background_files/figure-latex/cha
-p2.2.3-1.pdf  used on input line 456.
+p2.2.3-1.pdf  used on input line 457.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [11pdfTeX warning (ext4): destination with the same identifier (name{figure.3})
  has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.486 
+l.487 
        <./03_chap2_theoretical-background_files/figure-latex/chap2.2.3-1.pdf>] 
-[12] [13] [14]
+[12]
 
-LaTeX Warning: Reference `fig:chap2.3.3.' on page 15 undefined on input line 63
-7.
+LaTeX Warning: Reference `fig:chap2.3.3.' on page 13 undefined on input line 50
+6.
+
+[13] [14]
+
+LaTeX Warning: Reference `fig:chap2.3.3.' on page 15 undefined on input line 64
+1.
 
 <03_chap2_theoretical-background_files/figure-latex/chap2.3.3 -1.pdf, id=207, 4
 69.755pt x 325.215pt>
@@ -791,34 +796,45 @@ File: 03_chap2_theoretical-background_files/figure-latex/chap2.3.3 -1.pdf Graph
 ic file (type pdf)
 <use 03_chap2_theoretical-background_files/figure-latex/chap2.3.3 -1.pdf>
 Package pdftex.def Info: 03_chap2_theoretical-background_files/figure-latex/cha
-p2.3.3 -1.pdf  used on input line 643.
+p2.3.3 -1.pdf  used on input line 654.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [15pdfTeX warning (ext4): destination with the same identifier (name{figure.4})
  has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.647 \newpage
+l.658 \newpage
                <./03_chap2_theoretical-background_files/figure-latex/chap2.3.3 
 -1.pdf>] [16]
-<03_chap2_theoretical-background_files/figure-latex/chap2.8 -1.pdf, id=229, 469
-.755pt x 325.215pt>
+<03_chap2_theoretical-background_files/figure-latex/chap2.8 -1.pdf, id=229, 505
+.89pt x 289.08pt>
 File: 03_chap2_theoretical-background_files/figure-latex/chap2.8 -1.pdf Graphic
  file (type pdf)
 <use 03_chap2_theoretical-background_files/figure-latex/chap2.8 -1.pdf>
 Package pdftex.def Info: 03_chap2_theoretical-background_files/figure-latex/cha
-p2.8 -1.pdf  used on input line 737.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[17 <./03_chap2_theoretical-background_files/figure-latex/chap2.8 -1.pdf>]
-<03_chap2_theoretical-background_files/figure-latex/chap2.9-1.pdf, id=245, 469.
-755pt x 325.215pt>
+p2.8 -1.pdf  used on input line 748.
+(pdftex.def)             Requested size: 469.76265pt x 268.43579pt.
+[17pdfTeX warning (ext4): destination with the same identifier (name{figure.5})
+ has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.752 \newpage
+               <./03_chap2_theoretical-background_files/figure-latex/chap2.8 -1
+.pdf>]
+<03_chap2_theoretical-background_files/figure-latex/chap2.9-1.pdf, id=246, 505.
+89pt x 289.08pt>
 File: 03_chap2_theoretical-background_files/figure-latex/chap2.9-1.pdf Graphic 
 file (type pdf)
 <use 03_chap2_theoretical-background_files/figure-latex/chap2.9-1.pdf>
 Package pdftex.def Info: 03_chap2_theoretical-background_files/figure-latex/cha
-p2.9-1.pdf  used on input line 784.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[18 <./03_chap2_theoretical-background_files/figure-latex/chap2.9-1.pdf>] (./03
-_chap2_theoretical-background.aux)
+p2.9-1.pdf  used on input line 797.
+(pdftex.def)             Requested size: 469.76265pt x 268.43579pt.
+[18pdfTeX warning (ext4): destination with the same identifier (name{figure.6})
+ has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.801 \end{document}
+                     <./03_chap2_theoretical-background_files/figure-latex/chap
+2.9-1.pdf>] (./03_chap2_theoretical-background.aux)
 Package rerunfilecheck Info: File `03_chap2_theoretical-background.out' has not
  changed.
 (rerunfilecheck)             Checksum: E98B2D299243DE1CE99F475952F9D750;1678.
@@ -827,8 +843,8 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 12075 strings out of 481466
- 177459 string characters out of 5920169
+ 12077 strings out of 481466
+ 177475 string characters out of 5920169
  466308 words of memory out of 5000000
  28486 multiletter control sequences out of 15000+600000
  564378 words of font info for 53 fonts, out of 8000000 for 9000
@@ -862,11 +878,11 @@ aming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/buehl/AppDa
 ta/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/buehl/
 AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb><c:/Users/bu
 ehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on 03_chap2_theoretical-background.pdf (18 pages, 355972 bytes).
+Output written on 03_chap2_theoretical-background.pdf (18 pages, 385193 bytes).
 
 PDF statistics:
- 328 PDF objects out of 1000 (max. 8388607)
- 277 compressed objects within 3 object streams
- 82 named destinations out of 1000 (max. 500000)
+ 330 PDF objects out of 1000 (max. 8388607)
+ 279 compressed objects within 3 object streams
+ 84 named destinations out of 1000 (max. 500000)
  129 words of extra memory for PDF output out of 10000 (max. 10000000)
 

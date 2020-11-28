@@ -4,7 +4,7 @@ output: pdf_document
 ```{r, echo=FALSE, fig.cap="Visualization of the 4 indexes",message=F,warning=F}
 
 
-#########################################attenzione !!!  this chunk is only to kniot this chapter can be deleted afterwards####
+#########################################attenzione !!!  this chunk is only to knit this chapter can be deleted afterwards####
 ### bei m ir geht der knit nicht mit ljungplotgarch darum werden hier die funktionen nicht aufgerufen
 load("data/data_mobi")
 source("add/libraries.R")
@@ -69,7 +69,7 @@ The result is the so-called log-returns.
 g.adj.lr <- na.exclude(diff(log(g.adj)))
 plot(g.adj.lr, main="Log-Returns of Adj. Prices ~ Google")
 ```
-Applying the transformation to the data causes the drift to disappear, but the series still contains stronger and weaker volatile phases. This effect often occurs in non-stationary financial data and is called volatility cluster. This special property is used for the modelling of forecast models, which will be discussed in chapter [2.2](#models-section).
+Applying the transformation to the data causes the drift to disappear, but the series still contains stronger and weaker volatile phases. This effect often occurs in non-stationary financial data and is called volatility cluster. This special property is used for the modeling of forecast models, which will be discussed in chapter [2.2](#models-section).
 
 In the following examples, we will only work with a section of the time series, as it often makes no sense to look long into the past. The further a value lies in the past, the smaller its influence on a future value will be.
 
@@ -135,8 +135,8 @@ fit <- auto.arima(x)
 ```
 
 In figure \ref{fig:chap2.2.1_2} you can see the prediction of the model. The whole representation is shifted by one day so that one can compare the model with a true value.
-The green dot is the actual value of the time series.
-The red dots indicate the upper and lower 95% interval limits respectively. These indicate that a future value will be within this band. The blue dot is the point forecast predicted by the model.
+The \textcolor{green}{green dot} is the actual value of the time series.
+The \textcolor{red}{red dots} indicate the upper and lower 95% interval limits respectively. These indicate that a future value will be within this band. The \textcolor{blue}{blue dot} is the point forecast predicted by the model.
 
 \newpage
 
@@ -188,7 +188,7 @@ with
 - $\sigma^{2}$ is the unconditional variance of the process $\epsilon_{t}$.
 - $\sigma_{t}^{2}$ is the conditional variance of the process $\epsilon_{t}$.
 
-With a GARCH(*n*,*m*)-process it is possible to model the volaclusters of a time series. The GARCH(*1*,*1*) model has become widely used in financial time series modelling and is implemented in most statistics and econometric software packages. Those models are favored over other stochastic volatility models by many economists due to their relatively simple implementation [@garch11].
+With a GARCH(*n*,*m*)-process it is possible to model the volaclusters of a time series. The GARCH(*1*,*1*) model has become widely used in financial time series modeling and is implemented in most statistics and econometric software packages. Those models are favored over other stochastic volatility models by many economists due to their relatively simple implementation [@garch11].
 
 \newpage
 
@@ -318,7 +318,7 @@ The equation \ref{eq:arma-garch1} is called the *mean-equation* and describes th
 
 ### 2.3. Moving Average Filters
 
-Moving average filters are basically used to identify trends and smooth out price fluctuations. As a commonly used tool, moving average filters are very simple in their usage, historical data from a timeframe L gets summarized and divided by the length of the filter (L). 
+Moving average filters are basically used to identify trends and smooth out price fluctuations. As a commonly used tool, moving average filters are very simple in their usage, historical data from a timeframe L gets summarized and divided by the length of the filter (L). Depending on the length of the filter, the application to the timeseries the MA gets shifted, longer filters have a higher shift then shorter ones we visualize this behavior in \ref{fig:chap2.3.3.}.
 Many different indicators are built upon the Moving Average principle, mostly they are used in combinations of different lengths to create signals. In the following section, we introduce some of the most popular indicators based on the MA principle.
 
 The actual challenge in using Moving average filters, is to figure out which length of the filter brings the most useful information.
@@ -379,9 +379,9 @@ Momentum
 
 &nbsp;
 
-Since not all observations are having the same influence of future value, we can apply a weight to past observations. One method will be exponentially weighted Moving average. So we chose an optimal parameter to give past observations weights decreasing by $\alpha^k$. In comparison to the SMA [2.3.1.](#SMA) [@EMA] ,a EMA from the same length L, reacts faster than to Price changes.
+Since not all observations are having the same influence on the future value, we can apply a weight to past observations. One method will be exponentially weighted Moving average. So we chose an optimal parameter to give past observations weights decreasing by $\alpha^k$. In comparison to the SMA [2.3.1.](#SMA) [@EMA] ,a EMA from the same length L, reacts faster than to price changes.
 
-A skillfull trader choses an optimal $\alpha$ to increase the performance of the measurement. Weights could also be given individually by adding a weight vector to the filter.
+A skillful trader chooses an optimal $\alpha$ to increase the performance of the measurement. Weights could also be given individually by adding a weight vector to the filter.
 
 EMA
 
@@ -417,7 +417,7 @@ Moving Average Crossing
 
 \newpage
 
-An example of MA average crossings with 2 SMAs of different length is visualized in # \ref{fig:chap2.3.3.}. As mentioned earlier, finding the right length of the filter depends on each timeseries and their behaviour. 
+An example of MA average crossings with 2 SMAs of different length is visualized in # \ref{fig:chap2.3.3.}. The prices are in \textcolor{green}{green} while the \textcolor{blue}{blue line} represents an \textcolor{blue}{50} day SMA an the \textcolor{red}{red line} a  \textcolor{red}{250 (1 year)} SMA. The crossing points of those two SMAs could now be used as trading signals. In this example these crossings wouldn't perform very well, therefore as mentioned earlier, finding the right length of the filter depends on each timeseries, their behavior and the preferences of the trader. 
 
 &nbsp;
 
@@ -425,7 +425,7 @@ An example of MA average crossings with 2 SMAs of different length is visualized
 par(mfrow=c(1,2))
 n1=50
 n2=250
-chartSeries(GOOGL,type="line",subset="2019-3::2020-10",theme=chartTheme("white"),name= "MA Crossings Google Nasdag")
+chartSeries(GOOGL,type="line",subset="2015-3::2020-10",theme=chartTheme("white"),name= "MA Crossings Google Nasdag")
 addSMA(n=n1,on=1,col = "blue")
 addSMA(n=n2,on=1,col = "red")
 
@@ -437,10 +437,18 @@ addSMA(n=n2,on=1,col = "red")
 
 ### 2.4. Relative Strength Index
 
+The real strength index is a tool to measure momentum, the value indicates if positions are overvalued or undervalued.
+the scale goes from 0 to 100. Usually when the RSI is going over 70 it suppose taht the asset is overvalued and in contrast when its under 30 then its undervalued. 
 &nbsp;
 
-Work in Progress [@slide_trading_indicators_univariate].
+ [@slide_trading_indicators_univariate].
 
+```{r,chap2.8 ,fig.cap="Bollinger Bands", echo=FALSE, warning=FALSE, message=FALSE, fig.keep = 'last',fig.dim=c(7,4)}
+n=14
+chartSeries(GOOGL, subset="2017-08::2020-10",type="line",theme=chartTheme("white"),name = "RSI Google Nasdag")
+addRSI(n=n,maType="SMA")
+
+```
 ### 2.5. Sharpe Ratio
 
 &nbsp;
@@ -464,11 +472,10 @@ the risk of this strategy is based in the currency risk.
 
 ### 2.7. Value
 \newpage
+
 ### 2.8.  Bollinger bands
-
 &nbsp;
-
-Bollinger bands are a analysis tool founded by John Bollinger. It contains a moving average and an upper and lower band . The bands are defined by adding  a constant${K}$ times a standard deviation ${\sigma_t}$ to the *Moving Average* for the upper , and subtracting it for the lower band.
+Bollinger bands are a analysis tool founded by John Bollinger. It contains a moving average and an upper and lower band . The bands are defined by adding  a constant ${K}$ times a standard deviation ${\sigma_t}$ to the *Moving Average* for the upper , and subtracting it for the lower band.
 
 \begin{equation}
   \label{eq:lower and upper bollingerbands}
@@ -482,7 +489,7 @@ the variance from bollingers theory is calculated by:
   \mathrm{\sigma_{t}^2}=\frac{1}{N}\sum_{k=0}^{N-1}(x_{t-k} -MA_t)^2
 \end{equation}
 
-The calculated ${\sigma_t}$ could be problematic because its derived from the original series and increases with the level, its non stationary. Therefore an other method to calculate the standart deviation could be used. As done in  section [2.2.2.](#GARCH) $\sigma$ could be provided by a GARCH, which would handle the volatility.
+The calculated ${\sigma_t}$ could be problematic because its derived from the original series and increases with the level, its non stationary. Therefore an other method to calculate the standard deviation could be used. As done in  section [2.2.2.](#GARCH) $\sigma_t$ could be provided by a GARCH, which would handle the increasing volatility.
 
 
 - ${N}$ = usually the filterlength and the length considered for ${\sigma}$ are the same
@@ -492,7 +499,7 @@ The calculated ${\sigma_t}$ could be problematic because its derived from the or
 - ${L_t}$ = lower band
 
 
-```{r,chap2.8 , echo=FALSE, warning=FALSE, message=FALSE, fig.keep = 'last'}
+```{r,chap2.8 ,fig.cap="Bollinger Bands", echo=FALSE, warning=FALSE, message=FALSE, fig.keep = 'last',fig.dim=c(7,4)}
 n=20
 k=2
 chartSeries(GOOGL,subset="2007-05::2009-01",theme=chartTheme("white"),name= "bollinger bands")
@@ -503,9 +510,7 @@ addBBands(n=n,sd=k,maType = "SMA", draw = 'bands', on = -1)
 
 \newpage
 ### 2.9 Moving Average Convergence Divergence
-
 &nbsp;
-
 The MACD is also a commonly used filter. The basic principle is to Subtract a longer EMA with length $L$ as in section   [2.3.3](#EMA) from a shorter EMA from length $S$  then smooth the result with another EMA with length $R$. As a result with can use the crossing of the 2 generated curves for trading. As an alternative we could use SMA's instead of EMA's
 
 \begin{equation}
@@ -531,7 +536,7 @@ The MACD is also a commonly used filter. The basic principle is to Subtract a lo
 
 $_1$ short and long in the meaning s<l, not buy sell
 
-```{r,chap2.9, echo=FALSE, warning=FALSE, message=FALSE, fig.keep = 'last'}
+```{r,chap2.9,fig.cap="MACD", echo=FALSE, warning=FALSE, message=FALSE, fig.keep = 'last',fig.dim=c(7,4)}
 chartSeries(Cl(GOOGL),subset="2007-05::2009-01",theme=chartTheme("white"),name= "MACD EMA GOOGL Closing")
 addMACD(fast=12,slow=26,signal=9,type="EMA")
 ```
