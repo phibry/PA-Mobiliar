@@ -437,18 +437,40 @@ addSMA(n=n2,on=1,col = "red")
 
 ### 2.4. Relative Strength Index
 
-The real strength index is a tool to measure momentum, the value indicates if positions are overvalued or undervalued.
-the scale goes from 0 to 100. Usually when the RSI is going over 70 it suppose taht the asset is overvalued and in contrast when its under 30 then its undervalued. 
+The Relative strength index is a tool to measure momentum, the value indicates if positions are overvalued or undervalued.
+the scale goes from 0 to 100.  [@RSI].
+
+
+\begin{equation}
+  \label{eq:mac}
+  U_{t}=\begin{cases}1, \textnormal{if }    x_t \ge x_{t-1}\\0, \textnormal{otherwise} \end{cases}
+  D_{t}=\begin{cases}1, \textnormal{if }  x_t < x_{t-1}\\0, \textnormal{otherwise} \end{cases}
+\end{equation}
+
+- ${X_t}$    =Original timeseries 
+
+We then apply SMA or EMA of length N to $U_t$ and $U_t$ which converts them in $up_t(N)$ and $down_t(N)$
+The RSI is now computet by:
+\begin{equation}
+  \label{eq:mac}
+ RSI_t(N)=100\frac{up_t(N)}{up_t(N)+down_t(N)}
+\end{equation}
+
+The original developer J. Welles Wilder Jr. proposed a length of N =14 in its work from 1978[@slide_trading_indicators_univariate].
+Traditional tradings signals based on the RSI  are the upper 70 or lower 30 limit to buy or sell.
+Usually when the RSI is going over 70 it suppose that the asset is overvalued and in contrast when its under 30 then its undervalued.
+
 &nbsp;
 
- [@slide_trading_indicators_univariate].
 
-```{r,chap2.8 ,fig.cap="Bollinger Bands", echo=FALSE, warning=FALSE, message=FALSE, fig.keep = 'last',fig.dim=c(7,4)}
-n=14
-chartSeries(GOOGL, subset="2017-08::2020-10",type="line",theme=chartTheme("white"),name = "RSI Google Nasdag")
-addRSI(n=n,maType="SMA")
+```{r,chap2.4 ,fig.cap="RSI", echo=FALSE, warning=FALSE, message=FALSE, fig.keep = 'last',fig.dim=c(7,4)}
 
+chartSeries(GOOGL, subset="2020-01::2020-10",type="line",theme=chartTheme("white"),name = "RSI EMA Google Nasdag",TA=NULL)
+addRSI(n=14,maType="EMA")
+?chartSeries()
 ```
+
+\newpage
 ### 2.5. Sharpe Ratio
 
 &nbsp;
@@ -530,9 +552,7 @@ The MACD is also a commonly used filter. The basic principle is to Subtract a lo
 - $S$   = length of the $short_1$ EMA           usually 12
 - $L$   = length of the $long_1$  EMA           usually 26
 - $R$   = length of the "double smoothing ema"  usually 9
-- $\alpha$ = $1-\frac{1}{S}$
-- $\beta$  = $1-\frac{1}{L}$
-- $\gamma$ = $1-\frac{1}{R}$
+- $\alpha$ = $1-\frac{1}{S}$, $\beta$  = $1-\frac{1}{L}$, $\gamma$ = $1-\frac{1}{R}$
 
 $_1$ short and long in the meaning s<l, not buy sell
 

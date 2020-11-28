@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.11.14)  28 NOV 2020 14:31
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.11.14)  28 NOV 2020 16:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -536,7 +536,14 @@ d-pdftex.def
 File: l3backend-pdftex.def 2020-09-24 L3 backend support: PDF output (pdfTeX)
 \l__kernel_color_stack_int=\count295
 \l__pdf_internal_box=\box67
-) (./03_chap2_theoretical-background.aux)
+) (./03_chap2_theoretical-background.aux
+
+LaTeX Warning: Label `eq:mac' multiply defined.
+
+
+LaTeX Warning: Label `eq:mac' multiply defined.
+
+)
 \openout1 = `03_chap2_theoretical-background.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 78.
@@ -804,35 +811,55 @@ p2.3.3 -1.pdf  used on input line 654.
                                                   
 l.658 \newpage
                <./03_chap2_theoretical-background_files/figure-latex/chap2.3.3 
--1.pdf>] [16]
-<03_chap2_theoretical-background_files/figure-latex/chap2.8 -1.pdf, id=229, 505
+-1.pdf>]
+Overfull \hbox (98.30006pt too wide) in paragraph at lines 681--683
+[]\T1/lmr/m/n/10 The orig-i-nal de-vel-oper J. Welles Wilder Jr. pro-posed a le
+ngth of N =14 in its work from 1978[@slide_trading_indicators_univariate]. 
+ []
+
+<03_chap2_theoretical-background_files/figure-latex/chap2.4 -1.pdf, id=219, 505
+.89pt x 289.08pt>
+File: 03_chap2_theoretical-background_files/figure-latex/chap2.4 -1.pdf Graphic
+ file (type pdf)
+<use 03_chap2_theoretical-background_files/figure-latex/chap2.4 -1.pdf>
+Package pdftex.def Info: 03_chap2_theoretical-background_files/figure-latex/cha
+p2.4 -1.pdf  used on input line 688.
+(pdftex.def)             Requested size: 469.76265pt x 268.43579pt.
+[16pdfTeX warning (ext4): destination with the same identifier (name{figure.5})
+ has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.692 \newpage
+               <./03_chap2_theoretical-background_files/figure-latex/chap2.4 -1
+.pdf>] [17]
+<03_chap2_theoretical-background_files/figure-latex/chap2.8 -1.pdf, id=243, 505
 .89pt x 289.08pt>
 File: 03_chap2_theoretical-background_files/figure-latex/chap2.8 -1.pdf Graphic
  file (type pdf)
 <use 03_chap2_theoretical-background_files/figure-latex/chap2.8 -1.pdf>
 Package pdftex.def Info: 03_chap2_theoretical-background_files/figure-latex/cha
-p2.8 -1.pdf  used on input line 748.
-(pdftex.def)             Requested size: 469.76265pt x 268.43579pt.
-[17pdfTeX warning (ext4): destination with the same identifier (name{figure.5})
- has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  
-l.752 \newpage
-               <./03_chap2_theoretical-background_files/figure-latex/chap2.8 -1
-.pdf>]
-<03_chap2_theoretical-background_files/figure-latex/chap2.9-1.pdf, id=246, 505.
-89pt x 289.08pt>
-File: 03_chap2_theoretical-background_files/figure-latex/chap2.9-1.pdf Graphic 
-file (type pdf)
-<use 03_chap2_theoretical-background_files/figure-latex/chap2.9-1.pdf>
-Package pdftex.def Info: 03_chap2_theoretical-background_files/figure-latex/cha
-p2.9-1.pdf  used on input line 797.
+p2.8 -1.pdf  used on input line 774.
 (pdftex.def)             Requested size: 469.76265pt x 268.43579pt.
 [18pdfTeX warning (ext4): destination with the same identifier (name{figure.6})
  has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.801 \end{document}
+l.778 \newpage
+               <./03_chap2_theoretical-background_files/figure-latex/chap2.8 -1
+.pdf>]
+<03_chap2_theoretical-background_files/figure-latex/chap2.9-1.pdf, id=260, 505.
+89pt x 289.08pt>
+File: 03_chap2_theoretical-background_files/figure-latex/chap2.9-1.pdf Graphic 
+file (type pdf)
+<use 03_chap2_theoretical-background_files/figure-latex/chap2.9-1.pdf>
+Package pdftex.def Info: 03_chap2_theoretical-background_files/figure-latex/cha
+p2.9-1.pdf  used on input line 820.
+(pdftex.def)             Requested size: 469.76265pt x 268.43579pt.
+[19pdfTeX warning (ext4): destination with the same identifier (name{figure.7})
+ has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.824 \end{document}
                      <./03_chap2_theoretical-background_files/figure-latex/chap
 2.9-1.pdf>] (./03_chap2_theoretical-background.aux)
 Package rerunfilecheck Info: File `03_chap2_theoretical-background.out' has not
@@ -841,13 +868,16 @@ Package rerunfilecheck Info: File `03_chap2_theoretical-background.out' has not
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: There were multiply-defined labels.
+
  ) 
 Here is how much of TeX's memory you used:
- 12077 strings out of 481466
- 177475 string characters out of 5920169
- 466308 words of memory out of 5000000
- 28486 multiletter control sequences out of 15000+600000
- 564378 words of font info for 53 fonts, out of 8000000 for 9000
+ 12091 strings out of 481466
+ 177938 string characters out of 5920169
+ 466344 words of memory out of 5000000
+ 28493 multiletter control sequences out of 15000+600000
+ 570351 words of font info for 55 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  66i,11n,72p,341b,329s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{EMA} has been referenced but does not exist, repl
@@ -878,11 +908,11 @@ aming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/buehl/AppDa
 ta/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/buehl/
 AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb><c:/Users/bu
 ehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on 03_chap2_theoretical-background.pdf (18 pages, 385193 bytes).
+Output written on 03_chap2_theoretical-background.pdf (19 pages, 410083 bytes).
 
 PDF statistics:
- 330 PDF objects out of 1000 (max. 8388607)
- 279 compressed objects within 3 object streams
- 84 named destinations out of 1000 (max. 500000)
- 129 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 346 PDF objects out of 1000 (max. 8388607)
+ 292 compressed objects within 3 object streams
+ 88 named destinations out of 1000 (max. 500000)
+ 134 words of extra memory for PDF output out of 10000 (max. 10000000)
 
