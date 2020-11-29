@@ -3,3 +3,39 @@ output: pdf_document
 ---
 
 ## 4. Conclusion
+
+In figure \ref{fig:chap4.1} Index 1
+
+
+```{r chap4.1, echo=FALSE, fig.cap="Index 1."}
+ind <- na.exclude(data[,1:4])
+ind.lr <- na.exclude(diff(log(ind)))
+startdate <- "2018-01-01"
+insample <- "2019-01-01"
+
+ind.lr.all <- ind.lr[paste(startdate,"/",sep="")]
+ind.lr.in <- ind.lr.all[paste("/",insample,sep="")]
+ind.lr.out <- ind.lr.all[paste(insample,"/",sep="")]
+
+
+par(mfrow=c(1,1))
+performante(xin=ind.lr.in[,1], xout=ind.lr.out[,1], main="Index 1")
+```
+
+In figure \ref{fig:chap4.2} Index 2
+
+```{r chap4.2, echo=FALSE, fig.cap="Index 2."}
+performante(xin=ind.lr.in[,2], xout=ind.lr.out[,2], main="Index 2")
+```
+
+In figure \ref{fig:chap4.3} Index 3
+
+```{r chap4.3, echo=FALSE, fig.cap="Index 3."}
+performante(xin=ind.lr.in[,3], xout=ind.lr.out[,3], main="Index 3")
+```
+
+In figure \ref{fig:chap4.4} Index 4
+
+```{r chap4.4, echo=FALSE, fig.cap="Index 4."}
+performante(xin=ind.lr.in[,4], xout=ind.lr.out[,4], main="Index 2")
+```
