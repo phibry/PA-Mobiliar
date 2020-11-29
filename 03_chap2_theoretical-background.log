@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.11.14)  29 NOV 2020 12:26
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.11.14)  29 NOV 2020 15:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -847,7 +847,7 @@ p2.6 -1.pdf  used on input line 783.
 (./03_chap2_theoretical-background.aux)
 Package rerunfilecheck Info: File `03_chap2_theoretical-background.out' has not
  changed.
-(rerunfilecheck)             Checksum: 7A81CBAD4CB37AF5D170FD01A68EEF9E;1435.
+(rerunfilecheck)             Checksum: DBEBFB38AAEBB7A54338FEA3C2048780;1435.
 
 LaTeX Warning: There were undefined references.
 
@@ -891,7 +891,7 @@ aming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/buehl/AppDa
 ta/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/buehl/
 AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb><c:/Users/bu
 ehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on 03_chap2_theoretical-background.pdf (19 pages, 395201 bytes).
+Output written on 03_chap2_theoretical-background.pdf (19 pages, 395098 bytes).
 
 PDF statistics:
  334 PDF objects out of 1000 (max. 8388607)

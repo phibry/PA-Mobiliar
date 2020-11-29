@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.11.14)  26 NOV 2020 17:36
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.11.14)  29 NOV 2020 15:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -698,7 +698,7 @@ File: 04_chap3_Methodology_files/figure-latex/chap 3.1.3-1.pdf Graphic file (ty
 pe pdf)
 <use 04_chap3_Methodology_files/figure-latex/chap 3.1.3-1.pdf>
 Package pdftex.def Info: 04_chap3_Methodology_files/figure-latex/chap 3.1.3-1.p
-df  used on input line 144.
+df  used on input line 145.
 (pdftex.def)             Requested size: 469.75496pt x 469.75496pt.
 <04_chap3_Methodology_files/figure-latex/chap 3.1.4-1.pdf, id=42, 1084.05pt x 1
 084.05pt>
@@ -706,10 +706,10 @@ File: 04_chap3_Methodology_files/figure-latex/chap 3.1.4-1.pdf Graphic file (ty
 pe pdf)
 <use 04_chap3_Methodology_files/figure-latex/chap 3.1.4-1.pdf>
 Package pdftex.def Info: 04_chap3_Methodology_files/figure-latex/chap 3.1.4-1.p
-df  used on input line 145.
+df  used on input line 146.
 (pdftex.def)             Requested size: 469.75496pt x 469.75496pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 144--146
+Underfull \hbox (badness 10000) in paragraph at lines 145--147
 [][]
  []
 
@@ -720,10 +720,10 @@ File: 04_chap3_Methodology_files/figure-latex/chap 3.1.5-1.pdf Graphic file (ty
 pe pdf)
 <use 04_chap3_Methodology_files/figure-latex/chap 3.1.5-1.pdf>
 Package pdftex.def Info: 04_chap3_Methodology_files/figure-latex/chap 3.1.5-1.p
-df  used on input line 152.
+df  used on input line 153.
 (pdftex.def)             Requested size: 469.75496pt x 469.75496pt.
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1
-56.
+57.
 (c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [3 <./04_chap3_Methodology_files/figure-latex/chap 3.1.4-1.pdf>] [4pdfTeX war
@@ -731,129 +731,9 @@ ning (ext4): destination with the same identifier (name{figure.2}) has been alr
 eady used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.374 \end{verbatim}
-                     <./04_chap3_Methodology_files/figure-latex/chap 3.1.5-1.pd
-f>] [5] [6] [7]
-<04_chap3_Methodology_files/figure-latex/chap 3.1.5-2.pdf, id=91, 1084.05pt x 1
-084.05pt>
-File: 04_chap3_Methodology_files/figure-latex/chap 3.1.5-2.pdf Graphic file (ty
-pe pdf)
-<use 04_chap3_Methodology_files/figure-latex/chap 3.1.5-2.pdf>
-Package pdftex.def Info: 04_chap3_Methodology_files/figure-latex/chap 3.1.5-2.p
-df  used on input line 378.
-(pdftex.def)             Requested size: 469.75496pt x 469.75496pt.
-[8] [9pdfTeX warning (ext4): destination with the same identifier (name{figure.
-3}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  
-l.382 \newpage
-               <./04_chap3_Methodology_files/figure-latex/chap 3.1.5-2.pdf>]
-<04_chap3_Methodology_files/figure-latex/chap3.2 ma crossover-1.pdf, id=108, 46
-9.755pt x 325.215pt>
-File: 04_chap3_Methodology_files/figure-latex/chap3.2 ma crossover-1.pdf Graphi
-c file (type pdf)
-<use 04_chap3_Methodology_files/figure-latex/chap3.2 ma crossover-1.pdf>
-Package pdftex.def Info: 04_chap3_Methodology_files/figure-latex/chap3.2 ma cro
-ssover-1.pdf  used on input line 400.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<04_chap3_Methodology_files/figure-latex/chap3.2 ma crossover-2.pdf, id=109, 46
-9.755pt x 325.215pt>
-File: 04_chap3_Methodology_files/figure-latex/chap3.2 ma crossover-2.pdf Graphi
-c file (type pdf)
-<use 04_chap3_Methodology_files/figure-latex/chap3.2 ma crossover-2.pdf>
-Package pdftex.def Info: 04_chap3_Methodology_files/figure-latex/chap3.2 ma cro
-ssover-2.pdf  used on input line 401.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<04_chap3_Methodology_files/figure-latex/chap3.2 ma crossover-3.pdf, id=110, 46
-9.755pt x 325.215pt>
-File: 04_chap3_Methodology_files/figure-latex/chap3.2 ma crossover-3.pdf Graphi
-c file (type pdf)
-<use 04_chap3_Methodology_files/figure-latex/chap3.2 ma crossover-3.pdf>
-Package pdftex.def Info: 04_chap3_Methodology_files/figure-latex/chap3.2 ma cro
-ssover-3.pdf  used on input line 402.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<04_chap3_Methodology_files/figure-latex/chap3.2 ma crossover-4.pdf, id=111, 46
-9.755pt x 325.215pt>
-File: 04_chap3_Methodology_files/figure-latex/chap3.2 ma crossover-4.pdf Graphi
-c file (type pdf)
-<use 04_chap3_Methodology_files/figure-latex/chap3.2 ma crossover-4.pdf>
-Package pdftex.def Info: 04_chap3_Methodology_files/figure-latex/chap3.2 ma cro
-ssover-4.pdf  used on input line 403.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-
-Overfull \hbox (138.76308pt too wide) in paragraph at lines 400--404
- []\T1/lmr/bx/n/10 3.2.1. sma sig-nals to trade[] []
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 400--404
-[]
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 400--404
-[]
- []
-
-[10] [11]
-Overfull \vbox (2.94283pt too high) has occurred while \output is active []
-
-[12 <./04_chap3_Methodology_files/figure-latex/chap3.2 ma crossover-1.pdf> <./0
-4_chap3_Methodology_files/figure-latex/chap3.2 ma crossover-2.pdf>] [13 <./04_c
-hap3_Methodology_files/figure-latex/chap3.2 ma crossover-3.pdf>]
-<04_chap3_Methodology_files/figure-latex/chap3.2 ma crossover-5.pdf, id=152, 46
-9.755pt x 325.215pt>
-File: 04_chap3_Methodology_files/figure-latex/chap3.2 ma crossover-5.pdf Graphi
-c file (type pdf)
-<use 04_chap3_Methodology_files/figure-latex/chap3.2 ma crossover-5.pdf>
-Package pdftex.def Info: 04_chap3_Methodology_files/figure-latex/chap3.2 ma cro
-ssover-5.pdf  used on input line 409.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<04_chap3_Methodology_files/figure-latex/chap3.2 ma crossover-6.pdf, id=153, 46
-9.755pt x 325.215pt>
-File: 04_chap3_Methodology_files/figure-latex/chap3.2 ma crossover-6.pdf Graphi
-c file (type pdf)
-<use 04_chap3_Methodology_files/figure-latex/chap3.2 ma crossover-6.pdf>
-Package pdftex.def Info: 04_chap3_Methodology_files/figure-latex/chap3.2 ma cro
-ssover-6.pdf  used on input line 410.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<04_chap3_Methodology_files/figure-latex/chap3.2 ma crossover-7.pdf, id=154, 46
-9.755pt x 325.215pt>
-File: 04_chap3_Methodology_files/figure-latex/chap3.2 ma crossover-7.pdf Graphi
-c file (type pdf)
-<use 04_chap3_Methodology_files/figure-latex/chap3.2 ma crossover-7.pdf>
-Package pdftex.def Info: 04_chap3_Methodology_files/figure-latex/chap3.2 ma cro
-ssover-7.pdf  used on input line 411.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<04_chap3_Methodology_files/figure-latex/chap3.2 ma crossover-8.pdf, id=155, 46
-9.755pt x 325.215pt>
-File: 04_chap3_Methodology_files/figure-latex/chap3.2 ma crossover-8.pdf Graphi
-c file (type pdf)
-<use 04_chap3_Methodology_files/figure-latex/chap3.2 ma crossover-8.pdf>
-Package pdftex.def Info: 04_chap3_Methodology_files/figure-latex/chap3.2 ma cro
-ssover-8.pdf  used on input line 412.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 409--413
-[][]
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 409--413
-[]
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 409--413
-[]
- []
-
-[14 <./04_chap3_Methodology_files/figure-latex/chap3.2 ma crossover-4.pdf>] [15
- <./04_chap3_Methodology_files/figure-latex/chap3.2 ma crossover-5.pdf>] [16 <.
-/04_chap3_Methodology_files/figure-latex/chap3.2 ma crossover-6.pdf>] [17 <./04
-_chap3_Methodology_files/figure-latex/chap3.2 ma crossover-7.pdf>] [18 <./04_ch
-ap3_Methodology_files/figure-latex/chap3.2 ma crossover-8.pdf>] (./04_chap3_Met
-hodology.aux)
+l.162 \newpage
+               <./04_chap3_Methodology_files/figure-latex/chap 3.1.5-1.pdf>] [5
+] (./04_chap3_Methodology.aux)
 Package rerunfilecheck Info: File `04_chap3_Methodology.out' has not changed.
 (rerunfilecheck)             Checksum: E606773280F37FCD7C339057B8654C58;455.
 
@@ -861,13 +741,13 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 11986 strings out of 481466
- 177042 string characters out of 5920169
- 478134 words of memory out of 5000000
- 28440 multiletter control sequences out of 15000+600000
+ 11918 strings out of 481466
+ 173398 string characters out of 5920169
+ 463808 words of memory out of 5000000
+ 28395 multiletter control sequences out of 15000+600000
  559750 words of font info for 51 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 66i,9n,72p,254b,477s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 66i,9n,72p,254b,331s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{GARCH} has been referenced but does not exist, re
 placed by a fixed one
 
@@ -880,10 +760,10 @@ pdfTeX warning (dest): name{ts-analysis} has been referenced but does not exist
 lmbx12.pfb><c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/publi
 c/lm/lmr10.pfb><c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/p
 ublic/lm/lmtt10.pfb>
-Output written on 04_chap3_Methodology.pdf (18 pages, 536379 bytes).
+Output written on 04_chap3_Methodology.pdf (5 pages, 347889 bytes).
 PDF statistics:
- 234 PDF objects out of 1000 (max. 8388607)
- 182 compressed objects within 2 object streams
- 39 named destinations out of 1000 (max. 500000)
- 90 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 110 PDF objects out of 1000 (max. 8388607)
+ 90 compressed objects within 1 object stream
+ 25 named destinations out of 1000 (max. 500000)
+ 45 words of extra memory for PDF output out of 10000 (max. 10000000)
 
