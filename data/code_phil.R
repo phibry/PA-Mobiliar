@@ -574,3 +574,444 @@ ind1.out <- ind1.all[paste(insample,"/",sep="")]
 
 
 
+
+#.####
+#.####
+#.####
+#.####
+source("add/libraries.R")
+source("add/functions_PA.R")
+load("data/data_mobi")
+
+
+ind <- na.exclude(data[,1:4])
+ind.lr <- na.exclude(diff(log(ind)))
+
+plot(ind)
+plot(ind.lr)
+
+
+# Sample-Sizing
+# Can be iterated to find the best model
+startdate <- "2018-01-01"
+insample <- "2019-01-01"
+
+# time-window
+ind.all <- ind[paste(startdate,"/",sep="")]
+ind.lr.all <- ind.lr[paste(startdate,"/",sep="")]
+
+# in-sample
+ind.in <- ind.all[paste("/",insample,sep="")]
+ind.lr.in <- ind.lr.all[paste("/",insample,sep="")]
+
+# out-of sample
+ind.out <- ind.all[paste(insample,"/",sep="")]
+ind.lr.out <- ind.lr.all[paste(insample,"/",sep="")]
+
+head(ind.all)
+tail(ind.all)
+
+head(ind.in)
+tail(ind.in)
+
+head(ind.out)
+tail(ind.out)
+
+
+## Models####
+## Index 1####
+## ARIMA####
+ind.lr.out[,1]
+
+chart.ACFplus(ind.lr.in[,1])
+pacf(ind.lr.in[,1])
+pacf(ind.lr.in[,2])
+pacf(ind.lr.in[,3])
+pacf(ind.lr.in[,4])
+
+ind1.arma <- arima(ind.lr.in[,1], order=c(1,0,0))
+tsdiag(ind1.arma)
+ind1.arma$coef
+
+mat_out1 <- cbind(ind.lr.out[,1],
+                  lag(ind.lr.out[,1], k=1))
+head(mat_out1, 10)
+
+
+arima_pred1 <- ind1.arma$coef[length(ind1.arma$coef)] +
+  as.matrix(mat_out1[,2:ncol(mat_out1)])%*%ind1.arma$coef[1:(length(ind1.arma$coef)-1)]
+
+
+# Compare Out-Of-Sample with AR(1)
+par(mfrow=c(2,1))
+plot(ind.lr.out[,1])
+plot(as.xts(arima_pred1), type="l")
+
+
+# Trading: Signum
+ret1_arima <- sign(arima_pred1)*ind.lr.out[,1]
+
+# Sharpe
+sharpe_bnh <- as.double(sqrt(250) * mean(ind.lr.out[,1]) / sqrt(var(ind.lr.out[,1])))
+sharpe1_arima <- as.double(sqrt(250) * mean(ret1_arima, na.rm=T) / sqrt(var(ret1_arima, na.rm=T)))
+
+
+# Plot
+par(mfrow=c(1,1))
+plot(cumsum(ind.lr.out[,1]),main=paste("Buy & Hold: Sharpe=",round(sharpe_bnh,2),sep=""))
+lines(cumsum(na.exclude(ret1_arima)),lty=2, col="red")
+
+
+## M-GARCH####
+ind1.garch_11 <- garchFit(~garch(1,1), data=ind.lr.in[,1], delta=2,
+                       include.delta=F, include.mean=F, trace=F)
+summary(ind1.garch_11)
+# ARMA(1,0)+GARCH(1,1): -12.38373
+# ARMA(0,0)+GARCH(1,1): -12.40257
+
+# Sigma_t in-sample
+sigma_t_in <- ind1.garch_11@sigma.t
+names(sigma_t_in) <- index(ind.lr.in[,1])
+sigma_t_in <- as.xts(sigma_t_in)
+index(sigma_t_in) <- index(ind.lr.in[,1])
+
+# Regression
+lm_obj <- lm(ind.lr.in[,1] ~ sigma_t_in)
+summary(lm_obj)
+
+# Sigma_t out of sample
+compute_sigma_t_out_of_sample_func <- function(x_out, y.garch_11, x_in)
+{
+  # Vola based on in-sample parameters
+  sigma_t <- rep(NA,length(x_out))
+  a <- y.garch_11@fit$coef["beta1"]
+  b <- y.garch_11@fit$coef["alpha1"]
+  d <- y.garch_11@fit$coef["omega"]
+  
+  # First data point: based on last in-sample data
+  # Formula: variance-equation
+  sigma_t[1] <- sqrt(d + a*y.garch_11@sigma.t[length(y.garch_11@sigma.t)]^2 +
+                       b*x_in[length(x_in)]^2)
+  
+  # On out-of-sample span
+  for (i in 2:length(x_out))
+  {
+    sigma_t[i] <- sqrt(d+a*sigma_t[i-1]^2+b*x_out[i-1]^2)
+  }
+  # Transform sigma_t into xts object
+  names(sigma_t) <- index(x_out)
+  sigma_t<-as.xts(sigma_t)
+  index(sigma_t) <- index(x_out)
+  return(list(sigma_t=sigma_t))
+}
+sigma_t_out <- compute_sigma_t_out_of_sample_func(ind.lr.out[,1], ind1.garch_11, ind.lr.in[,1])$sigma_t
+
+# MGARCH-Prediction
+mgarch_predict <- lm_obj$coefficients[1]+lm_obj$coefficients[2]*sigma_t_out
+
+# MGARCH-Returns
+returns_mgarch <- sign(mgarch_predict)*ind.lr.out[,1]
+
+# Sharpe
+sharpe1_mgarch <- as.double(sqrt(250) * mean(returns_mgarch, na.rm=T) / sqrt(var(returns_mgarch, na.rm=T)))
+
+
+par(mfrow=c(1,1))
+plot(cumsum(ind.lr.out[,1]),main=paste("Buy & Hold: Sharpe=",round(sharpe_bnh,2),sep=""))
+lines(cumsum(na.exclude(ret1_arima)),lty=2, col="red")
+lines(cumsum(na.exclude(returns_mgarch)), lty=2, col="blue")
+
+sharpe_bnh
+sharpe1_mgarch
+
+
+
+#.####
+## Index 2####
+# ARMA####
+ind.lr.out[,2]
+
+chart.ACFplus(ind.lr.in[,2])
+pacf(ind.lr.in[,2])
+
+ind2.arma <- arima(ind.lr.in[,2], order=c(2,0,0))
+tsdiag(ind2.arma)
+ind2.arma$coef
+
+mat_out2 <- cbind(ind.lr.out[,2],
+                  lag(ind.lr.out[,2], k=1),
+                  lag(ind.lr.out[,2], k=2))
+head(mat_out2, 10)
+
+
+arima_pred2 <- ind2.arma$coef[length(ind2.arma$coef)] +
+  as.matrix(mat_out2[,2:ncol(mat_out2)])%*%ind2.arma$coef[1:(length(ind2.arma$coef)-1)]
+
+
+# Compare Out-Of-Sample with AR(7)
+par(mfrow=c(2,1))
+plot(ind.lr.out[,1])
+plot(as.xts(arima_pred2), type="l")
+
+
+# Trading: Signum
+ret2_arima <- sign(arima_pred2)*ind.lr.out[,1]
+
+# Sharpe
+sharpe_bnh <- as.double(sqrt(250) * mean(ind.lr.out[,1]) / sqrt(var(ind.lr.out[,1])))
+sharpe2_arima <- as.double(sqrt(250) * mean(ret2_arima, na.rm=T) / sqrt(var(ret2_arima, na.rm=T)))
+
+
+# Plot
+par(mfrow=c(1,1))
+plot(cumsum(ind.lr.out[,1]),main=paste("Index 2: Buy & Hold: Sharpe=",round(sharpe_bnh,2),sep=""))
+lines(cumsum(na.exclude(ret2_arima)), lty=2, col="red")
+
+# M-GARCH####
+ind2.garch <- garchFit(~garch(1,1), data=ind.lr.in[,2], delta=2,
+                            include.delta=F, include.mean=T, trace=F)
+summary(ind2.garch)
+ljungplotGarch(ind2.garch@residuals, ind2.garch@sigma.t)
+
+
+# Sigma_t in-sample
+sigma_t_in <- ind2.garch@sigma.t
+names(sigma_t_in) <- index(ind.lr.in[,2])
+sigma_t_in <- as.xts(sigma_t_in)
+index(sigma_t_in) <- index(ind.lr.in[,2])
+
+# Regression
+lm_obj <- lm(ind.lr.in[,2] ~ sigma_t_in)
+summary(lm_obj)
+
+# Sigma_t out of sample
+sigma_t_out <- compute_sigma_t_out_of_sample_func(ind.lr.out[,2], ind1.garch_11, ind.lr.in[,2])$sigma_t
+
+# MGARCH-Prediction
+mgarch_predict <- lm_obj$coefficients[1]+lm_obj$coefficients[2]*sigma_t_out
+
+# MGARCH-Returns
+returns_mgarch <- sign(mgarch_predict)*ind.lr.out[,2]
+
+# Sharpe
+sharpe2_mgarch <- as.double(sqrt(250) * mean(returns_mgarch, na.rm=T) / sqrt(var(returns_mgarch, na.rm=T)))
+
+
+par(mfrow=c(1,1))
+plot(cumsum(ind.lr.out[,2]),main=paste("Buy & Hold: Sharpe=",round(sharpe_bnh,2),sep=""))
+lines(cumsum(na.exclude(ret2_arima)),lty=2, col="red")
+lines(cumsum(na.exclude(returns_mgarch)), lty=2, col="blue")
+
+sharpe_bnh
+sharpe1_mgarch
+
+
+
+#.####
+## Index 3####
+ind3.garch <- garchFit(~garch(1,1), data=ind.lr.in[,3], delta=2,
+                       include.delta=F, include.mean=F, trace=F)
+summary(ind3.garch)
+ljungplotGarch(ind3.garch@residuals, ind3.garch@sigma.t)
+
+
+#.####
+## Index 4####
+# ARMA####
+ind.lr.out[,4]
+
+chart.ACFplus(ind.lr.in[,4])
+pacf(ind.lr.in[,4])
+
+ind4.arma <- arima(ind.lr.in[,4], order=c(2,0,0))
+# auto.arima(ind.lr.in[,4])
+
+tsdiag(ind4.arma)
+ind4.arma$coef
+
+mat_out4 <- cbind(ind.lr.out[,4],
+                  lag(ind.lr.out[,4], k=1),
+                  lag(ind.lr.out[,4], k=2))
+head(mat_out4, 10)
+
+
+arima_pred4 <- ind4.arma$coef[length(ind4.arma$coef)] +
+  as.matrix(mat_out4[,2:ncol(mat_out4)])%*%ind4.arma$coef[1:(length(ind4.arma$coef)-1)]
+
+
+# Compare Out-Of-Sample with AR(7)
+par(mfrow=c(2,1))
+plot(ind.lr.out[,4])
+plot(as.xts(arima_pred4), type="l")
+
+
+# Trading: Signum
+ret4_arima <- sign(arima_pred1)*ind.lr.out[,4]
+
+# Sharpe
+sharpe_bnh <- as.double(sqrt(250) * mean(ind.lr.out[,4]) / sqrt(var(ind.lr.out[,4])))
+sharpe4_arima <- as.double(sqrt(250) * mean(ret4_arima, na.rm=T) / sqrt(var(ret4_arima, na.rm=T)))
+
+
+# Plot
+par(mfrow=c(2,1))
+plot(cumsum(ind.lr.out[,4]),main=paste("Buy & Hold: Sharpe=",round(sharpe_bnh,2),sep=""))
+plot(cumsum(na.exclude(ret4_arima)),main=paste("ARIMA: Sharpe=",round(sharpe4_arima,2),sep=""))
+
+acf(ind.lr.out[,4])
+
+
+# GARCH####
+ind4.garch <- garchFit(~garch(1,1), data=ind.lr.in[,4], delta=2,
+                       include.delta=F, include.mean=F, trace=F)
+summary(ind4.garch)
+ljungplotGarch(ind4.garch@residuals, ind4.garch@sigma.t)
+
+
+
+
+#.####
+## Automation####
+ind <- na.exclude(data[,1:4])
+ind.lr <- na.exclude(diff(log(ind)))
+startdate <- "2018-01-01"
+insample <- "2019-01-01"
+
+ind.lr.all <- ind.lr[paste(startdate,"/",sep="")]
+ind.lr.in <- ind.lr.all[paste("/",insample,sep="")]
+ind.lr.out <- ind.lr.all[paste(insample,"/",sep="")]
+
+
+compute_sigma_t_out_of_sample_func <- function(x_out, y.garch_11, x_in)
+{
+  # Vola based on in-sample parameters
+  sigma_t <- rep(NA,length(x_out))
+  a <- y.garch_11@fit$coef["beta1"]
+  b <- y.garch_11@fit$coef["alpha1"]
+  d <- y.garch_11@fit$coef["omega"]
+  
+  # First data point: based on last in-sample data
+  # Formula: variance-equation
+  sigma_t[1] <- sqrt(d + a*y.garch_11@sigma.t[length(y.garch_11@sigma.t)]^2 +
+                       b*x_in[length(x_in)]^2)
+  
+  # On out-of-sample span
+  for (i in 2:length(x_out))
+  {
+    sigma_t[i] <- sqrt(d+a*sigma_t[i-1]^2+b*x_out[i-1]^2)
+  }
+  # Transform sigma_t into xts object
+  names(sigma_t) <- index(x_out)
+  sigma_t<-as.xts(sigma_t)
+  index(sigma_t) <- index(x_out)
+  return(list(sigma_t=sigma_t))
+}
+
+performante <- function(xin, xout, threshold_p=0.7, main="") {
+  
+  ## AR-Model-Order
+  testerino <- rep(0, 10)
+  j <- 1
+  while (!all(testerino > threshold_p)) {
+    # fit an ar-model
+    arma_obj <- arima(xin, order=c(j,0,0))
+    
+    # estiamte the Ljung-Box statistics
+    for (i in 1:10) {
+      testerino[i] <- Box.test(arma_obj$residuals, lag = i, type = c("Ljung-Box"), fitdf = 0)$p.value
+    }
+    j <- j + 1
+  }
+  ##
+  ##
+  ##
+  ##
+  ## AR-Prediction
+  mat_out <- cbind(xout)
+  for (k in 1:(j-1)) {
+    mat_out <- cbind(mat_out, lag(xout, k=k))
+  }
+  ar_pred <- arma_obj$coef[length(arma_obj$coef)] +
+    as.matrix(mat_out[,2:ncol(mat_out)])%*%arma_obj$coef[1:(length(arma_obj$coef)-1)]
+  ##
+  ##
+  ##
+  ##
+  ## 
+  ## MGARCH
+  garch_11 <- garchFit(~garch(1,1), data=xin, delta=2,
+                            include.delta=F, include.mean=F, trace=F)
+  ##
+  ##
+  ##
+  ##
+  ## 
+  # Sigma_t in-sample
+  sigma_t_in <- garch_11@sigma.t
+  names(sigma_t_in) <- index(xin)
+  sigma_t_in <- as.xts(sigma_t_in)
+  index(sigma_t_in) <- index(xin)
+  ##
+  ##
+  ##
+  ##
+  ## 
+  # Regression
+  lm_obj <- lm(xin ~ sigma_t_in)
+  ##
+  ##
+  ##
+  ##
+  ## 
+  # Sigma_t out of sample
+  sigma_t_out <- compute_sigma_t_out_of_sample_func(xout, garch_11, xin)$sigma_t
+  ##
+  ##
+  ##
+  ##
+  ## 
+  # MGARCH-Prediction
+  mgarch_predict <- lm_obj$coefficients[1]+lm_obj$coefficients[2]*sigma_t_out
+  ##
+  ##
+  ##
+  ##
+  ## 
+  ## Trading: Signum
+  ret_arima <- sign(ar_pred)*xout
+  returns_mgarch <- sign(mgarch_predict)*xout
+  ##
+  ##
+  ##
+  ##
+  ##   
+  # Sharpe
+  sharpe_bnh <- as.double(sqrt(250) * mean(xout) / sqrt(var(xout)))
+  sharpe_ar <- as.double(sqrt(250) * mean(ret_arima, na.rm=T) / sqrt(var(ret_arima, na.rm=T)))
+  sharpe_mgarch <- as.double(sqrt(250) * mean(returns_mgarch, na.rm=T) / sqrt(var(returns_mgarch, na.rm=T)))
+  ##
+  ##
+  ##
+  ##
+  ## 
+  # Plot
+  #par(mfrow=c(1,1))
+  (plot(cumsum(xout), main=main, lwd=1.5))
+  (lines(cumsum(na.exclude(ret_arima)), lty=2, lwd=1, col="red"))
+  (lines(cumsum(na.exclude(returns_mgarch)), lty=3, col="blue"))
+  
+  
+  print(addLegend("topleft", legend.names = c(paste("Buy & Hold:", round(sharpe_bnh, 2)),
+                                        paste("AR(",j-1,"):", round(sharpe_ar, 2)),
+                                        paste("MGARCH(1,1):", round(sharpe_mgarch, 2))),
+            lty=c(1, 2, 3),
+            lwd=c(1.5, 1, 1),
+            col=c("black", "red", "blue"),
+            cex=0.8))
+}
+
+par(mfrow=c(4,1))
+performante(xin=ind.lr.in[,1], xout=ind.lr.out[,1], main="Index 1")
+performante(xin=ind.lr.in[,2], xout=ind.lr.out[,2], main="Index 2")
+performante(xin=ind.lr.in[,3], xout=ind.lr.out[,3], main="Index 3")
+performante(xin=ind.lr.in[,4], xout=ind.lr.out[,4], main="Index 4")
