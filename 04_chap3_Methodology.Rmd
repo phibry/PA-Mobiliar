@@ -56,24 +56,41 @@ kbl(c, caption="Correlations oft the four indexes", booktabs = T) %>%
 Applying the natural logarithm to the series is an approach to cancel out increasing volatility \ref{fig:chap3.1.2}. 
 
 
+<<<<<<< HEAD
 ```{r,chap3.1.2, echo = FALSE, fig.dim=c(7,3.5), fig.cap="Visualization log_indizes"}
 plot(log_ind, main="Log_Indexes 1-4", col=2:5, lwd=1,legend.loc="topleft") #plotting log data
+=======
+```{r,chap 3.1.2. ,include=T, echo = F,fig.dim=c(7,3.5),message=F, fig.cap="Visualization log_indizes"}
+plot(log_ind, main="Log_Indexes 1-4", col=1:4, lwd=1,legend.loc="topleft") #plotting log data
+>>>>>>> main
 
 ```
 
 \newpage
 
+<<<<<<< HEAD
 By taking the returns of the transformed series we can visualize volatility clusters as seen in figure \ref{fig:chap3.1.3},
 clearly visible are the increasng volatiliy clusters in the finbanacial crisis, due the ghigh correaltion the indezes look pretty similir
 
 ```{r,chap3.1.3, include=T, echo = F,message=F,fig.dim=c(15,15), fig.cap="Visualization log returns"}
 par(mfrow=c(4,1))
+=======
+By taking the returns of the transformed series we can visualize volatility clusters as seen in figure \ref{fig:chap3.1.3.},
+Clearly visible are the high spikes in the times of the financial crisis 2007-2009. Also at the end of the series the impact of covid in march 2020 is remarkable.
 
 
-plot(log_ret_ind[,1],main="Log_returns index 1",col = 2)
-plot(log_ret_ind[,2],main="Log_returns index 2",col = 3)
-plot(log_ret_ind[,3],main="Log_returns index 3",col = 4)
-plot(log_ret_ind[,4],main="Log_returns index 4",col = 5)
+
+```{r,chap 3.1.3,include=T, echo = F,message=F,fig.dim=c(15,15), fig.cap="Visualization log returns"}
+>>>>>>> main
+
+
+plot(log_ret_ind,main="Log_returns indexes",legend.loc="topleft")
+
+#par(mfrow=c(4,1))
+#plot(log_ret_ind[,1],main="Log_returns index 1",col = 1)
+#plot(log_ret_ind[,2],main="Log_returns index 2",col = 2)
+#plot(log_ret_ind[,3],main="Log_returns index 3",col = 3)
+#plot(log_ret_ind[,4],main="Log_returns index 4",col = 4)
 
 
 start_date="2015-08-01"
@@ -104,9 +121,10 @@ plot(y_ind[,4],main=paste("Log index 4,","vola=",vola_y_ind[4],sep=" "),col = 5)
 ```
 
 #### 3.1.5 periodicity
-```{r,chap 3.1.5,include=T, echo = F,message=F,fig.dim=c(15,15), fig.cap="peridodogramm ",warning= F}
+```{r,chap 3.1.5,include=T, echo = F,message=F,fig.dim=c(15,15), fig.cap="peridodogramm ",warning= F,fig.keep="last"}
+
 source("add/periodogramm.R")
-per(x_ind[,1],T)
+#per(x_ind[,1],T)
 
 charts.PerformanceSummary(x_ind[,1], main="Naive Buy Rule")
 SharpeRatio(x_ind,FUN="StdDev")
@@ -128,7 +146,7 @@ in Section 2 we have learned different indicators and models for timeseries. the
 #### 3.2.1. sma signals to trade 
 
 
-```{r chap3.2 ma crossover, echo=FALSE, fig.cap="conversion data"}
+```{r chap3.2 ma crossover, echo=FALSE, fig.cap="conversion data",include=F}
 
 load("data/data_mobi") 
 n=20
