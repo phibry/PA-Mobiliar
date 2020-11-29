@@ -109,7 +109,9 @@ source("add/periodogramm.R")
 per(x_ind[,1],T)
 
 charts.PerformanceSummary(x_ind[,1], main="Naive Buy Rule")
+SharpeRatio(x_ind,FUN="StdDev")
 
+SharpeRatio(ind[,1],int[,11],FUN="StdDev")
 ```
 
 
@@ -132,7 +134,7 @@ load("data/data_mobi")
 n=20
 # lentgths
 n1=10
-n2 =50
+n2 =250
 k=2
 
 mobidat= data[,4] # chose the row and horizon
@@ -171,12 +173,14 @@ ret = return*trade
 
 mean(ret,na.rm=T)
 names(ret)="filter"
-
+SharpeRatio(ret,FUN="StdDev")
 
 chart.Bar(ret,main="returns daily")
 chart.CumReturns(ret, main="Naive Rule: Cum Returns")
 chart.Drawdown(ret,main="Naive Rule: Percentage Drawdown")
 charts.PerformanceSummary(ret, main="Naive Buy Rule")
+SharpeRatio(data,FUN="StdDev")
+
 ```
 
 
