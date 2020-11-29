@@ -286,7 +286,7 @@ You can see how the red lines are approaching the black dotted lines ($0 \pm 1.9
 
 &nbsp;
 
-If you want to adopt a GARCH model and you discover non-vanishing autocorrelations in the standardized residuals $\hat{u}_{t}$, the model can be extended with an ARMA part.
+If you want to adopt a GARCH model and you discover non-vanishing autocorrelations in the standardized residuals $\hat{u}_{t}$, the model can be extended with an ARMA part to counteract the autocorrelations.
 
 \begin{eqnarray}
 y_{t}&=&\mu + a_{1}y_{t-1}+...+a_{p}y_{t-p}+\epsilon_{t}+b_{1}\epsilon_{t-1}+...+b_{q}\epsilon_{t-q} \label{eq:arma-garch1} \\
@@ -297,6 +297,32 @@ y_{t}&=&\mu + a_{1}y_{t-1}+...+a_{p}y_{t-p}+\epsilon_{t}+b_{1}\epsilon_{t-1}+...
 This model contains now 4 different model orders: *p*,*q*,*n* and *m*. Experience shows that for financial time series, a model order of *n*=*m*=$1$ and *p*,*q*$\leq 1$ is often sufficient to fit the data to an ARMA-GARCH model.
 
 The equation \ref{eq:arma-garch1} is called the *mean-equation* and describes the conditional mean of the process, which is used to obtain optimal point forecast. The equation \ref{eq:arma-garch2} defines the variance of the process and is called *variance-equation*, which is used for the forecast error variance [@eco2].
+
+\newpage
+
+#### 2.2.4. M-GARCH
+
+&nbsp;
+
+The last model that is considered as a forecast model in this thesis is the so-called MGARCH model. Highly volatile phases indicate downturns. Market participants tend to oversell during these downturns. Overselling leads to inflated volumes and this in turn leads to inflated volatilities. This model can be helpful since it emphasizes recession and crisis dynamics.
+
+\begin{align} \label{eq:mgarch}
+  r_{t} &= \mathrm{log}(x_{t})-\mathrm{log}(x_{t-1}) \nonumber \\
+  r_{t} &= \mu+e\sigma_{t}+\epsilon_{t} \\
+  \epsilon_{t} &= \sigma_{t}u_{t} \nonumber
+\end{align}
+
+where
+
+- $x_{t}$ is the original data (typically non-stationary)
+- $r_{t}$ are the log-returns (stationary)
+- $\mu$ is the long-term drift
+- $\epsilon_{t}$ is a volacluster process (GARCH)
+- $e$ is a constant (a parameter to be estimated), $e>0$ implies a larger expected return. $e<0$ would imply a smaller expected return. If $e=0$ then the MGARCH-effect vanishes [@slide_eco3_3].
+
+For this model, the in-sample conditional standard deviations (volatilities) from any GARCH process are determined and the out-of-sample conditional standard deviation for obtaining forecasts of the future returns is then calculated by regression.
+
+$$\hat{r}_{t+1}=\hat{\mu}+\hat{e}\hat{\sigma}_{t+1}$$
 
 \newpage
 

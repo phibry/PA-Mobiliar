@@ -11,7 +11,7 @@ This paper applies time-series analysis to these short price movements to create
 
 ### 1.1. Data Analysis
 
-The dataset which will be analyzed in this paper contains 4 tradeable indexes, a visualization of the data is shown below in figure \ref{fig:chap1.1.}.
+The dataset which will be analyzed in this paper contains 4 tradeable indexes, a visualization of the data is shown below in figure \ref{fig:chap1.1}.
 
 ```{r chap1.1, echo=FALSE, fig.cap="Visualization of the 4 indexes"}
 load("data/data_mobi")
