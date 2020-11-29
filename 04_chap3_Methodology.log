@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.11.14)  29 NOV 2020 15:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.11.14)  29 NOV 2020 15:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**03_chap2_theoretical-background.tex
-(./03_chap2_theoretical-background.tex
+**04_chap3_Methodology.tex
+(./04_chap3_Methodology.tex
 LaTeX2e <2020-10-01> patch level 2
 L3 programming layer <2020-10-27> xparse <2020-03-03> (c:/Users/buehl/AppData/R
 oaming/TinyTeX/texmf-dist/tex/latex/base/article.cls
@@ -536,15 +536,8 @@ d-pdftex.def
 File: l3backend-pdftex.def 2020-09-24 L3 backend support: PDF output (pdfTeX)
 \l__kernel_color_stack_int=\count295
 \l__pdf_internal_box=\box67
-) (./03_chap2_theoretical-background.aux
-
-LaTeX Warning: Label `eq:mac' multiply defined.
-
-
-LaTeX Warning: Label `eq:mac' multiply defined.
-
-)
-\openout1 = `03_chap2_theoretical-background.aux'.
+) (./04_chap3_Methodology.aux)
+\openout1 = `04_chap3_Methodology.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 78.
 LaTeX Font Info:    ... okay on input line 78.
@@ -595,9 +588,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 78.
 LaTeX Info: Redefining \pageref on input line 78.
 LaTeX Info: Redefining \nameref on input line 78.
-(./03_chap2_theoretical-background.out) (./03_chap2_theoretical-background.out)
+(./04_chap3_Methodology.out) (./04_chap3_Methodology.out)
 \@outlinefile=\write3
-\openout3 = `03_chap2_theoretical-background.out'.
+\openout3 = `04_chap3_Methodology.out'.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -633,269 +626,144 @@ LaTeX Info: Redefining \nameref on input line 78.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 9
-9.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 1
+10.
 (c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 9
-9.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
+10.
 (c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-99.
+110.
 (c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-99.
+110.
 (c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 99.
+(Font)              <10> on input line 110.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 99.
+(Font)              <7> on input line 110.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 99.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 99.
-
+(Font)              <5> on input line 110.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 110
+.
 (c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 99.
-
+LaTeX Font Info:    Trying to load font information for U+msb on input line 110
+.
 (c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 
-LaTeX Warning: Reference `fig:chap2.1' on page 1 undefined on input line 130.
+LaTeX Warning: Reference `fig:chap3.1.2.' on page 1 undefined on input line 129
+.
 
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1
-34.
-(c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
-File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-<03_chap2_theoretical-background_files/figure-latex/chap2.1-1.pdf, id=40, 469.7
-55pt x 325.215pt>
-File: 03_chap2_theoretical-background_files/figure-latex/chap2.1-1.pdf Graphic 
-file (type pdf)
-<use 03_chap2_theoretical-background_files/figure-latex/chap2.1-1.pdf>
-Package pdftex.def Info: 03_chap2_theoretical-background_files/figure-latex/cha
-p2.1-1.pdf  used on input line 145.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<04_chap3_Methodology_files/figure-latex/chap 3.1.2. -1.pdf, id=17, 505.89pt x 
+252.945pt>
+File: 04_chap3_Methodology_files/figure-latex/chap 3.1.2. -1.pdf Graphic file (
+type pdf)
+<use 04_chap3_Methodology_files/figure-latex/chap 3.1.2. -1.pdf>
+Package pdftex.def Info: 04_chap3_Methodology_files/figure-latex/chap 3.1.2. -1
+.pdf  used on input line 133.
+(pdftex.def)             Requested size: 469.76265pt x 234.88133pt.
 [1
 
 {c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdfte
-x.map}] [2 <./03_chap2_theoretical-background_files/figure-latex/chap2.1-1.pdf>
-]
-<03_chap2_theoretical-background_files/figure-latex/chap2.2-1.pdf, id=72, 469.7
-55pt x 325.215pt>
-File: 03_chap2_theoretical-background_files/figure-latex/chap2.2-1.pdf Graphic 
-file (type pdf)
-<use 03_chap2_theoretical-background_files/figure-latex/chap2.2-1.pdf>
-Package pdftex.def Info: 03_chap2_theoretical-background_files/figure-latex/cha
-p2.2-1.pdf  used on input line 157.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+x.map}pdfTeX warning (ext4): destination with the same identifier (name{table.1
+}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.137 \newpage
+              pdfTeX warning (ext4): destination with the same identifier (name
+{figure.1}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.137 \newpage
+               <./04_chap3_Methodology_files/figure-latex/chap 3.1.2. -1.pdf>]
 
-Underfull \hbox (badness 10000) in paragraph at lines 157--164
+LaTeX Warning: Reference `fig:chap3.1.3.' on page 2 undefined on input line 140
+.
+
+<04_chap3_Methodology_files/figure-latex/chap 3.1.3-1.pdf, id=41, 1084.05pt x 1
+084.05pt>
+File: 04_chap3_Methodology_files/figure-latex/chap 3.1.3-1.pdf Graphic file (ty
+pe pdf)
+<use 04_chap3_Methodology_files/figure-latex/chap 3.1.3-1.pdf>
+Package pdftex.def Info: 04_chap3_Methodology_files/figure-latex/chap 3.1.3-1.p
+df  used on input line 145.
+(pdftex.def)             Requested size: 469.75496pt x 469.75496pt.
+<04_chap3_Methodology_files/figure-latex/chap 3.1.4-1.pdf, id=42, 1084.05pt x 1
+084.05pt>
+File: 04_chap3_Methodology_files/figure-latex/chap 3.1.4-1.pdf Graphic file (ty
+pe pdf)
+<use 04_chap3_Methodology_files/figure-latex/chap 3.1.4-1.pdf>
+Package pdftex.def Info: 04_chap3_Methodology_files/figure-latex/chap 3.1.4-1.p
+df  used on input line 146.
+(pdftex.def)             Requested size: 469.75496pt x 469.75496pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 145--147
 [][]
  []
 
-
-LaTeX Warning: Reference `fig:chap2.1.2' on page 3 undefined on input line 183.
-
-
-
-LaTeX Warning: Reference `fig:chap2.1' on page 3 undefined on input line 189.
-
-[3 <./03_chap2_theoretical-background_files/figure-latex/chap2.2-1.pdf>]
-<03_chap2_theoretical-background_files/figure-latex/chap2.1.2-1.pdf, id=89, 469
-.755pt x 325.215pt>
-File: 03_chap2_theoretical-background_files/figure-latex/chap2.1.2-1.pdf Graphi
-c file (type pdf)
-<use 03_chap2_theoretical-background_files/figure-latex/chap2.1.2-1.pdf>
-Package pdftex.def Info: 03_chap2_theoretical-background_files/figure-latex/cha
-p2.1.2-1.pdf  used on input line 199.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[4pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) 
-has been already used, duplicate ignored
+[2 <./04_chap3_Methodology_files/figure-latex/chap 3.1.3-1.pdf>]
+<04_chap3_Methodology_files/figure-latex/chap 3.1.5-1.pdf, id=53, 1084.05pt x 1
+084.05pt>
+File: 04_chap3_Methodology_files/figure-latex/chap 3.1.5-1.pdf Graphic file (ty
+pe pdf)
+<use 04_chap3_Methodology_files/figure-latex/chap 3.1.5-1.pdf>
+Package pdftex.def Info: 04_chap3_Methodology_files/figure-latex/chap 3.1.5-1.p
+df  used on input line 153.
+(pdftex.def)             Requested size: 469.75496pt x 469.75496pt.
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1
+57.
+(c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
+) [3 <./04_chap3_Methodology_files/figure-latex/chap 3.1.4-1.pdf>] [4pdfTeX war
+ning (ext4): destination with the same identifier (name{figure.2}) has been alr
+eady used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.203 \newpage
-               <./03_chap2_theoretical-background_files/figure-latex/chap2.1.2-
-1.pdf>]
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 2
-27.
-(c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
-File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [5]
-
-LaTeX Warning: Reference `fig:chap2.1.2' on page 6 undefined on input line 264.
-
-
-
-LaTeX Warning: Reference `fig:chap2.2.1_1' on page 6 undefined on input line 27
-1.
-
-
-LaTeX Warning: Reference `fig:chap2.2.1_2' on page 6 undefined on input line 27
-8.
-
-[6]
-<03_chap2_theoretical-background_files/figure-latex/chap2.2.1_2-1.pdf, id=114, 
-469.755pt x 325.215pt>
-File: 03_chap2_theoretical-background_files/figure-latex/chap2.2.1_2-1.pdf Grap
-hic file (type pdf)
-<use 03_chap2_theoretical-background_files/figure-latex/chap2.2.1_2-1.pdf>
-Package pdftex.def Info: 03_chap2_theoretical-background_files/figure-latex/cha
-p2.2.1_2-1.pdf  used on input line 290.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[7pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) 
-has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  
-l.335 \newpage
-               <./03_chap2_theoretical-background_files/figure-latex/chap2.2.1_
-2-1.pdf>] [8] [9pdfTeX warning (ext4): destination with the same identifier (na
-me{table.1}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  
-l.397 \newpage
-              ]
-
-LaTeX Warning: Reference `fig:chap2.2.2' on page 10 undefined on input line 407
-.
-
-[10]
-
-LaTeX Warning: Reference `fig:chap2.2.3' on page 11 undefined on input line 450
-.
-
-<03_chap2_theoretical-background_files/figure-latex/chap2.2.3-1.pdf, id=155, 46
-9.755pt x 325.215pt>
-File: 03_chap2_theoretical-background_files/figure-latex/chap2.2.3-1.pdf Graphi
-c file (type pdf)
-<use 03_chap2_theoretical-background_files/figure-latex/chap2.2.3-1.pdf>
-Package pdftex.def Info: 03_chap2_theoretical-background_files/figure-latex/cha
-p2.2.3-1.pdf  used on input line 457.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[11pdfTeX warning (ext4): destination with the same identifier (name{figure.3})
- has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  
-l.487 
-       <./03_chap2_theoretical-background_files/figure-latex/chap2.2.3-1.pdf>] 
-[12]
-
-LaTeX Warning: Reference `fig:chap2.3.3.' on page 13 undefined on input line 50
-6.
-
-[13] [14]
-
-LaTeX Warning: Reference `fig:chap2.3.3.' on page 15 undefined on input line 64
-1.
-
-<03_chap2_theoretical-background_files/figure-latex/chap2.3.3 -1.pdf, id=200, 4
-69.755pt x 325.215pt>
-File: 03_chap2_theoretical-background_files/figure-latex/chap2.3.3 -1.pdf Graph
-ic file (type pdf)
-<use 03_chap2_theoretical-background_files/figure-latex/chap2.3.3 -1.pdf>
-Package pdftex.def Info: 03_chap2_theoretical-background_files/figure-latex/cha
-p2.3.3 -1.pdf  used on input line 654.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[15pdfTeX warning (ext4): destination with the same identifier (name{figure.4})
- has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  
-l.658 \newpage
-               <./03_chap2_theoretical-background_files/figure-latex/chap2.3.3 
--1.pdf>]
-Overfull \hbox (98.30006pt too wide) in paragraph at lines 687--693
-[]\T1/lmr/m/n/10 The orig-i-nal de-vel-oper J. Welles Wilder Jr. pro-posed a le
-ngth of N =14 in its work from 1978[@slide_trading_indicators_univariate].
- []
-
-<03_chap2_theoretical-background_files/figure-latex/chap2.4 -1.pdf, id=212, 505
-.89pt x 289.08pt>
-File: 03_chap2_theoretical-background_files/figure-latex/chap2.4 -1.pdf Graphic
- file (type pdf)
-<use 03_chap2_theoretical-background_files/figure-latex/chap2.4 -1.pdf>
-Package pdftex.def Info: 03_chap2_theoretical-background_files/figure-latex/cha
-p2.4 -1.pdf  used on input line 696.
-(pdftex.def)             Requested size: 469.76265pt x 268.43579pt.
-[16 <./03_chap2_theoretical-background_files/figure-latex/chap2.4 -1.pdf>]
-<03_chap2_theoretical-background_files/figure-latex/chap2.5-1.pdf, id=227, 505.
-89pt x 289.08pt>
-File: 03_chap2_theoretical-background_files/figure-latex/chap2.5-1.pdf Graphic 
-file (type pdf)
-<use 03_chap2_theoretical-background_files/figure-latex/chap2.5-1.pdf>
-Package pdftex.def Info: 03_chap2_theoretical-background_files/figure-latex/cha
-p2.5-1.pdf  used on input line 737.
-(pdftex.def)             Requested size: 469.76265pt x 268.43579pt.
-[17 <./03_chap2_theoretical-background_files/figure-latex/chap2.5-1.pdf>]
-<03_chap2_theoretical-background_files/figure-latex/chap2.6 -1.pdf, id=243, 505
-.89pt x 289.08pt>
-File: 03_chap2_theoretical-background_files/figure-latex/chap2.6 -1.pdf Graphic
- file (type pdf)
-<use 03_chap2_theoretical-background_files/figure-latex/chap2.6 -1.pdf>
-Package pdftex.def Info: 03_chap2_theoretical-background_files/figure-latex/cha
-p2.6 -1.pdf  used on input line 783.
-(pdftex.def)             Requested size: 469.76265pt x 268.43579pt.
-[18 <./03_chap2_theoretical-background_files/figure-latex/chap2.6 -1.pdf>] [19]
-(./03_chap2_theoretical-background.aux)
-Package rerunfilecheck Info: File `03_chap2_theoretical-background.out' has not
- changed.
-(rerunfilecheck)             Checksum: DBEBFB38AAEBB7A54338FEA3C2048780;1435.
+l.162 \newpage
+               <./04_chap3_Methodology_files/figure-latex/chap 3.1.5-1.pdf>] [5
+] (./04_chap3_Methodology.aux)
+Package rerunfilecheck Info: File `04_chap3_Methodology.out' has not changed.
+(rerunfilecheck)             Checksum: E606773280F37FCD7C339057B8654C58;455.
 
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: There were multiply-defined labels.
-
  ) 
 Here is how much of TeX's memory you used:
- 12083 strings out of 481466
- 177865 string characters out of 5920169
- 466311 words of memory out of 5000000
- 28490 multiletter control sequences out of 15000+600000
- 570351 words of font info for 55 fonts, out of 8000000 for 9000
+ 11918 strings out of 481466
+ 173398 string characters out of 5920169
+ 463808 words of memory out of 5000000
+ 28395 multiletter control sequences out of 15000+600000
+ 559750 words of font info for 51 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 66i,11n,72p,345b,329s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 66i,9n,72p,254b,331s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{GARCH} has been referenced but does not exist, re
 placed by a fixed one
 
-pdfTeX warning (dest): name{EMA} has been referenced but does not exist, replac
-ed by a fixed one
+pdfTeX warning (dest): name{ts-analysis} has been referenced but does not exist
+, replaced by a fixed one
 
-pdfTeX warning (dest): name{SMA} has been referenced but does not exist, replac
-ed by a fixed one
-
-{c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc
-}{c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathe
-x.enc}{c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-
-ts1.enc}{c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/l
-m-ec.enc}{c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/
-lm-mathsy.enc}{c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvip
-s/lm/lm-mathit.enc}<c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/typ
-e1/public/lm/lmbx10.pfb><c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/font
-s/type1/public/lm/lmbx12.pfb><c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist
-/fonts/type1/public/lm/lmex10.pfb><c:/Users/buehl/AppData/Roaming/TinyTeX/texmf
--dist/fonts/type1/public/lm/lmmi10.pfb><c:/Users/buehl/AppData/Roaming/TinyTeX/
-texmf-dist/fonts/type1/public/lm/lmmi7.pfb><c:/Users/buehl/AppData/Roaming/Tiny
-TeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/buehl/AppData/Roaming/
-TinyTeX/texmf-dist/fonts/type1/public/lm/lmr5.pfb><c:/Users/buehl/AppData/Roami
-ng/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/buehl/AppData/Ro
-aming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/buehl/AppDa
-ta/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/buehl/
-AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb><c:/Users/bu
-ehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on 03_chap2_theoretical-background.pdf (19 pages, 395098 bytes).
-
+{c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc
+}<c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx1
+0.pfb><c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/
+lmbx12.pfb><c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/publi
+c/lm/lmr10.pfb><c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/p
+ublic/lm/lmtt10.pfb>
+Output written on 04_chap3_Methodology.pdf (5 pages, 347889 bytes).
 PDF statistics:
- 334 PDF objects out of 1000 (max. 8388607)
- 280 compressed objects within 3 object streams
- 83 named destinations out of 1000 (max. 500000)
- 118 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 110 PDF objects out of 1000 (max. 8388607)
+ 90 compressed objects within 1 object stream
+ 25 named destinations out of 1000 (max. 500000)
+ 45 words of extra memory for PDF output out of 10000 (max. 10000000)
 
