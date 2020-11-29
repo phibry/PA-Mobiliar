@@ -1,16 +1,17 @@
 ---
 output: pdf_document
+geometry: margin = 1in
 ---
 ```{r, echo=FALSE, fig.cap="Visualization of the 4 indexes",message=F,warning=F}
 
 
 #########################################attenzione !!!  this chunk is only to knit this chapter can be deleted afterwards####
 ### bei m ir geht der knit nicht mit ljungplotgarch darum werden hier die funktionen nicht aufgerufen
-load("data/data_mobi")
-source("add/libraries.R")
+#load("data/data_mobi")
+#source("add/libraries.R")
 
-ind <- data[,1:4]
-int <- data[,5:12]
+#ind <- data[,1:4]
+#int <- data[,5:12]
 ```
 
 
@@ -405,7 +406,7 @@ Momentum
 
 &nbsp;
 
-Since not all observations are having the same influence on the future value, we can apply a weight to past observations. One method will be exponentially weighted Moving average. So we chose an optimal parameter to give past observations weights decreasing by $\alpha^k$. In comparison to the SMA [2.3.1.](#SMA) [@EMA] ,a EMA from the same length L, reacts faster than to price changes.
+Since not all observations are having the same influence on the future value, we can apply a weight to past observations. One method will be exponentially weighted Moving average. So we chose an optimal parameter to give past observations weights decreasing by $\alpha^{k}$. In comparison to the SMA [2.3.1.](#SMA) [@EMA] ,a EMA from the same length L, reacts faster than to price changes.
 
 A skillful trader chooses an optimal $\alpha$ to increase the performance of the measurement. Weights could also be given individually by adding a weight vector to the filter.
 
@@ -447,7 +448,7 @@ An example of MA average crossings with 2 SMAs of different length is visualized
 
 &nbsp;
 
-```{r,chap2.3.3 ,fig.cap="Moving Average Crossing", echo=FALSE,warning=FALSE, message=FALSE, fig.keep = 'last'}
+```{r, chap2.3.3, fig.cap="Moving Average Crossing", echo=FALSE,warning=FALSE, message=FALSE, fig.keep = 'last'}
 par(mfrow=c(1,2))
 n1=50
 n2=250
@@ -466,7 +467,7 @@ addSMA(n=n2,on=1,col = "red")
 &nbsp;
 
 The Relative strength index is a tool to measure momentum, the value indicates if positions are overvalued or undervalued.
-the scale goes from 0 to 100. [@RSI].
+the scale goes from 0 to 100. [@slide_trading_indicators_univariate].
 
 
 \begin{equation}
@@ -524,7 +525,7 @@ The MACD is also a commonly used filter. The basic principle is to Subtract a lo
 
 $_1$ short and long in the meaning s<l, not buy sell
 
-```{r,chap2.5,fig.cap="MACD", echo=FALSE, warning=FALSE, message=FALSE, fig.keep = 'last',fig.dim=c(7,4)}
+```{r,chap2.5, fig.cap="MACD", echo=FALSE, warning=FALSE, message=FALSE, fig.keep = 'last',fig.dim=c(7,4)}
 chartSeries(Cl(GOOGL),subset="2007-05::2009-01",theme=chartTheme("white"),name= "MACD EMA GOOGL Closing")
 addMACD(fast=12,slow=26,signal=9,type="EMA")
 ```
@@ -546,7 +547,7 @@ the variance from bollingers theory is calculated by:
   \mathrm{\sigma_{t}^2}=\frac{1}{N}\sum_{k=0}^{N-1}(x_{t-k} -MA_t)^2
 \end{equation}
 
-The calculated ${\sigma_t}$ could be problematic because its derived from the original series and increases with the level, its non stationary. Therefore an other method to calculate the standard deviation could be used. As done in  section [2.2.2.](#GARCH) $\sigma_t$ could be provided by a GARCH, which would handle the increasing volatility.
+The calculated ${\sigma_t}$ could be problematic because its derived from the original series and increases with the level, its non stationary. Therefore an other method to calculate the standard deviation could be used. As done in  section [2.2.2.](#garch-section) $\sigma_t$ could be provided by a GARCH, which would handle the increasing volatility.
 
 
 - ${N}$ = usually the filterlength and the length considered for ${\sigma}$ are the same
@@ -567,8 +568,6 @@ addBBands(n=n,sd=k,maType = "SMA", draw = 'bands', on = -1)
 \newpage
 
 ### 2.7. Sharpe Ratio
-
-&nbsp;
  
 Sharpe ratio is a very powerful and widely used ratio to measure performance. It describes return per risk.
 
