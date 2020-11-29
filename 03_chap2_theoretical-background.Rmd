@@ -350,7 +350,7 @@ EqMA
 
 
 
-###  2.3.1.1 Momentum
+#####  2.3.1.1 Momentum
 Momentum is an indicator wether a market is bullish or bearish, it measures the "speed" of the trend direction in the market.
 for a timespan $k$ the last price $p_k$, $k$ timesteps ago is subtracted from the last price. This is equivalent to applying and EqMA on the returns of a series. 
 
@@ -436,7 +436,7 @@ addSMA(n=n2,on=1,col = "red")
 \newpage
 
 ### 2.4. Relative Strength Index
-
+&nbsp;
 The Relative strength index is a tool to measure momentum, the value indicates if positions are overvalued or undervalued.
 the scale goes from 0 to 100.  [@RSI].
 
@@ -467,35 +467,42 @@ Usually when the RSI is going over 70 it suppose that the asset is overvalued an
 
 chartSeries(GOOGL, subset="2020-01::2020-10",type="line",theme=chartTheme("white"),name = "RSI EMA Google Nasdag",TA=NULL)
 addRSI(n=14,maType="EMA")
-?chartSeries()
 ```
-
 \newpage
-### 2.5. Sharpe Ratio
+
+### 2.5. Moving Average Convergence Divergence
 
 &nbsp;
- 
-Sharpe ratio is a very powerful and widely used ratio to measure performance. It describes return per risk.
+The MACD is also a commonly used filter. The basic principle is to Subtract a longer EMA with length $L$ as in section   [2.3.3](#EMA) from a shorter EMA from length $S$  then smooth the result with another EMA with length $R$. As a result with can use the crossing of the 2 generated curves for trading. As an alternative we could use SMA's instead of EMA's
 
 \begin{equation}
-  \label{eq:Sharperatio}
-  \mathrm{SharpeRatio}=\frac{R_{p}-R_{f}}{\sigma}
+  \label{eq:MACD}
+  \mathrm macd_t =\frac{1}{\sum_{k=0}^{t-1}\alpha^{k}} \sum_{k=0}^{t-1}\alpha^{k}x-{t-k}-\frac{1}{\sum_{k=0}^{t-1}\beta^{k}}\sum_{k=0}^{t-1}\beta^{k}x-{t-k}
 \end{equation}
 
-- ${R_p}$ = Return of Portfolio
-- ${R_p}$ = Risk free Rate, mostly treasury bonds
-- ${\sigma_p}$ = standard deviation of portfolios excess return (risk)
 
-### 2.6. Carry
-
-carry trades are trading strategies were usually money is borrowed at a lower interest rate, than the investment is giving in return.
-the risk of this strategy is based in the currency risk.
+\begin{equation}
+  \label{eq:signal MACD}
+\mathrm  MACD signal_t=   \frac{1}{\sum_{k=0}^{t-1}\gamma^{k}}\sum_{k=0}^{t-1}\gamma^{k}x-{t-k}
+\end{equation}
 
 
-### 2.7. Value
+
+- $x_t$ = prices or log prices
+- $S$   = length of the $short_1$ EMA           usually 12
+- $L$   = length of the $long_1$  EMA           usually 26
+- $R$   = length of the "double smoothing ema"  usually 9
+- $\alpha$ = $1-\frac{1}{S}$, $\beta$  = $1-\frac{1}{L}$, $\gamma$ = $1-\frac{1}{R}$
+
+$_1$ short and long in the meaning s<l, not buy sell
+
+```{r,chap2.5,fig.cap="MACD", echo=FALSE, warning=FALSE, message=FALSE, fig.keep = 'last',fig.dim=c(7,4)}
+chartSeries(Cl(GOOGL),subset="2007-05::2009-01",theme=chartTheme("white"),name= "MACD EMA GOOGL Closing")
+addMACD(fast=12,slow=26,signal=9,type="EMA")
+```
 \newpage
 
-### 2.8.  Bollinger bands
+### 2.6.  Bollinger bands
 &nbsp;
 Bollinger bands are a analysis tool founded by John Bollinger. It contains a moving average and an upper and lower band . The bands are defined by adding  a constant ${K}$ times a standard deviation ${\sigma_t}$ to the *Moving Average* for the upper , and subtracting it for the lower band.
 
@@ -521,7 +528,7 @@ The calculated ${\sigma_t}$ could be problematic because its derived from the or
 - ${L_t}$ = lower band
 
 
-```{r,chap2.8 ,fig.cap="Bollinger Bands", echo=FALSE, warning=FALSE, message=FALSE, fig.keep = 'last',fig.dim=c(7,4)}
+```{r,chap2.6 ,fig.cap="Bollinger Bands", echo=FALSE, warning=FALSE, message=FALSE, fig.keep = 'last',fig.dim=c(7,4)}
 n=20
 k=2
 chartSeries(GOOGL,subset="2007-05::2009-01",theme=chartTheme("white"),name= "bollinger bands")
@@ -529,34 +536,31 @@ addBBands(n=n,sd=k,maType = "SMA", draw = 'bands', on = -1)
 #addTA(signal,type="S",col="red")
       
 ```
+\newpage
+
+### 2.7. Sharpe Ratio
+
+&nbsp;
+ 
+Sharpe ratio is a very powerful and widely used ratio to measure performance. It describes return per risk.
+
+\begin{equation}
+  \label{eq:Sharperatio}
+  \mathrm{SharpeRatio}=\frac{R_{p}-R_{f}}{\sigma}
+\end{equation}
+
+- ${R_p}$ = Return of Portfolio
+- ${R_p}$ = Risk free Rate, mostly treasury bonds
+- ${\sigma_p}$ = standard deviation of portfolios excess return (risk)
+
+
+### 2.8. Carry
+
+Carry trades are trading strategies were usually money is borrowed at a lower interest rate, than the investment is giving in return.
+the risk of this strategy is based in the currency risk.
+
+
 
 \newpage
-### 2.9 Moving Average Convergence Divergence
-&nbsp;
-The MACD is also a commonly used filter. The basic principle is to Subtract a longer EMA with length $L$ as in section   [2.3.3](#EMA) from a shorter EMA from length $S$  then smooth the result with another EMA with length $R$. As a result with can use the crossing of the 2 generated curves for trading. As an alternative we could use SMA's instead of EMA's
-
-\begin{equation}
-  \label{eq:MACD}
-  \mathrm macd_t =\frac{1}{\sum_{k=0}^{t-1}\alpha^{k}} \sum_{k=0}^{t-1}\alpha^{k}x-{t-k}-\frac{1}{\sum_{k=0}^{t-1}\beta^{k}}\sum_{k=0}^{t-1}\beta^{k}x-{t-k}
-\end{equation}
 
 
-\begin{equation}
-  \label{eq:signal MACD}
-\mathrm  MACD signal_t=   \frac{1}{\sum_{k=0}^{t-1}\gamma^{k}}\sum_{k=0}^{t-1}\gamma^{k}x-{t-k}
-\end{equation}
-
-
-
-- $x_t$ = prices or log prices
-- $S$   = length of the $short_1$ EMA           usually 12
-- $L$   = length of the $long_1$  EMA           usually 26
-- $R$   = length of the "double smoothing ema"  usually 9
-- $\alpha$ = $1-\frac{1}{S}$, $\beta$  = $1-\frac{1}{L}$, $\gamma$ = $1-\frac{1}{R}$
-
-$_1$ short and long in the meaning s<l, not buy sell
-
-```{r,chap2.9,fig.cap="MACD", echo=FALSE, warning=FALSE, message=FALSE, fig.keep = 'last',fig.dim=c(7,4)}
-chartSeries(Cl(GOOGL),subset="2007-05::2009-01",theme=chartTheme("white"),name= "MACD EMA GOOGL Closing")
-addMACD(fast=12,slow=26,signal=9,type="EMA")
-```
