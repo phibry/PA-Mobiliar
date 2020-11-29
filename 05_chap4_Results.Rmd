@@ -1,5 +1,6 @@
 ---
 output: pdf_document
+geometry: margin = 1in
 ---
 
 ## 4. Conclusion
@@ -27,6 +28,8 @@ In figure \ref{fig:chap4.2} Index 2
 ```{r chap4.2, echo=FALSE, fig.cap="Index 2."}
 performante(xin=ind.lr.in[,2], xout=ind.lr.out[,2], main="Index 2")
 ```
+
+\newpage
 
 In figure \ref{fig:chap4.3} Index 3
 

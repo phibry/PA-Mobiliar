@@ -1,16 +1,17 @@
 ---
 output: pdf_document
+geometry: margin = 1in
 ---
 ```{r, echo=FALSE, fig.cap="Visualization of the 4 indexes",message=F,warning=F}
 
 
 #########################################attenzione !!!  this chunk is only to knit this chapter can be deleted afterwards####
 ### bei m ir geht der knit nicht mit ljungplotgarch darum werden hier die funktionen nicht aufgerufen
-load("data/data_mobi")
-source("add/libraries.R")
+#load("data/data_mobi")
+#source("add/libraries.R")
 
-ind <- data[,1:4]
-int <- data[,5:12]
+#ind <- data[,1:4]
+#int <- data[,5:12]
 ```
 
 
@@ -131,7 +132,7 @@ x <- na.exclude(g.adj["2010-01-01/"])
 fit <- auto.arima(x)
 
 # Plot LjungBox statistic
-#ljungplot(fit$residuals)
+ljungplot(fit$residuals)
 ```
 
 In figure \ref{fig:chap2.2.1_2} you can see the prediction of the model. The whole representation is shifted by one day so that one can compare the model with a true value.
@@ -244,7 +245,7 @@ If the parameter restrictions are not fulfilled, complications may arise, the fo
 Furthermore, the Ljung-Box statistics are important for the standardized residuals. Looking back at formula \ref{eq:garch} standardized residuals $u_{t}$ are proportional to the conditional volatilities $\sigma_{t}$, which should lead to the log returns $\epsilon_{t}$.  The conditional volatilities map the volacluster in the time series. To achieve the best possible model, one does not want to find these volacluster effects in the standardized residuals, but only in the conditional volatilities. The Ljung-Box statistics check this property. In figure \ref{fig:chap2.2.2} Ljung-Box statistics of the $\hat{u}_{t}$ and the $\hat{u}^{2}_{t}$ are shown.
 
 ```{r chap2.2.2, echo=FALSE, fig.cap="Ljung-Box statistic of the standardized residuals.", fig.keep = 'last'}
-#ljungplotGarch(y.garch_11@residuals, y.garch_11@sigma.t)
+ljungplotGarch(y.garch_11@residuals, y.garch_11@sigma.t)
 ```
 
 The plot shows reliable statistics for forecasts from the Google-GARCH(*1*,*1*) model. For all lags up to 20, the p-values are above the 5% line and thus hypothesis tests are discarded. However, if for a given lag=k the p-values would fall below the 5% line, then forecasts would only be reliable up to a forecast horizon k.
@@ -344,7 +345,7 @@ $$\hat{r}_{t+1}=\hat{\mu}+\hat{e}\hat{\sigma}_{t+1}$$
 
 ### 2.3. Moving Average Filters
 
-Moving average filters are basically used to identify trends and smooth out price fluctuations. As a commonly used tool, moving average filters are very simple in their usage, historical data from a timeframe L gets summarized and divided by the length of the filter (L). Depending on the length of the filter, the application to the timeseries the MA gets shifted, longer filters have a higher shift then shorter ones we visualize this behavior in \ref{fig:chap2.3.3.}.
+Moving average filters are basically used to identify trends and smooth out price fluctuations. As a commonly used tool, moving average filters are very simple in their usage, historical data from a timeframe L gets summarized and divided by the length of the filter (L). Depending on the length of the filter, the application to the timeseries the MA gets shifted, longer filters have a higher shift then shorter ones we visualize this behavior in \ref{fig:chap2.3.3}.
 Many different indicators are built upon the Moving Average principle, mostly they are used in combinations of different lengths to create signals. In the following section, we introduce some of the most popular indicators based on the MA principle.
 
 The actual challenge in using Moving average filters, is to figure out which length of the filter brings the most useful information.
@@ -405,7 +406,7 @@ Momentum
 
 &nbsp;
 
-Since not all observations are having the same influence on the future value, we can apply a weight to past observations. One method will be exponentially weighted Moving average. So we chose an optimal parameter to give past observations weights decreasing by $\alpha^k$. In comparison to the SMA [2.3.1.](#SMA) [@EMA] ,a EMA from the same length L, reacts faster than to price changes.
+Since not all observations are having the same influence on the future value, we can apply a weight to past observations. One method will be exponentially weighted Moving average. So we chose an optimal parameter to give past observations weights decreasing by $\alpha^{k}$. In comparison to the SMA [2.3.1.](#SMA) [@EMA] ,a EMA from the same length L, reacts faster than to price changes.
 
 A skillful trader chooses an optimal $\alpha$ to increase the performance of the measurement. Weights could also be given individually by adding a weight vector to the filter.
 
@@ -443,11 +444,11 @@ Moving Average Crossing
 
 \newpage
 
-An example of MA average crossings with 2 SMAs of different length is visualized in # \ref{fig:chap2.3.3.}. The prices are in \textcolor{green}{green} while the \textcolor{blue}{blue line} represents an \textcolor{blue}{50} day SMA an the \textcolor{red}{red line} a  \textcolor{red}{250 (1 year)} SMA. The crossing points of those two SMAs could now be used as trading signals. In this example these crossings wouldn't perform very well, therefore as mentioned earlier, finding the right length of the filter depends on each timeseries, their behavior and the preferences of the trader. 
+An example of MA average crossings with 2 SMAs of different length is visualized in # \ref{fig:chap2.3.3}. The prices are in \textcolor{green}{green} while the \textcolor{blue}{blue line} represents an \textcolor{blue}{50} day SMA an the \textcolor{red}{red line} a  \textcolor{red}{250 (1 year)} SMA. The crossing points of those two SMAs could now be used as trading signals. In this example these crossings wouldn't perform very well, therefore as mentioned earlier, finding the right length of the filter depends on each timeseries, their behavior and the preferences of the trader. 
 
 &nbsp;
 
-```{r,chap2.3.3 ,fig.cap="Moving Average Crossing", echo=FALSE,warning=FALSE, message=FALSE, fig.keep = 'last'}
+```{r, chap2.3.3, fig.cap="Moving Average Crossing", echo=FALSE,warning=FALSE, message=FALSE, fig.keep = 'last'}
 par(mfrow=c(1,2))
 n1=50
 n2=250
@@ -462,13 +463,15 @@ addSMA(n=n2,on=1,col = "red")
 \newpage
 
 ### 2.4. Relative Strength Index
+
 &nbsp;
+
 The Relative strength index is a tool to measure momentum, the value indicates if positions are overvalued or undervalued.
-the scale goes from 0 to 100.  [@RSI].
+the scale goes from 0 to 100. [@slide_trading_indicators_univariate].
 
 
 \begin{equation}
-  \label{eq:mac}
+  \label{eq:mac1}
   U_{t}=\begin{cases}1, \textnormal{if }    x_t \ge x_{t-1}\\0, \textnormal{otherwise} \end{cases}
   D_{t}=\begin{cases}1, \textnormal{if }  x_t < x_{t-1}\\0, \textnormal{otherwise} \end{cases}
 \end{equation}
@@ -478,7 +481,7 @@ the scale goes from 0 to 100.  [@RSI].
 We then apply SMA or EMA of length N to $U_t$ and $U_t$ which converts them in $up_t(N)$ and $down_t(N)$
 The RSI is now computet by:
 \begin{equation}
-  \label{eq:mac}
+  \label{eq:mac2}
  RSI_t(N)=100\frac{up_t(N)}{up_t(N)+down_t(N)}
 \end{equation}
 
@@ -522,7 +525,7 @@ The MACD is also a commonly used filter. The basic principle is to Subtract a lo
 
 $_1$ short and long in the meaning s<l, not buy sell
 
-```{r,chap2.5,fig.cap="MACD", echo=FALSE, warning=FALSE, message=FALSE, fig.keep = 'last',fig.dim=c(7,4)}
+```{r,chap2.5, fig.cap="MACD", echo=FALSE, warning=FALSE, message=FALSE, fig.keep = 'last',fig.dim=c(7,4)}
 chartSeries(Cl(GOOGL),subset="2007-05::2009-01",theme=chartTheme("white"),name= "MACD EMA GOOGL Closing")
 addMACD(fast=12,slow=26,signal=9,type="EMA")
 ```
@@ -544,7 +547,7 @@ the variance from bollingers theory is calculated by:
   \mathrm{\sigma_{t}^2}=\frac{1}{N}\sum_{k=0}^{N-1}(x_{t-k} -MA_t)^2
 \end{equation}
 
-The calculated ${\sigma_t}$ could be problematic because its derived from the original series and increases with the level, its non stationary. Therefore an other method to calculate the standard deviation could be used. As done in  section [2.2.2.](#GARCH) $\sigma_t$ could be provided by a GARCH, which would handle the increasing volatility.
+The calculated ${\sigma_t}$ could be problematic because its derived from the original series and increases with the level, its non stationary. Therefore an other method to calculate the standard deviation could be used. As done in  section [2.2.2.](#garch-section) $\sigma_t$ could be provided by a GARCH, which would handle the increasing volatility.
 
 
 - ${N}$ = usually the filterlength and the length considered for ${\sigma}$ are the same
@@ -565,8 +568,6 @@ addBBands(n=n,sd=k,maType = "SMA", draw = 'bands', on = -1)
 \newpage
 
 ### 2.7. Sharpe Ratio
-
-&nbsp;
  
 Sharpe ratio is a very powerful and widely used ratio to measure performance. It describes return per risk.
 
