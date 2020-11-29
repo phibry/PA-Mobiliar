@@ -54,7 +54,7 @@ kbl(c, caption="Correlations oft the four indexes", booktabs = T) %>%
 Applying the natural logarithm to the series is an approach to cancel out increasing volatility \ref{fig:chap3.1.2.}. The strong upward is still visible the original series more than doubled its original price over the whole timespan(index 4)\ref{fig:chap1.1}. 
 
 
-```{r,chap 3.1.2. ,include=T, echo = F,fig.dim=c(7,3.5),message=F, fig.cap="Visualization log_indizes"}
+```{r,chap 3.1.2. ,include=T, echo = F,fig.dim=c(7,3.0),message=F, fig.cap="Visualization log_indizes"}
 plot(log_ind, main="Log Indexes 1-4", col=1:4, lwd=1,legend.loc="topleft") #plotting log data
 ```
 
@@ -64,10 +64,10 @@ By taking the returns of the transformed series we can visualize volatility clus
 Clearly visible are the high spikes in the times of the financial crisis 2007-2009. Also at the end of the series the impact of covid 19 in march 2020 is remarkable.  
 the unconditional volatility of the indexes are \textcolor{black}{0.64e-06}, \textcolor{red}{4..1e-06}, \textcolor{green}{8.5e-06}, \textcolor{blue}{15.6e-06}. Which means the the index 1 is as much as 24 times volatiler than the fourth index. 
 
-
-```{r,chap 3.1.2,include=T, echo = F,message=F, fig.cap="Log returns"}
+```{r,chap 3.1.2, include=T, echo = F,message=F,  fig.cap="Log returns"}
 plot(log_ret_ind,main="Log_returns indexes",legend.loc="topleft") #plot log returns
 ```
+
 \newpage
 
 #### 3.1.2.1 Autocorrelation of log returns
@@ -89,12 +89,12 @@ acf(abs(x4^2),lag.max = 50,main= "ACF INDEX 4 ,10-2003/03-2020" )
 
 ```
 
-For for further analysis we concentrate on different timespans, because in most models it makes few sense to consider thew whole timeseries from 2003 till today
+For further analysis we concentrate on different timespans, because in most models it makes few sense to consider the whole timeseries from 2003 till today
 
 
 
 
-```{r,chap 3.1.4,include=T, echo = F,message=F,fig.dim=c(15,15), fig.cap="Visualization log returns"}
+```{r,chap 3.1.4,include=F, echo = F,message=F,fig.dim=c(15,15), fig.cap="Visualization log returns"}
 par(mfrow=c(4,2))
 
 start_date="2018-01-01"
@@ -116,7 +116,9 @@ plot(y_ind[,4],main=paste("Log index 4,","vola=",vola_y_ind[4],sep=" "),col = 4)
 
 ```
 \newpage
-#### 3.1.3. periodicity
+
+#### 3.1.2.2. periodicity
+
 &nbsp;
 
 ```{r,chap 3.1.3.,include=T, echo = F,message=F,fig.dim=c(15,15), fig.cap="peridodogramm ",warning= F,fig.keep="last"}
@@ -142,20 +144,33 @@ To do so we need to create trading signals based on the models and indicators. F
 #### 3.2.1. Buy and hold Performance
 &nbsp;
 
-As mentioned earlier the goal of this work is to outperform the buy and hold strategy. because the series all have a strong upward trend this task is very tricky. Buy and hold has very low trading costs because the underlyings are just bougth once. According to swissquote [@swissquote] costs for asset trades over 50k are 190 USD per trade $_1$, so these costs must also be taken in consideration for the strategy
+As mentioned earlier the goal of this work is to outperform the buy and hold strategy. because the series all have a strong upward trend this task is very tricky. Buy and hold has very low trading costs because the underlyings are just bougth once. According to swissquote [@swissquote] costs for asset trades over 50k are 190 USD per trade $_1$, so these costs must also be taken in consideration for the strategy.
+
 
 $_1$ notice: This fee is only for private investors, conditions may differ for institutions.
 
+
+```{r chap3.2.1. ma crossover, echo=FALSE, fig.cap="conversion data",include=F}
+
+
+# plot of buy and hold equally weightet all indexes, sharpe timespan? -wildi
+
+
+```
+
+\newpage 
+
 #### 3.2.2. sma signals to trade 
 
+As a fisrt approch we apply a moving averag crossing to the timeseries. The trading horizont is from 
+```{r chap3.2.2. ma crossover, echo=FALSE, fig.cap="conversion data",include=T,fig.keep = 'last'}
 
-```{r chap3.2 ma crossover, echo=FALSE, fig.cap="conversion data",include=F}
 
 load("data/data_mobi") 
 n=20
 # lentgths
-n1=10
-n2 =250
+n1=50
+n2 =100
 k=2
 
 mobidat= data[,4] # chose the row and horizon
@@ -182,7 +197,7 @@ signal=reclass(signal,sma1)
 
 
 
-chartSeries(mobidat,subset=horizon,theme=chartTheme("white"),name= "sna",type="")
+chartSeries(mobidat,subset=horizon,theme=chartTheme("white"),name= "sMa",type="")
 addSMA(n=n1,on=1,col = "blue")
 addSMA(n=n2,on=1,col = "red")
 addTA(signal,type="S",col="red")
@@ -192,15 +207,19 @@ trade   =   Lag(signal[horizon],1)
 return  =   diff(log(mobidat))
 ret = return*trade
 
-mean(ret,na.rm=T)
 names(ret)="filter"
-SharpeRatio(ret,FUN="StdDev")
+```
 
-chart.Bar(ret,main="returns daily")
-chart.CumReturns(ret, main="Naive Rule: Cum Returns")
-chart.Drawdown(ret,main="Naive Rule: Percentage Drawdown")
+
+
+```{r chap3.2.3. ma crossover, echo=FALSE, fig.cap="conversion data",include=T,fig.keep = 'last'}
+
+#SharpeRatio(ret,FUN="StdDev")
+#chart.Bar(ret,main="returns daily")
+#chart.CumReturns(ret, main="Naive Rule: Cum Returns")
+#chart.Drawdown(ret,main="Naive Rule: Percentage Drawdown")
 charts.PerformanceSummary(ret, main="Naive Buy Rule")
-SharpeRatio(data,FUN="StdDev")
+#SharpeRatio(data,FUN="StdDev")
 
 ```
 
