@@ -444,7 +444,7 @@ Moving Average Crossing
 
 \newpage
 
-An example of MA average crossings with 2 SMAs of different length is visualized in # \ref{fig:chap2.3.3}. The prices are in \textcolor{green}{green} while the \textcolor{blue}{blue line} represents an \textcolor{blue}{50} day SMA an the \textcolor{red}{red line} a  \textcolor{red}{250 (1 year)} SMA. The crossing points of those two SMAs could now be used as trading signals. In this example these crossings wouldn't perform very well, therefore as mentioned earlier, finding the right length of the filter depends on each timeseries, their behavior and the preferences of the trader. 
+An example of MA average crossings with 2 SMAs of different length is visualized in figure \ref{fig:chap2.3.3}. The prices are in \textcolor{green}{green} while the \textcolor{blue}{blue line} represents an \textcolor{blue}{50} day SMA an the \textcolor{red}{red line} a  \textcolor{red}{250 (1 year)} SMA. The crossing points of those two SMAs could now be used as trading signals. In this example these crossings wouldn't perform very well, therefore as mentioned earlier, finding the right length of the filter depends on each timeseries, their behavior and the preferences of the trader. 
 
 &nbsp;
 
@@ -452,7 +452,7 @@ An example of MA average crossings with 2 SMAs of different length is visualized
 par(mfrow=c(1,2))
 n1=50
 n2=250
-chartSeries(GOOGL,type="line",subset="2015-3::2020-10",theme=chartTheme("white"),name= "MA Crossings Google Nasdag")
+chartSeries(GOOGL,type="line",subset="2015-3::2020-10",theme=chartTheme("white", bg.col="#FFFFFF"),name= "MA Crossings Google Nasdag")
 addSMA(n=n1,on=1,col = "blue")
 addSMA(n=n2,on=1,col = "red")
 
@@ -485,7 +485,7 @@ The RSI is now computet by:
  RSI_t(N)=100\frac{up_t(N)}{up_t(N)+down_t(N)}
 \end{equation}
 
-The original developer J. Welles Wilder Jr. proposed a length of N =14 in its work from 1978[@slide_trading_indicators_univariate].
+The original developer J. Welles Wilder Jr. proposed a length of N =14 in its work from 1978 [@RSI].
 Traditional tradings signals based on the RSI  are the upper 70 or lower 30 limit to buy or sell.
 Usually when the RSI is going over 70 it suppose that the asset is overvalued and in contrast when its under 30 then its undervalued.
 
@@ -494,7 +494,7 @@ Usually when the RSI is going over 70 it suppose that the asset is overvalued an
 
 ```{r,chap2.4 ,fig.cap="RSI", echo=FALSE, warning=FALSE, message=FALSE, fig.keep = 'last',fig.dim=c(7,4)}
 
-chartSeries(GOOGL, subset="2020-01::2020-10",type="line",theme=chartTheme("white"),name = "RSI EMA Google Nasdag",TA=NULL)
+chartSeries(GOOGL, subset="2020-01::2020-10",type="line",theme=chartTheme("white", bg.col="#FFFFFF"),name = "RSI EMA Google Nasdag",TA=NULL)
 addRSI(n=14,maType="EMA")
 ```
 \newpage
@@ -525,8 +525,11 @@ The MACD is also a commonly used filter. The basic principle is to Subtract a lo
 
 $_1$ short and long in the meaning s<l, not buy sell
 
+&nbsp;
+
+
 ```{r,chap2.5, fig.cap="MACD", echo=FALSE, warning=FALSE, message=FALSE, fig.keep = 'last',fig.dim=c(7,4)}
-chartSeries(Cl(GOOGL),subset="2007-05::2009-01",theme=chartTheme("white"),name= "MACD EMA GOOGL Closing")
+chartSeries(Cl(GOOGL),subset="2007-05::2009-01",theme=chartTheme("white", bg.col="#FFFFFF"),name= "MACD EMA GOOGL Closing")
 addMACD(fast=12,slow=26,signal=9,type="EMA")
 ```
 \newpage
@@ -556,11 +559,12 @@ The calculated ${\sigma_t}$ could be problematic because its derived from the or
 - ${U_t}$ = upper band
 - ${L_t}$ = lower band
 
+&nbsp;
 
 ```{r,chap2.6 ,fig.cap="Bollinger Bands", echo=FALSE, warning=FALSE, message=FALSE, fig.keep = 'last',fig.dim=c(7,4)}
 n=20
 k=2
-chartSeries(GOOGL,subset="2007-05::2009-01",theme=chartTheme("white"),name= "bollinger bands")
+chartSeries(GOOGL,subset="2007-05::2009-01",theme=chartTheme("white", bg.col="#FFFFFF"),name= "bollinger bands")
 addBBands(n=n,sd=k,maType = "SMA", draw = 'bands', on = -1)
 #addTA(signal,type="S",col="red")
       

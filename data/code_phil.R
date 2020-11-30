@@ -869,9 +869,25 @@ ljungplotGarch(ind4.garch@residuals, ind4.garch@sigma.t)
 
 
 
-
 #.####
-## Automation####
+#.####
+#.####
+#.####
+#.####
+#.####
+#.####
+#.####
+#.####
+#.####
+#.####
+#.####
+#.####
+#.####
+#.####
+#.####
+#.####
+#.####
+## ARMA, GARCH####
 ind <- na.exclude(data[,1:4])
 ind.lr <- na.exclude(diff(log(ind)))
 startdate <- "2018-01-01"
@@ -1011,7 +1027,300 @@ performante <- function(xin, xout, threshold_p=0.7, main="") {
 }
 
 par(mfrow=c(4,1))
+
 performante(xin=ind.lr.in[,1], xout=ind.lr.out[,1], main="Index 1")
 performante(xin=ind.lr.in[,2], xout=ind.lr.out[,2], main="Index 2")
 performante(xin=ind.lr.in[,3], xout=ind.lr.out[,3], main="Index 3")
 performante(xin=ind.lr.in[,4], xout=ind.lr.out[,4], main="Index 4")
+
+
+
+
+#.####
+# MA-Filter####
+# Ind1####
+pt_obj <- optimize_simple_MA_func(x=na.exclude(ind.lr[,1]), in_samp="2019-01-01", min_L=5, max_L=1000, x_trade=NULL)
+
+pt_obj$L_opt
+pt_obj$sharpe_opt
+
+par(mfrow=c(1,1))
+ts.plot(pt_obj$perf_vec)
+perf_plot_func(x=na.exclude(ind.lr[,1]), L=pt_obj$L_opt, in_samp="2019-01-01", x_trade=NULL)
+
+# Ind2####
+pt_obj <- optimize_simple_MA_func(x=na.exclude(ind.lr[,2]), in_samp="2019-01-01", min_L=5, max_L=1000, x_trade=NULL)
+
+pt_obj$L_opt
+pt_obj$sharpe_opt
+
+par(mfrow=c(1,1))
+ts.plot(pt_obj$perf_vec)
+perf_plot_func(x=na.exclude(ind.lr[,2]), L=pt_obj$L_opt, in_samp="2019-01-01", x_trade=NULL)
+
+# Ind3####
+pt_obj <- optimize_simple_MA_func(x=na.exclude(ind.lr[,3]), in_samp="2019-01-01", min_L=5, max_L=1000, x_trade=NULL)
+
+pt_obj$L_opt
+pt_obj$sharpe_opt
+
+par(mfrow=c(1,1))
+ts.plot(pt_obj$perf_vec)
+perf_plot_func(x=na.exclude(ind.lr[,3]), L=pt_obj$L_opt, in_samp="2019-01-01", x_trade=NULL)
+
+# Ind4####
+pt_obj <- optimize_simple_MA_func(x=na.exclude(ind.lr[,4]), in_samp="2019-01-01", min_L=5, max_L=1000, x_trade=NULL)
+
+pt_obj$L_opt
+pt_obj$sharpe_opt
+
+par(mfrow=c(1,1))
+ts.plot(pt_obj$perf_vec)
+perf_plot_func(x=na.exclude(ind.lr[,4]), L=pt_obj$L_opt, in_samp="2019-01-01", x_trade=NULL)
+
+
+
+
+
+
+
+
+
+
+#.####
+# MA-Cross-Filter####
+load("data/data_mobi") 
+
+
+n1 = 20
+n2 = 200
+
+mobidat = data[,4]
+
+
+
+
+
+n1 = 2
+n2 = 200
+
+start = "2015-10-30"
+end = "2018-12-31"
+horizon = paste(start,"::",end,sep = "")
+sma1 <-SMA(mobidat,n=n1)
+sma2 <-SMA(mobidat,n=n2)
+signal <-rep(0,length(sma1))
+signal[which(sma1>sma2&lag(sma1)<lag(sma2))]<-1
+signal[which(sma1<sma2&lag(sma1)>lag(sma2))]<--1
+signal[which(sma1>sma2)]<-1
+signal[which(sma1<sma2)]<--1
+signal=reclass(signal,sma1)
+
+trade   =   Lag(signal[horizon],1)
+return  =   diff(log(mobidat))
+ret = return*trade
+ret <- na.exclude(ret)
+cums <- cumsum(ret)[length(ret)]
+cums <- as.data.frame(cums)
+rownames(cums) <- paste(n1,"/",n2)
+cums
+
+
+
+L1min <- 1
+L1max <- 50
+
+L2min <- 100
+L2max <- 250
+
+best <- 0
+
+
+
+cross_optim <- function(x, start = "2015-10-30", end = "2018-12-31", L1min = 1, L1max = 50, L2min =  100, L2max = 250) {
+  best <- 0
+  mobidat <- x
+  pb <- txtProgressBar(min = L1min, max = L1max, style = 3)
+  for (k in L1min:L1max) {
+    for (j in L2min:L2max) {
+      n1 <- k
+      n2 <- j
+      
+      # sample
+      horizon <- paste(start,"::",end,sep = "")
+      
+      # Simple Moving Averages
+      sma1 <- SMA(mobidat,n=n1)
+      sma2 <- SMA(mobidat,n=n2)
+      
+      # Signals
+      signal <- rep(0,length(sma1))
+      signal[which(sma1>sma2&lag(sma1)<lag(sma2))] <- 1
+      signal[which(sma1<sma2&lag(sma1)>lag(sma2))]< - -1
+      signal[which(sma1>sma2)] <- 1
+      signal[which(sma1<sma2)] <- -1
+      signal <- reclass(signal,sma1)
+      
+      # Trading
+      trade   <-   Lag(signal[horizon],1)
+      return  <-   diff(log(mobidat))
+      ret <- return*trade
+      ret <- na.exclude(ret)
+      
+      # Sharpe
+      sharpe <- sqrt(250)*mean(ret)/sqrt(var(ret))
+      
+      if (sharpe > best) {
+        best <- sharpe
+        rownames(best) <- paste(n1,"/",n2)
+      }
+    }
+    setTxtProgressBar(pb, k)
+  }
+  close(pb)
+  print(best)
+  return(best)
+}
+
+
+ind1_opt <- cross_optim(data[,1], start = "2015-10-30", end = "2018-12-31", L1min = 1, L1max = 50, L2min =  100, L2max = 250)
+ind2_opt <- cross_optim(data[,2], start = "2015-10-30", end = "2018-12-31", L1min = 1, L1max = 50, L2min =  100, L2max = 250)
+ind3_opt <- cross_optim(data[,3], start = "2015-10-30", end = "2018-12-31", L1min = 1, L1max = 50, L2min =  100, L2max = 250)
+ind4_opt <- cross_optim(data[,4], start = "2015-10-30", end = "2018-12-31", L1min = 1, L1max = 50, L2min =  100, L2max = 250)
+
+
+
+
+# Optim Index 1####
+# Index.1
+# 1 / 106 1.225487
+n1 <- 1
+n2 <- 106
+
+mobidat= data[,1] # chose the row and horizon
+start="2019-01-01"
+end = "2020-04-31"
+
+start = "2015-10-30"
+end = "2018-12-31"
+
+horizon=paste(start,"::",end,sep = "")
+sma1 <-SMA(mobidat,n=n1)
+sma2 <-SMA(mobidat,n=n2)
+signal <-rep(0,length(sma1))
+signal[which(sma1>sma2&lag(sma1)<lag(sma2))]<-1
+signal[which(sma1<sma2&lag(sma1)>lag(sma2))]<--1
+signal[which(sma1>sma2)]<-1
+signal[which(sma1<sma2)]<--1
+signal=reclass(signal,sma1)
+chartSeries(mobidat,subset=horizon,theme=chartTheme("white", bg.col="#FFFFFF"),name= "sMa",type="")
+addSMA(n=n1,on=1,col = "blue")
+addSMA(n=n2,on=1,col = "red")
+addTA(signal,type="S",col="red")
+trade   =   Lag(signal[horizon],1)
+return  =   diff(log(mobidat))
+ret = return*trade
+names(ret)="filter"
+
+SharpeRatio(ret,FUN="StdDev")*sqrt(250)
+
+
+# Optim Index 2####
+# 17 / 111 0.9386703
+n1=17
+n2 =111
+
+mobidat= data[,2] # chose the row and horizon
+start="2019-01-01"
+end = "2020-04-31"
+
+start = "2015-10-30"
+end = "2018-12-31"
+
+horizon=paste(start,"::",end,sep = "")
+sma1 <-SMA(mobidat,n=n1)
+sma2 <-SMA(mobidat,n=n2)
+signal <-rep(0,length(sma1))
+signal[which(sma1>sma2&lag(sma1)<lag(sma2))]<-1
+signal[which(sma1<sma2&lag(sma1)>lag(sma2))]<--1
+signal[which(sma1>sma2)]<-1
+signal[which(sma1<sma2)]<--1
+signal=reclass(signal,sma1)
+chartSeries(mobidat,subset=horizon,theme=chartTheme("white", bg.col="#FFFFFF"),name= "sMa",type="")
+addSMA(n=n1,on=1,col = "blue")
+addSMA(n=n2,on=1,col = "red")
+addTA(signal,type="S",col="red")
+trade   =   Lag(signal[horizon],1)
+return  =   diff(log(mobidat))
+ret = return*trade
+names(ret)="filter"
+
+SharpeRatio(ret,FUN="StdDev")*sqrt(250)
+
+
+# Optim Index 3####
+# 16 / 112 0.8723012
+n1 = 16
+n2 =112
+
+mobidat= data[,3] # chose the row and horizon
+start="2019-01-01"
+end = "2020-04-31"
+
+start = "2015-10-30"
+end = "2018-12-31"
+
+horizon=paste(start,"::",end,sep = "")
+sma1 <-SMA(mobidat,n=n1)
+sma2 <-SMA(mobidat,n=n2)
+signal <-rep(0,length(sma1))
+signal[which(sma1>sma2&lag(sma1)<lag(sma2))]<-1
+signal[which(sma1<sma2&lag(sma1)>lag(sma2))]<--1
+signal[which(sma1>sma2)]<-1
+signal[which(sma1<sma2)]<--1
+signal=reclass(signal,sma1)
+chartSeries(mobidat,subset=horizon,theme=chartTheme("white", bg.col="#FFFFFF"),name= "sMa",type="")
+addSMA(n=n1,on=1,col = "blue")
+addSMA(n=n2,on=1,col = "red")
+addTA(signal,type="S",col="red")
+trade   =   Lag(signal[horizon],1)
+return  =   diff(log(mobidat))
+ret = return*trade
+names(ret)="filter"
+
+SharpeRatio(ret,FUN="StdDev")*sqrt(250)
+
+
+# Optim Index 4####
+# 15 / 135 0.8837106
+n1=15
+n2 =135
+
+mobidat= data[,4] # chose the row and horizon
+start="2019-01-01"
+end = "2020-04-31"
+
+start = "2015-10-30"
+end = "2018-12-31"
+
+
+
+horizon=paste(start,"::",end,sep = "")
+sma1 <-SMA(mobidat,n=n1)
+sma2 <-SMA(mobidat,n=n2)
+signal <-rep(0,length(sma1))
+signal[which(sma1>sma2&lag(sma1)<lag(sma2))]<-1
+signal[which(sma1<sma2&lag(sma1)>lag(sma2))]<--1
+signal[which(sma1>sma2)]<-1
+signal[which(sma1<sma2)]<--1
+signal=reclass(signal,sma1)
+chartSeries(mobidat,subset=horizon,theme=chartTheme("white", bg.col="#FFFFFF"),name= "sMa",type="")
+addSMA(n=n1,on=1,col = "blue")
+addSMA(n=n2,on=1,col = "red")
+addTA(signal,type="S",col="red")
+trade   =   Lag(signal[horizon],1)
+return  =   diff(log(mobidat))
+ret = return*trade
+names(ret)="filter"
+
+SharpeRatio(ret,FUN="StdDev")*sqrt(250)

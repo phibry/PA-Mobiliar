@@ -175,3 +175,121 @@ performante <- function(xin, xout, threshold_p=0.7, main="") {
                   col=c("black", "red", "blue"),
                   cex=0.8))
 }
+
+
+optimize_simple_MA_func<-function(x,in_samp,min_L,max_L,x_trade)
+{
+  if (is.null(x_trade))
+    x_trade<-x
+
+  sharpe_opt<--9.e+99
+  #in_s<-which(index(x)>in_samp)[1]
+  
+  pb <- txtProgressBar(min = min_L, max = max_L, style = 3)
+  perf_vec<-NULL
+  
+  for (L in min_L:max_L)
+  {
+    yhat_full <- SMA(x, n=L)
+    yhat <- yhat_full[max_L:length(yhat_full)]
+
+    # Use x-trade for trading
+    #perf <- sign(yhat)[1:(in_s-1)]*x_trade[2:(in_s)]
+    perf<-lag(sign(yhat))*x_trade
+    
+    sharpe<-sqrt(250)*mean(perf,na.rm=T)/sqrt(var(perf,na.rm=T))
+    perf_vec<-c(perf_vec,sharpe)
+    if (sharpe>sharpe_opt)
+    {
+      sharpe_opt<-sharpe
+      L_opt<-L
+    }
+    setTxtProgressBar(pb, L)
+  }
+  close(pb)
+  names(perf_vec)<-paste("filter length ",min_L:max_L)
+
+  return(list(L_opt=L_opt,sharpe_opt=sharpe_opt,perf_vec=perf_vec))
+}
+
+
+
+filt_func<-function(x,b)
+{
+  L<-nrow(b)
+  if (is.matrix(x))
+  {  
+    length_time_series<-nrow(x)
+  } else
+  {
+    if (is.vector(x))
+    {
+      length_time_series<-length(x)
+    } else
+    {
+      print("Error: x is neither a matrix nor a vector!!!!")
+    }
+  }
+  if (is.xts(x))
+  {
+    yhat<-x[,1]
+  } else
+  {
+    yhat<-rep(NA,length_time_series)
+  }
+  for (i in L:length_time_series)#i<-L
+  {
+    # If x is an xts object then we cannot reorder x in desceding time i.e. x[i:(i-L+1)] is the same as  x[(i-L+1):i]
+    #   Therefore, in this case, we have to revert the ordering of the b coefficients.    
+    if (is.xts(x))
+    {
+      if (ncol(b)>1)
+      {
+        yhat[i]<-as.double(sum(apply(b[L:1,]*x[i:(i-L+1),],1,sum)))
+      } else
+      {
+        yhat[i]<-as.double(b[L:1,]%*%x[i:(i-L+1)])#tail(x) x[(i-L+1):i]
+      }
+    } else
+    {
+      if (ncol(b)>1)
+      {
+        yhat[i]<-as.double(sum(apply(b[1:L,]*x[i:(i-L+1),],1,sum)))
+      } else
+      {
+        yhat[i]<-as.double(as.vector(b)%*%x[i:(i-L+1)])#tail(x) x[(i-L+1):i]
+      }
+    }
+  }
+  #  names(yhat)<-index(x)#index(yhat)  index(x)
+  #  yhat<-as.xts(yhat,tz="GMT")
+  return(list(yhat=yhat))
+}
+
+
+perf_plot_func<-function(x,L,in_samp,x_trade, ploterino=2)
+{
+  if (is.null(x_trade))
+    x_trade<-x
+  
+  b<-as.matrix(rep(1/L,L),ncol=1)
+  
+  yhat<-filt_func(x,b)$yhat
+  
+  is.xts(yhat)
+  
+  # Use x-trade for trading  
+  
+  # Lag k=1 mit signume
+  # Man filtert also logReturns
+  perf<-lag(sign(yhat),k=1)*x_trade
+  
+  par(mfrow=(c(ploterino,1)))
+  perf_in<-perf[paste("/",in_samp,sep="")]
+  sharpe<-sqrt(250)*mean(perf_in,na.rm=T)/sqrt(var(perf_in,na.rm=T))
+  print(plot(cumsum(na.exclude(perf_in)),main=paste("In-sample: Sharpe=",round(sharpe,2),sep="")))
+  perf_out<-perf[paste(in_samp,"/",sep="")]
+  sharpe<-sqrt(250)*mean(perf_out,na.rm=T)/sqrt(var(perf_out,na.rm=T))
+  print(plot(cumsum(na.exclude(perf_out)),main=paste("Out-sample: Sharpe=",round(sharpe,2),sep="")))
+  
+}

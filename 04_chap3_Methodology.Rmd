@@ -60,7 +60,9 @@ plot(ind, main="Indexes 1-4", col=1:4, lwd=1, legend.loc="topleft") #plotting or
 
 By taking the returns of the transformed series we can visualize volatility clusters as seen in figure. The first value of the series is eliminated because of the differences \ref{fig:chap3.1.3},
 Clearly visible are the high spikes in the times of the financial crisis 2007-2009. Also at the end of the series the impact of covid 19 in march 2020 is remarkable.  
-the unconditional volatility of the indexes are \textcolor{black}{0.64e-06}, \textcolor{red}{4..1e-06}, \textcolor{green}{8.5e-06}, \textcolor{blue}{15.6e-06}. Which means the the index 1 is as much as 24 times volatiler than the fourth index. 
+the unconditional volatility of the indexes are \textcolor{black}{0.64e-06}, \textcolor{red}{4..1e-06}, \textcolor{green}{8.5e-06}, \textcolor{blue}{15.6e-06}. Which means the the index 1 is as much as 24 times volatiler than the fourth index.
+
+&nbsp;
 
 ```{r,chap3.1.3, include=T, echo = F,message=F,  fig.cap="Log returns"}
 plot(log_ret_ind, main="Log_returns indexes", legend.loc="topleft") #plot log returns
@@ -127,7 +129,6 @@ plot(y_ind[,4],main=paste("Log index 4,","vola=",vola_y_ind[4],sep=" "),col = 4)
 \newpage
 
 ### 3.2. Trading signals
-&nbsp;
 
 in Section 2 we have learned different indicators and models for timeseries-analysis. These models and indicators are now used to trade the indexes we've introduced in the previous section.
 
@@ -135,6 +136,7 @@ To do so we need to create trading signals based on the models and indicators. F
 
 
 #### 3.2.1. Buy and hold Performance
+
 &nbsp;
 
 As mentioned earlier the goal of this work is to outperform the buy and hold strategy. because the series all have a strong upward trend this task is very tricky. Buy and hold has very low trading costs because the underlyings are just bougth once. According to swissquote [@swissquote] costs for asset trades over 50k are 190 USD per trade $_1$, so these costs must also be taken in consideration for the strategy.
@@ -149,7 +151,9 @@ $_1$ notice: This fee is only for private investors, conditions may differ for i
 
 \newpage 
 
-#### 3.2.2. sma signals to trade 
+#### 3.2.2. sma signals to trade
+
+&nbsp;
 
 As a fisrt approch we apply a moving averag crossing to the timeseries. The trading horizont is from 
 ```{r chap3.2.2. ma crossover, echo=FALSE, fig.cap="conversion data",include=T,fig.keep = 'last'}
@@ -171,7 +175,7 @@ signal[which(sma1<sma2&lag(sma1)>lag(sma2))]<--1
 signal[which(sma1>sma2)]<-1
 signal[which(sma1<sma2)]<--1
 signal=reclass(signal,sma1)
-chartSeries(mobidat,subset=horizon,theme=chartTheme("white"),name= "sMa",type="")
+chartSeries(mobidat,subset=horizon,theme=chartTheme("white", bg.col="#FFFFFF"),name= "sMa",type="")
 addSMA(n=n1,on=1,col = "blue")
 addSMA(n=n2,on=1,col = "red")
 addTA(signal,type="S",col="red")
@@ -184,7 +188,7 @@ names(ret)="filter"
 
 
 ```{r chap3.2.3. ma crossover, echo=FALSE, fig.cap="conversion data",include=T,fig.keep = 'last'}
-#SharpeRatio(ret,FUN="StdDev")
+#SharpeRatio(ret,FUN="StdDev")*sqrt(250)
 #chart.Bar(ret,main="returns daily")
 #chart.CumReturns(ret, main="Naive Rule: Cum Returns")
 #chart.Drawdown(ret,main="Naive Rule: Percentage Drawdown")
