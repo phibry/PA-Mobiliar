@@ -20,8 +20,7 @@ ind <- data[,1:4]
 int <- data[,5:12]
 
 par(mfrow=c(1,1))
-plot(ind, main="Indexes 1-4", col=2:5, lwd=1,legend.loc="topleft") #plotting original data
-
+plot(ind, main="Indexes 1-4", col=1:4, lwd=1, legend.loc="topleft") #plotting original data
 ```
 
 Each time-series has `r nrow(ind)` observations and starts from October 2003 to April 2020. In all indexes is an upward drift observable, during the time period of the great recession (2008) is a slight bump visible. Also later in 2013 and 2016 are small break-ins evident. More interesting is the up and down behavior at the end of the series during the Covid19 pandemic.
