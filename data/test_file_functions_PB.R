@@ -128,6 +128,6 @@ in_sample ="2010-01-01"
   
 x<-log_ind[paste(start_date,"/",sep="")]
 
-
+# code from methology
 
 
