@@ -22,7 +22,7 @@ ljungplotGarch <- function(resid, sig) {
   }
   
   par(mfrow=c(1,2))
-  plot(x=1:20, y=p1, main=expression(paste("Ljung-Box statistic: ", û)),
+  plot(x=1:20, y=p1, main=expression(paste("Ljung-Box statistic: ", u)),
        xlab = "lag", ylab = "p value", axes = FALSE,
        ylim=c(0,1))
   box(col="gray")
@@ -33,7 +33,7 @@ ljungplotGarch <- function(resid, sig) {
   points(x=15, y=p1[15], pch=16, col="red")
   points(x=20, y=p1[20], pch=16, col="red")
   
-  plot(x=1:20, y=p2, main=expression(paste("Ljung-Box statistic: ", û^2)),
+  plot(x=1:20, y=p2, main=expression(paste("Ljung-Box statistic: ", u^2)),
        xlab = "lag", ylab = "p value", axes = FALSE,
        ylim=c(0,1))
   box(col="gray")
