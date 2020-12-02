@@ -175,9 +175,6 @@ By targeting the best sharpe ratio for the indexes we build a portfolio for thos
 
 
 ```{r chap3.2.1. ma crossover, echo=FALSE, fig.cap="conversion data",include=F}
-# plot of buy and hold equally weightet all indexes, sharpe timespan? -wildi
-var(ind)
-
 #5328.205
 #23203.62
 #45321.87
@@ -185,10 +182,11 @@ var(ind)
 5328.205-
 69771.43/5328.205
 5328.205+23203.62+45321.87+69771.43
-5328.205/143625.1
-23203.62/143625.1
-45321.87/143625.1
-69771.43/143625.1
+
+round(100*5328.205/143625.1,2)
+round(100*23203.62/143625.1,2)
+round(100*45321.87/143625.1,2)
+round(100*69771.43/143625.1,2)
 ```
  
 \newpage 
