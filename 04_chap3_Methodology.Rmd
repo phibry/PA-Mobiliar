@@ -37,9 +37,6 @@ kbl(c, caption="Correlations oft the four indexes", booktabs = T) %>%
 &nbsp;
 
 
-Applying the natural logarithm to the series is an approach to cancel out increasing volatility \ref{fig:chap3.1.2.}. The strong upward is still visible the original series more than doubled its original price over the whole timespan(index 4)\ref{fig:chap1.1}. 
-
-
 ```{r,chap 3.1.2. ,include=T, echo = F,fig.dim=c(7,3.0),message=F, fig.cap="Visualization log_indizes"}
 plot(log_ind, main="Log Indexes 1-4", col=1:4, lwd=1,legend.loc="topleft") #plotting log data
 ```
@@ -88,10 +85,6 @@ acf(abs(x4^2),lag.max = 50,main= "ACF INDEX 4 ,10-2003/03-2020" )
 
 For further analysis we concentrate on different timespans, because in most models it makes few sense to consider the whole timeseries from 2003 till today
 
-
-By taking the returns of the transformed series we can visualize volatility clusters as seen in figure. The first value of the series is eliminated because of the differences \ref{fig:chap3.1.3},
-Clearly visible are the high spikes in the times of the financial crisis 2007-2009. Also at the end of the series the impact of covid 19 in march 2020 is remarkable.  
-the unconditional volatility of the indexes are \textcolor{black}{0.64e-06}, \textcolor{red}{4..1e-06}, \textcolor{green}{8.5e-06}, \textcolor{blue}{15.6e-06}. Which means the the index 1 is as much as 24 times volatiler than the fourth index.
 
 &nbsp;
 
@@ -164,24 +157,24 @@ As mentioned earlier the goal of this work is to outperform the buy and hold str
 
 $_1$ notice: This fee is only for private investors, conditions may differ for institutions.
 
-#### 3.2.1.1 portfolios
+#### 3.2.1.1 Portfolios
 
-By targeting the best sharpe ratio for the indexes we build a portfolio for those 4 indexes. One approach would be the equally weighted portfolio with weights for every index of $\frac{1}{4}$. As we've seen in figure \ref{fig:chap3.1.3} the volatility of the indexes strongly differ, meaning that the index 4 would have the most impact, nearly 50 %, on the portfolio by weighting it equally. 
+By targeting the best sharpe ratio for the indexes we build a portfolio for those 4 indexes. One approach would be the equally weighted portfolio with weights for every index of $\frac{1}{4}$. As we've seen in figure \ref{fig:chap3.1.3} The volatility of the indexes strongly differ, meaning that the index 4 would have the most impact, nearly 50 %, on the portfolio by weighting it equally. 
 
 \begin{equation}
   \label{eq:standardizing vola}
- standardized\sigma_k = \frac{\sigma_k}{\sum_{k=1}^{4}\sigma_k
+ standardized\sigma_k = \frac{\sigma_k}{\sum_{k=1}^{4}\sigma_k}
 \end{equation}
 
 
-```{r chap3.2.1. share volatility equally, echo=FALSE, fig.cap=equally weighted protfolios variance",include=F}
+```{r chap3.2.1. share volatility equally, echo=FALSE,include=T}
 sigmas=diag(var(ind))
 sigma_shares=100*sigmas/sum(sigmas)
 sigma_shares
 ```
  
  
-THe cancel out this effect, we're going to size the position with the inverse volatility, by standardizing the conditional variance:
+To cancel out this effect, we're going to size the position with the inverse volatility, by standardizing the conditional variance:
 
 \newpage 
 
