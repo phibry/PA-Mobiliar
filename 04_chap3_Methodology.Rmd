@@ -166,7 +166,7 @@ $_1$ notice: This fee is only for private investors, conditions may differ for i
 
 #### 3.2.1.1 portfolios
 
-By targeting the best sharpe ratio for the indexes we build a portfolio for those 4 indexes. One approach would be the equally weighted portfolio with weights for every index of $\frac{1}{4}$. As we've seen in figure \ref{fig:chap3.1.3} the volatility of the indexes strongly differ, meaning that the index 4 would have the most impact on the portfolio by weighting it equally. THe cancel out this effect, we're going to size the position with the inverse volatility, by standardizing the conditional variance:
+By targeting the best sharpe ratio for the indexes we build a portfolio for those 4 indexes. One approach would be the equally weighted portfolio with weights for every index of $\frac{1}{4}$. As we've seen in figure \ref{fig:chap3.1.3} the volatility of the indexes strongly differ, meaning that the index 4 would have the most impact, nearly 50 %, on the portfolio by weighting it equally. 
 
 \begin{equation}
   \label{eq:standardizing vola}
@@ -174,21 +174,15 @@ By targeting the best sharpe ratio for the indexes we build a portfolio for thos
 \end{equation}
 
 
-```{r chap3.2.1. ma crossover, echo=FALSE, fig.cap="conversion data",include=F}
-#5328.205
-#23203.62
-#45321.87
-#69771.43
-5328.205-
-69771.43/5328.205
-5328.205+23203.62+45321.87+69771.43
-
-round(100*5328.205/143625.1,2)
-round(100*23203.62/143625.1,2)
-round(100*45321.87/143625.1,2)
-round(100*69771.43/143625.1,2)
+```{r chap3.2.1. share volatility equally, echo=FALSE, fig.cap=equally weighted protfolios variance",include=F}
+sigmas=diag(var(ind))
+sigma_shares=100*sigmas/sum(sigmas)
+sigma_shares
 ```
  
+ 
+THe cancel out this effect, we're going to size the position with the inverse volatility, by standardizing the conditional variance:
+
 \newpage 
 
 ### 3.2.2. sma signals to trade
