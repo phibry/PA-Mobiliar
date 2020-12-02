@@ -1129,13 +1129,9 @@ cums
 
 L1min <- 1
 L1max <- 50
-
 L2min <- 100
 L2max <- 250
-
 best <- 0
-
-
 
 cross_optim <- function(x, start = "2015-10-30", end = "2018-12-31", L1min = 1, L1max = 50, L2min =  100, L2max = 250) {
   best <- 0
@@ -1182,11 +1178,10 @@ cross_optim <- function(x, start = "2015-10-30", end = "2018-12-31", L1min = 1, 
   return(best)
 }
 
-
-ind1_opt <- cross_optim(data[,1], start = "2015-10-30", end = "2018-12-31", L1min = 1, L1max = 50, L2min =  100, L2max = 250)
-ind2_opt <- cross_optim(data[,2], start = "2015-10-30", end = "2018-12-31", L1min = 1, L1max = 50, L2min =  100, L2max = 250)
-ind3_opt <- cross_optim(data[,3], start = "2015-10-30", end = "2018-12-31", L1min = 1, L1max = 50, L2min =  100, L2max = 250)
-ind4_opt <- cross_optim(data[,4], start = "2015-10-30", end = "2018-12-31", L1min = 1, L1max = 50, L2min =  100, L2max = 250)
+ind1_opt <- cross_optim(data[,1], start = "2015-10-30", end = "2018-12-31", L1min = 1, L1max = 50, L2min =  100, L2max = 200)
+ind2_opt <- cross_optim(data[,2], start = "2015-10-30", end = "2018-12-31", L1min = 1, L1max = 50, L2min =  100, L2max = 200)
+ind3_opt <- cross_optim(data[,3], start = "2015-10-30", end = "2018-12-31", L1min = 1, L1max = 50, L2min =  100, L2max = 200)
+ind4_opt <- cross_optim(data[,4], start = "2015-10-30", end = "2018-12-31", L1min = 1, L1max = 50, L2min =  100, L2max = 200)
 
 
 

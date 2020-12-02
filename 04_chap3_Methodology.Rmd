@@ -5,8 +5,7 @@ geometry: margin = 1in
 
 ## 3. Methodology
 
-In this section models are created, trying to outperform the buy and hold strategy.
-starting by analyzing the data and using simple models, more complex models and combined tools are added step by step in different approaches.
+In this section models are created, trying to outperform the buy and hold strategy. starting by analyzing the data and using simple models, more complex models and combined tools are added step by step in different approaches.
 
 ### 3.1. Data Analysis
 
@@ -14,13 +13,9 @@ As mentioned in section [1.1](#ts-analysis) We are now going to analyze the data
 
 #### 3.1.1. Correlation
 
-&nbsp;
+ 
 
-One could nearly tell just by looking at the indexes how strong they're correlated. The correlation matrix confirms the 
-assumption, the correlation is nearly 1 for every index to each other.
-
-
-
+One could nearly tell just by looking at the indexes how strong they're correlated. The correlation matrix confirms the assumption, the correlation is nearly 1 for every index to each other.
 
 ```{r chap3.1.1., echo=FALSE}
 log_ind <-    log(ind)      #logarithm of the series
@@ -31,11 +26,9 @@ kbl(c, caption="Correlations oft the four indexes", booktabs = T) %>%
   kable_styling(latex_options = c("striped", "hold_position"))
 ```
 
-
 #### 3.1.2. transformation, volatility and clusters
 
-&nbsp;
-
+ 
 
 ```{r,chap 3.1.2. ,include=T, echo = F,fig.dim=c(7,3.0),message=F, fig.cap="Visualization log_indizes"}
 plot(log_ind, main="Log Indexes 1-4", col=1:4, lwd=1,legend.loc="topleft") #plotting log data
@@ -43,17 +36,14 @@ plot(log_ind, main="Log Indexes 1-4", col=1:4, lwd=1,legend.loc="topleft") #plot
 
 \newpage
 
-By taking the returns of the transformed series we can visualize volatility clusters as seen in figure. The first value of the series is eliminated because of the differences \ref{fig:chap3.1.3.},
-Clearly visible are the high spikes in the times of the financial crisis 2007-2009. Also at the end of the series the impact of covid 19 in march 2020 is remarkable.  
-the unconditional volatility of the indexes are
-\textcolor{black}{5328.205}, \textcolor{red}{23203.62}, \textcolor{green}{45321.87}, \textcolor{blue}{69771.43}. Which means the the index 1 is as much as 13 times volatiler than the fourth index. 
+By taking the returns of the transformed series we can visualize volatility clusters as seen in figure. The first value of the series is eliminated because of the differences \ref{fig:chap3.1.3.}, Clearly visible are the high spikes in the times of the financial crisis 2007-2009. Also at the end of the series the impact of covid 19 in march 2020 is remarkable.\
+the unconditional volatility of the indexes are \textcolor{black}{5328.205}, \textcolor{red}{23203.62}, \textcolor{green}{45321.87}, \textcolor{blue}{69771.43}. Which means the the index 1 is as much as 13 times volatiler than the fourth index.
 
 ```{r,chap 3.1.2, include=T, echo = F,message=F,  fig.cap="Log returns"}
 plot(log_ret_ind,main="Log_returns indexes",legend.loc="topleft") #plot log returns
 ```
 
-Applying the natural logarithm to the series is an approach to cancel out increasing volatility \ref{fig:chap3.1.2}. The strong upward is still visible the original series more than doubled its original price over the whole timespan (index 4) \ref{fig:chap1.1}. 
-
+Applying the natural logarithm to the series is an approach to cancel out increasing volatility \ref{fig:chap3.1.2}. The strong upward is still visible the original series more than doubled its original price over the whole timespan (index 4) \ref{fig:chap1.1}.
 
 ```{r, chap3.1.2, echo = F, fig.dim=c(7,3.0), fig.cap="Visualization log indizes"}
 par(mfrow=c(1,1))
@@ -63,11 +53,11 @@ plot(ind, main="Indexes 1-4", col=1:4, lwd=1, legend.loc="topleft") #plotting or
 
 \newpage
 
-
 #### 3.1.2.1 Autocorrelation of log returns
-&nbsp;
 
-By computing the acf of the squared log_returns we see that the volatility cluster have very long dependency structures. 
+ 
+
+By computing the acf of the squared log\_returns we see that the volatility cluster have very long dependency structures.
 
 ```{r,chap 3.1.2.1,include=T, echo = F,message=F, fig.cap="ACF log returns",fig.dim=c(15,10)}
 par(mfrow=c(2,2))
@@ -85,17 +75,13 @@ acf(abs(x4^2),lag.max = 50,main= "ACF INDEX 4 ,10-2003/03-2020" )
 
 For further analysis we concentrate on different timespans, because in most models it makes few sense to consider the whole timeseries from 2003 till today
 
-
-&nbsp;
-
+ 
 
 ```{r,chap3.1.3, include=T, echo = F,message=F,  fig.cap="Log returns"}
 plot(log_ret_ind, main="Log_returns indexes", legend.loc="topleft") #plot log returns
 ```
 
 \newpage
-
-
 
 ```{r,chap 3.1.4,include=F, echo = F,message=F,fig.dim=c(15,15), fig.cap="Visualization log returns"}
 par(mfrow=c(4,2))
@@ -116,11 +102,12 @@ plot(x_ind[,1],main=paste("Log_returns index,","vola=",vola_x_ind[4],sep=" "),co
 plot(y_ind[,4],main=paste("Log index 4,","vola=",vola_y_ind[4],sep=" "),col = 4)
 
 ```
+
 \newpage
 
 #### 3.1.2.2. periodicity
 
-&nbsp;
+ 
 
 ```{r,chap 3.1.3.,include=T, echo = F,message=F,fig.dim=c(15,15), fig.cap="peridodogramm ",warning= F,fig.keep="last"}
 #source("add/periodogramm.R")
@@ -130,69 +117,67 @@ plot(y_ind[,4],main=paste("Log index 4,","vola=",vola_y_ind[4],sep=" "),col = 4)
 #SharpeRatio(ind[,1],int[,11],FUN="StdDev")
 ```
 
-
-
 \newpage
 
+### 3.2.Trading
 
-&nbsp;
-
+ 
 
 in Section 2 we have learned different indicators and models for timeseries-analysis. These models and indicators are now used to trade the indexes we've introduced in the previous section.
 
-To do so we need to create trading signals based on the models and indicators. For example we're using the MA Crossings, as mentioned [2.3.3.](#Ma crossings) the points where the two MAs cross, are now used to create a trading signal. when the longer MA comes from below to the crossing we are going long the asset and if it approaches the point from above we're shorting the position. Technically we apply a 1 to a vector at each crossing, where we intend to buy and apply a -1 at the points we want to sell. 
+To do so we need to create trading signals based on the models and indicators. For example we're using the MA Crossings, as mentioned [2.3.3.](#Ma%20crossings) the points where the two MAs cross, are now used to create a trading signal. when the longer MA comes from below to the crossing we are going long the asset and if it approaches the point from above we're shorting the position. Technically we apply a 1 to a vector at each crossing, where we intend to buy and apply a -1 at the points we want to sell.
 
+### 3.2.1. Buy and Hold Performance
 
-
-
-
-
-
-### 3.2.1. Buy and hold Performance
-
-&nbsp;
+ 
 
 As mentioned earlier the goal of this work is to outperform the buy and hold strategy. because the series all have a strong upward trend this task is very tricky. Buy and hold has very low trading costs because the underlyings are just bougth once. According to swissquote [@swissquote] costs for asset trades over 50k are 190 USD per trade $_1$, so these costs must also be taken in consideration for the strategy.
-
 
 $_1$ notice: This fee is only for private investors, conditions may differ for institutions.
 
 #### 3.2.1.1 Portfolios
 
-By targeting the best sharpe ratio for the indexes we build a portfolio for those 4 indexes. One approach would be the equally weighted portfolio with weights for every index of $\frac{1}{4}$. As we've seen in figure \ref{fig:chap3.1.3} The volatility of the indexes strongly differ, meaning that the index 4 would have the most impact, nearly 50 %, on the portfolio by weighting it equally. 
+By targeting the best sharpe ratio for the indexes we build a portfolio for those 4 indexes. One approach would be the equally weighted portfolio with weights for every index of $\frac{1}{4}$. As we've seen in figure \ref{fig:chap3.1.3} The volatility of the indexes strongly differ, meaning that the index 4 would have the most impact, nearly 50 %, on the portfolio by weighting it equally. To cancel this effect, we're going to size the position with the inverse volatility so the indexes have the weights seen in the table on the right side.
 
 \begin{equation}
   \label{eq:standardizing vola}
- standardized\sigma_k = \frac{\sigma_k}{\sum_{k=1}^{4}\sigma_k}
+ procentual  share \sigma_k = \frac{\sigma_k}{\sum_{k=1}^{4}\sigma_k}
 \end{equation}
-
 
 ```{r chap3.2.1. share volatility equally, echo=FALSE,include=T}
 sigmas=diag(var(ind))
-sigma_shares=100*sigmas/sum(sigmas)
-sigma_shares
+sigmas_1=1/sigmas
+sigma_shares=as.matrix(100*sigmas/sum(sigmas))
+sigma_shares_1=as.matrix(100*sigmas_1/sum(sigmas_1))
+perc=cbind(sigma_shares,sigma_shares_1)
+colnames(perc) <- c("percentage of vola when equally weighted","weights when weigthed with inverse vola")
+perc=as.data.frame(perc)
+kbl(perc, caption="shares", booktabs = T) %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
 ```
- 
- 
-To cancel out this effect, we're going to size the position with the inverse volatility, by standardizing the conditional variance:
 
-\newpage 
+\newpage
 
-### 3.2.2. sma signals to trade
+### 3.2.2. Moving average crossings to trade
 
-&nbsp;
+ 
 
-As a fisrt approch we apply a moving averag crossing to the timeseries. The trading horizont is from 
+As a first approach we apply 2 SMAs for every time series, trade them with the common Ma crossings rules and optimize the sharpe ratio. The in-sample timespan is considered from 2015-10-30 to 2018-12-31, therefore the filterlenghts are restrained by $1 \l L1 \le 50$ and $10\l L2 \le 200$. The out of sample timespan is from 2018-12-31 to th last data point in march 2020. 
+
+For the first index we find L1 = 1 , and L2 = 106 with an out of sample sharpe of 3.51 this equals buy and hold, no trades were executet.
+The second index leaves us with a L1 = 17 and L2 =111, further two trades were execute and dthey deliver a shrape from 2.77.
+Continuing with the third index shows us L1 =16 and L2 112, the ma crossings signals were also for 2 trades and left us with a sharpe 1.97.
+The Last index was also only traded twice with filterlengths of 15 and 135 and a sharpe 1.63.
+
+The filterlengths are very similar, therefore we only show the last MA crossing in \ref{chap3.2.2.}. The intuition says that this strategy may not be so bad , why leaving a trend market instead of buy and hold.
+
+
 ```{r chap3.2.2. ma crossover, echo=FALSE, fig.cap="conversion data",include=T,fig.keep = 'last'}
-load("data/data_mobi") 
-n=20
-# lentgths
-n1=50
-n2 =100
-k=2
+n1=15
+n2 =135
 mobidat= data[,4] # chose the row and horizon
-start="2015-10-30"
-end="2020-04-30"
+start="2019-01-01"
+end = "2020-04-31"
 horizon=paste(start,"::",end,sep = "")
 sma1 <-SMA(mobidat,n=n1)
 sma2 <-SMA(mobidat,n=n2)
@@ -202,24 +187,15 @@ signal[which(sma1<sma2&lag(sma1)>lag(sma2))]<--1
 signal[which(sma1>sma2)]<-1
 signal[which(sma1<sma2)]<--1
 signal=reclass(signal,sma1)
-
-
-chartSeries(mobidat,subset=horizon,theme=chartTheme("white"),name= "sMa",type="")
-
 chartSeries(mobidat,subset=horizon,theme=chartTheme("white", bg.col="#FFFFFF"),name= "sMa",type="")
-
 addSMA(n=n1,on=1,col = "blue")
 addSMA(n=n2,on=1,col = "red")
 addTA(signal,type="S",col="red")
 trade   =   Lag(signal[horizon],1)
 return  =   diff(log(mobidat))
 ret = return*trade
-
-
 names(ret)="filter"
 ```
-
-
 
 ```{r chap3.2.3. ma crossover, echo=FALSE, fig.cap="conversion data",include=T,fig.keep = 'last'}
 
@@ -230,10 +206,6 @@ names(ret)="filter"
 charts.PerformanceSummary(ret, main="Naive Buy Rule")
 #SharpeRatio(data,FUN="StdDev")
 
-names(ret)="filter"
+#ames(ret)="filter"
 
 ```
-
-
-
-

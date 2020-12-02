@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.11.14)  2 DEC 2020 22:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.11.14)  2 DEC 2020 23:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -678,7 +678,7 @@ LaTeX Info: Redefining \nameref on input line 90.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<add/titlepage.pdf, id=84, 597.23125pt x 845.1575pt>
+<add/titlepage.pdf, id=88, 597.23125pt x 845.1575pt>
 File: add/titlepage.pdf Graphic file (type pdf)
 <use add/titlepage.pdf>
 Package pdftex.def Info: add/titlepage.pdf  used on input line 94.
@@ -687,7 +687,7 @@ File: add/titlepage.pdf Graphic file (type pdf)
 <use add/titlepage.pdf>
 Package pdftex.def Info: add/titlepage.pdf  used on input line 94.
 (pdftex.def)             Requested size: 459.64165pt x 650.4509pt.
-<add/titlepage.pdf, id=87, page=1, 597.23125pt x 845.1575pt>
+<add/titlepage.pdf, id=91, page=1, 597.23125pt x 845.1575pt>
 File: add/titlepage.pdf Graphic file (type pdf)
 <use add/titlepage.pdf, page 1>
 Package pdftex.def Info: add/titlepage.pdf , page1 used on input line 94.
@@ -711,7 +711,7 @@ Package pdftex.def Info: add/titlepage.pdf , page1 used on input line 94.
 [1
 
  <./add/titlepage.pdf>]
-<add/declaration.pdf, id=130, 597.23125pt x 845.1575pt>
+<add/declaration.pdf, id=134, 597.23125pt x 845.1575pt>
 File: add/declaration.pdf Graphic file (type pdf)
 <use add/declaration.pdf>
 Package pdftex.def Info: add/declaration.pdf  used on input line 95.
@@ -720,7 +720,7 @@ File: add/declaration.pdf Graphic file (type pdf)
 <use add/declaration.pdf>
 Package pdftex.def Info: add/declaration.pdf  used on input line 95.
 (pdftex.def)             Requested size: 459.64165pt x 650.4509pt.
-<add/declaration.pdf, id=133, page=1, 597.23125pt x 845.1575pt>
+<add/declaration.pdf, id=137, page=1, 597.23125pt x 845.1575pt>
 File: add/declaration.pdf Graphic file (type pdf)
 <use add/declaration.pdf, page 1>
 Package pdftex.def Info: add/declaration.pdf , page1 used on input line 95.
@@ -797,7 +797,7 @@ ier (name{page.}) has been already used, duplicate ignored
                    \relax 
 l.104 \newpage
                [4]
-<00_main_files/figure-latex/chap1.1-1.pdf, id=193, 469.755pt x 325.215pt>
+<00_main_files/figure-latex/chap1.1-1.pdf, id=198, 469.755pt x 325.215pt>
 File: 00_main_files/figure-latex/chap1.1-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap1.1-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap1.1-1.pdf  used on inpu
@@ -815,20 +815,20 @@ ed, duplicate ignored
                                                   
 l.214 \newpage
               ]
-<00_main_files/figure-latex/chap2.1-1.pdf, id=218, 469.755pt x 325.215pt>
+<00_main_files/figure-latex/chap2.1-1.pdf, id=223, 469.755pt x 325.215pt>
 File: 00_main_files/figure-latex/chap2.1-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap2.1-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap2.1-1.pdf  used on inpu
 t line 272.
 (pdftex.def)             Requested size: 328.82626pt x 227.64894pt.
 [3]
-<00_main_files/figure-latex/chap2.2-1.pdf, id=237, 469.755pt x 325.215pt>
+<00_main_files/figure-latex/chap2.2-1.pdf, id=242, 469.755pt x 325.215pt>
 File: 00_main_files/figure-latex/chap2.2-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap2.2-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap2.2-1.pdf  used on inpu
 t line 291.
 (pdftex.def)             Requested size: 328.82626pt x 227.64894pt.
-<00_main_files/figure-latex/chap2.1.2-1.pdf, id=242, 469.755pt x 325.215pt>
+<00_main_files/figure-latex/chap2.1.2-1.pdf, id=247, 469.755pt x 325.215pt>
 File: 00_main_files/figure-latex/chap2.1.2-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap2.1.2-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap2.1.2-1.pdf  used on in
@@ -857,7 +857,7 @@ LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 3
 (c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [6]
-<00_main_files/figure-latex/chap2.2.1_1-1.pdf, id=286, 469.755pt x 325.215pt>
+<00_main_files/figure-latex/chap2.2.1_1-1.pdf, id=291, 469.755pt x 325.215pt>
 File: 00_main_files/figure-latex/chap2.2.1_1-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap2.2.1_1-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap2.2.1_1-1.pdf  used on 
@@ -869,7 +869,7 @@ has been already used, duplicate ignored
                                                   
 l.438 \newpage
                <./00_main_files/figure-latex/chap2.2.1_1-1.pdf>]
-<00_main_files/figure-latex/chap2.2.1_2-1.pdf, id=300, 469.755pt x 325.215pt>
+<00_main_files/figure-latex/chap2.2.1_2-1.pdf, id=305, 469.755pt x 325.215pt>
 File: 00_main_files/figure-latex/chap2.2.1_2-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap2.2.1_2-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap2.2.1_2-1.pdf  used on 
@@ -887,7 +887,7 @@ y used, duplicate ignored
                                                   
 l.547 \newpage
               ]
-<00_main_files/figure-latex/chap2.2.2-1.pdf, id=330, 469.755pt x 325.215pt>
+<00_main_files/figure-latex/chap2.2.2-1.pdf, id=335, 469.755pt x 325.215pt>
 File: 00_main_files/figure-latex/chap2.2.2-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap2.2.2-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap2.2.2-1.pdf  used on in
@@ -899,7 +899,7 @@ put line 562.
                                                   
 l.603 \newpage
                <./00_main_files/figure-latex/chap2.2.2-1.pdf>]
-<00_main_files/figure-latex/chap2.2.3-1.pdf, id=345, 469.755pt x 325.215pt>
+<00_main_files/figure-latex/chap2.2.3-1.pdf, id=350, 469.755pt x 325.215pt>
 File: 00_main_files/figure-latex/chap2.2.3-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap2.2.3-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap2.2.3-1.pdf  used on in
@@ -911,7 +911,7 @@ put line 616.
                                                   
 l.657 \newpage
                <./00_main_files/figure-latex/chap2.2.3-1.pdf>] [12] [13] [14]
-<00_main_files/figure-latex/chap2.3.3-1.pdf, id=395, 469.755pt x 325.215pt>
+<00_main_files/figure-latex/chap2.3.3-1.pdf, id=400, 469.755pt x 325.215pt>
 File: 00_main_files/figure-latex/chap2.3.3-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap2.3.3-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap2.3.3-1.pdf  used on in
@@ -923,7 +923,7 @@ put line 862.
                                                   
 l.869 \newpage
                <./00_main_files/figure-latex/chap2.3.3-1.pdf>]
-<00_main_files/figure-latex/chap2.4 -1.pdf, id=407, 505.89pt x 289.08pt>
+<00_main_files/figure-latex/chap2.4 -1.pdf, id=412, 505.89pt x 289.08pt>
 File: 00_main_files/figure-latex/chap2.4 -1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap2.4 -1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap2.4 -1.pdf  used on inp
@@ -935,7 +935,7 @@ ut line 910.
                                                   
 l.916 \newpage
                <./00_main_files/figure-latex/chap2.4 -1.pdf>]
-<00_main_files/figure-latex/chap2.5-1.pdf, id=423, 505.89pt x 289.08pt>
+<00_main_files/figure-latex/chap2.5-1.pdf, id=428, 505.89pt x 289.08pt>
 File: 00_main_files/figure-latex/chap2.5-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap2.5-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap2.5-1.pdf  used on inpu
@@ -947,7 +947,7 @@ t line 960.
                                                   
 l.966 \newpage
                <./00_main_files/figure-latex/chap2.5-1.pdf>]
-<00_main_files/figure-latex/chap2.6 -1.pdf, id=441, 505.89pt x 289.08pt>
+<00_main_files/figure-latex/chap2.6 -1.pdf, id=446, 505.89pt x 289.08pt>
 File: 00_main_files/figure-latex/chap2.6 -1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap2.6 -1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap2.6 -1.pdf  used on inp
@@ -959,168 +959,174 @@ ut line 1015.
                                                   
 l.1021 \newpage
                 <./00_main_files/figure-latex/chap2.6 -1.pdf>] [19]
-
-LaTeX Warning: Reference `fig:chap3.1.2.' on page 20 undefined on input line 11
-02.
-
-<00_main_files/figure-latex/chap 3.1.2. -1.pdf, id=465, 505.89pt x 216.81pt>
+<00_main_files/figure-latex/chap 3.1.2. -1.pdf, id=469, 505.89pt x 216.81pt>
 File: 00_main_files/figure-latex/chap 3.1.2. -1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap 3.1.2. -1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap 3.1.2. -1.pdf  used on
- input line 1108.
+ input line 1103.
 (pdftex.def)             Requested size: 328.8323pt x 140.92813pt.
 [20pdfTeX warning (ext4): destination with the same identifier (name{table.3}) 
 has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.1115 \newpage
+l.1110 \newpage
                 <./00_main_files/figure-latex/chap 3.1.2. -1.pdf>]
 
 LaTeX Warning: Reference `fig:chap3.1.3.' on page 21 undefined on input line 11
-19.
+14.
 
-<00_main_files/figure-latex/chap 3.1.2-1.pdf, id=483, 469.755pt x 325.215pt>
+<00_main_files/figure-latex/chap 3.1.2-1.pdf, id=487, 469.755pt x 325.215pt>
 File: 00_main_files/figure-latex/chap 3.1.2-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap 3.1.2-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap 3.1.2-1.pdf  used on i
-nput line 1130.
+nput line 1125.
 (pdftex.def)             Requested size: 328.82626pt x 227.64894pt.
-<00_main_files/figure-latex/chap3.1.2-1.pdf, id=486, 505.89pt x 216.81pt>
+<00_main_files/figure-latex/chap3.1.2-1.pdf, id=490, 505.89pt x 216.81pt>
 File: 00_main_files/figure-latex/chap3.1.2-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.1.2-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.1.2-1.pdf  used on in
-put line 1144.
+put line 1139.
 (pdftex.def)             Requested size: 328.8323pt x 140.92813pt.
 [21pdfTeX warning (ext4): destination with the same identifier (name{figure.13}
 ) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.1151 \newpage
+l.1146 \newpage
                pdfTeX warning (ext4): destination with the same identifier (nam
 e{figure.14}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.1151 \newpage
+l.1146 \newpage
                 <./00_main_files/figure-latex/chap 3.1.2-1.pdf> <./00_main_file
 s/figure-latex/chap3.1.2-1.pdf>]
-<00_main_files/figure-latex/chap 3.1.2.1-1.pdf, id=506, 1084.05pt x 722.7pt>
+<00_main_files/figure-latex/chap 3.1.2.1-1.pdf, id=510, 1084.05pt x 722.7pt>
 File: 00_main_files/figure-latex/chap 3.1.2.1-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap 3.1.2.1-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap 3.1.2.1-1.pdf  used on
- input line 1164.
+ input line 1159.
 (pdftex.def)             Requested size: 328.8235pt x 219.21567pt.
-<00_main_files/figure-latex/chap3.1.3-1.pdf, id=508, 469.755pt x 325.215pt>
+<00_main_files/figure-latex/chap3.1.3-1.pdf, id=511, 469.755pt x 325.215pt>
 File: 00_main_files/figure-latex/chap3.1.3-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.1.3-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.1.3-1.pdf  used on in
-put line 1190.
+put line 1174.
 (pdftex.def)             Requested size: 328.82626pt x 227.64894pt.
 [22pdfTeX warning (ext4): destination with the same identifier (name{figure.15}
 ) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.1197 \newpage
+l.1181 \newpage
                 <./00_main_files/figure-latex/chap 3.1.2.1-1.pdf>] [23pdfTeX wa
 rning (ext4): destination with the same identifier (name{figure.16}) has been a
 lready used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.1206 \newpage
-                <./00_main_files/figure-latex/chap3.1.3-1.pdf>]
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1
-254.
-(c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
-File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [24]
-<00_main_files/figure-latex/chap3.2.2. ma crossover-1.pdf, id=547, 469.755pt x 
+l.1190 \newpage
+                <./00_main_files/figure-latex/chap3.1.3-1.pdf>] [24pdfTeX warni
+ng (ext4): destination with the same identifier (name{table.4}) has been alread
+y used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.1259 \newpage
+               ]
+
+LaTeX Warning: Command \l invalid in math mode on input line 1270.
+
+
+LaTeX Warning: Command \l invalid in math mode on input line 1271.
+
+
+LaTeX Warning: Reference `chap3.2.2.' on page 25 undefined on input line 1284.
+
+<00_main_files/figure-latex/chap3.2.2. ma crossover-1.pdf, id=552, 469.755pt x 
 325.215pt>
 File: 00_main_files/figure-latex/chap3.2.2. ma crossover-1.pdf Graphic file (ty
 pe pdf)
 <use 00_main_files/figure-latex/chap3.2.2. ma crossover-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.2. ma crossover-1.p
-df  used on input line 1274.
+df  used on input line 1289.
 (pdftex.def)             Requested size: 328.82626pt x 227.64894pt.
-<00_main_files/figure-latex/chap3.2.3. ma crossover-1.pdf, id=548, 469.755pt x 
+<00_main_files/figure-latex/chap3.2.3. ma crossover-1.pdf, id=553, 469.755pt x 
 325.215pt>
 File: 00_main_files/figure-latex/chap3.2.3. ma crossover-1.pdf Graphic file (ty
 pe pdf)
 <use 00_main_files/figure-latex/chap3.2.3. ma crossover-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.3. ma crossover-1.p
-df  used on input line 1283.
+df  used on input line 1298.
 (pdftex.def)             Requested size: 328.82626pt x 227.64894pt.
 [25pdfTeX warning (ext4): destination with the same identifier (name{figure.17}
 ) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.1290 \newpage
+l.1305 \newpage
                 <./00_main_files/figure-latex/chap3.2.2. ma crossover-1.pdf>]
-<00_main_files/figure-latex/chap4.1-1.pdf, id=563, 469.755pt x 325.215pt>
+<00_main_files/figure-latex/chap4.1-1.pdf, id=567, 469.755pt x 325.215pt>
 File: 00_main_files/figure-latex/chap4.1-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap4.1-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap4.1-1.pdf  used on inpu
-t line 1299.
+t line 1314.
 (pdftex.def)             Requested size: 328.82626pt x 227.64894pt.
-<00_main_files/figure-latex/chap4.2-1.pdf, id=565, 469.755pt x 325.215pt>
+<00_main_files/figure-latex/chap4.2-1.pdf, id=569, 469.755pt x 325.215pt>
 File: 00_main_files/figure-latex/chap4.2-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap4.2-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap4.2-1.pdf  used on inpu
-t line 1310.
+t line 1325.
 (pdftex.def)             Requested size: 328.82626pt x 227.64894pt.
 [26pdfTeX warning (ext4): destination with the same identifier (name{figure.18}
 ) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.1317 \newpage
+l.1332 \newpage
                 <./00_main_files/figure-latex/chap3.2.3. ma crossover-1.pdf>] [
 27pdfTeX warning (ext4): destination with the same identifier (name{figure.19})
  has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.1317 \newpage
+l.1332 \newpage
                pdfTeX warning (ext4): destination with the same identifier (nam
 e{figure.20}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.1317 \newpage
+l.1332 \newpage
                 <./00_main_files/figure-latex/chap4.1-1.pdf> <./00_main_files/f
 igure-latex/chap4.2-1.pdf>]
-<00_main_files/figure-latex/chap4.3-1.pdf, id=598, 469.755pt x 325.215pt>
+<00_main_files/figure-latex/chap4.3-1.pdf, id=602, 469.755pt x 325.215pt>
 File: 00_main_files/figure-latex/chap4.3-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap4.3-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap4.3-1.pdf  used on inpu
-t line 1323.
+t line 1338.
 (pdftex.def)             Requested size: 328.82626pt x 227.64894pt.
-<00_main_files/figure-latex/chap4.4-1.pdf, id=600, 469.755pt x 325.215pt>
+<00_main_files/figure-latex/chap4.4-1.pdf, id=604, 469.755pt x 325.215pt>
 File: 00_main_files/figure-latex/chap4.4-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap4.4-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap4.4-1.pdf  used on inpu
-t line 1334.
+t line 1349.
 (pdftex.def)             Requested size: 328.82626pt x 227.64894pt.
 [28pdfTeX warning (ext4): destination with the same identifier (name{figure.21}
 ) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.1341 \newpage
+l.1356 \newpage
                 <./00_main_files/figure-latex/chap4.3-1.pdf>] [29pdfTeX warning
  (ext4): destination with the same identifier (name{figure.22}) has been alread
 y used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.1404 \newpage
+l.1419 \newpage
                 <./00_main_files/figure-latex/chap4.4-1.pdf>] [30] (./00_main.a
 ux)
 Package rerunfilecheck Info: File `00_main.out' has not changed.
-(rerunfilecheck)             Checksum: E29197E062AB8C5CA8F2D04CACBBEB52;3022.
+(rerunfilecheck)             Checksum: BD65A9576CAEA9922C1BF2D11BEE9C79;3202.
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 13206 strings out of 481466
- 197312 string characters out of 5920169
+ 13170 strings out of 481466
+ 196729 string characters out of 5920169
  501973 words of memory out of 5000000
- 29460 multiletter control sequences out of 15000+600000
- 576348 words of font info for 57 fonts, out of 8000000 for 9000
+ 29425 multiletter control sequences out of 15000+600000
+ 576029 words of font info for 56 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  66i,17n,77p,322b,450s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{Maux5cux2520crossings} has been referenced but do
@@ -1135,11 +1141,11 @@ ed by a fixed one
 pdfTeX warning (dest): name{ts-analysis} has been referenced but does not exist
 , replaced by a fixed one
 
-{c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc
-}{c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.en
-c}{c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-math
-ex.enc}{c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm
--ts1.enc}{c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/
+{c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc
+}{c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathe
+x.enc}{c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-
+ts1.enc}{c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/l
+m-ec.enc}{c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/
 lm-mathsy.enc}{c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvip
 s/lm/lm-mathit.enc}<c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/typ
 e1/public/lm/lmbx10.pfb><c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/font
@@ -1152,12 +1158,11 @@ TinyTeX/texmf-dist/fonts/type1/public/lm/lmr5.pfb><c:/Users/buehl/AppData/Roami
 ng/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/buehl/AppData/Ro
 aming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/buehl/AppDa
 ta/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/buehl/
-AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb><c:/Users/bu
-ehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on 00_main.pdf (34 pages, 1293126 bytes).
+AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb>
+Output written on 00_main.pdf (34 pages, 1235861 bytes).
 PDF statistics:
- 733 PDF objects out of 1000 (max. 8388607)
- 597 compressed objects within 6 object streams
- 166 named destinations out of 1000 (max. 500000)
- 316 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 735 PDF objects out of 1000 (max. 8388607)
+ 600 compressed objects within 6 object streams
+ 169 named destinations out of 1000 (max. 500000)
+ 324 words of extra memory for PDF output out of 10000 (max. 10000000)
 
