@@ -3,18 +3,6 @@ output: pdf_document
 geometry: margin = 1in
 ---
 
-
-
-```{r, echo=FALSE,message=F,warning=F}
-#########################################attenzione !!!  this chunk is only to kniot this chapter can be deleted afterwards####
-#load("data/data_mobi")
-#source("add/libraries.R")
-#ind <- data[,1:4]
-#int <- data[,5:12]
-```
-
-
-
 ## 3. Methodology
 
 In this section models are created, trying to outperform the buy and hold strategy.

@@ -2,22 +2,6 @@
 output: pdf_document
 geometry: margin = 1in
 ---
-```{r, echo=FALSE, fig.cap="Visualization of the 4 indexes",message=F,warning=F}
-
-
-#########################################attenzione !!!  this chunk is only to knit this chapter can be deleted afterwards####
-### bei m ir geht der knit nicht mit ljungplotgarch darum werden hier die funktionen nicht aufgerufen
-#load("data/data_mobi")
-#source("add/libraries.R")
-
-#ind <- data[,1:4]
-#int <- data[,5:12]
-```
-
-
-
-
-
 
 ## 2. Theory
 
