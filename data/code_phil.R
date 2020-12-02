@@ -888,6 +888,9 @@ ljungplotGarch(ind4.garch@residuals, ind4.garch@sigma.t)
 #.####
 #.####
 ## ARMA, GARCH####
+source("add/libraries.R")
+source("add/functions_PA.R")
+load("data/data_mobi")
 ind <- na.exclude(data[,1:4])
 ind.lr <- na.exclude(diff(log(ind)))
 startdate <- "2018-01-01"
@@ -923,116 +926,124 @@ compute_sigma_t_out_of_sample_func <- function(x_out, y.garch_11, x_in)
   return(list(sigma_t=sigma_t))
 }
 
-performante <- function(xin, xout, threshold_p=0.7, main="") {
-  
-  ## AR-Model-Order
-  testerino <- rep(0, 10)
-  j <- 1
-  while (!all(testerino > threshold_p)) {
-    # fit an ar-model
+
+performante <- function(xin, xout, main="") {
+  ## AR
+  best <- 0
+  for (j in 1:8) {
     arma_obj <- arima(xin, order=c(j,0,0))
+    mat_out <- cbind(xout)
     
-    # estiamte the Ljung-Box statistics
-    for (i in 1:10) {
-      testerino[i] <- Box.test(arma_obj$residuals, lag = i, type = c("Ljung-Box"), fitdf = 0)$p.value
+    for (k in 1:(j)) {
+      mat_out <- cbind(mat_out, lag(xout, k=k))
     }
-    j <- j + 1
+    ar_pred <- arma_obj$coef[length(arma_obj$coef)] +
+      as.matrix(mat_out[,2:ncol(mat_out)])%*%arma_obj$coef[1:(length(arma_obj$coef)-1)]
+    
+    ret_arima <- na.exclude(sign(ar_pred)*xout)
+    
+    sharpe_ar <- as.double(sqrt(250) * mean(ret_arima, na.rm=T) / sqrt(var(ret_arima, na.rm=T)))
+    
+    if (sharpe_ar > best) {
+      best <- as.data.frame(sharpe_ar)
+      rownames(best) <- paste(j)
+      
+      best_ret <- ret_arima
+    }
   }
-  ##
-  ##
-  ##
-  ##
-  ## AR-Prediction
-  mat_out <- cbind(xout)
-  for (k in 1:(j-1)) {
-    mat_out <- cbind(mat_out, lag(xout, k=k))
-  }
-  ar_pred <- arma_obj$coef[length(arma_obj$coef)] +
-    as.matrix(mat_out[,2:ncol(mat_out)])%*%arma_obj$coef[1:(length(arma_obj$coef)-1)]
-  ##
-  ##
-  ##
-  ##
-  ## 
+  
+  
+  
+  
   ## MGARCH
   garch_11 <- garchFit(~garch(1,1), data=xin, delta=2,
                             include.delta=F, include.mean=F, trace=F)
-  ##
-  ##
-  ##
-  ##
-  ## 
+
   # Sigma_t in-sample
   sigma_t_in <- garch_11@sigma.t
   names(sigma_t_in) <- index(xin)
   sigma_t_in <- as.xts(sigma_t_in)
   index(sigma_t_in) <- index(xin)
-  ##
-  ##
-  ##
-  ##
-  ## 
+
   # Regression
   lm_obj <- lm(xin ~ sigma_t_in)
-  ##
-  ##
-  ##
-  ##
-  ## 
+
   # Sigma_t out of sample
   sigma_t_out <- compute_sigma_t_out_of_sample_func(xout, garch_11, xin)$sigma_t
-  ##
-  ##
-  ##
-  ##
-  ## 
+
   # MGARCH-Prediction
   mgarch_predict <- lm_obj$coefficients[1]+lm_obj$coefficients[2]*sigma_t_out
-  ##
-  ##
-  ##
-  ##
-  ## 
+
   ## Trading: Signum
-  ret_arima <- sign(ar_pred)*xout
-  returns_mgarch <- sign(mgarch_predict)*xout
-  ##
-  ##
-  ##
-  ##
-  ##   
+  returns_mgarch <- na.exclude(sign(mgarch_predict)*xout)
+
   # Sharpe
+  sharpe_mgarch <- as.double(sqrt(250) * mean(returns_mgarch) / sqrt(var(returns_mgarch)))
   sharpe_bnh <- as.double(sqrt(250) * mean(xout) / sqrt(var(xout)))
-  sharpe_ar <- as.double(sqrt(250) * mean(ret_arima, na.rm=T) / sqrt(var(ret_arima, na.rm=T)))
-  sharpe_mgarch <- as.double(sqrt(250) * mean(returns_mgarch, na.rm=T) / sqrt(var(returns_mgarch, na.rm=T)))
-  ##
-  ##
-  ##
-  ##
-  ## 
+
   # Plot
-  #par(mfrow=c(1,1))
-  (plot(cumsum(xout), main=main, lwd=1.5))
-  (lines(cumsum(na.exclude(ret_arima)), lty=2, lwd=1, col="red"))
-  (lines(cumsum(na.exclude(returns_mgarch)), lty=3, col="blue"))
+  # find ylim-borders
+  ymin <- min(c(min(cumsum(xout)), min(cumsum(best_ret)), min(cumsum(returns_mgarch))))
+  ymax <- max(c(max(cumsum(xout)), max(cumsum(best_ret)), max(cumsum(returns_mgarch))))
+  
+  
+  
+  plot(cumsum(xout), main=main, lwd=1.5, ylim=c(ymin-0.1*abs(ymin), ymax+0.1*ymax))
+  lines(cumsum(best_ret), lty=2, lwd=1, col="red")
+  lines(cumsum(returns_mgarch), lty=3, col="blue")
   
   
   print(addLegend("topleft", legend.names = c(paste("Buy & Hold:", round(sharpe_bnh, 2)),
-                                        paste("AR(",j-1,"):", round(sharpe_ar, 2)),
+                                        paste("AR(",rownames(best),"):", round(best, 2)),
                                         paste("MGARCH(1,1):", round(sharpe_mgarch, 2))),
             lty=c(1, 2, 3),
             lwd=c(1.5, 1, 1),
             col=c("black", "red", "blue"),
             cex=0.8))
+  
+  return(list(ret_ar=best_ret, sig_ar=sign(ar_pred), ret_mgarch=returns_mgarch, sig_mgarch=sign(mgarch_predict), xout=xout))
 }
 
-par(mfrow=c(4,1))
 
-performante(xin=ind.lr.in[,1], xout=ind.lr.out[,1], main="Index 1")
+
+arma_obj <- arima(xin, order=c(j,0,0))
+mat_out <- cbind(xout)
+
+for (k in 1:(j)) {
+  mat_out <- cbind(mat_out, lag(xout, k=k))
+}
+ar_pred <- arma_obj$coef[length(arma_obj$coef)] +
+  as.matrix(mat_out[,2:ncol(mat_out)])%*%arma_obj$coef[1:(length(arma_obj$coef)-1)]
+
+ret_arima <- sign(ar_pred)*xout
+
+(sharpe_ar <- as.double(sqrt(250) * mean(ret_arima, na.rm=T) / sqrt(var(ret_arima, na.rm=T))))
+
+
+
+
+par(mfrow=c(1,1))
+yolo <- performante(xin=ind.lr.in[,1], xout=ind.lr.out[,1], main="Index 1")
+
+
+notion <- 1000000
+
+cumsum(yolo$xout * notion)
+
+
+cumsum(yolo$xout)[length(yolo$xout)] * notion
+  
+  
+(1+cumsum(na.exclude(yolo$ret_ar))[length(na.exclude(yolo$ret_ar))]) * notion
+(1+cumsum(na.exclude(yolo$ret_mgarch))[length(na.exclude(yolo$ret_mgarch))]) * notion
+
+
+
+
 performante(xin=ind.lr.in[,2], xout=ind.lr.out[,2], main="Index 2")
 performante(xin=ind.lr.in[,3], xout=ind.lr.out[,3], main="Index 3")
-performante(xin=ind.lr.in[,4], xout=ind.lr.out[,4], main="Index 4")
 
+performante(xin=ind.lr.in[,4], xout=ind.lr.out[,4], main="Index 4")
 
 
 
