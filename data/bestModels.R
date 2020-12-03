@@ -371,82 +371,181 @@ opt_mgarch_4
 
 #.####
 # MA-Filter####
-optimize_simple_MA_func<-function(x,in_samp,min_L,max_L,x_trade)
-{
-  if (is.null(x_trade))
-    x_trade<-x
+source("add/libraries.R")
+source("add/functions_PA.R")
+load("data/data_mobi")
+
+ind <- na.exclude(data[,1:4])
+ind.lr <- na.exclude(diff(log(ind)))
+
+optimize_sma <- function(x, min_L=5, max_L=500, L_forecast=1, start = "2015-10-30", insamp = "2019-01-01", plot_T=TRUE) {
   
-  sharpe_opt<--9.e+99
-  #in_s<-which(index(x)>in_samp)[1]
+  xall <- x[paste(start,"/",sep="")]
+  xin <- xall[paste("/",insamp,sep="")]
+  xout <- xall[paste(insamp,"/",sep="")]
+  
+  sharpe_opt<- -9.e+99
+  draw_opt <- -9.e+99
+  mse_opt <- -9.e+99
+  
+  filler <- 1
+  res_mat <- matrix(1:((length(min_L:max_L))*4), ncol=4,
+                    dimnames = list(1:(length(min_L:max_L)), c("L", "Sharpe", "Drawdown", "MSE")))
   
   pb <- txtProgressBar(min = min_L, max = max_L, style = 3)
-  perf_vec<-NULL
   
-  for (L in min_L:max_L)
-  {
-    yhat_full <- SMA(x, n=L)
+  for (L in min_L:max_L) {
+    # Moving Average
+    yhat_full <- SMA(xin, n=L)
+    # Cut init
     yhat <- yhat_full[max_L:length(yhat_full)]
     
-    # Use x-trade for trading
-    #perf <- sign(yhat)[1:(in_s-1)]*x_trade[2:(in_s)]
-    perf<-lag(sign(yhat))*x_trade
+    # Perf (daily)
+    perf <- lag(sign(yhat))*xin
     
-    sharpe<-sqrt(250)*mean(perf,na.rm=T)/sqrt(var(perf,na.rm=T))
-    perf_vec<-c(perf_vec,sharpe)
-    if (sharpe>sharpe_opt)
-    {
-      sharpe_opt<-sharpe
-      L_opt<-L
+    sharpe <- sqrt(250)*mean(perf,na.rm=T)/sqrt(var(perf,na.rm=T))
+    
+    maxdraw<- -max(abs(Drawdowns(na.exclude(perf), geometric = F)))
+    
+    future_returns <- lag(SMA(xin, n=L_forecast), k=-L_forecast)
+    MSE <- -as.double(mean((future_returns-yhat)^2, na.rm=T))/var(xin, na.rm=T)
+    
+    res_mat[filler,] <- c(L, sharpe, maxdraw, MSE)
+    
+    filler <- filler + 1
+    
+    # Best
+    if (sharpe > sharpe_opt) {
+      sharpe <- as.data.frame(sharpe)
+      sharpe_opt <- sharpe
+      rownames(sharpe_opt) <- paste(L)
+      colnames(sharpe_opt) <- "Sharpe"
     }
+    
+    if (maxdraw > draw_opt) {
+      maxdraw <- as.data.frame(maxdraw)
+      draw_opt <- maxdraw
+      rownames(draw_opt) <- paste(L)
+      colnames(draw_opt) <- "Drawdown"
+    }
+    
+    if (MSE > mse_opt) {
+      MSE <- as.data.frame(MSE)
+      mse_opt <- MSE
+      rownames(mse_opt) <- paste(L)
+      colnames(mse_opt) <- "MSE"
+    }
+
     setTxtProgressBar(pb, L)
   }
   close(pb)
-  names(perf_vec)<-paste("filter length ",min_L:max_L)
   
-  return(list(L_opt=L_opt,sharpe_opt=sharpe_opt,perf_vec=perf_vec))
+  listerino <- list(sharpe_opt=sharpe_opt, draw_opt=draw_opt, mse_opt=mse_opt, res_mat=res_mat)
+  
+  if (plot_T) {
+    perfplot_sma(xall, insamp, listerino, max_L)
+  }
+
+  return(listerino)
+}
+perfplot_sma <- function(xall, insamp, opt_obj, max_L) {
+  sharpe_L <- as.numeric(rownames(opt_obj$sharpe_opt))
+  drawdown_L <- as.numeric(rownames(opt_obj$draw_opt))
+  MSE_L <- as.numeric(rownames(opt_obj$mse_opt))
+  
+  # Trading Signal
+  sharpe_signal <- sign(SMA(xall, n=sharpe_L))
+  drawdown_signal <- sign(SMA(xall, n=drawdown_L))
+  MSE_signal <- sign(SMA(xall, n=MSE_L))
+  
+  # Returns
+  sharpe_ret <- lag(sharpe_signal)*xall
+  drawdown_ret <- lag(drawdown_signal)*xall
+  MSE_ret <- lag(MSE_signal)*xall
+  
+  # Plot
+  # par(mfrow=c(2,1))
+  # chartSeries(cumsum(na.exclude(xall[paste(insamp, "/", sep=""),])), theme=chartTheme("white", bg.col="#FFFFFF"),name= "SMA",type="")
+  # addSMA(n=sharpe_L, on=1, col="red")
+  # addSMA(n=drawdown_L, on=1, col="blue")
+  # addSMA(n=MSE_L, on=1, col="green")
+  # 
+  # plot(cumsum(na.exclude(xall[paste(insamp, "/", sep=""),])), main="Comparison")
+  # plot(cumsum(na.exclude(sharpe_ret[paste(insamp, "/", sep=""),])), col="red")
+  
+  bnh_perf <- cumsum(na.exclude(xall[paste(insamp, "/", sep=""),]))
+  sharpe_perf <- cumsum(na.exclude(sharpe_ret[paste(insamp, "/", sep=""),]))
+  drawdown_perf <- cumsum(na.exclude(drawdown_ret[paste(insamp, "/", sep=""),]))
+  MSE_perf <- cumsum(na.exclude(MSE_ret[paste(insamp, "/", sep=""),]))
+  
+  ymin <- min(c(min(bnh_perf), min(sharpe_perf), min(drawdown_perf), min(MSE_perf)))
+  ymax <- max(c(max(bnh_perf), max(sharpe_perf), max(drawdown_perf), max(MSE_perf)))
+  
+  
+  plot(sharpe_perf, main="Comparison", lwd=2,
+       ylim=c(ymin-0.1*abs(ymin), ymax+0.1*ymax))
+  lines(sharpe_perf, col="red", lty=2, lwd=2)
+  lines(drawdown_perf, col="blue", lty=3, lwd=2)
+  lines(MSE_perf, col="green", lty=4, lwd=2)
+  
+  print(addLegend("topleft", legend.names = c("Buy & Hold",
+                                              paste("Sharpe, L: ",sharpe_L),
+                                              paste("Drawdown, L: ",drawdown_L),
+                                              paste("MSE, L: ",MSE_L)),
+                  lty=c(1, 2, 3, 4),
+                  lwd=c(2, 2, 2, 2),
+                  col=c("black", "red", "blue", "green"),
+                  cex=0.8))
 }
 
-
-
-
-
-
 # Ind1####
-pt_obj <- optimize_simple_MA_func(x=na.exclude(ind.lr[,1]), in_samp="2019-01-01", min_L=5, max_L=1000, x_trade=NULL)
+optim_sma1 <- optimize_sma(x=ind.lr[,1])
+opt_obj <- optim_sma1
 
-pt_obj$L_opt
-pt_obj$sharpe_opt
+head(optim_sma1$res_mat)
+optim_sma1$mse_opt
 
+par(mfrow=c(3,1))
+plot(x=optim_sma1$res_mat[,1], y=optim_sma1$res_mat[,2], col="red", type="l",
+     xlab="L", ylab="", main="Sharpe: In-Sample")
+points(x=as.numeric(rownames(optim_sma1$sharpe_opt)),
+       y=as.numeric(optim_sma1$sharpe_opt), col="red", pch=19)
+
+plot(x=optim_sma1$res_mat[,1], y=optim_sma1$res_mat[,3], col="blue", type="l",
+     xlab="L", ylab="", main="Drawdown: In-Sample")
+points(x=as.numeric(rownames(optim_sma1$draw_opt)),
+       y=as.numeric(optim_sma1$draw_opt), col="blue", pch=19)
+
+plot(x=optim_sma1$res_mat[,1], y=optim_sma1$res_mat[,4], col="green", type="l",
+     xlab="L", ylab="", main="MSE: In-Sample")
+points(x=as.numeric(rownames(optim_sma1$mse_opt)),
+       y=as.numeric(optim_sma1$mse_opt), col="green", pch=19)
+
+
+# in one
 par(mfrow=c(1,1))
-ts.plot(pt_obj$perf_vec)
-perf_plot_func(x=na.exclude(ind.lr[,1]), L=pt_obj$L_opt, in_samp="2019-01-01", x_trade=NULL)
+plot(x=optim_sma1$res_mat[,1], y=optim_sma1$res_mat[,2], col="red", type="l",
+     xlab="L", ylab="", main="In-Sample")
+points(x=as.numeric(rownames(optim_sma1$sharpe_opt)),
+       y=as.numeric(optim_sma1$sharpe_opt), col="red", pch=19)
+lines(x=optim_sma1$res_mat[,1], y=optim_sma1$res_mat[,3], col="blue", type="l")
+
+points(x=as.numeric(rownames(optim_sma1$draw_opt)),
+       y=as.numeric(optim_sma1$draw_opt), col="blue", pch=19)
+
+lines(x=optim_sma1$res_mat[,1], y=optim_sma1$res_mat[,4], col="green", type="l")
+points(x=as.numeric(rownames(optim_sma1$mse_opt)),
+       y=as.numeric(optim_sma1$mse_opt), col="green", pch=19)
+
+
 
 # Ind2####
-pt_obj <- optimize_simple_MA_func(x=na.exclude(ind.lr[,2]), in_samp="2019-01-01", min_L=5, max_L=1000, x_trade=NULL)
+optim_sma2 <- optimize_sma(x=ind.lr[,2])
 
-pt_obj$L_opt
-pt_obj$sharpe_opt
-
-par(mfrow=c(1,1))
-ts.plot(pt_obj$perf_vec)
-perf_plot_func(x=na.exclude(ind.lr[,2]), L=pt_obj$L_opt, in_samp="2019-01-01", x_trade=NULL)
 
 # Ind3####
-pt_obj <- optimize_simple_MA_func(x=na.exclude(ind.lr[,3]), in_samp="2019-01-01", min_L=5, max_L=1000, x_trade=NULL)
+optim_sma3 <- optimize_sma(x=ind.lr[,3])
 
-pt_obj$L_opt
-pt_obj$sharpe_opt
-
-par(mfrow=c(1,1))
-ts.plot(pt_obj$perf_vec)
-perf_plot_func(x=na.exclude(ind.lr[,3]), L=pt_obj$L_opt, in_samp="2019-01-01", x_trade=NULL)
 
 # Ind4####
-pt_obj <- optimize_simple_MA_func(x=na.exclude(ind.lr[,4]), in_samp="2019-01-01", min_L=5, max_L=1000, x_trade=NULL)
-
-pt_obj$L_opt
-pt_obj$sharpe_opt
-
-par(mfrow=c(1,1))
-ts.plot(pt_obj$perf_vec)
-perf_plot_func(x=na.exclude(ind.lr[,4]), L=pt_obj$L_opt, in_samp="2019-01-01", x_trade=NULL)
+optim_sma4 <- optimize_sma(x=ind.lr[,4])
