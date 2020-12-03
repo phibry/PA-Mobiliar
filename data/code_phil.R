@@ -1262,7 +1262,7 @@ ind4_opt <- cross_optim(data[,4], start = "2015-10-30", end = "2018-12-31", L1mi
 n1 <- 1
 n2 <- 106
 
-mobidat= data[,1] # chose the row and horizon
+mobidat = data[,1] # chose the row and horizon
 start="2019-01-01"
 end = "2020-04-31"
 
@@ -1278,9 +1278,20 @@ signal[which(sma1<sma2&lag(sma1)>lag(sma2))]<--1
 signal[which(sma1>sma2)]<-1
 signal[which(sma1<sma2)]<--1
 signal=reclass(signal,sma1)
+#chartSeries(mobidat,subset=horizon,theme=chartTheme("white", bg.col="#FFFFFF"),name= "sMa",type="", yrange=c(700, 900))
 chartSeries(mobidat,subset=horizon,theme=chartTheme("white", bg.col="#FFFFFF"),name= "sMa",type="")
+chartSeries(mobidat["2019-01-01/"], theme=chartTheme("white", bg.col="#FFFFFF"),name= "sMa",type="")
+mobidat["2019-01-01/"]
 addSMA(n=n1,on=1,col = "blue")
 addSMA(n=n2,on=1,col = "red")
+
+?addSMA
+
+sma_verif <- SMA(mobidat["2019-01-01/"], n=n2)
+plot(filt_obj$yhat, col="purple")
+lines(sma_verif, col="green")
+
+
 addTA(signal,type="S",col="red")
 trade   =   Lag(signal[horizon],1)
 return  =   diff(log(mobidat))
@@ -1288,6 +1299,88 @@ ret = return*trade
 names(ret)="filter"
 
 SharpeRatio(ret,FUN="StdDev")*sqrt(250)
+
+
+
+
+
+
+
+# Verification####
+L1 <- 106
+b1 <- matrix(rep(1/L1,L1),ncol=1,nrow=L1)
+
+filt_func<-function(x,b)
+{
+  L<-nrow(b)
+  if (is.matrix(x))
+  {  
+    length_time_series<-nrow(x)
+  } else
+  {
+    if (is.vector(x))
+    {
+      length_time_series<-length(x)
+    } else
+    {
+      print("Error: x is neither a matrix nor a vector!!!!")
+    }
+  }
+  if (is.xts(x))
+  {
+    yhat<-x[,1]
+  } else
+  {
+    yhat<-rep(NA,length_time_series)
+  }
+  for (i in L:length_time_series)#i<-L
+  {
+    # If x is an xts object then we cannot reorder x in desceding time i.e. x[i:(i-L+1)] is the same as  x[(i-L+1):i]
+    #   Therefore, in this case, we have to revert the ordering of the b coefficients.    
+    if (is.xts(x))
+    {
+      if (ncol(b)>1)
+      {
+        yhat[i]<-as.double(sum(apply(b[L:1,]*x[i:(i-L+1),],1,sum)))
+      } else
+      {
+        yhat[i]<-as.double(b[L:1,]%*%x[i:(i-L+1)])#tail(x) x[(i-L+1):i]
+      }
+    } else
+    {
+      if (ncol(b)>1)
+      {
+        yhat[i]<-as.double(sum(apply(b[1:L,]*x[i:(i-L+1),],1,sum)))
+      } else
+      {
+        yhat[i]<-as.double(as.vector(b)%*%x[i:(i-L+1)])#tail(x) x[(i-L+1):i]
+      }
+    }
+  }
+  #  names(yhat)<-index(x)#index(yhat)  index(x)
+  #  yhat<-as.xts(yhat,tz="GMT")
+  return(list(yhat=yhat))
+}
+
+mobidat["2019-01-01/"]
+
+filt_obj<-filt_func(x=mobidat["2019-01-01/"],b1)
+filt_obj$yhat
+
+# Plot verif
+sma_verif <- SMA(mobidat["2019-01-01/"], n=n2)
+plot(filt_obj$yhat, col="purple")
+lines(sma_verif, col="green")
+
+
+
+
+
+
+
+
+
+
 
 
 # Optim Index 2####
@@ -1326,7 +1419,7 @@ SharpeRatio(ret,FUN="StdDev")*sqrt(250)
 # Optim Index 3####
 # 16 / 112 0.8723012
 n1 = 16
-n2 =112
+n2 = 112
 
 mobidat= data[,3] # chose the row and horizon
 start="2019-01-01"
