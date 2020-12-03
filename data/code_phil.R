@@ -1198,13 +1198,19 @@ L1max <- 50
 L2min <- 100
 L2max <- 250
 
-best <- 0
 
 
-
+# do not change!!!!
 cross_optim <- function(x, start = "2015-10-30", end = "2018-12-31", L1min = 1, L1max = 50, L2min =  100, L2max = 250) {
-  best <- 0
+  best_sharpe <- 0
+  best_drawdown <- -1000
   mobidat <- x
+  
+  filler <- 1
+  perf_mat <- matrix(1:(length(L1min:L1max)*(length(L2min:L2max))*3), ncol=3,
+                     dimnames = list(1:(length(L1min:L1max)*length(L2min:L2max)),
+                     c("Filter", "Sharpe", "Drawdown")))
+  
   pb <- txtProgressBar(min = L1min, max = L1max, style = 3)
   for (k in L1min:L1max) {
     for (j in L2min:L2max) {
@@ -1235,34 +1241,320 @@ cross_optim <- function(x, start = "2015-10-30", end = "2018-12-31", L1min = 1, 
       # Sharpe
       sharpe <- sqrt(250)*mean(ret)/sqrt(var(ret))
       
-      if (sharpe > best) {
-        best <- sharpe
-        rownames(best) <- paste(n1,"/",n2)
+      # Drawdown
+      maxdraw <- -max(abs(Drawdowns(ret, geometric = F)))
+
+
+      # Fill Matrix
+      perf_mat[filler,1] <- paste(n1,"/",n2)
+      perf_mat[filler,2:3] <- c(as.numeric(sharpe), maxdraw)
+
+      filler <- filler + 1
+      
+      # Best
+      if (sharpe > best_sharpe) {
+        best_sharpe <- sharpe
+        rownames(best_sharpe) <- paste(n1,"/",n2)
       }
+      if (maxdraw > best_drawdown) {
+        maxdraw <- as.data.frame(maxdraw)
+        best_drawdown <- maxdraw
+        rownames(best_drawdown) <- paste(n1,"/",n2)
+      }
+      
     }
     setTxtProgressBar(pb, k)
   }
   close(pb)
-  print(best)
-  return(best)
+  print(best_drawdown)
+  print(best_sharpe)
+  return(list(best_drawdown=best_drawdown, best_sharpe=best_sharpe, perf_mat=perf_mat))
+}
+
+# Optim-Plot####
+plot(ind1_opt$perf_mat[,2], col="red", type="l")
+lines((as.numeric(ind1_opt$perf_mat[,3])*90)+1.7, col="green", type="l")
+
+loop_func <- function(x.lr, insamp="2019-01-01", minyear=3, maxyear=18) {
+  ind.lr <- x.lr
+  year_list <- NULL
+  for (yx in minyear:maxyear) {
+    year_list <- c(year_list, paste(2000+yx,"-01-01", sep=""))
+  }
+  
+  # Create result_matrix
+  res_mat <- matrix(1:(5*length(year_list)), ncol=5,
+                    dimnames = list(1:length(year_list), c("StartDate", "Sharpe", "S-Filter", "Drawdown", "D-Filter")))
+  
+  pb <- txtProgressBar(min = 1, max = length(year_list), style = 3)
+  
+  # Loop through years
+  for (i in 1:length(year_list)) {
+    startdate <- year_list[i]
+    
+    #startdate <- year_list[1]
+    
+    ind.lr.all <- ind.lr[paste(startdate,"/",sep="")]
+    ind.lr.in <- ind.lr.all[paste("/",insamp,sep="")]
+    ind.lr.out <- ind.lr.all[paste(insamp,"/",sep="")]
+    
+    yolo1 <- cross_optim_easy(x=ind.lr.in, start=startdate)
+    
+    res_mat[i,1] <- startdate
+    
+    res_mat[i,2:3] <- c(as.numeric(yolo1$best_sharpe), rownames(yolo1$best_sharpe))
+    
+    res_mat[i,4:5] <- c(as.numeric(yolo1$best_drawdown), rownames(yolo1$best_drawdown))
+    
+    setTxtProgressBar(pb, i)
+  }
+  res_df <- as.data.frame(res_mat)
+  close(pb)
+  
+  return(res_df)
+}
+cross_optim_easy <- function(x, start, end = "2018-12-31", L1min = 1, L1max = 50, L2min =  100, L2max = 250) {
+  best_sharpe <- 0
+  best_drawdown <- -1000
+  mobidat <- x
+  
+  pb <- txtProgressBar(min = L1min, max = L1max, style = 3)
+  for (k in L1min:L1max) {
+    for (j in L2min:L2max) {
+      n1 <- k
+      n2 <- j
+      
+      # sample
+      horizon <- paste(start,"::",end,sep = "")
+      
+      # Simple Moving Averages
+      sma1 <- SMA(mobidat,n=n1)
+      sma2 <- SMA(mobidat,n=n2)
+      
+      # Signals
+      signal <- rep(0,length(sma1))
+      signal[which(sma1>sma2&lag(sma1)<lag(sma2))] <- 1
+      signal[which(sma1<sma2&lag(sma1)>lag(sma2))]< - -1
+      signal[which(sma1>sma2)] <- 1
+      signal[which(sma1<sma2)] <- -1
+      signal <- reclass(signal,sma1)
+      
+      # Trading
+      trade   <-   Lag(signal[horizon],1)
+      return  <-   diff(log(mobidat))
+      ret <- return*trade
+      ret <- na.exclude(ret)
+      
+      # Sharpe
+      sharpe <- sqrt(250)*mean(ret)/sqrt(var(ret))
+      
+      # Drawdown
+      maxdraw <- -max(abs(Drawdowns(ret, geometric = F)))
+      
+      # Best
+      if (sharpe > best_sharpe) {
+        best_sharpe <- sharpe
+        rownames(best_sharpe) <- paste(n1,"/",n2)
+      }
+      if (maxdraw > best_drawdown) {
+        maxdraw <- as.data.frame(maxdraw)
+        best_drawdown <- maxdraw
+        rownames(best_drawdown) <- paste(n1,"/",n2)
+      }
+      
+    }
+    setTxtProgressBar(pb, k)
+  }
+  close(pb)
+  return(list(best_drawdown=best_drawdown, best_sharpe=best_sharpe))
+}
+
+
+test1 <- loop_func(x.lr=data[,1])
+save(test1, file="data/R_Files/optim_ma_cross_1.RData")
+# StartDate            Sharpe S-Filter              Drawdown D-Filter
+# 1  2003-01-01  1.45844222153173 49 / 246   -0.0141489634438965 19 / 105
+# 2  2004-01-01  1.47125034690453 49 / 243   -0.0140297780479764 26 / 102
+# 3  2005-01-01  1.48915679924878 49 / 243   -0.0140367194253574 26 / 100
+# 4  2006-01-01  1.42311105563007 37 / 113   -0.0142801979799769 26 / 100
+# 5  2007-01-01  1.23341916290696 37 / 113   -0.0148979753498477 26 / 100
+# 6  2008-01-01 0.985242507857545 39 / 206  -0.00952124350747108 10 / 224
+# 7  2009-01-01  1.12829996441047 42 / 113  -0.00952640050631492 10 / 224
+# 8  2010-01-01 0.938642084363342 42 / 113  -0.00971507133204241 10 / 227
+# 9  2011-01-01 0.868689748882843  1 / 148  -0.00679858760873919  1 / 171
+# 10 2012-01-01 0.861010216124702 37 / 113  -0.00680627442924042  1 / 173
+# 11 2013-01-01 0.909432395375849  1 / 171  -0.00680577256804404  1 / 171
+# 12 2014-01-01  0.97574405364782 37 / 113  -0.00684933140843302  1 / 171
+# 13 2015-01-01  1.01232702605895 18 / 102  -0.00690089276907202  1 / 173
+# 14 2016-01-01  1.59439214889633 44 / 113  -0.00610750793887171 40 / 110
+# 15 2017-01-01  1.76789386791698  2 / 117  -0.00381724861593424  2 / 114
+# 16 2018-01-01  3.57988708556172  1 / 224 -0.000344832672721118  1 / 247
+
+
+test2 <- loop_func(x.lr=data[,2])
+save(test2, file="data/R_Files/optim_ma_cross_2.RData")
+# StartDate            Sharpe S-Filter            Drawdown D-Filter
+# 1  2003-01-01 0.714241766942486 35 / 242 -0.0442627463061008 50 / 249
+# 2  2004-01-01 0.727413283775737 34 / 241 -0.0415871669398634 29 / 134
+# 3  2005-01-01 0.859970781894646 33 / 242 -0.0378077702541536 35 / 104
+# 4  2006-01-01 0.838576096690756 32 / 250  -0.032868251320908 14 / 119
+# 5  2007-01-01 0.757388542748876 24 / 136 -0.0336980711236377 14 / 119
+# 6  2008-01-01 0.668255764918196 38 / 106 -0.0322014116644994 11 / 128
+# 7  2009-01-01 0.708170190122589 33 / 182 -0.0322690446518665 39 / 198
+# 8  2010-01-01 0.624332357270294 38 / 106 -0.0342575037133864  3 / 250
+# 9  2011-01-01 0.527307621044327 35 / 182 -0.0242843452401353 15 / 131
+# 10 2012-01-01 0.473894666684324 35 / 182 -0.0225986384448282 15 / 133
+# 11 2013-01-01 0.555089400702877 38 / 106 -0.0226914800190647 15 / 133
+# 12 2014-01-01 0.742132702028808 16 / 135 -0.0189907999173068 27 / 120
+# 13 2015-01-01 0.764497914066422 13 / 129 -0.0193988162548194 27 / 120
+# 14 2016-01-01  1.14131156757606 17 / 111 -0.0137615531429115 48 / 109
+# 15 2017-01-01  1.28684846731804 17 / 111 -0.0136734158098419 38 / 135
+# 16 2018-01-01  3.79682626850827 24 / 215 -0.0014425362406767  1 / 248
+
+
+test3 <- loop_func(x.lr=data[,3])
+save(test3, file="data/R_Files/optim_ma_cross_3.RData")
+# StartDate            Sharpe S-Filter             Drawdown D-Filter
+# 1  2003-01-01 0.567270710544995 18 / 188  -0.0549962129364439 22 / 120
+# 2  2004-01-01 0.528065625879041 18 / 188   -0.055115302523482 22 / 120
+# 3  2005-01-01  0.58935212142563 18 / 188  -0.0517029289063775 36 / 105
+# 4  2006-01-01   0.6819517317697 28 / 102  -0.0494857506058194 37 / 106
+# 5  2007-01-01 0.630007549439238 31 / 102  -0.0514636689657824 37 / 106
+# 6  2008-01-01 0.605050110801017 28 / 102  -0.0507678619830981  5 / 139
+# 7  2009-01-01 0.561016298885095 16 / 186  -0.0540205400931484  5 / 139
+# 8  2010-01-01 0.577308212431729 22 / 105  -0.0539970099068866  1 / 239
+# 9  2011-01-01 0.524296167840498 25 / 116  -0.0372989296815835 18 / 172
+# 10 2012-01-01 0.402454012067928 20 / 121  -0.0380847654608469 18 / 172
+# 11 2013-01-01 0.547497077821796 18 / 115  -0.0340166834298516 16 / 197
+# 12 2014-01-01 0.783317343576516 17 / 118  -0.0280123198844132 20 / 121
+# 13 2015-01-01 0.734831081895045 13 / 107  -0.0273866568131926 12 / 147
+# 14 2016-01-01   1.0727090311748 18 / 104   -0.020980932394247 14 / 104
+# 15 2017-01-01 0.984964823102248 18 / 102  -0.0199278298520777 10 / 102
+# 16 2018-01-01  2.88802424535405  1 / 227 -0.00271745745750329  1 / 248
+
+
+test4 <- loop_func(x.lr=data[,4])
+save(test4, file="data/R_Files/optim_ma_cross_4.RData")
+# StartDate            Sharpe S-Filter             Drawdown D-Filter
+# 1  2003-01-01 0.511127961896197  7 / 116  -0.0784071560569436 15 / 129
+# 2  2004-01-01 0.512090071424057 12 / 103  -0.0784102211535621  9 / 154
+# 3  2005-01-01 0.562778084170941 12 / 103  -0.0768745646069597  9 / 154
+# 4  2006-01-01 0.638716914421034 12 / 103  -0.0759902988629919 11 / 101
+# 5  2007-01-01 0.640084734095819 11 / 101  -0.0775411136421347 11 / 101
+# 6  2008-01-01  0.60594315747554 11 / 101  -0.0777126920737493 15 / 130
+# 7  2009-01-01 0.541553293913331 11 / 145  -0.0718201386085348  4 / 193
+# 8  2010-01-01 0.677527970261711 10 / 117  -0.0514031307839711  8 / 122
+# 9  2011-01-01 0.709196468879411 13 / 146  -0.0500564075063146 14 / 166
+# 10 2012-01-01  0.61300633235829 13 / 146  -0.0423142297951923 12 / 150
+# 11 2013-01-01  0.67194162089095  9 / 113    -0.04345226069608 12 / 145
+# 12 2014-01-01 0.774373652156288 15 / 136  -0.0383275866251787 16 / 131
+# 13 2015-01-01 0.719511492508388 15 / 136  -0.0326315350580271 11 / 121
+# 14 2016-01-01  1.00483115143095 18 / 100  -0.0248493631861116 19 / 101
+# 15 2017-01-01 0.891839938705778 11 / 103  -0.0256875325812206 11 / 102
+# 16 2018-01-01  2.64063599985071 11 / 235 -0.00360926583826626 43 / 245
+
+
+
+# do not change!!!!
+cross_optim <- function(x, start = "2015-10-30", end = "2018-12-31", L1min = 1, L1max = 50, L2min =  100, L2max = 250) {
+  best_sharpe <- 0
+  best_drawdown <- -1000
+  mobidat <- x
+  
+  filler <- 1
+  perf_mat <- matrix(1:(length(L1min:L1max)*(length(L2min:L2max))*3), ncol=3,
+                     dimnames = list(1:(length(L1min:L1max)*length(L2min:L2max)),
+                                     c("Filter", "Sharpe", "Drawdown")))
+  
+  pb <- txtProgressBar(min = L1min, max = L1max, style = 3)
+  for (k in L1min:L1max) {
+    for (j in L2min:L2max) {
+      n1 <- k
+      n2 <- j
+      
+      # sample
+      horizon <- paste(start,"::",end,sep = "")
+      
+      # Simple Moving Averages
+      sma1 <- SMA(mobidat,n=n1)
+      sma2 <- SMA(mobidat,n=n2)
+      
+      # Signals
+      signal <- rep(0,length(sma1))
+      signal[which(sma1>sma2&lag(sma1)<lag(sma2))] <- 1
+      signal[which(sma1<sma2&lag(sma1)>lag(sma2))]< - -1
+      signal[which(sma1>sma2)] <- 1
+      signal[which(sma1<sma2)] <- -1
+      signal <- reclass(signal,sma1)
+      
+      # Trading
+      trade   <-   Lag(signal[horizon],1)
+      return  <-   diff(log(mobidat))
+      ret <- return*trade
+      ret <- na.exclude(ret)
+      
+      # Sharpe
+      sharpe <- sqrt(250)*mean(ret)/sqrt(var(ret))
+      
+      # Drawdown
+      maxdraw <- -max(abs(Drawdowns(ret, geometric = F)))
+      
+      
+      # Fill Matrix
+      perf_mat[filler,1] <- paste(n1,"/",n2)
+      perf_mat[filler,2:3] <- c(as.numeric(sharpe), maxdraw)
+      
+      filler <- filler + 1
+      
+      # Best
+      if (sharpe > best_sharpe) {
+        best_sharpe <- sharpe
+        rownames(best_sharpe) <- paste(n1,"/",n2)
+      }
+      if (maxdraw > best_drawdown) {
+        maxdraw <- as.data.frame(maxdraw)
+        best_drawdown <- maxdraw
+        rownames(best_drawdown) <- paste(n1,"/",n2)
+      }
+      
+    }
+    setTxtProgressBar(pb, k)
+  }
+  close(pb)
+  print(best_drawdown)
+  print(best_sharpe)
+  return(list(best_drawdown=best_drawdown, best_sharpe=best_sharpe, perf_mat=perf_mat))
 }
 
 
 ind1_opt <- cross_optim(data[,1], start = "2015-10-30", end = "2018-12-31", L1min = 1, L1max = 50, L2min =  100, L2max = 250)
+save(ind1_opt, file="data/R_Files/optim_ma_cross_obj_1.RData")
+
+
 ind2_opt <- cross_optim(data[,2], start = "2015-10-30", end = "2018-12-31", L1min = 1, L1max = 50, L2min =  100, L2max = 250)
+save(ind2_opt, file="data/R_Files/optim_ma_cross_obj_2.RData")
+
+
 ind3_opt <- cross_optim(data[,3], start = "2015-10-30", end = "2018-12-31", L1min = 1, L1max = 50, L2min =  100, L2max = 250)
+save(ind3_opt, file="data/R_Files/optim_ma_cross_obj_3.RData")
+
+
 ind4_opt <- cross_optim(data[,4], start = "2015-10-30", end = "2018-12-31", L1min = 1, L1max = 50, L2min =  100, L2max = 250)
+save(ind4_opt, file="data/R_Files/optim_ma_cross_obj_4.RData")
+
+# Optim-Plot####
+plot(ind1_opt$perf_mat[,2], col="red", type="l")
+lines((as.numeric(ind1_opt$perf_mat[,3])*90)+1.7, col="green", type="l")
 
 
-
-
+#.####
 # Optim Index 1####
 # Index.1
 # 1 / 106 1.225487
 n1 <- 1
 n2 <- 106
 
-mobidat= data[,1] # chose the row and horizon
+mobidat = data[,1] # chose the row and horizon
 start="2019-01-01"
 end = "2020-04-31"
 
@@ -1278,9 +1570,20 @@ signal[which(sma1<sma2&lag(sma1)>lag(sma2))]<--1
 signal[which(sma1>sma2)]<-1
 signal[which(sma1<sma2)]<--1
 signal=reclass(signal,sma1)
+#chartSeries(mobidat,subset=horizon,theme=chartTheme("white", bg.col="#FFFFFF"),name= "sMa",type="", yrange=c(700, 900))
 chartSeries(mobidat,subset=horizon,theme=chartTheme("white", bg.col="#FFFFFF"),name= "sMa",type="")
+chartSeries(mobidat["2019-01-01/"], theme=chartTheme("white", bg.col="#FFFFFF"),name= "sMa",type="")
+mobidat["2019-01-01/"]
 addSMA(n=n1,on=1,col = "blue")
 addSMA(n=n2,on=1,col = "red")
+
+?addSMA
+
+sma_verif <- SMA(mobidat["2019-01-01/"], n=n2)
+plot(filt_obj$yhat, col="purple")
+lines(sma_verif, col="green")
+
+
 addTA(signal,type="S",col="red")
 trade   =   Lag(signal[horizon],1)
 return  =   diff(log(mobidat))
@@ -1288,6 +1591,88 @@ ret = return*trade
 names(ret)="filter"
 
 SharpeRatio(ret,FUN="StdDev")*sqrt(250)
+
+
+
+
+
+
+
+# Verification####
+L1 <- 106
+b1 <- matrix(rep(1/L1,L1),ncol=1,nrow=L1)
+
+filt_func<-function(x,b)
+{
+  L<-nrow(b)
+  if (is.matrix(x))
+  {  
+    length_time_series<-nrow(x)
+  } else
+  {
+    if (is.vector(x))
+    {
+      length_time_series<-length(x)
+    } else
+    {
+      print("Error: x is neither a matrix nor a vector!!!!")
+    }
+  }
+  if (is.xts(x))
+  {
+    yhat<-x[,1]
+  } else
+  {
+    yhat<-rep(NA,length_time_series)
+  }
+  for (i in L:length_time_series)#i<-L
+  {
+    # If x is an xts object then we cannot reorder x in desceding time i.e. x[i:(i-L+1)] is the same as  x[(i-L+1):i]
+    #   Therefore, in this case, we have to revert the ordering of the b coefficients.    
+    if (is.xts(x))
+    {
+      if (ncol(b)>1)
+      {
+        yhat[i]<-as.double(sum(apply(b[L:1,]*x[i:(i-L+1),],1,sum)))
+      } else
+      {
+        yhat[i]<-as.double(b[L:1,]%*%x[i:(i-L+1)])#tail(x) x[(i-L+1):i]
+      }
+    } else
+    {
+      if (ncol(b)>1)
+      {
+        yhat[i]<-as.double(sum(apply(b[1:L,]*x[i:(i-L+1),],1,sum)))
+      } else
+      {
+        yhat[i]<-as.double(as.vector(b)%*%x[i:(i-L+1)])#tail(x) x[(i-L+1):i]
+      }
+    }
+  }
+  #  names(yhat)<-index(x)#index(yhat)  index(x)
+  #  yhat<-as.xts(yhat,tz="GMT")
+  return(list(yhat=yhat))
+}
+
+mobidat["2019-01-01/"]
+
+filt_obj<-filt_func(x=mobidat["2019-01-01/"],b1)
+filt_obj$yhat
+
+# Plot verif
+sma_verif <- SMA(mobidat["2019-01-01/"], n=n2)
+plot(filt_obj$yhat, col="purple")
+lines(sma_verif, col="green")
+
+
+
+
+
+
+
+
+
+
 
 
 # Optim Index 2####
@@ -1326,7 +1711,7 @@ SharpeRatio(ret,FUN="StdDev")*sqrt(250)
 # Optim Index 3####
 # 16 / 112 0.8723012
 n1 = 16
-n2 =112
+n2 = 112
 
 mobidat= data[,3] # chose the row and horizon
 start="2019-01-01"

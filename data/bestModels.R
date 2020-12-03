@@ -133,6 +133,25 @@ optim_ar <- function(x.lr, inx, insamp="2019-01-01", minyear=3, maxyear=18) {
 par(mfrow=c(1,1))
 opt_ar_1 <- optim_ar(x.lr=ind.lr, inx=1)
 opt_ar_1
+# StartDate        AR-Sharpe AR-Order p
+# 1  2003-01-01 3.29595353087806          1
+# 2  2004-01-01 3.03663080384028          1
+# 3  2005-01-01 3.14595370330181          1
+# 4  2006-01-01 2.95696375410652          1
+# 5  2007-01-01 2.72157066213196          1
+# 6  2008-01-01 1.86730160376776          1
+# 7  2009-01-01 2.47288363622484          1
+# 8  2010-01-01 2.65097314751304          1
+# 9  2011-01-01  2.0037895032277          3
+# 10 2012-01-01 1.85182920854677          3
+# 11 2013-01-01 2.03321635232673          4
+# 12 2014-01-01 1.95391519328146          3
+# 13 2015-01-01 1.93205919008196          5
+# 14 2016-01-01 3.44862913565847          2
+# 15 2017-01-01 2.16327238600849          4
+# 16 2018-01-01 3.76531914186755          2
+save(opt_ar_1, file="data/R_Files/optim_ar_1.RData")
+
 # Best Model
 opt_ar_1[which.max(opt_ar_1[,2]),]
 
@@ -145,6 +164,26 @@ opt_ar_1[which.max(opt_ar_1[,2]),]
 ## Index2####
 opt_ar_2 <- optim_ar(x.lr=ind.lr, inx=2)
 opt_ar_2
+# StartDate        AR-Sharpe AR-Order p
+# 1  2003-01-01 3.03303677020712          1
+# 2  2004-01-01 3.10004245587814          1
+# 3  2005-01-01  3.0056303577096          1
+# 4  2006-01-01 2.65609741507539          1
+# 5  2007-01-01  2.6127467113483          1
+# 6  2008-01-01 2.74519371281584          1
+# 7  2009-01-01 1.81872615773264          1
+# 8  2010-01-01 2.68081106945987          1
+# 9  2011-01-01 1.76322872598847          1
+# 10 2012-01-01  1.6509536698659          1
+# 11 2013-01-01 1.75483021028372          1
+# 12 2014-01-01 1.61422632652208          1
+# 13 2015-01-01 1.32746265592463          1
+# 14 2016-01-01 1.75483021028372          1
+# 15 2017-01-01 1.61493950303439          3
+# 16 2018-01-01 1.96081233421565          2
+save(opt_ar_2, file="data/R_Files/optim_ar_2.RData")
+
+
 # Best Model
 opt_ar_2[which.max(opt_ar_2[,2]),]
 
@@ -157,6 +196,26 @@ opt_ar_2[which.max(opt_ar_2[,2]),]
 ## Index3####
 opt_ar_3 <- optim_ar(x.lr=ind.lr, inx=3)
 opt_ar_3
+# StartDate        AR-Sharpe AR-Order p
+# 1  2003-01-01 2.39846008834075          1
+# 2  2004-01-01 2.39846008834075          1
+# 3  2005-01-01 2.52837972310466          1
+# 4  2006-01-01 2.52837972310466          1
+# 5  2007-01-01 2.30122652365081          1
+# 6  2008-01-01 2.32596914576708          1
+# 7  2009-01-01 1.91689384883742          3
+# 8  2010-01-01 2.38928203790148          1
+# 9  2011-01-01 2.22518046632104          4
+# 10 2012-01-01 1.54296433840858          2
+# 11 2013-01-01 1.15519602735763          1
+# 12 2014-01-01 1.46833520572479          2
+# 13 2015-01-01 1.18440395331472          3
+# 14 2016-01-01 1.57488862612892          4
+# 15 2017-01-01 1.23709869095954          4
+# 16 2018-01-01 1.08560127991841          3
+save(opt_ar_3, file="data/R_Files/optim_ar_3.RData")
+
+
 # Best Model
 opt_ar_3[which.max(opt_ar_3[,2]),]
 
@@ -170,6 +229,26 @@ opt_ar_3[which.max(opt_ar_3[,2]),]
 opt_ar_4 <- optim_ar(x.lr=ind.lr, inx=4)
 opt_ar_4
 # Best Model
+# StartDate         AR-Sharpe AR-Order p
+# 1  2003-01-01  2.21814552894437          1
+# 2  2004-01-01  2.16858264074697          1
+# 3  2005-01-01  2.15917453873627          1
+# 4  2006-01-01  2.12250460120158          1
+# 5  2007-01-01  2.18062931729536          1
+# 6  2008-01-01  2.07452095501032          1
+# 7  2009-01-01  1.50820360010582          1
+# 8  2010-01-01   2.1819618081639          1
+# 9  2011-01-01  2.03065748663533          1
+# 10 2012-01-01   1.5346114273831          2
+# 11 2013-01-01 0.884246741008454          3
+# 12 2014-01-01  1.41217255946765          2
+# 13 2015-01-01  1.11676847529102          4
+# 14 2016-01-01   1.1206519698519          7
+# 15 2017-01-01 0.810093667134683          8
+# 16 2018-01-01  1.21982741090185          7
+save(opt_ar_4, file="data/R_Files/optim_ar_4.RData")
+
+
 opt_ar_4[which.max(opt_ar_4[,2]),]
 
 
@@ -285,3 +364,89 @@ opt_mgarch_3
 # Index4
 opt_mgarch_4 <- optim_mgarch(x.lr=ind.lr, inx=4)
 opt_mgarch_4
+
+
+
+
+
+#.####
+# MA-Filter####
+optimize_simple_MA_func<-function(x,in_samp,min_L,max_L,x_trade)
+{
+  if (is.null(x_trade))
+    x_trade<-x
+  
+  sharpe_opt<--9.e+99
+  #in_s<-which(index(x)>in_samp)[1]
+  
+  pb <- txtProgressBar(min = min_L, max = max_L, style = 3)
+  perf_vec<-NULL
+  
+  for (L in min_L:max_L)
+  {
+    yhat_full <- SMA(x, n=L)
+    yhat <- yhat_full[max_L:length(yhat_full)]
+    
+    # Use x-trade for trading
+    #perf <- sign(yhat)[1:(in_s-1)]*x_trade[2:(in_s)]
+    perf<-lag(sign(yhat))*x_trade
+    
+    sharpe<-sqrt(250)*mean(perf,na.rm=T)/sqrt(var(perf,na.rm=T))
+    perf_vec<-c(perf_vec,sharpe)
+    if (sharpe>sharpe_opt)
+    {
+      sharpe_opt<-sharpe
+      L_opt<-L
+    }
+    setTxtProgressBar(pb, L)
+  }
+  close(pb)
+  names(perf_vec)<-paste("filter length ",min_L:max_L)
+  
+  return(list(L_opt=L_opt,sharpe_opt=sharpe_opt,perf_vec=perf_vec))
+}
+
+
+
+
+
+
+# Ind1####
+pt_obj <- optimize_simple_MA_func(x=na.exclude(ind.lr[,1]), in_samp="2019-01-01", min_L=5, max_L=1000, x_trade=NULL)
+
+pt_obj$L_opt
+pt_obj$sharpe_opt
+
+par(mfrow=c(1,1))
+ts.plot(pt_obj$perf_vec)
+perf_plot_func(x=na.exclude(ind.lr[,1]), L=pt_obj$L_opt, in_samp="2019-01-01", x_trade=NULL)
+
+# Ind2####
+pt_obj <- optimize_simple_MA_func(x=na.exclude(ind.lr[,2]), in_samp="2019-01-01", min_L=5, max_L=1000, x_trade=NULL)
+
+pt_obj$L_opt
+pt_obj$sharpe_opt
+
+par(mfrow=c(1,1))
+ts.plot(pt_obj$perf_vec)
+perf_plot_func(x=na.exclude(ind.lr[,2]), L=pt_obj$L_opt, in_samp="2019-01-01", x_trade=NULL)
+
+# Ind3####
+pt_obj <- optimize_simple_MA_func(x=na.exclude(ind.lr[,3]), in_samp="2019-01-01", min_L=5, max_L=1000, x_trade=NULL)
+
+pt_obj$L_opt
+pt_obj$sharpe_opt
+
+par(mfrow=c(1,1))
+ts.plot(pt_obj$perf_vec)
+perf_plot_func(x=na.exclude(ind.lr[,3]), L=pt_obj$L_opt, in_samp="2019-01-01", x_trade=NULL)
+
+# Ind4####
+pt_obj <- optimize_simple_MA_func(x=na.exclude(ind.lr[,4]), in_samp="2019-01-01", min_L=5, max_L=1000, x_trade=NULL)
+
+pt_obj$L_opt
+pt_obj$sharpe_opt
+
+par(mfrow=c(1,1))
+ts.plot(pt_obj$perf_vec)
+perf_plot_func(x=na.exclude(ind.lr[,4]), L=pt_obj$L_opt, in_samp="2019-01-01", x_trade=NULL)
