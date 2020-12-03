@@ -422,7 +422,7 @@ EMA
 
 &nbsp;
 
-#### 2.3.3. Moving Average Crossings
+#### 2.3.3. Moving Average Crossings {#macross-section}
 
 &nbsp;
 
