@@ -1,5 +1,8 @@
 # Buy and Hold, 2019-01-01 Out-Of-Sample####
+source("add/libraries.R")
+source("add/functions_PA.R")
 load("data/data_mobi")
+
 ind <- na.exclude(data[,1:4])
 ind.lr <- na.exclude(diff(log(ind)))
 
@@ -22,7 +25,6 @@ performante_ar <- function(xin, xout) {
   for (j in 1:8) {
     arma_obj <- arima(xin, order=c(j,0,0))
     mat_out <- cbind(xout)
-    
     for (k in 1:(j)) {
       mat_out <- cbind(mat_out, lag(xout, k=k))
     }
@@ -80,7 +82,7 @@ perfplot_ar <- function(optim_ar_obj, lr_series, inx, insamp="2019-01-01") {
   ymin <- min(c(min(perf_bnh), min(perf_ar)))
   ymax <- max(c(max(perf_bnh), max(perf_ar)))
 
-  plot(perf_bnh, main=paste("Startdate: ",start_date," Index: ",inx), lwd=1.5,
+  plot(perf_bnh, main=paste("Startdate: ",start_date,"| Out-of-sample-Index: ",inx), lwd=1.5,
        ylim=c(ymin-0.1*abs(ymin), ymax+0.1*ymax))
   lines(perf_ar, lty=2, lwd=1, col="red")
   print(addLegend("topleft", legend.names = c(paste("Buy & Hold:", round(sharpe_bnh, 2)),
@@ -126,11 +128,6 @@ optim_ar <- function(x.lr, inx, insamp="2019-01-01", minyear=3, maxyear=18) {
   
   return(res_df)
 }
-
-
-
-
-
 
 ## Index1####
 par(mfrow=c(1,1))
