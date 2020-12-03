@@ -57,7 +57,7 @@ source("add/functions_PA.R")
 
 \newpage
 
-```{r child = '06_chap5_Conclusion.Rmd'}
+```{r child = '06_chap5_References.Rmd'}
 ```
 
 \newpage
