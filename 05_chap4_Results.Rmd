@@ -3,4 +3,12 @@ output: pdf_document
 geometry: margin = 1in
 ---
 
-## 4. Conclusion
+## 4. Results
+
+
+### 4.1 
+
+### 4.1 Key Take Away 
+
+Here's a short list of key takeaways from this project work
+
