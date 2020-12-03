@@ -68,7 +68,7 @@ plot(log_ret_ind,main="Log_returns indexes",legend.loc="topleft") #plot log retu
 
 \newpage
 
-##### 3.1.2.1 Autocorrelation of log returns
+##### 3.1.2.1. Autocorrelation of log returns
 
 &nbsp;
 
@@ -92,7 +92,7 @@ For further analysis we concentrate on different timespans, because in most mode
 
 \newpage
 
-```{r,chap3.1.4,include=F, echo = F,message=F,fig.dim=c(15,15), fig.cap="Visualization log returns"}
+```{r,chap3.1.4, include=F, echo = F,message=F,fig.dim=c(15,15), fig.cap="Visualization log returns"}
 par(mfrow=c(4,2))
 start_date="2018-01-01"
 in_sample ="2018-01-01"
@@ -120,13 +120,15 @@ in Section 2 we have learned different indicators and models for timeseries-anal
 
 To do so we need to create trading signals based on the models and indicators. For example we're using the MA Crossings, as mentioned [2.3.3.](#macross-section) the points where the two MAs cross, are now used to create a trading signal. when the longer MA comes from below to the crossing we are going long the asset and if it approaches the point from above we're shorting the position. Technically we apply a 1 to a vector at each crossing, where we intend to buy and apply a -1 at the points we want to sell.
 
-### 3.2.1. Buy and Hold Performance
+#### 3.2.1. Buy and Hold Performance
+
+&nbsp;
 
 As mentioned earlier the goal of this work is to outperform the buy and hold strategy. because the series all have a strong upward trend this task is very tricky. Buy and hold has very low trading costs because the underlyings are just bougth once. According to swissquote [@swissquote] costs for asset trades over 50k are 190 USD per trade $_1$, so these costs must also be taken in consideration for the strategy.
 
 $_1$ notice: This fee is only for private investors, conditions may differ for institutions.
 
-#### 3.2.1.1 Portfolios
+##### 3.2.1.1. Portfolios
 
 &nbsp;
 
@@ -151,9 +153,9 @@ kbl(perc, caption="shares", booktabs = T) %>%
 
 \newpage
 
-### 3.2.2. Moving average crossings to trade
+#### 3.2.2. Moving average crossings to trade
 
- 
+&nbsp;
 
 As a first approach we apply 2 SMAs for every time series, trade them with the common Ma crossings rules and optimize the sharpe ratio. The in-sample timespan is considered from 2015-10-30 to 2018-12-31, therefore the filterlenghts are restrained by $1 < L1 \le 50$ and $10 < L2 \le 200$. The out of sample timespan is from 2018-12-31 to th last data point in march 2020. 
 
@@ -190,6 +192,8 @@ ret = return*trade
 names(ret)="filter"
 ```
 
+\newpage
+
 ```{r, chap3.2.3, echo=FALSE, fig.cap="conversion data",include=T,fig.keep = 'last'}
 #SharpeRatio(ret,FUN="StdDev")
 #chart.Bar(ret,main="returns daily")
@@ -199,7 +203,3 @@ charts.PerformanceSummary(ret, main="Naive Buy Rule")
 #SharpeRatio(data,FUN="StdDev")
 #ames(ret)="filter"
 ```
-
-
-
-
