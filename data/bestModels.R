@@ -150,7 +150,8 @@ opt_ar_1
 # 14 2016-01-01 3.44862913565847          2
 # 15 2017-01-01 2.16327238600849          4
 # 16 2018-01-01 3.76531914186755          2
-save(opt_ar_1, file="data/R_Files/optim_ar_1.RData")
+
+#save(opt_ar_1, file="data/R_Files/optim_ar_1.RData")
 
 # Best Model
 opt_ar_1[which.max(opt_ar_1[,2]),]
