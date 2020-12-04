@@ -293,3 +293,61 @@ perf_plot_func<-function(x,L,in_samp,x_trade, ploterino=2)
   print(plot(cumsum(na.exclude(perf_out)),main=paste("Out-sample: Sharpe=",round(sharpe,2),sep="")))
   
 }
+
+
+
+# AR-Performance-Plot
+perfplot_ar <- function(optim_ar_obj, lr_series, inx, insamp="2019-01-01") {
+  # Max Optim-Element
+  max_obj <- optim_ar_obj[which.max(optim_ar_obj[,2]),]
+  
+  
+  # Startdate
+  start_date <- optim_ar_obj[which.max(optim_ar_obj[,2]),][1]
+  
+  xall <- lr_series[paste(start_date,"/",sep="")][,inx]
+  xin <- xall[paste("/",insamp,sep="")]
+  xout <- xall[paste(insamp,"/",sep="")]
+  
+  
+  # sharpe
+  sharpe_bnh <- as.double(sqrt(250) * mean(xout) / sqrt(var(xout)))
+  sharpe_ar <- as.numeric(optim_ar_obj[which.max(optim_ar_obj[,2]),][2])
+  
+  # Model Order AR(p)
+  p <- as.numeric(optim_ar_obj[which.max(optim_ar_obj[,2]),][3])
+  
+  # AR-Fit, in-sample
+  arma_obj <- arima(xin, order=c(p,0,0))
+  
+  # AR-Pred, out-of-sample
+  mat_out <- cbind(xout)
+  for (k in 1:(p)) {
+    mat_out <- cbind(mat_out, lag(xout, k=k))
+  }
+  ar_pred <- arma_obj$coef[length(arma_obj$coef)] +
+    as.matrix(mat_out[,2:ncol(mat_out)])%*%arma_obj$coef[1:(length(arma_obj$coef)-1)]
+  
+  # AR-Returns
+  signal <- sign(ar_pred)
+  ret_arima <- signal*xout
+  
+  # Plot
+  perf_bnh <- cumsum(xout)
+  perf_ar <- cumsum(na.exclude(ret_arima))
+  ymin <- min(c(min(perf_bnh), min(perf_ar)))
+  ymax <- max(c(max(perf_bnh), max(perf_ar)))
+  
+  plot(perf_bnh, main=paste("Startdate: ",start_date,"| Out-of-sample-Index: ",inx), lwd=1.5,
+       ylim=c(ymin-0.1*abs(ymin), ymax+0.1*ymax))
+  lines(perf_ar, lty=2, lwd=1, col="red")
+  print(addLegend("topleft", legend.names = c(paste("Buy & Hold:", round(sharpe_bnh, 2)),
+                                              paste("AR(",p,"):", round(sharpe_ar, 2))),
+                  lty=c(1, 2),
+                  lwd=c(1.5, 1),
+                  col=c("black", "red"),
+                  cex=0.8))
+  
+  return(sign(signal))
+}
+

@@ -571,7 +571,11 @@ addBBands(n=n,sd=k,maType = "SMA", draw = 'bands', on = -1)
 ```
 \newpage
 
-### 2.7. Sharpe Ratio
+### 2.7. Performance Indicators
+
+#### 2.7.1. Sharpe Ratio
+
+&nbsp;
  
 Sharpe ratio is a very powerful and widely used ratio to measure performance. It describes return per risk.
 
@@ -584,6 +588,13 @@ Sharpe ratio is a very powerful and widely used ratio to measure performance. It
 - ${R_p}$ = Risk free Rate, mostly treasury bonds
 - ${\sigma_p}$ = standard deviation of portfolios excess return (risk)
 
+#### 2.7.2. Drawdown
+
+&nbsp;
+
+#### 2.7.3. MSE
+
+&nbsp;
 
 ### 2.8. Carry
 

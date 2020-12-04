@@ -7,32 +7,30 @@ geometry: margin = 1in
 
 ```{r, echo=FALSE,message=F,warning=F}
 #########################################attenzione !!!  this chunk is only to kniot this chapter can be deleted afterwards####
-#load("data/data_mobi")
-#source("add/libraries.R")
-#ind <- data[,1:4]
-#int <- data[,5:12]
+# load("data/data_mobi")
+# source("add/libraries.R")
+# ind <- data[,1:4]
+# int <- data[,5:12]
 ```
 
 
 
 ## 3. Methodology
 
-In this section models are created, trying to outperform the buy and hold strategy.
-starting by analyzing the data and using simple models, more complex models and combined tools are added step by step in different approaches.
+In this section, different models are created and compared with the buy and hold strategy.
+You start with pure data analysis and then work your way from simple models to more and more complex ones.
 
 ### 3.1. Data Analysis
 
-As mentioned in section [1.1](#ts-analysis) We are now going to analyze the data further to gain as much information as possible just by using some simple tools and comparisons.
+As mentioned in section [1.1](#ts-analysis) we are now going to analyze the data further to gain as much information as possible just by using some simple tools and comparisons.
 
 #### 3.1.1. Correlation
 
 &nbsp;
 
-One could nearly tell just by looking at the indexes how strong they're correlated. The correlation matrix confirms the 
-assumption, the correlation is nearly 1 for every index to each other.
+One could nearly tell just by looking at the indexes how strong they're correlated. The correlation matrix in table \ref{tab:cortable} confirms the assumption, the correlation is nearly 1 for every index to each other.
 
-
-```{r, chap3.1.1, echo=FALSE}
+```{r cortable, echo=FALSE}
 log_ind <-    log(ind)      #logarithm of the series
 log_ret_ind <- na.exclude(diff(log_ind)) #log returns of the se
 x<-as.data.frame(log_ind)
@@ -46,24 +44,45 @@ kbl(c, caption="Correlations oft the four indexes", booktabs = T) %>%
 
 &nbsp;
 
-Applying the natural logarithm to the series is an approach to cancel out increasing volatility \ref{fig:chap3.1.2}. The strong upward is still visible the original series more than doubled its original price over the whole timespan(index 4) \ref{fig:chap1.1}. 
+Applying the natural logarithm to the series is an approach to cancel out increasing volatility \ref{fig:chap3.1.2}. The strong upward drift is still visible, the original series has more than doubled to its original price over the whole timespan (index 4) \ref{fig:chap1.1}. 
 
 
 ```{r, chap3.1.2, echo = F, fig.dim=c(7,3.0), fig.cap="Visualization log indizes"}
 par(mfrow=c(1,1))
-plot(ind, main="Indexes 1-4", col=1:4, lwd=1, legend.loc="topleft") #plotting original data
+plot(log(ind), main="Indexes 1-4", col=1:4, lwd=1, legend.loc="topleft") #plotting original data
 ```
 
 \newpage
 
-By taking the returns of the transformed series we can visualize volatility clusters as seen in figure. The first value of the series is eliminated because of the differences \ref{fig:chap3.1.3},
-Clearly visible are the high spikes in the times of the financial crisis 2007-2009. Also at the end of the series the impact of covid 19 in march 2020 is remarkable.  
-the unconditional volatility of the indexes are \textcolor{black}{0.64e-06}, \textcolor{red}{4..1e-06}, \textcolor{green}{8.5e-06}, \textcolor{blue}{15.6e-06}. Which means the the index 1 is as much as 24 times volatiler than the fourth index.
+```{r, echo = F}
+sd_vec <- apply(log_ret_ind, MARGIN = 2, FUN = sd)
+sharpe_fun <- function(x) {
+  as.double(sqrt(250) * mean(x) / sqrt(var(x)))
+}
+sharpe_vec <- apply(log_ret_ind, MARGIN = 2, FUN = sharpe_fun)
+```
+
+By taking the returns of the transformed series we can visualize volatility clusters as seen in figure \ref{fig:chap3.1.3}. The first value of the series is eliminated because of the differences,
+Clearly visible are the high spikes in the times of the financial crisis 2007-2009. Also at the end of the series, the impact of COVID19 in march 2020 is remarkable.
+
+Vola: LogReturns
+\textcolor{black}{`r round(sd_vec[1], 7)`}
+\textcolor{red}{`r round(sd_vec[2], 7)`}
+\textcolor{green}{`r round(sd_vec[3], 7)`}
+\textcolor{blue}{`r round(sd_vec[4], 7)`}
+
+Sharpe: LogReturns
+\textcolor{black}{`r round(sharpe_vec[1], 4)`}
+\textcolor{red}{`r round(sharpe_vec[2], 4)`}
+\textcolor{green}{`r round(sharpe_vec[3], 4)`}
+\textcolor{blue}{`r round(sharpe_vec[4], 4)`}
+
+The unconditional volatility of the indexes are \textcolor{black}{0.64e-06}, \textcolor{red}{4..1e-06}, \textcolor{green}{8.5e-06}, \textcolor{blue}{15.6e-06}. Which means the first index is 24 times more volatile than the fourth index.
 
 &nbsp;
 
 ```{r, chap3.1.3, include=T, echo = F,message=F,  fig.cap="Log returns"}
-plot(log_ret_ind,main="Log_returns indexes",legend.loc="topleft") #plot log returns
+plot(log_ret_ind, main="Log_returns indexes",legend.loc="topleft") #plot log returns
 ```
 
 \newpage
@@ -72,7 +91,7 @@ plot(log_ret_ind,main="Log_returns indexes",legend.loc="topleft") #plot log retu
 
 &nbsp;
 
-By computing the acf of the squared log_returns we see that the volatility cluster have very long dependency structures f more than a month. 
+By computing the ACF of the squared log-returns we see that the volatility cluster has very long dependency structures.
 
 
 ```{r,chap3.1.2.1,include=T, echo = F,message=F, fig.cap="ACF log returns",fig.dim=c(15,10)}
@@ -89,7 +108,7 @@ acf(abs(x4^2),lag.max = 50,main= "ACF INDEX 4 ,10-2003/03-2020" )
 
 ```
 
-For further analysis we concentrate on different timespans, because in most models it makes few sense to consider the whole timeseries from 2003 till today
+For further analysis, we concentrate on different timespans, because in most models it makes little sense to consider the whole time-series from 2003 till today.
 
 \newpage
 
@@ -110,30 +129,31 @@ plot(x_ind[,1],main=paste("Log_returns index,","vola=",vola_x_ind[3],sep=" "),co
 plot(y_ind[,3],main=paste("Log index 3,","vola=",vola_y_ind[3],sep=" "),col = 3)
 plot(x_ind[,1],main=paste("Log_returns index,","vola=",vola_x_ind[4],sep=" "),col = 4)
 plot(y_ind[,4],main=paste("Log index 4,","vola=",vola_y_ind[4],sep=" "),col = 4)
-
 ```
 
 \newpage
 
 ### 3.2. Trading
 
-in Section 2 we have learned different indicators and models for timeseries-analysis. Some of these models and indicators are now used to trade the indexes we've introduced in the previous section.
+In section 2 we have learned different indicators and models for time-series-analysis. Some of these models and indicators are now used to trade the indexes we've introduced in the previous section.
 
-To do so we need to create trading signals based on the models and indicators. For example we're using the MA Crossings, as mentioned [2.3.3.](#macross-section) the points where the two MAs cross, are now used to create a trading signal. when the longer MA comes from below to the crossing we are going long the asset and if it approaches the point from above we're shorting the position. Technically we apply a 1 to a vector at each crossing, where we intend to buy and apply a -1 at the points we want to sell.
+To do so we need to create trading signals based on the models and indicators. For example, we are using the MA Crossings, as mentioned [2.3.3.](#macross-section) the points where the two MAs cross, are now used to create a trading signal. when the longer MA comes from below to the crossing we are going long the asset and if it approaches the point from above we're shorting the position. Technically we apply a 1 to a vector at each crossing, where we intend to buy and apply a -1 at the points we want to sell.
 
 #### 3.2.1. Buy and Hold Performance
 
 &nbsp;
 
-As mentioned earlier the goal of this work is trying to outperform the buy and hold strategy. Because the series all have a strong upward trend this task is very tricky. Buy and hold has very low trading costs because the underlyings are just bought once. According to swissquote [@swissquote] costs for asset trades over 50k, are 190 USD per trade $_1$, so these costs should also be taken in consideration for chosing the strategy. In this work we've excluded these costs and only cocncentrate on the trades themselves.
+As mentioned earlier the goal of this work is trying to outperform the buy and hold strategy. Because the series all have a strong upward trend this task is very tricky. Buy and hold has very low trading costs because the underlying is just bought once. According to swissquote [@swissquote] costs for asset trades over 50k, are 190 USD per trade $_1$, so these costs should also be taken into consideration for choosing the strategy. In this work, we've excluded these costs and only concentrate on the trades themselves.
 
 $_1$ notice: This fee is only for private investors, conditions may differ for institutions.
+
+For the following models a good comparability should be achieved. To ensure this, all models are created with the same out-of-sample range, with the start date 2019-01-01.
 
 ##### 3.2.1.1. Portfolios
 
 &nbsp;
 
-By focussing on trading we build a portfolio for the 4 indexes. One approach would be the equally weighted portfolio with weights for every index of $\frac{1}{4}$. As we've seen in figure \ref{fig:chap3.1.3} The volatility of the indexes strongly differ, meaning that the index 4 would have the most impact, nearly 50 %, on the portfolio by weighing it equally. To cancel this effect, it may be useful to size the position with the inverse volatility, so the indexes have the weights seen in the table on the right side.
+By focussing on trading we build a portfolio for the 4 indexes. One approach would be the equally weighted portfolio with weights for every index of $\frac{1}{4}$. As we've seen in figure \ref{fig:chap3.1.3} The volatility of the indexes strongly differs, meaning that index 4 would have the most impact, nearly 50 %, on the portfolio by weighing it equally. To cancel this effect, it may be useful to size the position with the inverse volatility, so the indexes have the weights seen in the table on the right side.
 
 \begin{equation}
   \label{eq:standardizing vola}
@@ -153,29 +173,60 @@ kbl(perc, caption="shares", booktabs = T) %>%
 ```
 
 \newpage
-#### 3.2.2. ARMA trading
+
+#### 3.2.2. AR trading
+
+&nbsp;
+
+As with the theory data set (GOOGLE), these are 4 non-stationary series. For the AR models, the stationary log-returns of the time series are used. First we look at index 1, the series with the lowest volatility but with the highest Sharpe ratio (highest return with lowest risk). To find the best possible AR model, different AR(*p*) models are fitted with different model orders *p* for different in-sample ranges. For each model the out-of-sample Sharpe is calculated. The execution of this calculation leads to the solution shown in table \ref{tab:ar1table}.
+
+```{r ar1table, echo=FALSE}
+load("data/R_Files/optim_ar_1.RData")
+
+# x <- data.frame("place" = rep("    ", 16))
+
+kbl(cbind(opt_ar_1[1:8,], opt_ar_1[9:16,]), caption="Solution of the AR-Modell calculation.", booktabs = T, linesep = "") %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
+```
+
+With these calculations, the optimal model is an AR(2) with the start date 2018-01-01. Note that the Index 1 series has a very flat rising trend and a rising upward trend towards the end of 2018, so only a short in-sample is needed for this optimal model. It is interesting that the long in-sample ranges (2003 to 2007) also lead to relatively good performances.
+
+Figure \ref{fig:chap3.2.2.1} shows the optimal model compared to Buy and Hold. The AR(2) has a higher Sharpe than Buy and Hold. Regarding performance, it should be mentioned that the Sharpe optimization of the algorithm is based on daily trades. The signals for a trade are newly generated with each daily forecast and could lead to high trading costs (positive forecast = Long, negative forecast = Short). Nevertheless, one would still like to apply this procedure to the other indices.
+
+```{r, chap3.2.2.1, echo=FALSE, fig.cap="Visualization of the optimal AR(2)-Model.", fig.dim=c(11, 6), out.width = "100%"}
+signalerino <- perfplot_ar(optim_ar_obj=opt_ar_1, lr_series=log_ret_ind, inx=1, insamp="2019-01-01")
+# signalerino
+```
+
+```{r artable, echo=FALSE}
+load("data/R_Files/optim_ar_2.RData")
+load("data/R_Files/optim_ar_3.RData")
+load("data/R_Files/optim_ar_4.RData")
+
+#opt_ar_2
+
+```
+
+\newpage
+
 #### 3.2.3. Single Moving average trading
+
+&nbsp;
+
+
 #### 3.2.4. Moving average crossings trading
 
+&nbsp;
  
 As a second approach we apply 2 SMAs for every time series, trade them with the common Ma crossings rules and optimize them with sharpe and max drawdown 
 For the optimization we consider the out of sample timespan from 2019-01-01 to march 2020. The initialization of a filter has the same timespan as the length of filter itself, therefore we add an in-sample timespan to iniciate the filters. 
 The insample 
-
-<<<<<<< HEAD
-
  
 The intuition says that this strategy may not be so bad , why leaving a trend market instead of buy and hold.
 
-=======
 #### 3.2.2. Moving average crossings to trade
 
 &nbsp;
->>>>>>> main
-
-
-
-
 
 ```{r, chap3.2.2, echo=FALSE, fig.cap="conversion data", include=T, fig.keep = 'last'}
 n1=15

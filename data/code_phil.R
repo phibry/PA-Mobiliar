@@ -1725,13 +1725,15 @@ sma1 <-SMA(mobidat,n=n1)
 sma2 <-SMA(mobidat,n=n2)
 signal <-rep(0,length(sma1))
 signal[which(sma1>sma2&lag(sma1)<lag(sma2))]<-1
-signal[which(sma1<sma2&lag(sma1)>lag(sma2))]<--1
+signal[which(sma1<sma2&lag(sma1)>lag(sma2))]<-0
 signal[which(sma1>sma2)]<-1
-signal[which(sma1<sma2)]<--1
+signal[which(sma1<sma2)]<-0
 signal=reclass(signal,sma1)
+
 chartSeries(mobidat,subset=horizon,theme=chartTheme("white", bg.col="#FFFFFF"),name= "sMa",type="")
 addSMA(n=n1,on=1,col = "blue")
 addSMA(n=n2,on=1,col = "red")
+
 addTA(signal,type="S",col="red")
 trade   =   Lag(signal[horizon],1)
 return  =   diff(log(mobidat))
