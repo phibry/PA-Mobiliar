@@ -41,7 +41,7 @@ int.table <- data.frame(int.maturity, int.mean, int.sd, int.min, int.max)
 colnames(int.table) <- c("Maturity", "Mean", "Volatility", "Min.", "Max.")
 
 
-kbl(int.table, caption="Summary of the 8 interest rates.", booktabs = T) %>%
+kbl(int.table, caption="Summary of the 8 interest rates.", booktabs = T, linesep = "") %>%
   kable_styling(latex_options = c("striped", "hold_position"))
 ```
 

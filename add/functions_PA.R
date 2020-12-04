@@ -329,7 +329,8 @@ perfplot_ar <- function(optim_ar_obj, lr_series, inx, insamp="2019-01-01") {
     as.matrix(mat_out[,2:ncol(mat_out)])%*%arma_obj$coef[1:(length(arma_obj$coef)-1)]
   
   # AR-Returns
-  ret_arima <- sign(ar_pred)*xout
+  signal <- sign(ar_pred)
+  ret_arima <- signal*xout
   
   # Plot
   perf_bnh <- cumsum(xout)
@@ -346,5 +347,7 @@ perfplot_ar <- function(optim_ar_obj, lr_series, inx, insamp="2019-01-01") {
                   lwd=c(1.5, 1),
                   col=c("black", "red"),
                   cex=0.8))
+  
+  return(sign(signal))
 }
 

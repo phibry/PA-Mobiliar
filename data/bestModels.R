@@ -101,7 +101,7 @@ optim_ar <- function(x.lr, inx, insamp="2019-01-01", minyear=3, maxyear=18) {
   
   # Create result_matrix
   res_mat <- matrix(1:(3*length(year_list)), ncol=3,
-                    dimnames = list(1:length(year_list), c("StartDate", "AR-Sharpe", "AR-Order p")))
+                    dimnames = list(1:length(year_list), c("StartDate", "AR-Sharpe", "p")))
   
   
   pb <- txtProgressBar(min = 1, max = length(year_list), style = 3)
@@ -117,7 +117,7 @@ optim_ar <- function(x.lr, inx, insamp="2019-01-01", minyear=3, maxyear=18) {
     yolo1 <- performante_ar(xin=ind.lr.in[,inx], xout=ind.lr.out[,inx])
     
     res_mat[i,1] <- year_list[i]
-    res_mat[i,2:3] <- c(as.numeric(yolo1$sharpe_ar), round(as.numeric(yolo1$ar_p)))
+    res_mat[i,2:3] <- c(round(as.numeric(yolo1$sharpe_ar), 3), round(as.numeric(yolo1$ar_p)))
     
     setTxtProgressBar(pb, i)
   }

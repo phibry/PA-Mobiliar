@@ -183,17 +183,19 @@ As with the theory data set (GOOGLE), these are 4 non-stationary series. For the
 ```{r ar1table, echo=FALSE}
 load("data/R_Files/optim_ar_1.RData")
 
-opt_ar_1[,2] <- round(as.numeric(opt_ar_1[,2]), 3)
-kbl(opt_ar_1, caption="Solution of the AR-Modell calculation.", booktabs = T) %>%
+# x <- data.frame("place" = rep("    ", 16))
+
+kbl(cbind(opt_ar_1[1:8,], opt_ar_1[9:16,]), caption="Solution of the AR-Modell calculation.", booktabs = T, linesep = "") %>%
   kable_styling(latex_options = c("striped", "hold_position"))
 ```
 
 With these calculations, the optimal model is an AR(2) with the start date 2018-01-01. Note that the Index 1 series has a very flat rising trend and a rising upward trend towards the end of 2018, so only a short in-sample is needed for this optimal model. It is interesting that the long in-sample ranges (2003 to 2007) also lead to relatively good performances.
 
-Figure \ref{fig:chap3.2.2.1} shows the optimal model compared to Buy and Hold. The AR(2) has a higher Sharpe than Buy and Hold. Regarding performance, it should be mentioned that the Sharpe optimization of the algorithm is based on daily trades. The signals for a trade are newly generated with each daily forecast and could lead to high trading costs. Nevertheless, one would still like to apply this procedure to the other indices.
+Figure \ref{fig:chap3.2.2.1} shows the optimal model compared to Buy and Hold. The AR(2) has a higher Sharpe than Buy and Hold. Regarding performance, it should be mentioned that the Sharpe optimization of the algorithm is based on daily trades. The signals for a trade are newly generated with each daily forecast and could lead to high trading costs (positive forecast = Long, negative forecast = Short). Nevertheless, one would still like to apply this procedure to the other indices.
 
 ```{r, chap3.2.2.1, echo=FALSE, fig.cap="Visualization of the optimal AR(2)-Model.", fig.dim=c(11, 6), out.width = "100%"}
-perfplot_ar(optim_ar_obj=opt_ar_1, lr_series=log_ret_ind, inx=1, insamp="2019-01-01")
+signalerino <- perfplot_ar(optim_ar_obj=opt_ar_1, lr_series=log_ret_ind, inx=1, insamp="2019-01-01")
+# signalerino
 ```
 
 ```{r artable, echo=FALSE}
