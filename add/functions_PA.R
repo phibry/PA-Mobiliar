@@ -297,13 +297,12 @@ perf_plot_func<-function(x,L,in_samp,x_trade, ploterino=2)
 
 
 # AR-Performance-Plot
-perfplot_ar <- function(optim_ar_obj, lr_series, inx, insamp="2019-01-01") {
+perfplot_ar <- function(optim_ar_obj, lr_series, inx, insamp="2019-01-01", plotter=TRUE, returner=TRUE) {
   # Max Optim-Element
   max_obj <- optim_ar_obj[which.max(optim_ar_obj[,2]),]
   
-  
   # Startdate
-  start_date <- optim_ar_obj[which.max(optim_ar_obj[,2]),][1]
+  start_date <- max_obj[1]
   
   xall <- lr_series[paste(start_date,"/",sep="")][,inx]
   xin <- xall[paste("/",insamp,sep="")]
@@ -312,10 +311,10 @@ perfplot_ar <- function(optim_ar_obj, lr_series, inx, insamp="2019-01-01") {
   
   # sharpe
   sharpe_bnh <- as.double(sqrt(250) * mean(xout) / sqrt(var(xout)))
-  sharpe_ar <- as.numeric(optim_ar_obj[which.max(optim_ar_obj[,2]),][2])
+  sharpe_ar <- as.numeric(max_obj[2])
   
   # Model Order AR(p)
-  p <- as.numeric(optim_ar_obj[which.max(optim_ar_obj[,2]),][3])
+  p <- as.numeric(max_obj[3])
   
   # AR-Fit, in-sample
   arma_obj <- arima(xin, order=c(p,0,0))
@@ -333,21 +332,62 @@ perfplot_ar <- function(optim_ar_obj, lr_series, inx, insamp="2019-01-01") {
   ret_arima <- signal*xout
   
   # Plot
-  perf_bnh <- cumsum(xout)
-  perf_ar <- cumsum(na.exclude(ret_arima))
+    perf_bnh <- cumsum(xout)
+    perf_ar <- cumsum(na.exclude(ret_arima))
+  if (plotter) {
+    ymin <- min(c(min(perf_bnh), min(perf_ar)))
+    ymax <- max(c(max(perf_bnh), max(perf_ar)))
+    
+    plot(perf_bnh, main=paste("Startdate: ",start_date,"| Out-of-sample-Index: ",inx), lwd=1.5,
+         ylim=c(ymin-0.1*abs(ymin), ymax+0.1*ymax))
+    lines(perf_ar, lty=2, lwd=1, col="red")
+    print(addLegend("topleft", legend.names = c(paste("Buy & Hold:", round(sharpe_bnh, 2)),
+                                                paste("AR(",p,"):", round(sharpe_ar, 2))),
+                    lty=c(1, 2),
+                    lwd=c(1.5, 1),
+                    col=c("black", "red"),
+                    cex=0.8))
+  }
+  
+  if (returner) {
+    return(list(signal=sign(signal), perf_bnh=perf_bnh, perf_ar=perf_ar))
+  }
+}
+
+ar_plotter <- function(perf_bnh, perf_ar, start_date, inx, p, sharpe_bnh, sharpe_ar, signal) {
+  
   ymin <- min(c(min(perf_bnh), min(perf_ar)))
   ymax <- max(c(max(perf_bnh), max(perf_ar)))
+  signal <- reclass(signal, perf_bnh)
   
   plot(perf_bnh, main=paste("Startdate: ",start_date,"| Out-of-sample-Index: ",inx), lwd=1.5,
        ylim=c(ymin-0.1*abs(ymin), ymax+0.1*ymax))
   lines(perf_ar, lty=2, lwd=1, col="red")
-  print(addLegend("topleft", legend.names = c(paste("Buy & Hold:", round(sharpe_bnh, 2)),
+  addLegend("topleft", legend.names = c(paste("Buy & Hold:", round(sharpe_bnh, 2)),
                                               paste("AR(",p,"):", round(sharpe_ar, 2))),
-                  lty=c(1, 2),
-                  lwd=c(1.5, 1),
-                  col=c("black", "red"),
-                  cex=0.8))
+                  lty=c(1, 2), lwd=c(1.5, 1), col=c("black", "red"), cex=1)
   
-  return(sign(signal))
+  print(lines(signal, on=NA, ylim=c(-1.3, 1.3)))
+  # axis(side=2, at=c(-1, 1), labels=c("Short", "Long"), las=2, tick=FALSE)
+  # axis(side=4, at=c(-1, 1), las=2, tick=FALSE)
 }
 
+trading_counter <- function(trade_sig) {
+  trade_count <- 1
+  for (i in 1:length(trade_sig)) {
+    
+    if (is.na(trade_sig[i+1])) {
+      break
+      
+    } else {
+      if (trade_sig[i] != trade_sig[i+1]) {
+        trade_count <- trade_count + 1
+      }
+    }
+  }
+  return(trade_count)
+}
+
+sharpe_fun <- function(x) {
+  as.double(sqrt(250) * mean(x) / sqrt(var(x)))
+}
