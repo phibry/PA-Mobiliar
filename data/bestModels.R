@@ -255,8 +255,20 @@ opt_ar_4[which.max(opt_ar_4[,2]),]
 
 
 
+trade_count <- 1
+signalerino <- na.exclude(signalerino)
 
-
+for (i in 1:length(signalerino)) {
+  
+  if (is.na(signalerino[i+1])) {
+    break
+    
+  } else {
+    if (signalerino[i] != signalerino[i+1]) {
+      trade_count <- trade_count + 1
+    }
+  }
+}
 
 
 

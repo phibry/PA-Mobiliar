@@ -348,6 +348,6 @@ perfplot_ar <- function(optim_ar_obj, lr_series, inx, insamp="2019-01-01") {
                   col=c("black", "red"),
                   cex=0.8))
   
-  return(sign(signal))
+  return(list(signal=sign(signal), perf_bnh=perf_bnh, perf_ar=perf_ar))
 }
 

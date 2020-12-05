@@ -139,7 +139,7 @@ In section 2 we have learned different indicators and models for time-series-ana
 
 To do so we need to create trading signals based on the models and indicators. For example, we are using the MA Crossings, as mentioned [2.3.3.](#macross-section) the points where the two MAs cross, are now used to create a trading signal. when the longer MA comes from below to the crossing we are going long the asset and if it approaches the point from above we're shorting the position. Technically we apply a 1 to a vector at each crossing, where we intend to buy and apply a -1 at the points we want to sell.
 
-#### 3.2.1. Buy and Hold Performance
+#### 3.2.1. Buy and Hold Performance {#bnh-section}
 
 &nbsp;
 
@@ -178,33 +178,68 @@ kbl(perc, caption="shares", booktabs = T) %>%
 
 &nbsp;
 
-As with the theory data set (GOOGLE), these are 4 non-stationary series. For the AR models, the stationary log-returns of the time series are used. First we look at index 1, the series with the lowest volatility but with the highest Sharpe ratio (highest return with lowest risk). To find the best possible AR model, different AR(*p*) models are fitted with different model orders *p* for different in-sample ranges. For each model the out-of-sample Sharpe is calculated. The execution of this calculation leads to the solution shown in table \ref{tab:ar1table}.
+As with the theory data set, these 4 indizes are non-stationary series. For the AR models, the stationary log-returns of the time series are used. First we look at index 1, the series with the lowest volatility but with the highest Sharpe ratio (highest return with lowest risk). To find the best possible AR model, different AR(*p*) models are fitted with different model orders *p* for different in-sample ranges. For each model the out-of-sample Sharpe is calculated. The execution of this calculation leads to the solution shown in table \ref{tab:ar1table}.
 
 ```{r ar1table, echo=FALSE}
 load("data/R_Files/optim_ar_1.RData")
 
-# x <- data.frame("place" = rep("    ", 16))
+x <- rep("|", 8)
 
-kbl(cbind(opt_ar_1[1:8,], opt_ar_1[9:16,]), caption="Solution of the AR-Modell calculation.", booktabs = T, linesep = "") %>%
+part1 <- opt_ar_1[1:8,]
+part2 <- opt_ar_1[9:16,]
+part1["|"] <- x
+
+
+
+kbl(cbind(part1, part2), caption="Solution of the AR-Model calculation.", booktabs = T, linesep = "") %>%
   kable_styling(latex_options = c("striped", "hold_position"))
 ```
 
 With these calculations, the optimal model is an AR(2) with the start date 2018-01-01. Note that the Index 1 series has a very flat rising trend and a rising upward trend towards the end of 2018, so only a short in-sample is needed for this optimal model. It is interesting that the long in-sample ranges (2003 to 2007) also lead to relatively good performances.
 
-Figure \ref{fig:chap3.2.2.1} shows the optimal model compared to Buy and Hold. The AR(2) has a higher Sharpe than Buy and Hold. Regarding performance, it should be mentioned that the Sharpe optimization of the algorithm is based on daily trades. The signals for a trade are newly generated with each daily forecast and could lead to high trading costs (positive forecast = Long, negative forecast = Short). Nevertheless, one would still like to apply this procedure to the other indices.
-
 ```{r, chap3.2.2.1, echo=FALSE, fig.cap="Visualization of the optimal AR(2)-Model.", fig.dim=c(11, 6), out.width = "100%"}
 signalerino <- perfplot_ar(optim_ar_obj=opt_ar_1, lr_series=log_ret_ind, inx=1, insamp="2019-01-01")
-# signalerino
+trade_count <- 1
+trade_sig <- na.exclude(signalerino$signal)
+
+for (i in 1:length(trade_sig)) {
+  
+  if (is.na(trade_sig[i+1])) {
+    break
+    
+  } else {
+    if (trade_sig[i] != trade_sig[i+1]) {
+      trade_count <- trade_count + 1
+    }
+  }
+}
 ```
+
+Figure \ref{fig:chap3.2.2.1} shows the optimal model compared to Buy and Hold. The AR(2) has a higher Sharpe than Buy and Hold. Regarding performance, it should be mentioned that the Sharpe optimization of the algorithm is based on daily trades. The signals for a trade are newly generated with each daily forecast and could lead to high trading costs (positive forecast = Long, negative forecast = Short).
+
+\newpage
+
+Figure \ref{fig:chap3.2.2.2} shows the trading signals visually. If one were to trade exactly according to the AR(2) forecasts, one would make a trade at each vertical bar, a total of `r trade_count` trades would have to be made during out-of-sample periods. If you want to include trading costs in the performance, an AR model with daily trades would have to be much better than this one to outperform buy-and-hold.
+
+```{r, chap3.2.2.2, echo=FALSE, fig.cap="Visualization of the Trading-Signals of the Index 1."}
+plot((as.xts(signalerino$signal)), type="l", ylim=c(-1.2, 1.2), yaxis.right=FALSE, ylab="Signal", yaxis.left=FALSE,
+     main="Trading-Signals", grid.col = NA)
+axis(side=2, at=c(-1, 1), labels=c("Short", "Long"), las=2)
+axis(side=4, at=c(-1, 1), las=2)
+```
+
+But what influence do the trading costs really have? If you assume a fictitious investment amount of 1 million USD and you have to pay 190 USD for each trade, as mentioned in section [3.2.1](#bnh-section). Invest this amount at the beginning of the out-of-sample period. With the buy-and-hold strategy, a return of `r round(tail(signalerino$perf_bnh, 1) * 1000000)` is achieved by the end of the out-of-sample range. Without trading costs the AR(2) would yield `r round(tail(signalerino$perf_ar, 1) * 1000000)`, with trading costs only `r round((tail(signalerino$perf_ar, 1) * 1000000) - trade_count*190)`. To get at least the same return on the investment, the trading costs should not exceed USD 39.
+
+Thus it can be said that for index 1, the buy-and-hold strategy cannot be outperformed by an AR(2) model. Nevertheless, for the sake of completeness one would still like to apply this procedure to the other indexes.
 
 ```{r artable, echo=FALSE}
 load("data/R_Files/optim_ar_2.RData")
 load("data/R_Files/optim_ar_3.RData")
 load("data/R_Files/optim_ar_4.RData")
 
-#opt_ar_2
-
+opt_ar_2[which.max(opt_ar_2[,2]),]
+opt_ar_3[which.max(opt_ar_3[,2]),]
+opt_ar_4[which.max(opt_ar_4[,2]),]
 ```
 
 \newpage
