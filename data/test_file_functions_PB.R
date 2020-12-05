@@ -135,35 +135,50 @@ library(tidyr)
 #test1= as.data.frame(test1)
 
 
-
-
-str(test1)
+#################################################saving as xts files ########
 test1[,1]=as.Date(test1[,1])
-test1$Sharpe=as.numeric(test1$`Sharpe`)
-test1$Drawdown=as.numeric(test1$Drawdown)
-test1x=test1[,c(1,2,4)]
-qxts <- xts(test1x[,-1], test1x[,1])
-qxts$Drawdown=qxts$Drawdown* 100
+test1=test1 %>%separate(`S-Filter`,c("Sharpe_S","Sharpe_L")," / ")
+test1=test1%>%separate(`D-Filter`,c("Drawdown_S","Drawdown_L")," / ")
+test1[,2:7]=test1[,2:7] %>% mutate_if(is.character,as.numeric)
+qxts <- xts(test1[,-1], test1[,1])
+optim_ma_cross_obj_1_xts=qxts
+save(optim_ma_cross_obj_1_xts, file="data/R_Files/optim_ma_cross_obj_1_xts.RData")
 
 
-test1 %>%separate(`S-Filter`,c("Sharpe_S","Sharpe_L"),"/")
-test1 %>%separate(`D-Filter`,c("Drawdown_S","Drawdown_L"),"/")
-
-
-
-
-
-plot(qxts, main= " Best sharpe / Drawndown index 1 optimzation")
-
-
-
+test2[,1]=as.Date(test2[,1])
+test2=test2 %>%separate(`S-Filter`,c("Sharpe_S","Sharpe_L")," / ")
+test2=test2%>%separate(`D-Filter`,c("Drawdown_S","Drawdown_L")," / ")
+test2[,2:7]=test2[,2:7] %>% mutate_if(is.character,as.numeric)
+qxts <- xts(test2[,-1], test2[,1])
+optim_ma_cross_obj_2_xts=qxts
+save(optim_ma_cross_obj_2_xts, file="data/R_Files/optim_ma_cross_obj_2_xts.RData")
 
 
 
+test3[,1]=as.Date(test3[,1])
+test3=test3 %>%separate(`S-Filter`,c("Sharpe_S","Sharpe_L")," / ")
+test3=test3%>%separate(`D-Filter`,c("Drawdown_S","Drawdown_L")," / ")
+test3[,2:7]=test3[,2:7] %>% mutate_if(is.character,as.numeric)
+qxts <- xts(test3[,-1], test3[,1])
+optim_ma_cross_obj_3_xts=qxts
+save(optim_ma_cross_obj_3_xts, file="data/R_Files/optim_ma_cross_obj_3_xts.RData")
+
+test4[,1]=as.Date(test4[,1])
+test4=test4 %>%separate(`S-Filter`,c("Sharpe_S","Sharpe_L")," / ")
+test4=test4%>%separate(`D-Filter`,c("Drawdown_S","Drawdown_L")," / ")
+test4[,2:7]=test4[,2:7] %>% mutate_if(is.character,as.numeric)
+qxts <- xts(test4[,-1], test4[,1])
+optim_ma_cross_obj_4_xts=qxts
+save(optim_ma_cross_obj_4_xts, file="data/R_Files/optim_ma_cross_obj_4_xts.RData")
+
+
+#######################################plotting the data######### from optimizaiton
 
 
 
 
-
-
-
+#######
+plot(optim_ma_cross_obj_1_xts[,2:3],type="l",col= "red",main= "Filterlengths In-Sample Optimization Index 1",)
+lines(optim_ma_cross_obj_1_xts[,5:6], col=c("blue"),lwd=2)
+addLegend("topleft", on=1, legend.names = c("Sharpe long filter", "Drawdown long filter"), lty=c(1, 1), lwd=c(1, 1),col=c("red","blue"))
+addLegend("bottomleft", on=1, legend.names = c("Sharpe short filter", "Drawdown short filter"), lty=c(1, 1), lwd=c(1, 1),col=c("red","blue"))
