@@ -1776,3 +1776,17 @@ ret = return*trade
 names(ret)="filter"
 
 SharpeRatio(ret,FUN="StdDev")*sqrt(250)
+
+
+
+
+
+
+# Test
+library(xts)
+library(PerformanceAnalytics)
+data(sample_matrix)
+sample.xts <- as.xts(sample_matrix)
+
+plot(sample.xts[,"Close"])
+lines(sign(Return.calculate(sample.xts[,"Close"])), type="l", on=NA)

@@ -162,7 +162,9 @@ index(fcast) <- index(out_sample)
 
 x[index(tail(x, h))] <- NA
 
-plot(tail(x, 7), ylim=c(1600, 1820), main="ARIMA(1,1,0)")
+ymin <- min(c(na.exclude(as.numeric(tail(x, 7))), as.numeric(fcast[,1])))
+ymax <- max(c(na.exclude(as.numeric(tail(x, 7))), as.numeric(fcast[,3])))
+plot(tail(x, 7), ylim=c(ymin-ymin*0.05, ymax+ymax*0.05), main="ARIMA(1,1,0)")
 points(fcast[,1], col="red", pch=16)
 points(fcast[,2], col="red", pch=16)
 points(fcast[,3], col="blue", pch=16)

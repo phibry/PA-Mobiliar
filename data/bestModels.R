@@ -124,7 +124,9 @@ optim_ar <- function(x.lr, inx, insamp="2019-01-01", minyear=3, maxyear=18) {
   res_df <- as.data.frame(res_mat)
   close(pb)
   
-  perfplot_ar(res_df, ind.lr.all, inx)
+  # print(head(ind.lr.all))
+  # print(tail(ind.lr.all))
+  perfplot_ar(res_df, ind.lr, inx)
   
   return(res_df)
 }
@@ -182,7 +184,7 @@ opt_ar_2
 # 14 2016-01-01 1.75483021028372          1
 # 15 2017-01-01 1.61493950303439          3
 # 16 2018-01-01 1.96081233421565          2
-save(opt_ar_2, file="data/R_Files/optim_ar_2.RData")
+#save(opt_ar_2, file="data/R_Files/optim_ar_2.RData")
 
 
 # Best Model
@@ -214,7 +216,7 @@ opt_ar_3
 # 14 2016-01-01 1.57488862612892          4
 # 15 2017-01-01 1.23709869095954          4
 # 16 2018-01-01 1.08560127991841          3
-save(opt_ar_3, file="data/R_Files/optim_ar_3.RData")
+#save(opt_ar_3, file="data/R_Files/optim_ar_3.RData")
 
 
 # Best Model
@@ -247,7 +249,7 @@ opt_ar_4
 # 14 2016-01-01   1.1206519698519          7
 # 15 2017-01-01 0.810093667134683          8
 # 16 2018-01-01  1.21982741090185          7
-save(opt_ar_4, file="data/R_Files/optim_ar_4.RData")
+#save(opt_ar_4, file="data/R_Files/optim_ar_4.RData")
 
 
 opt_ar_4[which.max(opt_ar_4[,2]),]
