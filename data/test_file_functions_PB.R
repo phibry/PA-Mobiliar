@@ -174,11 +174,12 @@ save(optim_ma_cross_obj_4_xts, file="data/R_Files/optim_ma_cross_obj_4_xts.RData
 
 #######################################plotting the data######### from optimizaiton
 
-
-
-
-#######
-plot(optim_ma_cross_obj_1_xts[,2:3],type="l",col= "red",main= "Filterlengths In-Sample Optimization Index 1",)
+##################sharpe maxdrow
+plot(optim_ma_cross_obj_1_xts[,1],ylim= c(-2,4),main= "Max Sharpe/Drawdown Hyperoptimization Index 1",col="black")
+lines(optim_ma_cross_obj_1_xts[,4]*100,lwd=2,col="green")
+addLegend("topleft", on=1, legend.names = c("Sharpe ", "MaxDrawdown * 100 "), lty=c(1, 1), lwd=c(2, 2),col=c("black","green"))
+################## lengths
+plot(optim_ma_cross_obj_1_xts[,2:3],type="l",col= "red",main= "Filterlengths Hyperoptimization Index 1 ",)
 lines(optim_ma_cross_obj_1_xts[,5:6], col=c("blue"),lwd=2)
 addLegend("topleft", on=1, legend.names = c("Sharpe long filter", "Drawdown long filter"), lty=c(1, 1), lwd=c(1, 1),col=c("red","blue"))
 addLegend("bottomleft", on=1, legend.names = c("Sharpe short filter", "Drawdown short filter"), lty=c(1, 1), lwd=c(1, 1),col=c("red","blue"))
