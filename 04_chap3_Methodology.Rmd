@@ -214,13 +214,27 @@ load("data/R_Files/optim_ar_4.RData")
 &nbsp;
 
 
+
 #### 3.2.4. Moving average crossings trading
 
 &nbsp;
+
  
-As a second approach we apply 2 SMAs for every time series, trade them with the common Ma crossings rules and optimize them with sharpe and max drawdown 
-For the optimization we consider the out of sample timespan from 2019-01-01 to march 2020. The initialization of a filter has the same timespan as the length of filter itself, therefore we add an in-sample timespan to iniciate the filters. 
-The insample 
+As a third approach we apply 2 SMAs for every time series, trade them with the common Ma crossings rules introduced in [2.3.3.](#macross-section).
+
+##### 3.2.4.1 Optimization
+
+&nbsp;
+For the Optimization the same procedure as in the previous sections gets executed.
+The optimization has two levels. for different in sample timespans we optimiize the filter lengths on sharpe and maxdrawdown
+
+
+Hyperparameter:
+-$date$ = startdate for the insample timespan $2003-01-01 < date \le 2018-01-01, by 250 steps$
+Parameters:
+-$L1$ = length of shorter SMA  with $1 < L1 \le < 50$
+-$L2$ = length of longer  SMA with  $100 < L1 \le 250$
+
  
 The intuition says that this strategy may not be so bad , why leaving a trend market instead of buy and hold.
 

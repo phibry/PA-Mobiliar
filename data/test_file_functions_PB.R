@@ -130,4 +130,40 @@ x<-log_ind[paste(start_date,"/",sep="")]
 
 # code from methology
 
+install.packages(tidyr)
+library(tidyr)
+#test1= as.data.frame(test1)
+
+
+
+
+str(test1)
+test1[,1]=as.Date(test1[,1])
+test1$Sharpe=as.numeric(test1$`Sharpe`)
+test1$Drawdown=as.numeric(test1$Drawdown)
+test1x=test1[,c(1,2,4)]
+qxts <- xts(test1x[,-1], test1x[,1])
+qxts$Drawdown=qxts$Drawdown* 100
+
+
+test1 %>%separate(`S-Filter`,c("Sharpe_S","Sharpe_L"),"/")
+test1 %>%separate(`D-Filter`,c("Drawdown_S","Drawdown_L"),"/")
+
+
+
+
+
+plot(qxts, main= " Best sharpe / Drawndown index 1 optimzation")
+
+
+
+
+
+
+
+
+
+
+
+
 
