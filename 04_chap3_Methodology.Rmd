@@ -394,7 +394,9 @@ To solve this problem one could do the optimization again, indivdually analyze e
 
 $_1$ Note: maxdrawdown is scaled by the factor 100 to visualize it in the same plot 
 \newpage
-As noticed the Visualizations are only done for index one, We've done the same optimization for all indexes the result are shown in referenz auf tabelle
+As noticed the Visualizations are only done for index one, We've done the same optimization for all indexes the result are shown in 
+
+
 
 \newpage
 &nbsp;
