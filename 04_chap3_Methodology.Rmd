@@ -174,9 +174,7 @@ kbl(perc, caption="shares", booktabs = T) %>%
 
 \newpage
 
-#### 3.2.2. AR trading
-
-&nbsp;
+### 3.3. AR trading
 
 As with the theory data set, these 4 indexes are non-stationary series. For the AR models, the stationary log-returns of the time series are used. First we look at index 1, the series with the lowest volatility but with the highest Sharpe ratio (highest return with lowest risk). To find the best possible AR model, different AR(*p*) models are fitted with different model orders *p* for different in-sample ranges. For each model the out-of-sample sharpe is calculated. The execution of this calculation leads to the solution shown in table \ref{tab:ar1table}.
 
@@ -308,9 +306,7 @@ So it can be said that with very simple autoregressive models, a tool has been f
 
 \newpage
 
-#### 3.2.3. Single Moving average trading
-
-&nbsp;
+### 3.4. Single Simple Moving average trading
 
 SMA undso
 
@@ -338,16 +334,12 @@ optim_sma4 <- optimize_sma(x=log_ret_ind, inx=4)
 
 \newpage
 
-\newpage
-#### 3.2.4. Moving average crossings trading
-
-&nbsp;
-
+### 3.5. Moving average crossings trading
  
 As a third approach we apply 2 SMAs on every time series and trade them with the common Ma crossings rules introduced in [2.3.3.](#macross-section).
 With an optimaztion we're trying to find the best filterlengths for the 2 SMA's.
 
-##### 3.2.4.1 Optimization
+#### 3.5.1. Optimization
 
 &nbsp;
 
