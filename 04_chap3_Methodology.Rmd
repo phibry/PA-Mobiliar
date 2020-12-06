@@ -226,7 +226,7 @@ As a third approach we apply 2 SMAs for every time series, trade them with the c
 
 &nbsp;
 For the Optimization the same procedure as in the previous sections gets executed.
-The optimization has two levels. for different in sample timespans we optimiize the filter lengths on sharpe and maxdrawdown
+The optimization has two levels. for different in sample timespans we optimize the filter lengths on sharpe and maxdrawdown.
 
 
 Hyperparameter:
@@ -240,9 +240,9 @@ The intuition says that this strategy may not be so bad , why leaving a trend ma
 ```{r, echo=FALSE, fig.cap="Hyperoptimization", include=F,}
 ###loadind xts datasets
 load("data/R_Files/optim_ma_cross_obj_1_xts.RData")
-load("data/R_Files/optim_ma_cross_obj_2_xts.RData")
-load("data/R_Files/optim_ma_cross_obj_3_xts.RData")
-load("data/R_Files/optim_ma_cross_obj_4_xts.RData")
+load("data/R_Files/optim_ma_cross_obj_1.RData")
+
+
 ``` 
 \newpage
 
