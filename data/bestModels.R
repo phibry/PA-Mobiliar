@@ -393,9 +393,9 @@ load("data/data_mobi")
 ind <- na.exclude(data[,1:4])
 ind.lr <- na.exclude(diff(log(ind)))
 
-optimize_sma <- function(x, min_L=5, max_L=500, L_forecast=1, start = "2015-10-30", insamp = "2019-01-01", plot_T=TRUE) {
+optimize_sma <- function(x, inx, min_L=5, max_L=500, L_forecast=1, start = "2015-10-30", insamp = "2019-01-01", plot_T=TRUE) {
   
-  xall <- x[paste(start,"/",sep="")]
+  xall <- x[paste(start,"/",sep="")][,inx]
   xin <- xall[paste("/",insamp,sep="")]
   xout <- xall[paste(insamp,"/",sep="")]
   
@@ -458,12 +458,12 @@ optimize_sma <- function(x, min_L=5, max_L=500, L_forecast=1, start = "2015-10-3
   listerino <- list(sharpe_opt=sharpe_opt, draw_opt=draw_opt, mse_opt=mse_opt, res_mat=res_mat)
   
   if (plot_T) {
-    perfplot_sma(xall, insamp, listerino, max_L)
+    perfplot_sma(xall, insamp, start, listerino, max_L, inx)
   }
 
   return(listerino)
 }
-perfplot_sma <- function(xall, insamp, opt_obj, max_L) {
+perfplot_sma <- function(xall, insamp, start, opt_obj, max_L, inx) {
   sharpe_L <- as.numeric(rownames(opt_obj$sharpe_opt))
   drawdown_L <- as.numeric(rownames(opt_obj$draw_opt))
   MSE_L <- as.numeric(rownames(opt_obj$mse_opt))
@@ -472,21 +472,11 @@ perfplot_sma <- function(xall, insamp, opt_obj, max_L) {
   sharpe_signal <- sign(SMA(xall, n=sharpe_L))
   drawdown_signal <- sign(SMA(xall, n=drawdown_L))
   MSE_signal <- sign(SMA(xall, n=MSE_L))
-  
+
   # Returns
   sharpe_ret <- lag(sharpe_signal)*xall
   drawdown_ret <- lag(drawdown_signal)*xall
   MSE_ret <- lag(MSE_signal)*xall
-  
-  # Plot
-  # par(mfrow=c(2,1))
-  # chartSeries(cumsum(na.exclude(xall[paste(insamp, "/", sep=""),])), theme=chartTheme("white", bg.col="#FFFFFF"),name= "SMA",type="")
-  # addSMA(n=sharpe_L, on=1, col="red")
-  # addSMA(n=drawdown_L, on=1, col="blue")
-  # addSMA(n=MSE_L, on=1, col="green")
-  # 
-  # plot(cumsum(na.exclude(xall[paste(insamp, "/", sep=""),])), main="Comparison")
-  # plot(cumsum(na.exclude(sharpe_ret[paste(insamp, "/", sep=""),])), col="red")
   
   bnh_perf <- cumsum(na.exclude(xall[paste(insamp, "/", sep=""),]))
   sharpe_perf <- cumsum(na.exclude(sharpe_ret[paste(insamp, "/", sep=""),]))
@@ -497,24 +487,29 @@ perfplot_sma <- function(xall, insamp, opt_obj, max_L) {
   ymax <- max(c(max(bnh_perf), max(sharpe_perf), max(drawdown_perf), max(MSE_perf)))
   
   
-  plot(sharpe_perf, main="Comparison", lwd=2,
+  plot(sharpe_perf, main=paste("Startdate: ",start,"| Out-of-sample-Index: ",inx), lwd=2,
        ylim=c(ymin-0.1*abs(ymin), ymax+0.1*ymax))
   lines(sharpe_perf, col="red", lty=2, lwd=2)
   lines(drawdown_perf, col="blue", lty=3, lwd=2)
   lines(MSE_perf, col="green", lty=4, lwd=2)
   
-  print(addLegend("topleft", legend.names = c("Buy & Hold",
+  addLegend("topleft", legend.names = c("Buy & Hold",
                                               paste("Sharpe, L: ",sharpe_L),
                                               paste("Drawdown, L: ",drawdown_L),
                                               paste("MSE, L: ",MSE_L)),
                   lty=c(1, 2, 3, 4),
                   lwd=c(2, 2, 2, 2),
                   col=c("black", "red", "blue", "green"),
-                  cex=0.8))
+                  cex=0.8)
+  
+  lines(sharpe_signal, on=NA, ylim=c(-1.5, 1.5), col="red", lwd=2)
+  lines(drawdown_signal, on=NA, ylim=c(-1.5, 1.5), col="blue", lwd=2)
+  print(lines(MSE_signal, on=NA, ylim=c(-1.5, 1.5), col="green"), lwd=2)
 }
 
 # Ind1####
-optim_sma1 <- optimize_sma(x=ind.lr[,1])
+optim_sma1 <- optimize_sma(x=ind.lr, inx=1)
+
 opt_obj <- optim_sma1
 
 head(optim_sma1$res_mat)
@@ -555,12 +550,12 @@ points(x=as.numeric(rownames(optim_sma1$mse_opt)),
 
 
 # Ind2####
-optim_sma2 <- optimize_sma(x=ind.lr[,2])
+optim_sma2 <- optimize_sma(x=ind.lr, inx=2)
 
 
 # Ind3####
-optim_sma3 <- optimize_sma(x=ind.lr[,3])
+optim_sma3 <- optimize_sma(x=ind.lr, inx=3)
 
 
 # Ind4####
-optim_sma4 <- optimize_sma(x=ind.lr[,4])
+optim_sma4 <- optimize_sma(x=ind.lr, inx=4)
