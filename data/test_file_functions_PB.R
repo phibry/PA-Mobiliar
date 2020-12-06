@@ -177,9 +177,34 @@ save(optim_ma_cross_obj_4_xts, file="data/R_Files/optim_ma_cross_obj_4_xts.RData
 ##################sharpe maxdrow
 plot(optim_ma_cross_obj_1_xts[,1],ylim= c(-2,4),main= "Max Sharpe/Drawdown Hyperoptimization Index 1",col="black")
 lines(optim_ma_cross_obj_1_xts[,4]*100,lwd=2,col="green")
+
+  
+  
+  
 addLegend("topleft", on=1, legend.names = c("Sharpe ", "MaxDrawdown * 100 "), lty=c(1, 1), lwd=c(2, 2),col=c("black","green"))
 ################## lengths
 plot(optim_ma_cross_obj_1_xts[,2:3],type="l",col= "red",main= "Filterlengths Hyperoptimization Index 1 ",)
 lines(optim_ma_cross_obj_1_xts[,5:6], col=c("blue"),lwd=2)
 addLegend("topleft", on=1, legend.names = c("Sharpe long filter", "Drawdown long filter"), lty=c(1, 1), lwd=c(1, 1),col=c("red","blue"))
 addLegend("bottomleft", on=1, legend.names = c("Sharpe short filter", "Drawdown short filter"), lty=c(1, 1), lwd=c(1, 1),col=c("red","blue"))
+
+##################data for kable
+
+test1[,1]=as.Date(test1[,1])
+test1[,c(2,4)]=test1[,c(2,4)] %>% mutate_if(is.character,as.numeric)
+test1[,c(2,4)]=round(test1[,c(2,4)],3)
+##################### data for adding straight line in plot
+
+ind1_opt$best_drawdown
+ind1_opt$best_sharpe
+
+x=t(c("2015-10-01",1.225487,1,106,-0.006546676,18,102))
+
+df=as.data.frame(x)
+colnames(df)=c("date","Sharpe","Sharpe_S","Sharpe_L","Drawdown","Drawdown_S","Drawdown_L")
+df[,1]=as.Date(df[,1])
+qtxs <- xts(df[,-1], df[,1])
+
+optim_ma_cross_obj_1_with_xts=rbind(optim_ma_cross_obj_1_xts,qtxs)
+
+save(optim_ma_cross_obj_1_with_xts, file="data/R_Files/optim_ma_cross_obj_1_with_xts.RData")
