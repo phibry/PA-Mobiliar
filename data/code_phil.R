@@ -1200,6 +1200,8 @@ L2max <- 250
 
 
 
+
+
 # do not change!!!!
 cross_optim <- function(x, start = "2015-10-30", end = "2018-12-31", L1min = 1, L1max = 50, L2min =  100, L2max = 250) {
   best_sharpe <- 0
@@ -1313,6 +1315,8 @@ loop_func <- function(x.lr, insamp="2019-01-01", minyear=3, maxyear=18) {
   
   return(res_df)
 }
+
+
 cross_optim_easy <- function(x, start, end = "2018-12-31", L1min = 1, L1max = 50, L2min =  100, L2max = 250) {
   best_sharpe <- 0
   best_drawdown <- -1000

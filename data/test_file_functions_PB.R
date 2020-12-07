@@ -208,3 +208,197 @@ qtxs <- xts(df[,-1], df[,1])
 optim_ma_cross_obj_1_with_xts=rbind(optim_ma_cross_obj_1_xts,qtxs)
 
 save(optim_ma_cross_obj_1_with_xts, file="data/R_Files/optim_ma_cross_obj_1_with_xts.RData")
+
+
+
+
+
+
+
+
+############################################## do not change ###################################
+loop_func_v2 <- function(data, insamp="2019-01-01", minyear=3, maxyear=18,returnmax=10){
+  #This function uses the cross_optim_easy_v2 function an loops the function through the insample timespan and returns a data frame 
+  
+  year_list <- NULL
+  for (year in minyear:maxyear) {
+    year_list <- c(year_list, paste(2000+year,"-01-01", sep=""))
+  }
+  
+  pb <- txtProgressBar(min = 1, max = length(year_list), style = 3)
+  startdate=as.Date(paste(2000+minyear,"-01-01", sep=""))
+  
+  datevec <- as.data.frame(c(rep(startdate,returnmax)))
+  colnames(datevec)="startdate"
+  iteration<- cross_optim_easy_v2(x=data, start=startdate,returnmax=returnmax)
+  iteration_withdate=cbind(datevec,iteration)
+  
+  # Loop through years
+  for (i in 2:length(year_list)) {
+    startdate <- year_list[i]
+    iteration<- cross_optim_easy_v2(x=data, start=startdate,returnmax=returnmax)
+    
+    datevec <- as.data.frame(c(rep(as.Date(startdate),returnmax)))
+    colnames(datevec)="startdate"
+    
+    iteration_withdate_loop=cbind(datevec,iteration)
+    iteration_withdate=rbind(iteration_withdate,iteration_withdate_loop)
+    
+    setTxtProgressBar(pb, i)
+  }
+  close(pb)
+  
+  return(iteration_withdate)
+}
+cross_optim_easy_v2 <- function(x, start, end = "2018-12-31", L1min = 1, L1max = 50, L2min =  100, L2max = 250,returnmax=5){ 
+  ###This function optimizes the ma crossings with the given filterlength in the given timespan and returns a dataframe with the  "returnmax"
+  # sharpe and drawdownfilter which where found by common trading rules of ma crossings.
+  horizon <- paste(start,"::",end,sep = "")
+  
+  sharpmat<-matrix(NA,L1max,L2max)  ## craeting empty matrizes for sharpe and maxdrawdown
+  drawmat <-matrix(NA,L1max,L2max)
+  
+  pb = txtProgressBar(min = L1min, max = L1max, style = 3)
+  for (k in L1min:L1max)
+  {
+    
+    for (j in L2min:L2max)
+     {
+      
+      # Simple Moving Averages
+      sma1 <- SMA(x,k)
+      sma2 <- SMA(x,j)
+      
+      # Signals
+      signal <- rep(0,length(sma1))
+      signal[which(sma1>sma2&lag(sma1)<lag(sma2))] <- 1
+      signal[which(sma1<sma2&lag(sma1)>lag(sma2))]< - -1
+      signal[which(sma1>sma2)] <- 1
+      signal[which(sma1<sma2)] <- -1
+      signal <- reclass(signal,sma1)
+      
+      # Trading
+      trade   <-   Lag(signal[horizon],1)
+      return  <-   diff(log(x))
+      ret <- return*trade
+      ret <- na.exclude(ret)
+      
+      # Sharpe
+      sharpmat[k,j] <- sqrt(250)*mean(ret)/sqrt(var(ret))
+      
+      # Drawdown
+      drawmat[k,j] <- -max(abs(Drawdowns(ret, geometric = F)))
+     }
+   setTxtProgressBar(pb, k)
+   }
+  close(pb)
+  
+  #searching for the 5 maximum sharpes/drawdowns with the filterlenghts
+  l1_vec_sharp=c(rep(0,returnmax))
+  l2_vec_sharp=c(rep(0,returnmax))
+  vecsharp=tail(sort(sharpmat),returnmax)   #taking the 5 maximum sharpe ratios last one is the max of 5
+  
+  l1_vec_drawdown=c(rep(0,returnmax))
+  l2_vec_drawdown=c(rep(0,returnmax))
+  vecdrawdown=tail(sort(drawmat),returnmax) #taking the 5 maximum drawdowne ratios last one is the max of 5
+  
+  for(l in returnmax:1)
+   {
+   l1_vec_sharp[l]=(which(sharpmat==vecsharp[l],arr.ind=TRUE))[1]# adding the rows = L1 and columns = L2 to the 5 max sharpes
+   l2_vec_sharp[l]=(which(sharpmat==vecsharp[l],arr.ind=TRUE))[2]#
+   l1_vec_drawdown[l]=(which(drawmat==vecdrawdown[l],arr.ind=TRUE))[1]# adding the rows = L1 and columns = L2 to the 5 max drawdownes
+   l2_vec_drawdown[l]=(which(drawmat==vecdrawdown[l],arr.ind=TRUE))[2]#
+   
+   }
+  
+  maximus=cbind(vecsharp,l1_vec_sharp,l2_vec_sharp,vecdrawdown,l1_vec_drawdown,l2_vec_drawdown)    #combining the vector to return each value
+  colnames(maximus)=c("sharpe","sharpe_l1","sharpe_l2","drawdown","drawdown_l1","drawdown_l2")
+  return(maximus)
+}
+###################################################################################################
+
+
+
+
+m=cross_optim_easy(data[,1], start, end = "2018-12-31", L1min = 1, L1max = 50, L2min =  100, L2max = 250,returnmax=10)
+
+index_1_tenbest_year=loop_func_v2(data[,1])
+
+View(index_1_tenbest_year)
+
+
+
+
+
+
+x=data[,1]
+start="2012-01-01"
+
+
+cross_optim_easy_v2 <- function(x, start, end = "2018-12-31", L1min = 1, L1max = 50, L2min =  100, L2max = 250,returnmax=5){ 
+  ###This function optimizes the ma crossings with the given filterlength in the given timespan and returns a dataframe with the  "returnmax"
+  # sharpe and drawdownfilter which where found by common trading rules of ma crossings.
+  horizon <- paste(start,"::",end,sep = "")
+  
+  sharpmat<-matrix(NA,L1max,L2max)  ## craeting empty matrizes for sharpe and maxdrawdown
+  drawmat <-matrix(NA,L1max,L2max)
+  
+  pb = txtProgressBar(min = L1min, max = L1max, style = 3)
+  for (k in L1min:L1max)
+  {
+    
+    for (j in L2min:L2max)
+    {
+      
+      # Simple Moving Averages
+      sma1 <- SMA(x,k)
+      sma2 <- SMA(x,j)
+      
+      # Signals
+      signal <- rep(0,length(sma1))
+      signal[which(sma1>sma2&lag(sma1)<lag(sma2))] <- 1
+      signal[which(sma1<sma2&lag(sma1)>lag(sma2))]< - -1
+      signal[which(sma1>sma2)] <- 1
+      signal[which(sma1<sma2)] <- -1
+      signal <- reclass(signal,sma1)
+      
+      # Trading
+      trade   <-   Lag(signal[horizon],1)
+      return  <-   diff(log(x))
+      ret <- return*trade
+      ret <- na.exclude(ret)
+      
+      # Sharpe
+      sharpmat[k,j] <- sqrt(250)*mean(ret)/sqrt(var(ret))
+      
+      # Drawdown
+      drawmat[k,j] <- -max(abs(Drawdowns(ret, geometric = F)))
+    }
+    setTxtProgressBar(pb, k)
+  }
+  close(pb)
+  
+  #searching for the 5 maximum sharpes/drawdowns with the filterlenghts
+  l1_vec_sharp=c(rep(0,returnmax))
+  l2_vec_sharp=c(rep(0,returnmax))
+  vecsharp=tail(sort(sharpmat),returnmax)   #taking the 5 maximum sharpe ratios last one is the max of 5
+  
+  View(sharpmat)
+  
+  l1_vec_drawdown=c(rep(0,returnmax))
+  l2_vec_drawdown=c(rep(0,returnmax))
+  vecdrawdown=tail(sort(drawmat),returnmax) #taking the 5 maximum drawdowne ratios last one is the max of 5
+  
+  for(l in returnmax:1)
+  {
+    l1_vec_sharp[l]=(which(sharpmat==vecsharp[l],arr.ind=TRUE))[1]# adding the rows = L1 and columns = L2 to the 5 max sharpes
+    l2_vec_sharp[l]=(which(sharpmat==vecsharp[l],arr.ind=TRUE))[2]#
+    l1_vec_drawdown[l]=(which(drawmat==vecdrawdown[l],arr.ind=TRUE))[1]# adding the rows = L1 and columns = L2 to the 5 max drawdownes
+    l2_vec_drawdown[l]=(which(drawmat==vecdrawdown[l],arr.ind=TRUE))[2]#
+    
+  }
+  
+  maximus=cbind(vecsharp,l1_vec_sharp,l2_vec_sharp,vecdrawdown,l1_vec_drawdown,l2_vec_drawdown)    #combining the vector to return each value
+  colnames(maximus)=c("sharpe","sharpe_l1","sharpe_l2","drawdown","drawdown_l1","drawdown_l2")
+  return(maximus)
+}
