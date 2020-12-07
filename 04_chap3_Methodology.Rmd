@@ -64,11 +64,6 @@ sharp_vola_df <- data.frame(rbind(round(sd_vec, 4), round(sharpe_vec, 4)))
 colnames(sharp_vola_df) <- c("Index 1", "Index 2", "Index 3", "Index 4")
 rownames(sharp_vola_df) <- c("Volatility", "Sharpe-Ratio")
 
-# sharp_vola_df$`Index 1` = cell_spec(sharp_vola_df$`Index 1`, color="black")
-# sharp_vola_df$`Index 2` = cell_spec(sharp_vola_df$`Index 2`, color="red")
-# sharp_vola_df$`Index 3` = cell_spec(sharp_vola_df$`Index 3`, color="green")
-# sharp_vola_df$`Index 4` = cell_spec(sharp_vola_df$`Index 4`, color="blue")
-
 kbl(sharp_vola_df, caption="Sharpe Ratio and Volatility of the 4 indexes (log-returns).", booktabs = T) %>%
   kable_styling(latex_options = c("striped", "hold_position")) %>%
   column_spec(2, color="#000000") %>%
