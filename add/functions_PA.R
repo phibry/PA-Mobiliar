@@ -10,7 +10,7 @@ ljungplot <- function(x, lag=10) {
   box(col="gray")
   axis(2, col="gray", cex.axis=0.8)
   axis(1, col="gray", cex.axis=0.8)
-  abline(h=0.05, lty=2, col="blue")
+  abline(h=0.05, lty=2, col="#2297E6")
 }
 ljungplotGarch <- function(resid, sig) {
   p1 <- rep(NA, 20)
@@ -27,10 +27,10 @@ ljungplotGarch <- function(resid, sig) {
   box(col="gray")
   axis(2, col="gray", cex.axis=0.8)
   axis(1, col="gray", cex.axis=0.8)
-  abline(h=0.05, lty=2, col="blue")
-  points(x=10, y=p1[10], pch=16, col="red")
-  points(x=15, y=p1[15], pch=16, col="red")
-  points(x=20, y=p1[20], pch=16, col="red")
+  abline(h=0.05, lty=2, col="#2297E6")
+  points(x=10, y=p1[10], pch=16, col="#DF536B")
+  points(x=15, y=p1[15], pch=16, col="#DF536B")
+  points(x=20, y=p1[20], pch=16, col="#DF536B")
   
   plot(x=1:20, y=p2, main=expression(paste("Ljung-Box statistic: ", u^2)),
        xlab = "lag", ylab = "p value", axes = FALSE,
@@ -38,10 +38,10 @@ ljungplotGarch <- function(resid, sig) {
   box(col="gray")
   axis(2, col="gray", cex.axis=0.8)
   axis(1, col="gray", cex.axis=0.8)
-  abline(h=0.05, lty=2, col="blue")
-  points(x=10, y=p2[10], pch=16, col="red")
-  points(x=15, y=p2[15], pch=16, col="red")
-  points(x=20, y=p2[20], pch=16, col="red")
+  abline(h=0.05, lty=2, col="#2297E6")
+  points(x=10, y=p2[10], pch=16, col="#DF536B")
+  points(x=15, y=p2[15], pch=16, col="#DF536B")
+  points(x=20, y=p2[20], pch=16, col="#DF536B")
 }
 
 
@@ -95,7 +95,7 @@ perfplot_ar <- function(optim_ar_obj, lr_series, inx, insamp="2019-01-01", plott
                                                 paste("AR(",p,"):", round(sharpe_ar, 2))),
                     lty=c(1, 2),
                     lwd=c(1.5, 1),
-                    col=c("black", "red"),
+                    col=c("#000000", "red"),
                     cex=0.8))
   }
   
@@ -111,12 +111,12 @@ ar_plotter <- function(perf_bnh, perf_ar, start_date, inx, p, sharpe_bnh, sharpe
   
   plot(perf_bnh, main=paste("Startdate: ",start_date,"| Out-of-sample-Index: ",inx), lwd=1.5,
        ylim=c(ymin-0.1*abs(ymin), ymax+0.1*ymax))
-  lines(perf_ar, lty=2, lwd=1, col="red")
+  lines(perf_ar, lty=2, lwd=1, col="#DF536B")
   addLegend("topleft", legend.names = c(paste("Buy & Hold:", round(sharpe_bnh, 2)),
                                               paste("AR(",p,"):", round(sharpe_ar, 2))),
-                  lty=c(1, 2), lwd=c(1.5, 1), col=c("black", "red"), cex=1)
+                  lty=c(1, 2), lwd=c(1.5, 1), col=c("#000000", "#DF536B"), cex=1)
   
-  print(lines(signal, on=NA, ylim=c(-1.3, 1.3)))
+  print(lines(signal, on=NA, ylim=c(-1.3, 1.3), lwd=2))
   # axis(side=2, at=c(-1, 1), labels=c("Short", "Long"), las=2, tick=FALSE)
   # axis(side=4, at=c(-1, 1), las=2, tick=FALSE)
 }
@@ -215,9 +215,9 @@ perfplot_sma <- function(xall, insamp, start, opt_obj, max_L, inx) {
   
   plot(sharpe_perf, main=paste("Startdate: ",start,"| Out-of-sample-Index: ",inx), lwd=2,
        ylim=c(ymin-0.1*abs(ymin), ymax+0.1*ymax))
-  lines(sharpe_perf, col="red", lty=2, lwd=2)
-  lines(drawdown_perf, col="blue", lty=3, lwd=2)
-  lines(MSE_perf, col="green", lty=4, lwd=2)
+  lines(sharpe_perf, col="#DF536B", lty=2, lwd=2)
+  lines(drawdown_perf, col="#2297E6", lty=3, lwd=2)
+  lines(MSE_perf, col="#61D04F", lty=4, lwd=2)
   
   addLegend("topleft", legend.names = c("Buy & Hold",
                                         paste("Sharpe, L: ",sharpe_L),
@@ -225,12 +225,12 @@ perfplot_sma <- function(xall, insamp, start, opt_obj, max_L, inx) {
                                         paste("MSE, L: ",MSE_L)),
             lty=c(1, 2, 3, 4),
             lwd=c(2, 2, 2, 2),
-            col=c("black", "red", "blue", "green"),
+            col=c("#000000", "#DF536B", "#2297E6", "#61D04F"),
             cex=0.8)
   
-  lines(sharpe_signal, on=NA, ylim=c(-1.5, 1.5), col="red", lwd=2)
-  lines(drawdown_signal, on=NA, ylim=c(-1.5, 1.5), col="blue", lwd=2)
-  print(lines(MSE_signal, on=NA, ylim=c(-1.5, 1.5), col="green"), lwd=2)
+  lines(sharpe_signal, on=NA, ylim=c(-1.5, 1.5), col="#DF536B", lwd=2)
+  lines(drawdown_signal, on=NA, ylim=c(-1.5, 1.5), col="#2297E6", lwd=2)
+  print(lines(MSE_signal, on=NA, ylim=c(-1.5, 1.5), col="#61D04F", lwd=3))
 }
 
 #.####
