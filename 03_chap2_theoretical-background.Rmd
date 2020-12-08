@@ -587,10 +587,17 @@ Sharpe ratio is a very powerful and widely used ratio to measure performance. It
 \end{equation}
 
 - ${R_p}$ = Return of Portfolio
-- ${R_p}$ = Risk free Rate, mostly treasury bonds
+- ${R_f}$ = Risk free Rate, mostly treasury bonds
 - ${\sigma_p}$ = standard deviation of portfolios excess return (risk)
 
+For comparing different series often the sharpe ratio is anualized with $\sqrt{250}$ and the ${R_f}$ is considered 0.
+
+
 #### 2.7.2. Drawdown
+
+
+
+
 
 &nbsp;
 
