@@ -171,7 +171,7 @@ kbl(perc, caption="shares", booktabs = T) %>%
 
 ### 3.3. AR trading
 
-As with the theory data set, these 4 indexes are non-stationary series. For the AR models, the stationary log-returns of the time series are used. First we look at index 1, the series with the lowest volatility but with the highest Sharpe ratio (highest return with lowest risk). To find the best possible AR model, different AR(*p*) models are fitted with different model orders *p* for different in-sample ranges. For each model the out-of-sample sharpe is calculated. The execution of this calculation leads to the solution shown in table \ref{tab:ar1table}.
+As with the theory data set, these 4 indexes are non-stationary series. For the AR models, the stationary log-returns of the time series are used. First we look at index 1, the series with the lowest volatility but with the highest sharpe ratio (highest return with lowest risk). To find the best possible AR model, different AR(*p*) models are fitted with different model orders *p* for different in-sample ranges. The parameters *p* and start date are so called hyper parameters, parameters which are set before modelling. For each model the out-of-sample sharpe is calculated. The execution of this calculation leads to the solution shown in table \ref{tab:ar1table}.
 
 ```{r ar1table, echo=FALSE}
 load("data/R_Files/optim_ar_1.RData")
@@ -303,7 +303,11 @@ So it can be said that with very simple autoregressive models, a tool has been f
 
 ### 3.4. Single Simple Moving average trading
 
-SMA undso
+Next thing to look at is the optimisation with a single simple moving average. For AR models, the start date is a hyperparameter, as is the model order *p*. For SMA models there is no model order but a filter length *L*. The filter length is limited to:
+
+$$5<L<500$$
+Additionally the in-sample range is varied again. For each start date the in-sample performances are calculated for each filter length in the interval $5<L<500$. The AR model was only limited to the performance indicator sharpe ratio. Here the optimisation is completed with the drawdown and MSE indicators. Thus, for each start date, for each filter length *L*, the three different indicators are calculated and an optimal model can be choosen.
+
 
 ```{r, chap3.2.3.1, echo=FALSE, fig.cap="Optim", fig.dim=c(11, 6), out.width = "100%", fig.keep = 'last'}
 load("data/R_Files/optim_sma_1.RData")
@@ -347,10 +351,28 @@ for (i in 0:13) {
 }
 ```
 
+asdasd
+
+\newpage
+
+asdasd
+
+```{r restab1, echo=FALSE}
+tab1 <- res1$res_df
+tab1$Sharpe <- round(tab1$Sharpe, 2)
+tab1$Drawdown <- round(tab1$Drawdown, 6)
+tab1$MSE <- round(tab1$MSE, 3)
+kbl(tab1, caption="SMA-Optima by performance indicators | Index 1", booktabs = T, linesep = "") %>%
+  kable_styling(latex_options = c("striped", "hold_position")) %>%
+  column_spec(2:3, color="#DF536B") %>%
+  column_spec(4:5, color="#2297E6") %>%
+  column_spec(6:7, color="#61D04F")
+```
+
 \newpage
 
 ```{r, chap3.2.3.2, echo=FALSE, fig.cap="Best", fig.dim=c(11, 6), out.width = "100%"}
-optim_sma1 <- optimize_sma(x=log_ret_ind, inx=1)
+perfplot_sma_opt(xall=log_ret_ind, insamp="2019-01-01", res_obj=res1, inx=1)
 ```
 
 \newpage
@@ -396,10 +418,24 @@ for (i in 0:13) {
 }
 ```
 
+asdasd
+
+```{r restab2, echo=FALSE}
+tab2 <- res2$res_df
+tab2$Sharpe <- round(tab2$Sharpe, 2)
+tab2$Drawdown <- round(tab2$Drawdown, 6)
+tab2$MSE <- round(tab2$MSE, 3)
+kbl(tab2, caption="SMA-Optima by performance indicators | Index 2", booktabs = T, linesep = "") %>%
+  kable_styling(latex_options = c("striped", "hold_position")) %>%
+  column_spec(2:3, color="#DF536B") %>%
+  column_spec(4:5, color="#2297E6") %>%
+  column_spec(6:7, color="#61D04F")
+```
+
 \newpage
 
 ```{r, chap3.2.3.4, echo=FALSE, fig.cap="Best", fig.dim=c(11, 6), out.width = "100%"}
-optim_sma2 <- optimize_sma(x=log_ret_ind, inx=2)
+perfplot_sma_opt(xall=log_ret_ind, insamp="2019-01-01", res_obj=res2, inx=2)
 ```
 
 \newpage
@@ -445,10 +481,24 @@ for (i in 0:13) {
 }
 ```
 
+asdasd
+
+```{r restab3, echo=FALSE}
+tab3 <- res3$res_df
+tab3$Sharpe <- round(tab3$Sharpe, 2)
+tab3$Drawdown <- round(tab3$Drawdown, 6)
+tab3$MSE <- round(tab3$MSE, 3)
+kbl(tab3, caption="SMA-Optima by performance indicators | Index 3", booktabs = T, linesep = "") %>%
+  kable_styling(latex_options = c("striped", "hold_position")) %>%
+  column_spec(2:3, color="#DF536B") %>%
+  column_spec(4:5, color="#2297E6") %>%
+  column_spec(6:7, color="#61D04F")
+```
+
 \newpage
 
 ```{r, chap3.2.3.6, echo=FALSE, fig.cap="Best", fig.dim=c(11, 6), out.width = "100%", fig.keep = 'last'}
-optim_sma3 <- optimize_sma(x=log_ret_ind, inx=3)
+perfplot_sma_opt(xall=log_ret_ind, insamp="2019-01-01", res_obj=res3, inx=3)
 ```
 
 \newpage
@@ -494,10 +544,24 @@ for (i in 0:13) {
 }
 ```
 
+asdasd
+
+```{r restab4, echo=FALSE}
+tab4 <- res4$res_df
+tab4$Sharpe <- round(tab4$Sharpe, 2)
+tab4$Drawdown <- round(tab4$Drawdown, 6)
+tab4$MSE <- round(tab4$MSE, 3)
+kbl(tab4, caption="SMA-Optima by performance indicators | Index 4", booktabs = T, linesep = "") %>%
+  kable_styling(latex_options = c("striped", "hold_position")) %>%
+  column_spec(2:3, color="#DF536B") %>%
+  column_spec(4:5, color="#2297E6") %>%
+  column_spec(6:7, color="#61D04F")
+```
+
 \newpage
 
 ```{r, chap3.2.3.8, echo=FALSE, fig.cap="Best", fig.dim=c(11, 6), out.width = "100%"}
-optim_sma4 <- optimize_sma(x=log_ret_ind, inx=4)
+perfplot_sma_opt(xall=log_ret_ind, insamp="2019-01-01", res_obj=res4, inx=4)
 ```
 
 \newpage
