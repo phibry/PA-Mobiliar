@@ -458,12 +458,14 @@ optimize_sma <- function(x, inx, min_L=5, max_L=500, L_forecast=1, start = "2015
   listerino <- list(sharpe_opt=sharpe_opt, draw_opt=draw_opt, mse_opt=mse_opt, res_mat=res_mat)
   
   if (plot_T) {
-    perfplot_sma(xall, insamp, start, listerino, max_L, inx)
+    perfplot_sma(xall, insamp, start, listerino, inx)
   }
 
   return(listerino)
 }
-perfplot_sma <- function(xall, insamp, start, opt_obj, max_L, inx) {
+
+
+perfplot_sma <- function(xall, insamp, start, opt_obj, inx) {
   sharpe_L <- as.numeric(rownames(opt_obj$sharpe_opt))
   drawdown_L <- as.numeric(rownames(opt_obj$draw_opt))
   MSE_L <- as.numeric(rownames(opt_obj$mse_opt))
@@ -506,8 +508,7 @@ perfplot_sma <- function(xall, insamp, start, opt_obj, max_L, inx) {
   lines(drawdown_signal, on=NA, ylim=c(-1.5, 1.5), col="blue", lwd=2)
   print(lines(MSE_signal, on=NA, ylim=c(-1.5, 1.5), col="green"), lwd=2)
 }
-
-# Ind1####
+# Ind1 2015-10-30####
 optim_sma1 <- optimize_sma(x=ind.lr, inx=1)
 
 opt_obj <- optim_sma1
@@ -549,13 +550,467 @@ points(x=as.numeric(rownames(optim_sma1$mse_opt)),
 
 
 
-# Ind2####
+# Ind2 2015-10-30####
 optim_sma2 <- optimize_sma(x=ind.lr, inx=2)
 
 
-# Ind3####
+# Ind3 2015-10-30####
 optim_sma3 <- optimize_sma(x=ind.lr, inx=3)
 
 
-# Ind4####
+# Ind4 2015-10-30####
 optim_sma4 <- optimize_sma(x=ind.lr, inx=4)
+
+
+
+#.####
+#.####
+#.####
+#.####
+# Optim ALL####
+loop_sma <- function(x=ind.lr, inx=1, insamp = "2019-01-01", minyear=3, maxyear=16) {
+  
+  year_list <- NULL
+  for (yx in minyear:maxyear) {
+    year_list <- c(year_list, paste(2000+yx,"-01-01", sep=""))
+  }
+  
+  # Create result_matrix
+  res_mat <- matrix(1:(7*length(year_list)), ncol=7,
+                    dimnames = list(1:length(year_list), c("StartDate", "Sharpe", "L_Sharpe", "Drawdown", "L_Drawdown", "MSE", "L_MSE")))
+  
+  lirino <- NULL
+  
+  pb <- txtProgressBar(min = 1, max = length(year_list), style = 3)
+  
+  # Loop through years
+  for (i in 1:length(year_list)) {
+    startdate <- year_list[i]
+    
+    
+    opt_obj <- optimize_sma(x, inx, min_L=5, max_L=500, L_forecast=1, start = startdate, insamp = "2019-01-01", plot_T=FALSE)
+    res_mat[i,] <- c(year_list[i],
+                     as.numeric(opt_obj$sharpe_opt), rownames(opt_obj$sharpe_opt),
+                     as.numeric(opt_obj$draw_opt), rownames(opt_obj$draw_opt),
+                     as.numeric(opt_obj$mse_opt), rownames(opt_obj$mse_opt))
+    
+    
+    resulterino <- opt_obj$res_mat
+    StartDate <- rep(year_list[i], dim(resulterino)[1])
+    result <- as.data.frame(cbind(resulterino, StartDate))
+    
+    lirino <- rbind(lirino, result)
+    
+    
+    setTxtProgressBar(pb, i)
+  }
+  res_df <- as.data.frame(res_mat)
+  close(pb)
+  
+  return(list(res_df=res_df, lirino=lirino))  
+}
+optimize_sma_opt <- function(x, inx, min_L=5, max_L=500, L_forecast=1, start = "2015-10-30", insamp = "2019-01-01") {
+  
+  xall <- x[paste(start,"/",sep="")][,inx]
+  xin <- xall[paste("/",insamp,sep="")]
+  xout <- xall[paste(insamp,"/",sep="")]
+  
+  sharpe_opt<- -9.e+99
+  draw_opt <- -9.e+99
+  mse_opt <- -9.e+99
+  
+  filler <- 1
+  res_mat <- matrix(1:((length(min_L:max_L))*4), ncol=4,
+                    dimnames = list(1:(length(min_L:max_L)), c("L", "Sharpe", "Drawdown", "MSE")))
+  
+  pb <- txtProgressBar(min = min_L, max = max_L, style = 3)
+  
+  for (L in min_L:max_L) {
+    # Moving Average
+    yhat_full <- SMA(xin, n=L)
+    # Cut init
+    yhat <- yhat_full[max_L:length(yhat_full)]
+    
+    # Perf (daily)
+    perf <- lag(sign(yhat))*xin
+    
+    sharpe <- sqrt(250)*mean(perf,na.rm=T)/sqrt(var(perf,na.rm=T))
+    
+    maxdraw<- -max(abs(Drawdowns(na.exclude(perf), geometric = F)))
+    
+    future_returns <- lag(SMA(xin, n=L_forecast), k=-L_forecast)
+    MSE <- -as.double(mean((future_returns-yhat)^2, na.rm=T))/var(xin, na.rm=T)
+    
+    res_mat[filler,] <- c(L, sharpe, maxdraw, MSE)
+    
+    filler <- filler + 1
+    
+    # Best
+    if (sharpe > sharpe_opt) {
+      sharpe <- as.data.frame(sharpe)
+      sharpe_opt <- sharpe
+      rownames(sharpe_opt) <- paste(L)
+      colnames(sharpe_opt) <- "Sharpe"
+    }
+    
+    if (maxdraw > draw_opt) {
+      maxdraw <- as.data.frame(maxdraw)
+      draw_opt <- maxdraw
+      rownames(draw_opt) <- paste(L)
+      colnames(draw_opt) <- "Drawdown"
+    }
+    
+    if (MSE > mse_opt) {
+      MSE <- as.data.frame(MSE)
+      mse_opt <- MSE
+      rownames(mse_opt) <- paste(L)
+      colnames(mse_opt) <- "MSE"
+    }
+    
+    setTxtProgressBar(pb, L)
+  }
+  close(pb)
+  
+  listerino <- list(sharpe_opt=sharpe_opt, draw_opt=draw_opt, mse_opt=mse_opt, res_mat=res_mat)
+  return(listerino)
+}
+perfplot_sma_opt <- function(xall, insamp, res_obj, inx) {
+  xall <- xall[,inx]
+  
+  # Optima
+  sharpe_opt <- res_obj$res_df[which.max(res_obj$res_df[,2]),1:3]
+  drawdown_opt <- res_obj$res_df[which.max(res_obj$res_df[,4]),c(1,4:5)]
+  mse_opt <- res_obj$res_df[which.max(res_obj$res_df[,6]),c(1,6:7)]
+  
+  # Filterlengths
+  sharpe_L <- as.numeric(sharpe_opt[3])
+  drawdown_L <- as.numeric(drawdown_opt[3])
+  MSE_L <- as.numeric(mse_opt[3])
+  
+  # Startdates
+  sharpe_startdate <- sharpe_opt[1]
+  
+  # Trading Signal
+  sharpe_signal <- sign(SMA(xall, n=sharpe_L))
+  drawdown_signal <- sign(SMA(xall, n=drawdown_L))
+  MSE_signal <- sign(SMA(xall, n=MSE_L))
+  
+  # Returns
+  sharpe_ret <- lag(sharpe_signal)*xall
+  drawdown_ret <- lag(drawdown_signal)*xall
+  MSE_ret <- lag(MSE_signal)*xall
+  
+  bnh_perf <- cumsum(na.exclude(xall[paste(insamp, "/", sep=""),]))
+  sharpe_perf <- cumsum(na.exclude(sharpe_ret[paste(insamp, "/", sep=""),]))
+  drawdown_perf <- cumsum(na.exclude(drawdown_ret[paste(insamp, "/", sep=""),]))
+  MSE_perf <- cumsum(na.exclude(MSE_ret[paste(insamp, "/", sep=""),]))
+  
+  ymin <- min(c(min(bnh_perf), min(sharpe_perf), min(drawdown_perf), min(MSE_perf)))
+  ymax <- max(c(max(bnh_perf), max(sharpe_perf), max(drawdown_perf), max(MSE_perf)))
+  
+  
+  plot(bnh_perf, main=paste("Out-of-sample-Index: ",inx), lwd=2,
+       ylim=c(ymin-0.1*abs(ymin), ymax+0.1*ymax))
+  lines(sharpe_perf, col="#DF536B", lty=2, lwd=2)
+  lines(drawdown_perf, col="#2297E6", lty=3, lwd=2)
+  lines(MSE_perf, col="#61D04F", lty=4, lwd=2)
+  
+  addLegend("topleft", legend.names = c("Buy & Hold",
+                                        paste("StartDate: ", sharpe_opt[1], "| Sharpe | L: ",sharpe_L),
+                                        paste("StartDate: ", drawdown_opt[1], "| Drawdown | L: ",drawdown_L),
+                                        paste("StartDate: ", mse_opt[1], "| MSE | L: ",MSE_L)),
+            lty=c(1, 2, 3, 4),
+            lwd=c(2, 2, 2, 2),
+            col=c("#000000", "#DF536B", "#2297E6", "#61D04F"),
+            cex=0.8)
+  
+  lines(sharpe_signal, on=NA, ylim=c(-1.5, 1.5), col="#DF536B", lwd=2)
+  lines(drawdown_signal, on=NA, ylim=c(-1.5, 1.5), col="#2297E6", lwd=2)
+  print(lines(MSE_signal, on=NA, ylim=c(-1.5, 1.5), col="#61D04F", lwd=2))
+}
+
+#.####
+# Ind 1 ALL####
+res1 <- loop_sma(x=ind.lr, inx=1, insamp = "2019-01-01", minyear=3, maxyear=16)
+res1$res_df[,2] <- as.numeric(res1$res_df[,2])
+res1$res_df[,3] <- as.numeric(res1$res_df[,3])
+res1$res_df[,4] <- as.numeric(res1$res_df[,4])
+res1$res_df[,5] <- as.numeric(res1$res_df[,5])
+res1$res_df[,6] <- as.numeric(res1$res_df[,6])
+res1$res_df[,7] <- as.numeric(res1$res_df[,7])
+
+res1$lirino[,1] <- as.numeric(res1$lirino[,1])
+res1$lirino[,2] <- as.numeric(res1$lirino[,2])
+res1$lirino[,3] <- as.numeric(res1$lirino[,3])
+res1$lirino[,4] <- as.numeric(res1$lirino[,4])
+#save(res1, file="data/R_Files/optim_sma_1.RData")
+res1$res_df
+
+# Sharpe
+res1$res_df[which.max(res1$res_df[,2]),1:3]
+
+# Drawdown
+res1$res_df[which.max(res1$res_df[,4]),c(1,4:5)]
+
+# MSE
+res1$res_df[which.max(res1$res_df[,6]),c(1,6:7)]
+
+
+
+# Plot
+seper <- (500-5)+1
+x_s <- res1$res_df[,3] + 1 + (0:13*seper)
+y_s <- res1$res_df[,2]
+
+x_d <- res1$res_df[,5] + 1 + (0:13*seper)
+y_d <- res1$res_df[,4]
+
+x_m <- res1$res_df[,7] + 1 + (0:13*seper)
+y_m <- res1$res_df[,6]
+
+plot(x=1:length(res1$lirino[,2]), y=res1$lirino[,2], type="l", col="#DF536B", main="Performance Indicators | SMA | Index 1", xlab = "L", ylab="", xaxt = "n", ylim=c(-2, 3))
+axis(1, at=c(1, seper, 1+2*seper, 2*seper+seper), labels=c("5", "500", "5", "500"))
+axis(3, at=c(1+seper, seper+seper), labels=c("5", "500"))
+axis(4, at=c(-0.5, 0.5, 1.5), labels=c("-0.10", "-0.05", "0"))
+points(x_s, y_s, pch=19, col="#DF536B")
+
+abline(v=1, lty=2, col="black")
+abline(v=1+(500-5), lty=2, col="black")
+
+abline(h=1.5, lty=2, col="black")
+abline(h=0, lty=2, col="black")
+
+lines((res1$lirino[,3])*18.23+1.5, type="l", col="#2297E6")
+points(x_d, y_d*18.23+1.5, pch=19, col="#2297E6")
+
+lines(res1$lirino[,4], type="l", col="#61D04F")
+points(x_m, y_m, pch=19, col="#61D04F")
+
+legend("topleft", legend=c("Sharpe", "MSE"),
+       col=c("#DF536B", "#61D04F"), lty=c(1,1), cex=0.8,
+       bty = "n")
+
+legend("topright", legend="Drawdown",
+       col="#2297E6", lty=1, cex=0.8,
+       bty = "n")
+
+for (i in 0:13) {
+  text((1+500-5)/2 + seper*i, -2, paste(2003+i, "-01-01", sep=""), cex=0.6)
+}
+
+# Ind 1 Opt-Plot####
+perfplot_sma_opt(xall=ind.lr, insamp="2019-01-01", res_obj=res1, inx=1)
+
+
+
+
+
+
+
+
+#.####
+# Ind 2####
+res2 <- loop_sma(x=ind.lr, inx=2, insamp = "2019-01-01", minyear=3, maxyear=16)
+res2$res_df[,2] <- as.numeric(res2$res_df[,2])
+res2$res_df[,3] <- as.numeric(res2$res_df[,3])
+res2$res_df[,4] <- as.numeric(res2$res_df[,4])
+res2$res_df[,5] <- as.numeric(res2$res_df[,5])
+res2$res_df[,6] <- as.numeric(res2$res_df[,6])
+res2$res_df[,7] <- as.numeric(res2$res_df[,7])
+
+res2$lirino[,1] <- as.numeric(res2$lirino[,1])
+res2$lirino[,2] <- as.numeric(res2$lirino[,2])
+res2$lirino[,3] <- as.numeric(res2$lirino[,3])
+res2$lirino[,4] <- as.numeric(res2$lirino[,4])
+#save(res2, file="data/R_Files/optim_sma_2.RData")
+
+# Sharpe
+res2$res_df[which.max(res2$res_df[,2]),1:3]
+
+# Drawdown
+res2$res_df[which.max(res2$res_df[,4]),c(1,4:5)]
+
+# MSE
+res2$res_df[which.max(res2$res_df[,6]),c(1,6:7)]
+
+# Plot
+seper <- (500-5)+1
+x_s <- res2$res_df[,3] + 1 + (0:13*seper)
+y_s <- res2$res_df[,2]
+
+x_d <- res2$res_df[,5] + 1 + (0:13*seper)
+y_d <- res2$res_df[,4]
+
+x_m <- res2$res_df[,7] + 1 + (0:13*seper)
+y_m <- res2$res_df[,6]
+
+plot(x=1:length(res2$lirino[,2]), y=res2$lirino[,2], type="l", col="#DF536B", main="Performance Indicators | SMA | Index 2", xlab = "L", ylab="", xaxt = "n", ylim=c(-2, 2))
+axis(1, at=c(1, seper, 1+2*seper, 2*seper+seper), labels=c("5", "500", "5", "500"))
+axis(3, at=c(1+seper, seper+seper), labels=c("5", "500"))
+axis(4, at=c(-1.5, -0.5, 0.5, 1.5), labels=c("-0.15", "-0.10", "-0.05", "0"))
+points(x_s, y_s, pch=19, col="#DF536B")
+
+abline(v=1, lty=2, col="black")
+abline(v=1+(500-5), lty=2, col="black")
+
+abline(h=1.5, lty=2, col="black")
+abline(h=0, lty=2, col="black")
+
+lines((res2$lirino[,3])*18.65+1.5, type="l", col="#2297E6", lty=1)
+points(x_d, y_d*18.65+1.5, pch=19, col="#2297E6")
+
+lines(res2$lirino[,4], type="l", col="#61D04F")
+points(x_m, y_m, pch=19, col="#61D04F")
+
+legend("topleft", legend=c("Sharpe", "MSE"),
+       col=c("#DF536B", "#61D04F"), lty=c(1,1), cex=0.8,
+       bty = "n")
+
+legend("topright", legend="Drawdown",
+       col="#2297E6", lty=1, cex=0.8,
+       bty = "n")
+for (i in 0:13) {
+  text((1+500-5)/2 + seper*i, -2, paste(2003+i, "-01-01", sep=""), cex=0.6)
+}
+
+# Ind 2 Opt-Plot####
+perfplot_sma_opt(xall=ind.lr, insamp="2019-01-01", res_obj=res2, inx=2)
+
+
+
+
+
+
+
+
+
+#.####
+# Ind 3####
+res3 <- loop_sma(x=ind.lr, inx=3, insamp = "2019-01-01", minyear=3, maxyear=16)
+res3$res_df[,2] <- as.numeric(res3$res_df[,2])
+res3$res_df[,3] <- as.numeric(res3$res_df[,3])
+res3$res_df[,4] <- as.numeric(res3$res_df[,4])
+res3$res_df[,5] <- as.numeric(res3$res_df[,5])
+res3$res_df[,6] <- as.numeric(res3$res_df[,6])
+res3$res_df[,7] <- as.numeric(res3$res_df[,7])
+
+res3$lirino[,1] <- as.numeric(res3$lirino[,1])
+res3$lirino[,2] <- as.numeric(res3$lirino[,2])
+res3$lirino[,3] <- as.numeric(res3$lirino[,3])
+res3$lirino[,4] <- as.numeric(res3$lirino[,4])
+#save(res3, file="data/R_Files/optim_sma_3.RData")
+
+# Sharpe
+res3$res_df[which.max(res3$res_df[,2]),1:3]
+
+# Drawdown
+res3$res_df[which.max(res3$res_df[,4]),c(1,4:5)]
+
+# MSE
+res3$res_df[which.max(res3$res_df[,6]),c(1,6:7)]
+
+# Plot
+seper <- (500-5)+1
+x_s <- res3$res_df[,3] + 1 + (0:13*seper)
+y_s <- res3$res_df[,2]
+
+x_d <- res3$res_df[,5] + 1 + (0:13*seper)
+y_d <- res3$res_df[,4]
+
+x_m <- res3$res_df[,7] + 1 + (0:13*seper)
+y_m <- res3$res_df[,6]
+
+plot(x=1:length(res3$lirino[,2]), y=res3$lirino[,2], type="l", col="#DF536B", main="Performance Indicators | SMA | Index 3", xlab = "L", ylab="", xaxt = "n", ylim=c(-2.5, 2))
+axis(1, at=c(1, seper, 1+2*seper, 2*seper+seper), labels=c("5", "500", "5", "500"))
+axis(3, at=c(1+seper, seper+seper), labels=c("5", "500"))
+axis(4, at=c(0.5, -0.25, -1), labels=c("0", "-0.15", "-0.3"))
+
+points(x_s, y_s, pch=19, col="#DF536B")
+
+abline(v=1, lty=2, col="black")
+abline(v=1+(500-5), lty=2, col="black")
+
+abline(h=0.5, lty=2, col="black")
+abline(h=0, lty=2, col="black")
+
+lines((res3$lirino[,3])*4.92+0.5, type="l", col="#2297E6", lty=1)
+points(x_d, y_d*4.92+0.5, pch=19, col="#2297E6")
+
+lines(res3$lirino[,4], type="l", col="#61D04F")
+points(x_m, y_m, pch=19, col="#61D04F")
+
+legend("topleft", legend=c("Sharpe", "MSE"),
+       col=c("#DF536B", "#61D04F"), lty=c(1,1), cex=0.8,
+       bty = "n")
+
+legend("topright", legend="Drawdown",
+       col="#2297E6", lty=1, cex=0.8,
+       bty = "n")
+for (i in 0:13) {
+  text((1+500-5)/2 + seper*i, -2.5, paste(2003+i, "-01-01", sep=""), cex=0.6)
+}
+
+# Ind 3 Opt-Plot####
+perfplot_sma_opt(xall=ind.lr, insamp="2019-01-01", res_obj=res3, inx=3)
+
+
+#.####
+# Ind 4####
+res4 <- loop_sma(x=ind.lr, inx=4, insamp = "2019-01-01", minyear=3, maxyear=16)
+res4$res_df[,2] <- as.numeric(res4$res_df[,2])
+res4$res_df[,3] <- as.numeric(res4$res_df[,3])
+res4$res_df[,4] <- as.numeric(res4$res_df[,4])
+res4$res_df[,5] <- as.numeric(res4$res_df[,5])
+res4$res_df[,6] <- as.numeric(res4$res_df[,6])
+res4$res_df[,7] <- as.numeric(res4$res_df[,7])
+
+res4$lirino[,1] <- as.numeric(res4$lirino[,1])
+res4$lirino[,2] <- as.numeric(res4$lirino[,2])
+res4$lirino[,3] <- as.numeric(res4$lirino[,3])
+res4$lirino[,4] <- as.numeric(res4$lirino[,4])
+#save(res4, file="data/R_Files/optim_sma_4.RData")
+
+# Plot
+seper <- (500-5)+1
+x_s <- res4$res_df[,3] + 1 + (0:13*seper)
+y_s <- res4$res_df[,2]
+
+x_d <- res4$res_df[,5] + 1 + (0:13*seper)
+y_d <- res4$res_df[,4]
+
+x_m <- res4$res_df[,7] + 1 + (0:13*seper)
+y_m <- res4$res_df[,6]
+
+plot(x=1:length(res4$lirino[,2]), y=res4$lirino[,2], type="l", col="#DF536B", main="Performance Indicators | SMA | Index 4", xlab = "L", ylab="", xaxt = "n", ylim=c(-3, 2))
+axis(1, at=c(1, seper, 1+2*seper, 2*seper+seper), labels=c("5", "500", "5", "500"))
+axis(3, at=c(1+seper, seper+seper), labels=c("5", "500"))
+axis(4, at=c(0.5, 0, -0.5, -1, -1.5), labels=c("0", "-0.1", "-0.2", "-0.3", "-0.4"))
+
+points(x_s, y_s, pch=19, col="#DF536B")
+
+abline(v=1, lty=2, col="black")
+abline(v=1+(500-5), lty=2, col="black")
+
+abline(h=0.5, lty=2, col="black")
+abline(h=0, lty=2, col="black")
+
+
+lines((res4$lirino[,3])*5+0.5, type="l", col="#2297E6", lty=1)
+points(x_d, y_d*5+0.5, pch=19, col="#2297E6")
+
+lines(res4$lirino[,4], type="l", col="#61D04F")
+points(x_m, y_m, pch=19, col="#61D04F")
+
+legend("topleft", legend=c("Sharpe", "MSE"),
+       col=c("#DF536B", "#61D04F"), lty=c(1,1), cex=0.8,
+       bty = "n")
+
+legend("topright", legend="Drawdown",
+       col="#2297E6", lty=1, cex=0.8,
+       bty = "n")
+for (i in 0:13) {
+  text((1+500-5)/2 + seper*i, -3, paste(2003+i, "-01-01", sep=""), cex=0.6)
+}
+
+# Ind 4 Opt-Plot####
+perfplot_sma_opt(xall=ind.lr, insamp="2019-01-01", res_obj=res4, inx=4)
