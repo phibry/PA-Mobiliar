@@ -4,3 +4,30 @@ geometry: margin = 1in
 ---
 
 ## Attachment
+
+
+
+
+
+###Ma crossings
+
+```{r macrosstable index 2, echo=FALSE}
+index_2_onebest_year=as.data.frame(index_2_onebest_year)
+index_2_onebest_year[,c(1,4)]=round(index_2_onebest_year[,c(1,4)],3)
+kbl(index_2_onebest_year, caption="index 2 best", booktabs = T, linesep = "") %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
+```
+
+```{r macrosstable index 3, echo=FALSE}
+index_3_onebest_year=as.data.frame(index_3_onebest_year)
+index_3_onebest_year[,c(1,4)]=round(index_3_onebest_year[,c(1,4)],3)
+kbl(index_3_onebest_year, caption="index 3 best", booktabs = T, linesep = "") %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
+```
+
+```{r macrosstable index 4, echo=FALSE}
+index_4_onebest_year=as.data.frame(index_4_onebest_year)
+index_4_onebest_year[,c(1,4)]=round(index_4_onebest_year[,c(1,4)],3)
+kbl(index_4_onebest_year, caption="index 4 best", booktabs = T, linesep = "") %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
+```
