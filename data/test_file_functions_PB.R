@@ -316,16 +316,16 @@ save(index_4_tenbest_year, file="data/R_Files/index_4_tenbesthead_year.RData")
 
 ###################################################onebest#####################################
 index_1_onebest_year=loop_func_v3(data=data[,1], minyear=3, maxyear=18,returnmax=1)
-save(index_1_onebest_year, file="data/R_Files/index_1_onebesthead_year.RData")
+save(index_1_onebest_year, file="data/R_Files/index_1_onebest_year.RData")
 
 index_2_onebest_year=loop_func_v3(data=data[,2], minyear=3, maxyear=18,returnmax=1)
-save(index_2_onebest_year, file="data/R_Files/index_2_onebesthead_year.RData")
+save(index_2_onebest_year, file="data/R_Files/index_2_onebest_year.RData")
 
 index_3_onebest_year=loop_func_v3(data=data[,3], minyear=3, maxyear=18,returnmax=1)
-save(index_3_onebest_year, file="data/R_Files/index_3_onebesthead_year.RData")
+save(index_3_onebest_year, file="data/R_Files/index_3_onebest_year.RData")
 
 index_4_onebest_year=loop_func_v3(data=data[,4], minyear=3, maxyear=18,returnmax=1)
-save(index_4_onebest_year, file="data/R_Files/index_4_onebesthead_year.RData")
+save(index_4_onebest_year, file="data/R_Files/index_4_onebest_year.RData")
 ######################################################################################################
 load("data/R_Files/index_1_tenbest_year.RData")
 
