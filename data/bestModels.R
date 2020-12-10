@@ -674,6 +674,7 @@ optimize_sma_opt <- function(x, inx, min_L=5, max_L=500, L_forecast=1, start = "
   listerino <- list(sharpe_opt=sharpe_opt, draw_opt=draw_opt, mse_opt=mse_opt, res_mat=res_mat)
   return(listerino)
 }
+
 perfplot_sma_opt <- function(xall, insamp, res_obj, inx) {
   xall <- xall[,inx]
   
@@ -728,6 +729,7 @@ perfplot_sma_opt <- function(xall, insamp, res_obj, inx) {
   lines(drawdown_signal, on=NA, ylim=c(-1.5, 1.5), col="#2297E6", lwd=2)
   print(lines(MSE_signal, on=NA, ylim=c(-1.5, 1.5), col="#61D04F", lwd=2))
 }
+
 
 #.####
 # Ind 1 ALL####
@@ -1014,3 +1016,217 @@ for (i in 0:13) {
 
 # Ind 4 Opt-Plot####
 perfplot_sma_opt(xall=ind.lr, insamp="2019-01-01", res_obj=res4, inx=4)
+
+
+
+
+
+
+#.####
+# Trading with invest####
+loop_sma_trading <- function(x, inx, min_L=5, max_L=500, insamp = "2018-12-31", invest_amount=1000000, tradingcosts=190) {
+  
+  
+  filler <- 1
+  res_mat <- matrix(1:((length(min_L:max_L))*4), ncol=4,
+                    dimnames = list(1:(length(min_L:max_L)), c("L", "SMA-Return", "Trades", "Sharpe")))
+  
+  pb <- txtProgressBar(min = min_L, max = max_L, style = 3)
+  
+  for (L in min_L:max_L) {
+    # SMA L<-328
+    sma_full <- SMA(x[,inx], n=L)
+    
+    # Cut init
+    sma_cut <- sma_full[paste(insamp, "/", sep="")]
+    
+    # Perf (daily)
+    perf <- lag(sign(sma_cut))*x[,inx][paste(insamp, "/", sep="")]
+    trade_sig <- lag(sign(sma_cut))
+    
+    # Count Trades
+    sma_trade_count <- trading_counter(as.numeric(na.exclude(trade_sig)))
+    
+    # Sharpe
+    sharpe <- sharpe_fun(na.exclude(perf))
+    
+    sma_ret <- tail((cumsum(na.exclude(perf)) * invest_amount) - (sma_trade_count * tradingcosts), 1)
+    bnh_ret <- cumsum(x[,inx][paste(insamp, "/", sep="")]) * invest_amount
+    
+    
+    res_mat[filler,] <- c(L, sma_ret, sma_trade_count, sharpe)
+    
+    filler <- filler + 1
+    
+    setTxtProgressBar(pb, L)
+  }
+  close(pb)
+  res_df <- as.data.frame(res_mat)
+  return(res_df)
+}
+
+plot_sma <- function(x, inx, L, insamp = "2018-12-31") {
+  sma_full <- SMA(x[,inx], n=L)
+  
+  # Cut init
+  sma_cut <- sma_full[paste(insamp, "/", sep="")]
+  
+  # Perf (daily)
+  perf <- lag(sign(sma_cut))*x[,inx][paste(insamp, "/", sep="")]
+  trade_sig <- lag(sign(sma_cut))
+  
+  # Trade Counter
+  sma_trade_count <- trading_counter(as.numeric(na.exclude(trade_sig)))
+  
+  # Sharpe
+  bnh_sharpe <- round(sharpe_fun(x[,inx]["2019-01-01/"]), 3)
+  trade_sharpe <- round(sharpe_fun(na.exclude(perf)), 3)
+  
+  bnh_perf <- cumsum(x[,inx]["2019-01-01/"])
+  trade_perf <- cumsum(na.exclude(perf))
+  
+  ymin <- min(c(min(bnh_perf), min(trade_perf)))
+  ymax <- max(c(max(bnh_perf), max(trade_perf)))
+  
+  plot(bnh_perf, main=paste("Out-of-sample-Index: ",inx), lwd=2,
+       ylim=c(ymin-0.1*abs(ymin), ymax+0.1*ymax))
+  lines(trade_perf, col="#E413A3", lty=2, lwd=2)
+
+  
+  addLegend("topleft", legend.names = c(paste("Buy & Hold | Sharpe=", bnh_sharpe),
+                                        paste("Trading-Opt.=",trade_sharpe, "| L=",L, "| Trades n=", sma_trade_count)),
+            lty=c(1, 2),
+            lwd=c(2, 2),
+            col=c("#000000", "#E413A3"),
+            cex=0.8)
+  
+  print(lines(trade_sig, on=NA, ylim=c(-1.5, 1.5), col="#E413A3", lwd=2))
+}
+
+
+
+
+# 1####
+res_trade_1 <- loop_sma_trading(x=ind.lr, inx=1, min_L=5, max_L=500, insamp = "2018-12-31", invest_amount=1000000, tradingcosts=190)
+
+sharpe_fun(ind.lr[, 1]["2019-01-01/"])
+# 3.504957
+
+bnh_trading_ret_1 <- as.numeric(tail(cumsum(ind.lr[, 1]["2019-01-01/"]) * 1000000, 1) - 190)
+# Buy and Hold: 63642.12
+
+sum(res_trade_1[,2] > bnh_trading_ret_1)
+# 0
+res_trade_1[,2] > bnh_trading_ret_1
+res_trade_1[res_trade_1[,2] > bnh_trading_ret_1, ]
+
+
+
+# 2####
+res_trade_2 <- loop_sma_trading(x=ind.lr, inx=2, min_L=5, max_L=500, insamp = "2018-12-31", invest_amount=1000000, tradingcosts=190)
+
+sharpe_fun(ind.lr[, 2]["2019-01-01/"])
+# 2.475576
+
+bnh_trading_ret_2 <- as.numeric(tail(cumsum(ind.lr[, 2]["2019-01-01/"]) * 1000000, 1) - 190)
+# Buy and Hold: 105865.3
+
+sum(res_trade_2[,2] > bnh_trading_ret_2)
+# 5
+res_trade_2[,2] > bnh_trading_ret_2
+
+#   L    SMA-Return   Trades   Sharpe
+#   40   106720.3     11       2.541531
+#   42   109481.3     13       2.616882
+#  353   107075.7      3       2.513635
+#  354   110658.9      3       2.599536
+#  357   106337.8      3       2.495972
+ind2_outperf <- res_trade_2[res_trade_2[,2] > bnh_trading_ret_2, ]
+plot(res_trade_2$Sharpe, type="l", main="SMA-Trading-Optimisation | Index 3", ylab="Sharpe Ratio", xlab="L", xaxt="n", col="#DF536B")
+axis(1, at=c(1, 96, 196, 296, 396, 496), labels=c("5", "100", "200", "300", "400", "500"))
+points(ind2_outperf$L-4, ind2_outperf$Sharpe, pch=19, col="#DF536B")
+
+
+
+trade_opt_2 <- as.numeric(res_trade_2[res_trade_2[,2] > bnh_trading_ret_2, ][,1])
+for (L in trade_opt_2) {
+  print(plot_sma(x=ind.lr, inx=2, L=L, insamp = "2018-12-31"))
+}
+
+# plot_sma(x=ind.lr, inx=2, L=40, insamp = "2018-12-31")
+# plot_sma(x=ind.lr, inx=2, L=42, insamp = "2019-01-01")
+# plot_sma(x=ind.lr, inx=2, L=353, insamp = "2019-01-01")
+# plot_sma(x=ind.lr, inx=2, L=354, insamp = "2019-01-01")
+# plot_sma(x=ind.lr, inx=2, L=357, insamp = "2019-01-01")
+
+
+
+# 3####
+res_trade_3 <- loop_sma_trading(x=ind.lr, inx=3, min_L=5, max_L=500, insamp = "2019-01-01", invest_amount=1000000, tradingcosts=190)
+
+sharpe_fun(ind.lr[, 3]["2019-01-01/"])
+# 2.155228
+
+bnh_trading_ret_3 <- as.numeric(tail(cumsum(ind.lr[, 3]["2019-01-01/"]) * 1000000, 1) - 190)
+# Buy and Hold: 143100.6
+
+sum(res_trade_3[,2] > bnh_trading_ret_3)
+# 10
+res_trade_3[,2] > bnh_trading_ret_3
+res_trade_3[res_trade_3[,2] > bnh_trading_ret_3, ]
+#   L    SMA-Return   Trades   Sharpe
+#   39   150456.0     13       2.306516
+#   40   159343.2     13       2.443678
+#   41   150723.3     11       2.304779
+#   42   155602.6     11       2.380016
+#  347   143347.6      3       2.168001
+#  348   143830.0      4       2.178323
+#  352   147161.7      3       2.226586
+#  383   144498.8      3       2.185674
+#  384   146086.0      3       2.210054
+#  385   144307.9      3       2.182743
+
+ind3_outperf <- res_trade_3[res_trade_3[,2] > bnh_trading_ret_3, ]
+plot(res_trade_3$Sharpe, type="l", main="SMA-Trading-Optimisation | Index 3", ylab="Sharpe Ratio", xlab="L", xaxt="n", col="#DF536B")
+axis(1, at=c(1, 96, 196, 296, 396, 496), labels=c("5", "100", "200", "300", "400", "500"))
+points(ind3_outperf$L-4, ind3_outperf$Sharpe, pch=19, col="#DF536B")
+
+
+trade_opt_3 <- as.numeric(res_trade_3[res_trade_3[,2] > bnh_trading_ret_3, ][,1])
+for (L in trade_opt_3) {
+  print(plot_sma(x=ind.lr, inx=3, L=L, insamp = "2019-01-01"))
+}
+
+# 4####
+res_trade_4 <- loop_sma_trading(x=ind.lr, inx=4, min_L=5, max_L=500, insamp = "2019-01-01", invest_amount=1000000, tradingcosts=190)
+
+sharpe_fun(ind.lr[, 4]["2019-01-01/"])
+# 1.944616
+
+bnh_trading_ret_4 <- as.numeric(tail(cumsum(ind.lr[, 4]["2019-01-01/"]) * 1000000, 1) - 190)
+# Buy and Hold: 184467.3
+
+sum(res_trade_4[,2] > bnh_trading_ret_4)
+# 8
+res_trade_4[,2] > bnh_trading_ret_4
+res_trade_4[res_trade_4[,2] > bnh_trading_ret_4, ]
+#   L    SMA-Return   Trades   Sharpe
+#   40   189309.3     17       2.031925
+#   42   195937.3     11       2.090842
+#   45   185488.6     11       1.978739
+#  347   185816.7      4       1.968006
+#  402   185573.5      3       1.963366
+#  407   185703.7      9       1.976972
+#  408   185543.1      5       1.967111
+#  414   188192.7      3       1.991428
+
+
+ind4_outperf <- res_trade_4[res_trade_4[,2] > bnh_trading_ret_4, ]
+plot(res_trade_4$Sharpe, type="l", main="SMA-Trading-Optimisation | Index 4", ylab="Sharpe Ratio", xlab="L", xaxt="n", col="#DF536B")
+axis(1, at=c(1, 96, 196, 296, 396, 496), labels=c("5", "100", "200", "300", "400", "500"))
+points(ind4_outperf$L-4, ind4_outperf$Sharpe, pch=19, col="#DF536B")
+
+trade_opt_4 <- as.numeric(res_trade_4[res_trade_4[,2] > bnh_trading_ret_4, ][,1])
+for (L in trade_opt_4) {
+  print(plot_sma(x=ind.lr, inx=4, L=L, insamp = "2019-01-01"))
+}
