@@ -308,7 +308,7 @@ Next thing to look at is the optimization with a single simple moving average. F
 
 $$5<L<500$$
 
-Additionally the in-sample range is varied again. For each start date the in-sample performances are calculated for each filter length in the interval $5<L<500$. The AR model was only limited to the performance indicator sharpe ratio. This time we're adding the Drawdown and MSE indicators. Thus, for each start date, for each filter length *L*, the three different indicators are calculated and an optimal model can be choosen.
+Additionally the in-sample range is varied again. For each start date the in-sample performances are calculated for each filter length in the interval $5<L<500$. The AR model was only limited to the performance indicator sharpe ratio. This time we are adding the drawdown and MSE indicators. Thus, for each start date, for each filter length *L*, the three different indicators are calculated and an optimal model can be choosen.
 
 The following figure \ref{fig:chap3.2.3.1} visually represents the complete SMA optimization of the first index. The two performance indicators sharpe (red) and MSE (green) correspond to the left y-axis. The drawdown (blue) was scaled to a visually appealing size for comparison and corresponds to the right y-axis.
 
@@ -594,7 +594,7 @@ perfplot_sma_opt(xall=log_ret_ind, insamp="2019-01-01", res_obj=res4, inx=4)
 ### 3.5. Moving average crossings trading {#macrossingse}
  
 As a third approach we apply 2 SMAs on every time series and trade them with the common Ma crossings rules introduced in [2.3.3.](#macross-section).
-With an optimaztion we're trying to find the best filterlengths for the 2 SMA's.
+With an optimaztion we are trying to find the best filterlengths for the 2 SMA's.
 
 #### 3.5.1. Optimization
 

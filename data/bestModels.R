@@ -1100,7 +1100,7 @@ plot_sma <- function(x, inx, L, insamp = "2018-12-31") {
             col=c("#000000", "#E413A3"),
             cex=0.8)
   
-  lines(trade_sig, on=NA, ylim=c(-1.5, 1.5), col="#E413A3", lwd=2)
+  print(lines(trade_sig, on=NA, ylim=c(-1.5, 1.5), col="#E413A3", lwd=2))
 }
 
 
