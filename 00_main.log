@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.6)  10 DEC 2020 08:50
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.6)  10 DEC 2020 09:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -696,7 +696,7 @@ LaTeX Info: Redefining \nameref on input line 130.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<add/titlepage.pdf, id=104, 597.23125pt x 845.1575pt>
+<add/titlepage.pdf, id=112, 597.23125pt x 845.1575pt>
 File: add/titlepage.pdf Graphic file (type pdf)
 <use add/titlepage.pdf>
 Package pdftex.def Info: add/titlepage.pdf  used on input line 134.
@@ -705,7 +705,7 @@ File: add/titlepage.pdf Graphic file (type pdf)
 <use add/titlepage.pdf>
 Package pdftex.def Info: add/titlepage.pdf  used on input line 134.
 (pdftex.def)             Requested size: 459.64165pt x 650.4509pt.
-<add/titlepage.pdf, id=107, page=1, 597.23125pt x 845.1575pt>
+<add/titlepage.pdf, id=115, page=1, 597.23125pt x 845.1575pt>
 File: add/titlepage.pdf Graphic file (type pdf)
 <use add/titlepage.pdf, page 1>
 Package pdftex.def Info: add/titlepage.pdf , page1 used on input line 134.
@@ -729,7 +729,7 @@ Package pdftex.def Info: add/titlepage.pdf , page1 used on input line 134.
 [1
 
  <./add/titlepage.pdf>]
-<add/declaration.pdf, id=150, 597.23125pt x 845.1575pt>
+<add/declaration.pdf, id=158, 597.23125pt x 845.1575pt>
 File: add/declaration.pdf Graphic file (type pdf)
 <use add/declaration.pdf>
 Package pdftex.def Info: add/declaration.pdf  used on input line 135.
@@ -738,7 +738,7 @@ File: add/declaration.pdf Graphic file (type pdf)
 <use add/declaration.pdf>
 Package pdftex.def Info: add/declaration.pdf  used on input line 135.
 (pdftex.def)             Requested size: 459.64165pt x 650.4509pt.
-<add/declaration.pdf, id=153, page=1, 597.23125pt x 845.1575pt>
+<add/declaration.pdf, id=161, page=1, 597.23125pt x 845.1575pt>
 File: add/declaration.pdf Graphic file (type pdf)
 <use add/declaration.pdf, page 1>
 Package pdftex.def Info: add/declaration.pdf , page1 used on input line 135.
@@ -815,7 +815,7 @@ fier (name{page.}) has been already used, duplicate ignored
                    \relax 
 l.144 \newpage
                [4]
-<00_main_files/figure-latex/chap1.1-1.pdf, id=218, 469.755pt x 325.215pt>
+<00_main_files/figure-latex/chap1.1-1.pdf, id=228, 469.755pt x 325.215pt>
 File: 00_main_files/figure-latex/chap1.1-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap1.1-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap1.1-1.pdf  used on inpu
@@ -833,20 +833,20 @@ ed, duplicate ignored
                                                   
 l.253 \newpage
               ]
-<00_main_files/figure-latex/chap2.1-1.pdf, id=243, 469.755pt x 325.215pt>
+<00_main_files/figure-latex/chap2.1-1.pdf, id=253, 469.755pt x 325.215pt>
 File: 00_main_files/figure-latex/chap2.1-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap2.1-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap2.1-1.pdf  used on inpu
 t line 311.
 (pdftex.def)             Requested size: 328.82626pt x 227.64894pt.
 [3]
-<00_main_files/figure-latex/chap2.2-1.pdf, id=262, 469.755pt x 325.215pt>
+<00_main_files/figure-latex/chap2.2-1.pdf, id=272, 469.755pt x 325.215pt>
 File: 00_main_files/figure-latex/chap2.2-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap2.2-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap2.2-1.pdf  used on inpu
 t line 330.
 (pdftex.def)             Requested size: 328.82626pt x 227.64894pt.
-<00_main_files/figure-latex/chap2.1.2-1.pdf, id=267, 469.755pt x 325.215pt>
+<00_main_files/figure-latex/chap2.1.2-1.pdf, id=277, 469.755pt x 325.215pt>
 File: 00_main_files/figure-latex/chap2.1.2-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap2.1.2-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap2.1.2-1.pdf  used on in
@@ -875,7 +875,7 @@ LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 4
 (c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [6]
-<00_main_files/figure-latex/chap2.2.1_1-1.pdf, id=311, 469.755pt x 325.215pt>
+<00_main_files/figure-latex/chap2.2.1_1-1.pdf, id=322, 469.755pt x 325.215pt>
 File: 00_main_files/figure-latex/chap2.2.1_1-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap2.2.1_1-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap2.2.1_1-1.pdf  used on 
@@ -887,7 +887,7 @@ has been already used, duplicate ignored
                                                   
 l.477 \newpage
                <./00_main_files/figure-latex/chap2.2.1_1-1.pdf>]
-<00_main_files/figure-latex/chap2.2.1_2-1.pdf, id=326, 469.755pt x 325.215pt>
+<00_main_files/figure-latex/chap2.2.1_2-1.pdf, id=336, 469.755pt x 325.215pt>
 File: 00_main_files/figure-latex/chap2.2.1_2-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap2.2.1_2-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap2.2.1_2-1.pdf  used on 
@@ -905,7 +905,7 @@ y used, duplicate ignored
                                                   
 l.586 \newpage
               ]
-<00_main_files/figure-latex/chap2.2.2-1.pdf, id=355, 469.755pt x 325.215pt>
+<00_main_files/figure-latex/chap2.2.2-1.pdf, id=365, 469.755pt x 325.215pt>
 File: 00_main_files/figure-latex/chap2.2.2-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap2.2.2-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap2.2.2-1.pdf  used on in
@@ -917,7 +917,7 @@ put line 601.
                                                   
 l.642 \newpage
                <./00_main_files/figure-latex/chap2.2.2-1.pdf>]
-<00_main_files/figure-latex/chap2.2.3-1.pdf, id=370, 469.755pt x 325.215pt>
+<00_main_files/figure-latex/chap2.2.3-1.pdf, id=380, 469.755pt x 325.215pt>
 File: 00_main_files/figure-latex/chap2.2.3-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap2.2.3-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap2.2.3-1.pdf  used on in
@@ -929,7 +929,7 @@ put line 655.
                                                   
 l.696 \newpage
                <./00_main_files/figure-latex/chap2.2.3-1.pdf>] [12] [13] [14]
-<00_main_files/figure-latex/chap2.3.3-1.pdf, id=420, 469.755pt x 325.215pt>
+<00_main_files/figure-latex/chap2.3.3-1.pdf, id=430, 469.755pt x 325.215pt>
 File: 00_main_files/figure-latex/chap2.3.3-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap2.3.3-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap2.3.3-1.pdf  used on in
@@ -941,7 +941,7 @@ put line 900.
                                                   
 l.907 \newpage
                <./00_main_files/figure-latex/chap2.3.3-1.pdf>]
-<00_main_files/figure-latex/chap2.4 -1.pdf, id=432, 505.89pt x 289.08pt>
+<00_main_files/figure-latex/chap2.4 -1.pdf, id=442, 505.89pt x 289.08pt>
 File: 00_main_files/figure-latex/chap2.4 -1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap2.4 -1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap2.4 -1.pdf  used on inp
@@ -953,7 +953,7 @@ ut line 948.
                                                   
 l.954 \newpage
                <./00_main_files/figure-latex/chap2.4 -1.pdf>]
-<00_main_files/figure-latex/chap2.5-1.pdf, id=449, 505.89pt x 289.08pt>
+<00_main_files/figure-latex/chap2.5-1.pdf, id=459, 505.89pt x 289.08pt>
 File: 00_main_files/figure-latex/chap2.5-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap2.5-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap2.5-1.pdf  used on inpu
@@ -965,7 +965,7 @@ t line 998.
                                                   
 l.1004 \newpage
                 <./00_main_files/figure-latex/chap2.5-1.pdf>]
-<00_main_files/figure-latex/chap2.6 -1.pdf, id=466, 505.89pt x 289.08pt>
+<00_main_files/figure-latex/chap2.6 -1.pdf, id=476, 505.89pt x 289.08pt>
 File: 00_main_files/figure-latex/chap2.6 -1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap2.6 -1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap2.6 -1.pdf  used on inp
@@ -977,7 +977,7 @@ ut line 1053.
                                                   
 l.1059 \newpage
                 <./00_main_files/figure-latex/chap2.6 -1.pdf>] [19]
-<00_main_files/figure-latex/chap3.1.2-1.pdf, id=499, 505.89pt x 216.81pt>
+<00_main_files/figure-latex/chap3.1.2-1.pdf, id=509, 505.89pt x 216.81pt>
 File: 00_main_files/figure-latex/chap3.1.2-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.1.2-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.1.2-1.pdf  used on in
@@ -994,7 +994,7 @@ e{figure.13}) has been already used, duplicate ignored
                                                   
 l.1186 \newpage
                 <./00_main_files/figure-latex/chap3.1.2-1.pdf>]
-<00_main_files/figure-latex/chap3.1.3-1.pdf, id=519, 469.755pt x 325.215pt>
+<00_main_files/figure-latex/chap3.1.3-1.pdf, id=529, 469.755pt x 325.215pt>
 File: 00_main_files/figure-latex/chap3.1.3-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.1.3-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.1.3-1.pdf  used on in
@@ -1011,7 +1011,7 @@ e{figure.14}) has been already used, duplicate ignored
                                                   
 l.1224 \newpage
                 <./00_main_files/figure-latex/chap3.1.3-1.pdf>]
-<00_main_files/figure-latex/chap3.1.2.1-1.pdf, id=533, 1084.05pt x 722.7pt>
+<00_main_files/figure-latex/chap3.1.2.1-1.pdf, id=543, 1084.05pt x 722.7pt>
 File: 00_main_files/figure-latex/chap3.1.2.1-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.1.2.1-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.1.2.1-1.pdf  used on 
@@ -1029,7 +1029,7 @@ ady used, duplicate ignored
                                                   
 l.1324 \newpage
                ]
-<00_main_files/figure-latex/chap3.2.2.1-1.pdf, id=562, 794.97pt x 433.62pt>
+<00_main_files/figure-latex/chap3.2.2.1-1.pdf, id=572, 794.97pt x 433.62pt>
 File: 00_main_files/figure-latex/chap3.2.2.1-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.2.1-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.2.1-1.pdf  used on 
@@ -1057,13 +1057,13 @@ e{table.8}) has been already used, duplicate ignored
                                                   
 l.1465 \newpage
                ]
-<00_main_files/figure-latex/chap3.2.2.2-1.pdf, id=588, 794.97pt x 433.62pt>
+<00_main_files/figure-latex/chap3.2.2.2-1.pdf, id=598, 794.97pt x 433.62pt>
 File: 00_main_files/figure-latex/chap3.2.2.2-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.2.2-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.2.2-1.pdf  used on 
 input line 1479.
 (pdftex.def)             Requested size: 399.30356pt x 217.80194pt.
-<00_main_files/figure-latex/chap3.2.2.3-1.pdf, id=590, 794.97pt x 433.62pt>
+<00_main_files/figure-latex/chap3.2.2.3-1.pdf, id=600, 794.97pt x 433.62pt>
 File: 00_main_files/figure-latex/chap3.2.2.3-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.2.3-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.2.3-1.pdf  used on 
@@ -1075,7 +1075,7 @@ input line 1492.
                                                   
 l.1499 \newpage
                 <./00_main_files/figure-latex/chap3.2.2.2-1.pdf>]
-<00_main_files/figure-latex/chap3.2.2.4-1.pdf, id=604, 794.97pt x 433.62pt>
+<00_main_files/figure-latex/chap3.2.2.4-1.pdf, id=614, 794.97pt x 433.62pt>
 File: 00_main_files/figure-latex/chap3.2.2.4-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.2.4-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.2.4-1.pdf  used on 
@@ -1093,7 +1093,7 @@ e{figure.19}) has been already used, duplicate ignored
 l.1524 \newpage
                 <./00_main_files/figure-latex/chap3.2.2.3-1.pdf> <./00_main_fil
 es/figure-latex/chap3.2.2.4-1.pdf>]
-<00_main_files/figure-latex/chap3.2.3.1-1.pdf, id=623, 794.97pt x 433.62pt>
+<00_main_files/figure-latex/chap3.2.3.1-1.pdf, id=633, 794.97pt x 433.62pt>
 File: 00_main_files/figure-latex/chap3.2.3.1-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.3.1-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.3.1-1.pdf  used on 
@@ -1111,7 +1111,7 @@ ady used, duplicate ignored
                                                   
 l.1584 \newpage
                ]
-<00_main_files/figure-latex/chap3.2.3.2-1.pdf, id=641, 794.97pt x 433.62pt>
+<00_main_files/figure-latex/chap3.2.3.2-1.pdf, id=651, 794.97pt x 433.62pt>
 File: 00_main_files/figure-latex/chap3.2.3.2-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.3.2-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.3.2-1.pdf  used on 
@@ -1123,7 +1123,7 @@ input line 1588.
                                                   
 l.1595 \newpage
                 <./00_main_files/figure-latex/chap3.2.3.2-1.pdf>]
-<00_main_files/figure-latex/chap3.2.3.3-1.pdf, id=653, 794.97pt x 433.62pt>
+<00_main_files/figure-latex/chap3.2.3.3-1.pdf, id=663, 794.97pt x 433.62pt>
 File: 00_main_files/figure-latex/chap3.2.3.3-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.3.3-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.3.3-1.pdf  used on 
@@ -1140,7 +1140,7 @@ e{table.10}) has been already used, duplicate ignored
                                                   
 l.1634 \newpage
                 <./00_main_files/figure-latex/chap3.2.3.3-1.pdf>]
-<00_main_files/figure-latex/chap3.2.3.4-1.pdf, id=666, 794.97pt x 433.62pt>
+<00_main_files/figure-latex/chap3.2.3.4-1.pdf, id=676, 794.97pt x 433.62pt>
 File: 00_main_files/figure-latex/chap3.2.3.4-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.3.4-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.3.4-1.pdf  used on 
@@ -1152,7 +1152,7 @@ input line 1638.
                                                   
 l.1645 \newpage
                 <./00_main_files/figure-latex/chap3.2.3.4-1.pdf>]
-<00_main_files/figure-latex/chap3.2.3.5-1.pdf, id=678, 794.97pt x 433.62pt>
+<00_main_files/figure-latex/chap3.2.3.5-1.pdf, id=689, 794.97pt x 433.62pt>
 File: 00_main_files/figure-latex/chap3.2.3.5-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.3.5-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.3.5-1.pdf  used on 
@@ -1169,7 +1169,7 @@ e{table.11}) has been already used, duplicate ignored
                                                   
 l.1684 \newpage
                 <./00_main_files/figure-latex/chap3.2.3.5-1.pdf>]
-<00_main_files/figure-latex/chap3.2.3.6-1.pdf, id=693, 794.97pt x 433.62pt>
+<00_main_files/figure-latex/chap3.2.3.6-1.pdf, id=703, 794.97pt x 433.62pt>
 File: 00_main_files/figure-latex/chap3.2.3.6-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.3.6-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.3.6-1.pdf  used on 
@@ -1181,7 +1181,7 @@ input line 1688.
                                                   
 l.1695 \newpage
                 <./00_main_files/figure-latex/chap3.2.3.6-1.pdf>]
-<00_main_files/figure-latex/chap3.2.3.7-1.pdf, id=705, 794.97pt x 433.62pt>
+<00_main_files/figure-latex/chap3.2.3.7-1.pdf, id=715, 794.97pt x 433.62pt>
 File: 00_main_files/figure-latex/chap3.2.3.7-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.3.7-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.3.7-1.pdf  used on 
@@ -1198,7 +1198,7 @@ e{table.12}) has been already used, duplicate ignored
                                                   
 l.1734 \newpage
                 <./00_main_files/figure-latex/chap3.2.3.7-1.pdf>]
-<00_main_files/figure-latex/chap3.2.3.8-1.pdf, id=718, 794.97pt x 433.62pt>
+<00_main_files/figure-latex/chap3.2.3.8-1.pdf, id=728, 794.97pt x 433.62pt>
 File: 00_main_files/figure-latex/chap3.2.3.8-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.3.8-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.3.8-1.pdf  used on 
@@ -1210,7 +1210,7 @@ input line 1738.
                                                   
 l.1745 \newpage
                 <./00_main_files/figure-latex/chap3.2.3.8-1.pdf>]
-<00_main_files/figure-latex/chap3.2.4.1.1-1.pdf, id=734, 1156.32pt x 533.995pt>
+<00_main_files/figure-latex/chap3.2.4.1.1-1.pdf, id=744, 1156.32pt x 533.995pt>
 
 File: 00_main_files/figure-latex/chap3.2.4.1.1-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.4.1.1-1.pdf>
@@ -1223,14 +1223,14 @@ n input line 1800.
                                                   
 l.1806 \newpage
                 <./00_main_files/figure-latex/chap3.2.4.1.1-1.pdf>]
-<00_main_files/figure-latex/chap3.2.4.1.2-1.pdf, id=751, 1156.32pt x 533.995pt>
+<00_main_files/figure-latex/chap3.2.4.1.2-1.pdf, id=761, 1156.32pt x 533.995pt>
 
 File: 00_main_files/figure-latex/chap3.2.4.1.2-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.4.1.2-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.4.1.2-1.pdf  used o
 n input line 1809.
 (pdftex.def)             Requested size: 469.75385pt x 216.93494pt.
-<00_main_files/figure-latex/chap3.2.4.1.3-1.pdf, id=752, 1156.32pt x 533.995pt>
+<00_main_files/figure-latex/chap3.2.4.1.3-1.pdf, id=762, 1156.32pt x 533.995pt>
 
 File: 00_main_files/figure-latex/chap3.2.4.1.3-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.4.1.3-1.pdf>
@@ -1249,14 +1249,14 @@ e{figure.30}) has been already used, duplicate ignored
 l.1843 \newpage
                 <./00_main_files/figure-latex/chap3.2.4.1.2-1.pdf> <./00_main_f
 iles/figure-latex/chap3.2.4.1.3-1.pdf>]
-<00_main_files/figure-latex/chap3.2.4.1.4-1.pdf, id=773, 1156.32pt x 512.91624p
+<00_main_files/figure-latex/chap3.2.4.1.4-1.pdf, id=783, 1156.32pt x 512.91624p
 t>
 File: 00_main_files/figure-latex/chap3.2.4.1.4-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.4.1.4-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.4.1.4-1.pdf  used o
 n input line 1847.
 (pdftex.def)             Requested size: 469.75385pt x 208.3717pt.
-<00_main_files/figure-latex/chap3.2.4.1.5-1.pdf, id=774, 1156.32pt x 512.91624p
+<00_main_files/figure-latex/chap3.2.4.1.5-1.pdf, id=784, 1156.32pt x 512.91624p
 t>
 File: 00_main_files/figure-latex/chap3.2.4.1.5-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.4.1.5-1.pdf>
@@ -1275,14 +1275,14 @@ dentifier (name{figure.32}) has been already used, duplicate ignored
 l.1878 the same plot \newpage
                               <./00_main_files/figure-latex/chap3.2.4.1.4-1.pdf
 > <./00_main_files/figure-latex/chap3.2.4.1.5-1.pdf>]
-<00_main_files/figure-latex/chap3.2.4.1.6-1.pdf, id=803, 1156.32pt x 512.91624p
+<00_main_files/figure-latex/chap3.2.4.1.6-1.pdf, id=814, 1156.32pt x 512.91624p
 t>
 File: 00_main_files/figure-latex/chap3.2.4.1.6-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.4.1.6-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.4.1.6-1.pdf  used o
 n input line 1882.
 (pdftex.def)             Requested size: 469.75385pt x 208.3717pt.
-<00_main_files/figure-latex/chap3.2.4.1.7-1.pdf, id=804, 1156.32pt x 512.91624p
+<00_main_files/figure-latex/chap3.2.4.1.7-1.pdf, id=815, 1156.32pt x 512.91624p
 t>
 File: 00_main_files/figure-latex/chap3.2.4.1.7-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.4.1.7-1.pdf>
@@ -1307,7 +1307,7 @@ ed
                                                   
 l.1951 \newpage
                ]
-<00_main_files/figure-latex/chap3.2.2-1.pdf, id=836, 469.755pt x 325.215pt>
+<00_main_files/figure-latex/chap3.2.2-1.pdf, id=846, 469.755pt x 325.215pt>
 File: 00_main_files/figure-latex/chap3.2.2-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.2-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.2-1.pdf  used on in
@@ -1319,7 +1319,7 @@ put line 1966.
                                                   
 l.1978 \newpage
                 <./00_main_files/figure-latex/chap3.2.2-1.pdf>]
-<00_main_files/figure-latex/chap3.2.3-1.pdf, id=850, 469.755pt x 325.215pt>
+<00_main_files/figure-latex/chap3.2.3-1.pdf, id=860, 469.755pt x 325.215pt>
 File: 00_main_files/figure-latex/chap3.2.3-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.3-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.3-1.pdf  used on in
@@ -1345,50 +1345,52 @@ um % 20Drawdown ,[] over % 20a % 20speci^^\ed %
 
 [45]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 2
-082.
+088.
 (c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 2083.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 2089.
 LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
-2126.
+2132.
 (c:/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [46]
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+[47]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[47] [48pdfTeX warning (ext4): destination with the same identifier (name{table
-.14}) has been already used, duplicate ignored
+[48pdfTeX warning (ext4): destination with the same identifier (name{table.14})
+ has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.2271 \end{document}
+l.2277 \end{document}
                      pdfTeX warning (ext4): destination with the same identifie
 r (name{table.15}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.2271 \end{document}
+l.2277 \end{document}
                      ] [49pdfTeX warning (ext4): destination with the same iden
 tifier (name{table.16}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.2271 \end{document}
+l.2277 \end{document}
                      ] (./00_main.aux)
 Package rerunfilecheck Info: File `00_main.out' has not changed.
-(rerunfilecheck)             Checksum: BB2ABB3F3E8CBFCC955EA14BBB220909;3840.
+(rerunfilecheck)             Checksum: 1A792A20873BE08C057C1F4C136574F2;4078.
  ) 
 Here is how much of TeX's memory you used:
- 13905 strings out of 481364
- 210393 string characters out of 5917580
- 541968 words of memory out of 5000000
- 30164 multiletter control sequences out of 15000+600000
+ 13913 strings out of 481364
+ 210467 string characters out of 5917580
+ 544041 words of memory out of 5000000
+ 30168 multiletter control sequences out of 15000+600000
  445634 words of font info for 58 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  66i,17n,77p,386b,450s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1423,10 +1425,10 @@ ehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb><c:/Use
 rs/buehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c
 :/Users/buehl/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtti10.
 pfb>
-Output written on 00_main.pdf (53 pages, 1764740 bytes).
+Output written on 00_main.pdf (53 pages, 1765206 bytes).
 PDF statistics:
- 1034 PDF objects out of 1200 (max. 8388607)
- 848 compressed objects within 9 object streams
- 235 named destinations out of 1000 (max. 500000)
- 421 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1046 PDF objects out of 1200 (max. 8388607)
+ 860 compressed objects within 9 object streams
+ 239 named destinations out of 1000 (max. 500000)
+ 437 words of extra memory for PDF output out of 10000 (max. 10000000)
 
