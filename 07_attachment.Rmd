@@ -3,4 +3,124 @@ output: pdf_document
 geometry: margin = 1in
 ---
 
-## Attachment
+## 6. Attachment
+
+
+### 6.3.3 AR 
+
+### 6.3.4 Single Ma
+
+### 6.3.5 Best ma crossings
+
+#### 6.3.5 Optimization code
+```{r, chap 6.3.5.1 , echo=T, eval=FALSE,include=T}
+loop_func_v3 <- function(data, minyear=3, maxyear=18,returnmax=10){
+  #This function uses the cross_optim_easy_v2 function an loops the function through the insample timespan and returns a data    frame 
+  
+  year_list <- NULL
+  for (year in minyear:maxyear) {
+    year_list <- c(year_list, paste(2000+year,"-01-01", sep=""))
+  }
+  
+  pb <- txtProgressBar(min = 1, max = length(year_list), style = 3)
+  startdate=as.Date(paste(2000+minyear,"-01-01", sep=""))
+  
+  datevec <- as.data.frame(c(rep(startdate,returnmax)))
+  colnames(datevec)="startdate"
+  iteration<- cross_optim_easy_v3(x=data, start=startdate,returnmax=returnmax)
+  iteration_withdate=cbind(datevec,iteration)
+  
+  # Loop through years
+  for (i in 2:length(year_list)) {
+    startdate <- year_list[i]
+    iteration<- cross_optim_easy_v3(x=data, start=startdate,returnmax=returnmax)
+    
+    datevec <- as.data.frame(c(rep(as.Date(startdate),returnmax)))
+    colnames(datevec)="startdate"
+    
+    iteration_withdate_loop=cbind(datevec,iteration)
+    iteration_withdate=rbind(iteration_withdate,iteration_withdate_loop)
+    
+    setTxtProgressBar(pb, i)
+  }
+  close(pb)
+  iteration_withdate <- xts(iteration_withdate[,-1], iteration_withdate[,1])
+  return(iteration_withdate)
+}
+cross_optim_easy_v3 <- function(x, start, end = "2018-12-31", L1min = 1, L1max = 50, L2min =  100, L2max = 250,returnmax=10){ 
+  ###This function optimizes the ma crossings with the given filterlength in the given timespan and returns a dataframe with the  "returnmax"
+  # sharpe and drawdownfilter which where found by common trading rules of ma crossings.
+  horizon <- paste(start,"::",end,sep = "")
+  
+  sharpmat<-matrix(NA,L1max,L2max)  ## creating empty matrizes for sharpe and maxdrawdown
+  drawmat <-matrix(NA,L1max,L2max)
+  
+  pb = txtProgressBar(min = L1min, max = L1max, style = 3)
+  for (k in L1min:L1max)
+  {
+    
+    for (j in L2min:L2max)
+    {
+      
+      # Simple Moving Averages
+      sma1 <- SMA(x,k)
+      sma2 <- SMA(x,j)
+      
+      # Signals
+      signal <- rep(0,length(sma1))
+      signal[which(sma1>sma2&lag(sma1)<lag(sma2))] <- 1
+      signal[which(sma1<sma2&lag(sma1)>lag(sma2))]< - -1
+      signal[which(sma1>sma2)] <- 1
+      signal[which(sma1<sma2)] <- -1
+      signal <- reclass(signal,sma1)
+      
+      # Trading
+      trade   <-   Lag(signal[horizon],1)
+      return  <-   diff(log(x))
+      ret <- return*trade
+      ret <- na.exclude(ret)
+      
+      # Sharpe
+      sharpmat[k,j] <- sqrt(250)*mean(ret)/sqrt(var(ret))
+      
+      # Drawdown
+      drawmat[k,j] <- -max(abs(Drawdowns(ret, geometric = F)))
+    }
+    setTxtProgressBar(pb, k)
+  }
+  close(pb)
+  
+  #finding the [returmax] best sharpevalues an thei indexes =l1 / l2
+  sharpmax <- which(sharpmat>=sort(sharpmat, decreasing = T)[returnmax], arr.ind = T)
+  sharpmax=head(sharpmax,returnmax)  
+  #finding the [returmax] best drawevalues an thei indexes =l1 / l2
+  drawmax <- which(drawmat>=sort(drawmat, decreasing = T)[returnmax], arr.ind = T)
+  drawmax=head(drawmax,returnmax)  
+  
+  maximus=cbind(sharpmat[sharpmax],sharpmax,drawmat[drawmax],drawmax)    #combining the vector to return each value
+  colnames(maximus)=c("sharpe","sharpe_l1","sharpe_l2","drawdown","drawdown_l1","drawdown_l2")
+  return(as.data.frame(maximus))
+}
+```  
+
+```{r macrosstable index 2, echo=FALSE}
+index_2_onebest_year=as.data.frame(index_2_onebest_year)
+index_2_onebest_year[,c(1,4)]=round(index_2_onebest_year[,c(1,4)],3)
+kbl(index_2_onebest_year, caption="index 2 best", booktabs = T, linesep = "") %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
+```
+
+```{r macrosstable index 3, echo=FALSE}
+index_3_onebest_year=as.data.frame(index_3_onebest_year)
+index_3_onebest_year[,c(1,4)]=round(index_3_onebest_year[,c(1,4)],3)
+kbl(index_3_onebest_year, caption="index 3 best", booktabs = T, linesep = "") %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
+```
+
+```{r macrosstable index 4, echo=FALSE}
+index_4_onebest_year=as.data.frame(index_4_onebest_year)
+index_4_onebest_year[,c(1,4)]=round(index_4_onebest_year[,c(1,4)],3)
+kbl(index_4_onebest_year, caption="index 4 best", booktabs = T, linesep = "") %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
+```
+
