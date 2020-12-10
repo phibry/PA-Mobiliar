@@ -419,6 +419,11 @@ points(ind2_outperf$L-4, ind2_outperf$Sharpe, pch=19, col="#DF536B")
 
 \newpage
 
+```{r, chap3.2.3.4, echo=FALSE, fig.cap="Two good models | Index 2", fig.dim=c(11, 6), out.width = "100%"}
+plot_sma2(x=log_ret_ind, inx=2, L1=42, L2=354, insamp = "2018-12-31")
+```
+
+\newpage
 ### 3.5. Moving average crossings trading {#macrossingse}
  
 As a third approach we apply 2 SMAs on every time series and trade them with the common Ma crossings rules introduced in [2.3.3](#macross-section).
