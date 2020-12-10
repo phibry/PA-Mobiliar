@@ -9,7 +9,7 @@ geometry: margin = 1in
 #########################################attenzione !!!  this chunk is only to kniot this chapter can be deleted afterwards####
 # load("data/data_mobi")
 # source("add/libraries.R")
-ind <- data[,1:4]
+# ind <- data[,1:4]
 # int <- data[,5:12]
 ```
 
@@ -175,8 +175,6 @@ kbl(perc, caption="shares", booktabs = T) %>%
 As with the theory data set, these 4 indexes are non-stationary series. For the AR models, the stationary log-returns of the time series are used. First we look at index 1, the series with the lowest volatility but with the highest sharpe ratio (highest return with lowest risk). To find the best possible AR model, different AR(*p*) models are fitted with different model orders *p* for different in-sample ranges. The parameters *p* and start date are so called hyper parameters, parameters which are set before modelling. For each model the out-of-sample sharpe is calculated. The execution of this calculation leads to the solution shown in table \ref{tab:ar1table}.
 
 ```{r ar1table, echo=FALSE}
-load("data/R_Files/optim_ar_1.RData")
-
 part1 <- opt_ar_1[1:8,]
 part2 <- opt_ar_1[9:16,]
 part1["|"] <- rep("|", 8)
@@ -188,11 +186,6 @@ kbl(cbind(part1, part2), caption="Solution of the AR-Model calculation.", bookta
 With these calculations, the optimal model is an AR(2) with the start date 2018-01-01. Note that the Index 1 series has a very flat rising trend and a rising upward trend towards the end of 2018, so only a short in-sample is needed for this optimal model. It is interesting that the long in-sample ranges (2003 to 2007) also lead to relatively good performances. This probably has something to do with the fact that trend at the beginning of the series has a greater influence on the model than the middle part.
 
 ```{r, chap3.2.2.1, echo=FALSE, fig.cap="Visualization of the optimal AR(2)-Model.", fig.dim=c(11, 6), out.width = "90%"}
-load("data/R_Files/optim_ar_1.RData")
-load("data/R_Files/optim_ar_2.RData")
-load("data/R_Files/optim_ar_3.RData")
-load("data/R_Files/optim_ar_4.RData")
-
 op2 <- c(as.character(opt_ar_1[which.max(opt_ar_1[,2]),][1]),
          as.character(opt_ar_2[which.max(opt_ar_2[,2]),][1]),
          as.character(opt_ar_3[which.max(opt_ar_3[,2]),][1]),
@@ -310,10 +303,9 @@ $$5<L<500$$
 
 Additionally the in-sample range is varied again. For each start date the in-sample performances are calculated for each filter length in the interval $5<L<500$. The AR model was only limited to the performance indicator sharpe ratio. This time we are adding the drawdown and MSE indicators. Thus, for each start date, for each filter length *L*, the three different indicators are calculated and an optimal model can be choosen.
 
-The following figure \ref{fig:chap3.2.3.1} visually represents the complete SMA optimization of the first index. The two performance indicators sharpe (red) and MSE (green) correspond to the left y-axis. The drawdown (blue) was scaled to a visually appealing size for comparison and corresponds to the right y-axis.
+The following figure \ref{fig:chap3.2.3.1} visually represents the complete SMA optimization of the first index. The two performance indicators sharpe (red) and MSE (green) correspond to the left y-axis. The drawdown (blue) was scaled to a visually appealing size for comparison and corresponds to the right y-axis. The x-axis shows the respective in-sample start dates, which calculates the respective performance indicators Sharpe, drawdown and MSE from filter lengths 5 to 500. The bold dots in the respective sections mark the optimal values of the respective indicator.
 
 ```{r, chap3.2.3.1, echo=FALSE, fig.cap="Optimization Index 1.", fig.dim=c(11, 6), out.width = "100%", fig.keep = 'last'}
-load("data/R_Files/optim_sma_1.RData")
 seper <- (500-5)+1
 x_s <- res1$res_df[,3] + 1 + (0:13*seper)
 y_s <- res1$res_df[,2]
@@ -354,11 +346,17 @@ for (i in 0:13) {
 }
 ```
 
-asdasd
+It is immediately noticeable that in each time window the trajectories are very repetitive. If we consider a single time window (2003), we can see that the Sharpe gets better for longer filters. Towards the end of the Sharpe optimization, the amplitude increases and diverges towards the end. With the drawdown this behaves exactly the opposite. It is noticeable with the drawdown, however, that with short filters the values fluctuate very strongly, which is not the case with long filters. What is also noticeable is that especially towards the middle (from 2007) the drawdown seems to level off, but in this time window several points could point to the optimal value. This randomness is discussed in more detail in section [3.5](#macrossingse). Already after a few iteration steps, the MSE seems to stabilize. It is difficult to find an optimum here, because practically all values are very similar.
 
 \newpage
 
-asdasd
+Table \ref{tab:restab1} shows the numerically best values for the respective start date and performance indicators of the optimization. The marked values should indicate the best filter lengths in each case. What is also striking here is that the Sharpe filter lengths from 2003 to 2013 are all identical. To describe this phenomenon further, a deeper analysis would be necessary, but this is not described further here.
+
+The optimal filter lengths for the corresponding indicators are now used to trade out-of-sample by sign in figure \ref{fig:chap3.2.3.2}.
+
+&nbsp;
+
+&nbsp;
 
 ```{r restab1, echo=FALSE}
 tab1 <- res1$res_df
@@ -376,7 +374,15 @@ kbl(tab1, caption="SMA-Optima by performance indicators | Index 1", booktabs = T
               background = c(rep("#FFFFFF", 5), "#C2EABC",rep("#FFFFFF", 8)))
 ```
 
+Note that a little trickery was used for the out-of-sample calculation. If SMA is used, the initialization phase of the filters must be taken into account. For example, for an SMA with a filter length of L=50, an initialization phase of 50 time units would have to be considered. Here the in-sample ranges were also used in order to be able to represent the comparability of the filters better. In practice, reliable trading signals could only be expected after the initialization phase.
+
 \newpage
+
+Applying the filter lengths of the best indicators to index 1, the following out-of-sample solutions are obtained. For the MSE (green), a very long filter L=486 was chosen as the optimal filter. This reacts very late to fluctuations in the time series. The index 1 shows a constantly rising trend, which leads to the fact that the MSE filter does not signal any trades.
+
+Sharpe and drawdown lead to the exact same filter length of L=69 with the same in-sample range with start date 2016-01-01. At the beginning of December 2019 a trade is signaled, which leads to a decline in performance.
+
+With none of the found optimal filter lengths and in-sample ranges the passive buy and hold strategy could be outperformed.
 
 ```{r, chap3.2.3.2, echo=FALSE, fig.cap="Best", fig.dim=c(11, 6), out.width = "100%"}
 perfplot_sma_opt(xall=log_ret_ind, insamp="2019-01-01", res_obj=res1, inx=1)
@@ -384,216 +390,43 @@ perfplot_sma_opt(xall=log_ret_ind, insamp="2019-01-01", res_obj=res1, inx=1)
 
 \newpage
 
-```{r, chap3.2.3.3, echo=FALSE, fig.cap="Optim", fig.dim=c(11, 6), out.width = "100%", fig.keep = 'last'}
-load("data/R_Files/optim_sma_2.RData")
-seper <- (500-5)+1
-x_s <- res2$res_df[,3] + 1 + (0:13*seper)
-y_s <- res2$res_df[,2]
-
-x_d <- res2$res_df[,5] + 1 + (0:13*seper)
-y_d <- res2$res_df[,4]
-
-x_m <- res2$res_df[,7] + 1 + (0:13*seper)
-y_m <- res2$res_df[,6]
-
-plot(x=1:length(res2$lirino[,2]), y=res2$lirino[,2], type="l", col="#DF536B", main="Performance Indicators | SMA | Index 2", xlab = "L", ylab="", xaxt = "n", ylim=c(-2, 2))
-axis(1, at=c(1, seper, 1+2*seper, 2*seper+seper), labels=c("5", "500", "5", "500"))
-axis(3, at=c(1+seper, seper+seper), labels=c("5", "500"))
-axis(4, at=c(-1.5, -0.5, 0.5, 1.5), labels=c("-0.15", "-0.10", "-0.05", "0"))
-
-abline(v=1, lty=2, col="black")
-abline(v=1+(500-5), lty=2, col="black")
-abline(h=1.5, lty=2, col="black")
-abline(h=0, lty=2, col="black")
-
-lines((res2$lirino[,3])*18.65+1.5, type="l", col="#2297E6", lty=1)
-lines(res2$lirino[,4], type="l", col="#61D04F")
-
-points(x_s, y_s, pch=19, col="#DF536B")
-points(x_d, y_d*18.65+1.5, pch=19, col="#2297E6")
-points(x_m, y_m, pch=19, col="#61D04F")
-
-legend("topleft", legend=c("Sharpe", "MSE"),
-       col=c("#DF536B", "#61D04F"), lty=c(1,1), cex=0.8,
-       bty = "n")
-
-legend("topright", legend="Drawdown",
-       col="#2297E6", lty=1, cex=0.8,
-       bty = "n")
-for (i in 0:13) {
-  text((1+500-5)/2 + seper*i, -2, paste(2003+i, "-01-01", sep=""), cex=0.6)
-}
-```
-
-asdasd
-
 ```{r restab2, echo=FALSE}
-tab2 <- res2$res_df
-tab2$Sharpe <- round(tab2$Sharpe, 2)
-tab2$Drawdown <- round(tab2$Drawdown, 6)
-tab2$MSE <- round(tab2$MSE, 3)
-kbl(tab2, caption="SMA-Optima by performance indicators | Index 2", booktabs = T, linesep = "") %>%
-  kable_styling(latex_options = c("striped", "hold_position")) %>%
-  # column_spec(2:3, color="#DF536B") %>%
-  # column_spec(4:5, color="#2297E6") %>%
-  # column_spec(6:7, color="#61D04F")
-  column_spec(2:3, color = "#DF536B",
-              background = c(rep("#FFFFFF", 13), "#F4DBDF")) %>%
-    column_spec(6:7, color = "#61D04F",
-              background = c(rep("#FFFFFF", 5), "#C2EABC", rep("#FFFFFF", 8))) %>%
-  column_spec(4:5, color = "#2297E6",
-              background = c(rep("#FFFFFF", 13), "#C2DFF5"))
+# Sharpe BnH: # 2.475576
+bnh_trading_sharpe_2 <- sharpe_fun(log_ret_ind[, 2]["2019-01-01/"])
+
+# Buy and Hold: 105865.3
+bnh_trading_ret_2 <- as.numeric(tail(cumsum(log_ret_ind[, 2]["2019-01-01/"]) * 1000000, 1) - 190)
+
+ind2_outperf <- res_trade_2[res_trade_2[,2] > bnh_trading_ret_2, ][,1:4]
+ 
+ind2_outperf$`SMA-Return` <- round(ind2_outperf$`SMA-Return`)
+ind2_outperf$Sharpe <- round(ind2_outperf$Sharpe, 3)
+rownames(ind2_outperf) <- NULL
+
+kbl(ind2_outperf, caption="SMA-Optima by trading | Index 2", booktabs = T, linesep = "") %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
+```
+
+Sharpe Buy and Hold: `r round(bnh_trading_sharpe_2, 3)`
+
+Trading-Return: 105865
+
+```{r, chap3.2.3.3, echo=FALSE, fig.cap="Sharpe | Index 2", out.width = "85%"}
+plot(res_trade_2$Sharpe, type="l", main="SMA-Trading-Optimisation | Index 2", ylab="Sharpe Ratio", xlab="L", xaxt="n", col="#DF536B")
+axis(1, at=c(1, 96, 196, 296, 396, 496), labels=c("5", "100", "200", "300", "400", "500"))
+points(ind2_outperf$L-4, ind2_outperf$Sharpe, pch=19, col="#DF536B")
 ```
 
 \newpage
 
-```{r, chap3.2.3.4, echo=FALSE, fig.cap="Best", fig.dim=c(11, 6), out.width = "100%"}
-perfplot_sma_opt(xall=log_ret_ind, insamp="2019-01-01", res_obj=res2, inx=2)
+```{r, chap3.2.3.4, echo=FALSE, fig.cap="Two good models | Index 2", fig.dim=c(11, 6), out.width = "100%"}
+plot_sma2(x=log_ret_ind, inx=2, L1=42, L2=354, insamp = "2018-12-31")
 ```
 
 \newpage
-
-```{r, chap3.2.3.5, echo=FALSE, fig.cap="Optim", fig.dim=c(11, 6), out.width = "100%", fig.keep = 'last'}
-load("data/R_Files/optim_sma_3.RData")
-seper <- (500-5)+1
-x_s <- res3$res_df[,3] + 1 + (0:13*seper)
-y_s <- res3$res_df[,2]
-
-x_d <- res3$res_df[,5] + 1 + (0:13*seper)
-y_d <- res3$res_df[,4]
-
-x_m <- res3$res_df[,7] + 1 + (0:13*seper)
-y_m <- res3$res_df[,6]
-
-plot(x=1:length(res3$lirino[,2]), y=res3$lirino[,2], type="l", col="#DF536B", main="Performance Indicators | SMA | Index 3", xlab = "L", ylab="", xaxt = "n", ylim=c(-2.5, 2))
-axis(1, at=c(1, seper, 1+2*seper, 2*seper+seper), labels=c("5", "500", "5", "500"))
-axis(3, at=c(1+seper, seper+seper), labels=c("5", "500"))
-axis(4, at=c(0.5, -0.25, -1), labels=c("0", "-0.15", "-0.3"))
-
-abline(v=1, lty=2, col="black")
-abline(v=1+(500-5), lty=2, col="black")
-abline(h=0.5, lty=2, col="black")
-abline(h=0, lty=2, col="black")
-
-lines((res3$lirino[,3])*4.92+0.5, type="l", col="#2297E6", lty=1)
-lines(res3$lirino[,4], type="l", col="#61D04F")
-
-points(x_s, y_s, pch=19, col="#DF536B")
-points(x_d, y_d*4.92+0.5, pch=19, col="#2297E6")
-points(x_m, y_m, pch=19, col="#61D04F")
-
-legend("topleft", legend=c("Sharpe", "MSE"),
-       col=c("#DF536B", "#61D04F"), lty=c(1,1), cex=0.8,
-       bty = "n")
-
-legend("topright", legend="Drawdown",
-       col="#2297E6", lty=1, cex=0.8,
-       bty = "n")
-for (i in 0:13) {
-  text((1+500-5)/2 + seper*i, -2.5, paste(2003+i, "-01-01", sep=""), cex=0.6)
-}
-```
-
-asdasd
-
-```{r restab3, echo=FALSE}
-tab3 <- res3$res_df
-tab3$Sharpe <- round(tab3$Sharpe, 2)
-tab3$Drawdown <- round(tab3$Drawdown, 6)
-tab3$MSE <- round(tab3$MSE, 3)
-kbl(tab3, caption="SMA-Optima by performance indicators | Index 3", booktabs = T, linesep = "") %>%
-  kable_styling(latex_options = c("hold_position")) %>%
-  # column_spec(2:3, color="#DF536B") %>%
-  # column_spec(4:5, color="#2297E6") %>%
-  # column_spec(6:7, color="#61D04F")
-  column_spec(2:3, color = "#DF536B",
-              background = c(rep("#FFFFFF", 13), "#F4DBDF")) %>%
-  column_spec(6:7, color = "#61D04F",
-              background = c(rep("#FFFFFF", 12), "#C2EABC", "#FFFFFF")) %>%
-  column_spec(4:5, color = "#2297E6",
-              background = c(rep("#FFFFFF", 13), "#C2DFF5"))
-```
-
-\newpage
-
-```{r, chap3.2.3.6, echo=FALSE, fig.cap="Best", fig.dim=c(11, 6), out.width = "100%", fig.keep = 'last'}
-perfplot_sma_opt(xall=log_ret_ind, insamp="2019-01-01", res_obj=res3, inx=3)
-```
-
-\newpage
-
-```{r, chap3.2.3.7, echo=FALSE, fig.cap="Optim", fig.dim=c(11, 6), out.width = "100%"}
-load("data/R_Files/optim_sma_4.RData")
-seper <- (500-5)+1
-x_s <- res4$res_df[,3] + 1 + (0:13*seper)
-y_s <- res4$res_df[,2]
-
-x_d <- res4$res_df[,5] + 1 + (0:13*seper)
-y_d <- res4$res_df[,4]
-
-x_m <- res4$res_df[,7] + 1 + (0:13*seper)
-y_m <- res4$res_df[,6]
-
-plot(x=1:length(res4$lirino[,2]), y=res4$lirino[,2], type="l", col="#DF536B", main="Performance Indicators | SMA | Index 4", xlab = "L", ylab="", xaxt = "n", ylim=c(-3, 2))
-axis(1, at=c(1, seper, 1+2*seper, 2*seper+seper), labels=c("5", "500", "5", "500"))
-axis(3, at=c(1+seper, seper+seper), labels=c("5", "500"))
-axis(4, at=c(0.5, 0, -0.5, -1, -1.5), labels=c("0", "-0.1", "-0.2", "-0.3", "-0.4"))
-
-abline(v=1, lty=2, col="black")
-abline(v=1+(500-5), lty=2, col="black")
-abline(h=0.5, lty=2, col="black")
-abline(h=0, lty=2, col="black")
-
-lines((res4$lirino[,3])*5+0.5, type="l", col="#2297E6", lty=1)
-lines(res4$lirino[,4], type="l", col="#61D04F")
-
-points(x_s, y_s, pch=19, col="#DF536B")
-points(x_d, y_d*5+0.5, pch=19, col="#2297E6")
-points(x_m, y_m, pch=19, col="#61D04F")
-
-legend("topleft", legend=c("Sharpe", "MSE"),
-       col=c("#DF536B", "#61D04F"), lty=c(1,1), cex=0.8,
-       bty = "n")
-
-legend("topright", legend="Drawdown",
-       col="#2297E6", lty=1, cex=0.8,
-       bty = "n")
-for (i in 0:13) {
-  text((1+500-5)/2 + seper*i, -3, paste(2003+i, "-01-01", sep=""), cex=0.6)
-}
-```
-
-asdasd
-
-```{r restab4, echo=FALSE}
-tab4 <- res4$res_df
-tab4$Sharpe <- round(tab4$Sharpe, 2)
-tab4$Drawdown <- round(tab4$Drawdown, 6)
-tab4$MSE <- round(tab4$MSE, 3)
-kbl(tab4, caption="SMA-Optima by performance indicators | Index 4", booktabs = T, linesep = "") %>%
-  kable_styling(latex_options = c("hold_position")) %>%
-  # column_spec(2:3, color="#DF536B") %>%
-  # column_spec(4:5, color="#2297E6") %>%
-  # column_spec(6:7, color="#61D04F")
-  column_spec(2:3, color = "#DF536B",
-              background = c(rep("#FFFFFF", 13), "#F4DBDF")) %>%
-  column_spec(4:5, color = "#2297E6",
-              background = c(rep("#FFFFFF", 13), "#C2DFF5")) %>%
-  column_spec(6:7, color = "#61D04F",
-              background = c(rep("#FFFFFF", 12), "#C2EABC", "#FFFFFF"))
-```
-
-\newpage
-
-```{r, chap3.2.3.8, echo=FALSE, fig.cap="Best", fig.dim=c(11, 6), out.width = "100%"}
-perfplot_sma_opt(xall=log_ret_ind, insamp="2019-01-01", res_obj=res4, inx=4)
-```
-
-\newpage
-
 ### 3.5. Moving average crossings trading {#macrossingse}
  
-As a third approach we apply 2 SMAs on every time series and trade them with the common Ma crossings rules introduced in [2.3.3.](#macross-section).
+As a third approach we apply 2 SMAs on every time series and trade them with the common Ma crossings rules introduced in [2.3.3](#macross-section).
 With an optimaztion we are trying to find the best filterlengths for the 2 SMA's.
 
 #### 3.5.1. Optimization
