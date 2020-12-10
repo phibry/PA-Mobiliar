@@ -116,7 +116,7 @@ ar_plotter <- function(perf_bnh, perf_ar, start_date, inx, p, sharpe_bnh, sharpe
                                               paste("AR(",p,"):", round(sharpe_ar, 2))),
                   lty=c(1, 2), lwd=c(1.5, 1), col=c("#000000", "#DF536B"), cex=1)
   
-  print(lines(signal, on=NA, ylim=c(-1.3, 1.3), lwd=2))
+  print(lines(signal, on=NA, ylim=c(-1.3, 1.3), lwd=2, col="#DF536B"))
   # axis(side=2, at=c(-1, 1), labels=c("Short", "Long"), las=2, tick=FALSE)
   # axis(side=4, at=c(-1, 1), las=2, tick=FALSE)
 }

@@ -19,3 +19,22 @@ load("data/R_Files/index_4_onebest_year.RData")
 
 load("data/R_Files/optim_ma_cross_obj_1.RData")
 load("data/R_Files/optim_ma_cross_obj_1_xts.RData")
+
+
+
+load("data/R_Files/optim_ar_1.RData")
+load("data/R_Files/optim_ar_2.RData")
+load("data/R_Files/optim_ar_3.RData")
+load("data/R_Files/optim_ar_4.RData")
+
+
+load("data/R_Files/optim_sma_1.RData")
+load("data/R_Files/optim_sma_2.RData")
+load("data/R_Files/optim_sma_3.RData")
+load("data/R_Files/optim_sma_4.RData")
+
+
+load("data/R_Files/res_trade_1.RData")
+load("data/R_Files/res_trade_2.RData")
+load("data/R_Files/res_trade_3.RData")
+load("data/R_Files/res_trade_4.RData")

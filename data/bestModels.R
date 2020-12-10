@@ -1064,7 +1064,6 @@ loop_sma_trading <- function(x, inx, min_L=5, max_L=500, insamp = "2018-12-31", 
   res_df <- as.data.frame(res_mat)
   return(res_df)
 }
-
 plot_sma <- function(x, inx, L, insamp = "2018-12-31") {
   sma_full <- SMA(x[,inx], n=L)
   
@@ -1090,25 +1089,76 @@ plot_sma <- function(x, inx, L, insamp = "2018-12-31") {
   
   plot(bnh_perf, main=paste("Out-of-sample-Index: ",inx), lwd=2,
        ylim=c(ymin-0.1*abs(ymin), ymax+0.1*ymax))
-  lines(trade_perf, col="#E413A3", lty=2, lwd=2)
+  lines(trade_perf, col="#E413A3", lty=3, lwd=2)
 
   
   addLegend("topleft", legend.names = c(paste("Buy & Hold | Sharpe=", bnh_sharpe),
                                         paste("Trading-Opt.=",trade_sharpe, "| L=",L, "| Trades n=", sma_trade_count)),
-            lty=c(1, 2),
+            lty=c(1, 3),
             lwd=c(2, 2),
             col=c("#000000", "#E413A3"),
             cex=0.8)
   
   print(lines(trade_sig, on=NA, ylim=c(-1.5, 1.5), col="#E413A3", lwd=2))
 }
-
+plot_sma2 <- function(x, inx, L1, L2, insamp = "2018-12-31") {
+  sma_full1 <- SMA(x[,inx], n=L1)
+  sma_full2 <- SMA(x[,inx], n=L2)
+  
+  # Cut init
+  sma_cut1 <- sma_full1[paste(insamp, "/", sep="")]
+  sma_cut2 <- sma_full2[paste(insamp, "/", sep="")]
+  
+  # Perf (daily)
+  perf1 <- lag(sign(sma_cut1))*x[,inx][paste(insamp, "/", sep="")]
+  perf2 <- lag(sign(sma_cut2))*x[,inx][paste(insamp, "/", sep="")]
+  trade_sig1 <- lag(sign(sma_cut1))
+  trade_sig2 <- lag(sign(sma_cut2))
+  
+  # Trade Counter
+  sma_trade_count1 <- trading_counter(as.numeric(na.exclude(trade_sig1)))
+  sma_trade_count2 <- trading_counter(as.numeric(na.exclude(trade_sig2)))
+  
+  # Sharpe
+  bnh_sharpe <- round(sharpe_fun(x[,inx]["2019-01-01/"]), 3)
+  trade_sharpe1 <- round(sharpe_fun(na.exclude(perf1)), 3)
+  trade_sharpe2 <- round(sharpe_fun(na.exclude(perf2)), 3)
+  
+  bnh_perf <- cumsum(x[,inx]["2019-01-01/"])
+  trade_perf1 <- cumsum(na.exclude(perf1))
+  trade_perf2 <- cumsum(na.exclude(perf2))
+  
+  ymin <- min(c(min(bnh_perf), min(trade_perf1), min(trade_perf2)))
+  ymax <- max(c(max(bnh_perf), max(trade_perf1), max(trade_perf2)))
+  
+  plot(bnh_perf, main=paste("Out-of-sample-Index: ",inx), lwd=2,
+       ylim=c(ymin-0.1*abs(ymin), ymax+0.1*ymax))
+  lines(trade_perf1, col="#E413A3", lty=3, lwd=2)
+  lines(trade_perf2, col="#14C29A", lty=2, lwd=2)
+  
+  
+  addLegend("topleft", legend.names = c(paste("Buy & Hold | Sharpe=", bnh_sharpe),
+                                        paste("Trading-Opt.=",trade_sharpe1, "| L=",L1, "| Trades n=", sma_trade_count1),
+                                        paste("Trading-Opt.=",trade_sharpe2, "| L=",L2, "| Trades n=", sma_trade_count2)),
+            lty=c(1, 3, 2),
+            lwd=c(2, 2, 2),
+            col=c("#000000", "#E413A3", "#14C29A"),
+            cex=0.8)
+  
+  lines(trade_sig1, on=NA, ylim=c(-1.5, 1.5), col="#E413A3", lwd=2)
+  print(lines(trade_sig2, on=NA, ylim=c(-1.5, 1.5), col="#14C29A", lwd=2))
+}
 
 
 
 # 1####
 res_trade_1 <- loop_sma_trading(x=ind.lr, inx=1, min_L=5, max_L=500, insamp = "2018-12-31", invest_amount=1000000, tradingcosts=190)
+save(res_trade_1, file="data/R_Files/res_trade_1.RData")
 
+
+sharp_bnh_1 <- sharpe_fun(ind.lr[, 1]["2019-01-01/"])
+res_trade_1$Sharpe > sharp_bnh_1
+sum(res_trade_1$Sharpe > sharp_bnh_1)
 sharpe_fun(ind.lr[, 1]["2019-01-01/"])
 # 3.504957
 
@@ -1124,8 +1174,12 @@ res_trade_1[res_trade_1[,2] > bnh_trading_ret_1, ]
 
 # 2####
 res_trade_2 <- loop_sma_trading(x=ind.lr, inx=2, min_L=5, max_L=500, insamp = "2018-12-31", invest_amount=1000000, tradingcosts=190)
+save(res_trade_2, file="data/R_Files/res_trade_2.RData")
 
-sharpe_fun(ind.lr[, 2]["2019-01-01/"])
+
+sharp_bnh_2 <- sharpe_fun(ind.lr[, 2]["2019-01-01/"])
+res_trade_2$Sharpe > sharp_bnh_2
+sum(res_trade_2$Sharpe > sharp_bnh_2)
 # 2.475576
 
 bnh_trading_ret_2 <- as.numeric(tail(cumsum(ind.lr[, 2]["2019-01-01/"]) * 1000000, 1) - 190)
@@ -1159,10 +1213,11 @@ for (L in trade_opt_2) {
 # plot_sma(x=ind.lr, inx=2, L=354, insamp = "2019-01-01")
 # plot_sma(x=ind.lr, inx=2, L=357, insamp = "2019-01-01")
 
-
+plot_sma2(x=ind.lr, inx=2, L1=42, L2=354, insamp = "2018-12-31") 
 
 # 3####
 res_trade_3 <- loop_sma_trading(x=ind.lr, inx=3, min_L=5, max_L=500, insamp = "2019-01-01", invest_amount=1000000, tradingcosts=190)
+save(res_trade_3, file="data/R_Files/res_trade_3.RData")
 
 sharpe_fun(ind.lr[, 3]["2019-01-01/"])
 # 2.155228
@@ -1199,6 +1254,7 @@ for (L in trade_opt_3) {
 
 # 4####
 res_trade_4 <- loop_sma_trading(x=ind.lr, inx=4, min_L=5, max_L=500, insamp = "2019-01-01", invest_amount=1000000, tradingcosts=190)
+save(res_trade_4, file="data/R_Files/res_trade_4.RData")
 
 sharpe_fun(ind.lr[, 4]["2019-01-01/"])
 # 1.944616
