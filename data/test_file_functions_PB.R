@@ -344,5 +344,44 @@ lines(index_1_tenbest_year[,6], col=c("cornflowerblue"),lwd=2,type="p")
 addLegend("left", on=1, legend.names = c("long filter sharpe", "long filter drawdown "), lty=c(1, 1), lwd=c(1, 1),col=c("coral","cornflowerblue"))
 addLegend("bottomleft", on=1, legend.names = c("short filter sharpe", "short filter Drawdown "), lty=c(1, 1), lwd=c(1, 1),col=c("red","blue"))
 ################################################################################################
+return_buy_and_hold_1  =   diff(log(data[,1]))##### buy and hold
+return_buy_and_hold_2  =   diff(log(data[,2]))
+return_buy_and_hold_3  =   diff(log(data[,3]))
+return_buy_and_hold_4  =   diff(log(data[,4]))
 
+n1=12
+n2 =134
+mobidat= data[,4] # chose the row and horizon
+start="2019-01-01"
+end = "2020-04-31"
+horizon=paste(start,"::",end,sep = "")
+sma1 <-SMA(mobidat,n=n1)
+sma2 <-SMA(mobidat,n=n2)
+signal <-rep(0,length(sma1))
+signal[which(sma1>sma2&lag(sma1)<lag(sma2))]<-1
+signal[which(sma1<sma2&lag(sma1)>lag(sma2))]<--1
+signal[which(sma1>sma2)]<-1
+signal[which(sma1<sma2)]<--1
+signal=reclass(signal,sma1)
+chartSeries(mobidat,subset=horizon,theme=chartTheme("white", bg.col="#FFFFFF"),name= "sMa",type="")
+addSMA(n=n1,on=1,col = "blue")
+addSMA(n=n2,on=1,col = "red")
+addTA(signal,type="S",col="red")
+trade   =   Lag(signal[horizon],1)
+return  =   diff(log(mobidat))
+ret = return*trade
+names(ret)="filter"
+
+ret_buy_and_hold_1 = return*trade
+
+
+#SharpeRatio(ret,FUN="StdDev")
+chart.Bar(ret,main="returns daily")
+chart.CumReturns(ret, main="Naive Rule: Cum Returns")
+addCumReturns(return_buy_and_hold_4, main = "", on = NA, type = "l", col = NULL, lty = 1,lwd = 1, pch = 0)
+#chart.Drawdown(ret,main="Naive Rule: Percentage Drawdown")
+charts.PerformanceSummary(ret, main="Naive Buy Rule")
+
+#SharpeRatio(data,FUN="StdDev")
+#ames(ret)="filter"
 
