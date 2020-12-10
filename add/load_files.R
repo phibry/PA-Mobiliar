@@ -1,7 +1,10 @@
+<<<<<<< HEAD
 
 
 #loading the r files for the sections
 
+=======
+>>>>>>> main
 
 
 load("data/R_Files/index_1_tenbest_year.RData")
@@ -20,3 +23,7 @@ load("data/R_Files/index_4_onebest_year.RData")
 
 load("data/R_Files/optim_ma_cross_obj_1.RData")
 load("data/R_Files/optim_ma_cross_obj_1_xts.RData")
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
