@@ -9,7 +9,7 @@ geometry: margin = 1in
 #########################################attenzione !!!  this chunk is only to kniot this chapter can be deleted afterwards####
 # load("data/data_mobi")
 # source("add/libraries.R")
-# ind <- data[,1:4]
+ind <- data[,1:4]
 # int <- data[,5:12]
 ```
 
@@ -31,6 +31,7 @@ As mentioned in section [1.1](#ts-analysis) we are now going to analyze the data
 One could nearly tell just by looking at the indexes how strong they're correlated. The correlation matrix in table \ref{tab:cortable} confirms the assumption, the correlation is nearly 1 for every index to each other.
 
 ```{r cortable, echo=FALSE}
+
 log_ind <-    log(ind)      #logarithm of the series
 log_ret_ind <- na.exclude(diff(log_ind)) #log returns of the se
 x<-as.data.frame(log_ind)
@@ -72,7 +73,7 @@ kbl(sharp_vola_df, caption="Sharpe Ratio and Volatility of the 4 indexes (log-re
   column_spec(5, color="#2297E6")
 ```
 
-The unconditional volatility of the indexes are \textcolor{black}{0.64e-06}, \textcolor{red}{4..1e-06}, \textcolor{green}{8.5e-06}, \textcolor{blue}{15.6e-06}. Which means the first index is 24 times more volatile than the fourth index.
+As we can see in the table the volatility of index 4 is as much as  x x xx times higher than the volatility of index 1 and the sharperatio behaves inverse to the risk.
 
 &nbsp;
 
@@ -303,10 +304,11 @@ So it can be said that with very simple autoregressive models, a tool has been f
 
 ### 3.4. Single Simple Moving average trading
 
-Next thing to look at is the optimisation with a single simple moving average. For AR models, the start date is a hyperparameter, as is the model order *p*. For SMA models there is no model order but a filter length *L*. The filter length is limited to:
+Next thing to look at is the optimization with a single simple moving average. For AR models, the start date is a hyperparameter, as is the model order *p*. For SMA models there is no model order but a filter length *L*. The filter length is limited to:
 
 $$5<L<500$$
-Additionally the in-sample range is varied again. For each start date the in-sample performances are calculated for each filter length in the interval $5<L<500$. The AR model was only limited to the performance indicator sharpe ratio. Here the optimisation is completed with the drawdown and MSE indicators. Thus, for each start date, for each filter length *L*, the three different indicators are calculated and an optimal model can be choosen.
+
+Additionally the in-sample range is varied again. For each start date the in-sample performances are calculated for each filter length in the interval $5<L<500$. The AR model was only limited to the performance indicator sharpe ratio. This time we're adding the Drawdown and MSE indicators. Thus, for each start date, for each filter length *L*, the three different indicators are calculated and an optimal model can be choosen.
 
 The following figure \ref{fig:chap3.2.3.1} visually represents the complete SMA optimization of the first index. The two performance indicators sharpe (red) and MSE (green) correspond to the left y-axis. The drawdown (blue) was scaled to a visually appealing size for comparison and corresponds to the right y-axis.
 
@@ -589,7 +591,7 @@ perfplot_sma_opt(xall=log_ret_ind, insamp="2019-01-01", res_obj=res4, inx=4)
 
 \newpage
 
-### 3.5. Moving average crossings trading
+### 3.5. Moving average crossings trading {#macrossingse}
  
 As a third approach we apply 2 SMAs on every time series and trade them with the common Ma crossings rules introduced in [2.3.3.](#macross-section).
 With an optimaztion we're trying to find the best filterlengths for the 2 SMA's.
@@ -600,7 +602,7 @@ With an optimaztion we're trying to find the best filterlengths for the 2 SMA's.
 
 For the Optimization the same procedure as in the previous sections gets executed.
 
-The optimization has two levels, the "first level" or outer level is  narrowing the insample timespan from (2003-01 / 01-2019) to (01-2018 / 01-2019). In the inner level "second level" the real optimization is calculated by finding the optimal combination of filters, regarding maximum sharpe and maximum drowndown trading them with the common crossing trading rules.
+The optimization has two levels, the "first level" or outer level is  narrowing the insample timespan  from (2003-01 / 01-2019) to (01-2018 / 01-2019). In the inner level "second level" the real optimization is calculated by finding the optimal combination of filters, regarding maximum sharpe and maximum drowndown trading them with the common crossing trading rules.
 
 Hyperparameter:
 
@@ -611,73 +613,127 @@ Parameters$_2$:
 - $L1$ = length of shorter SMA  with $1 < L1 \le  50$ 
 - $L2$ = length of longer  SMA with  $100 < L1 \le 250$
 
-Figure \ref{fig:chap3.2.4.1.1} visualizes one iteration of the optimization. For the fixed L1 =1, L2 is variable and the optimal sharpe is calculated. This procedure is done for every filterlenght as described in $_2$ and further visualized in \ref{fig:chap3.2.4.1.2}. The drawdown is also calculated as seen in plot \ref{fig:chap3.2.4.1.3}. Notice that the visualization is from the starting date 2015.
+Figure \ref{fig:chap3.2.4.1.1} visualizes one iteration of the optimization. For the fixed L1 =1, L2 is variable and the optimal sharpe is calculated. This procedure is done for every filterlenght as described in $_2$ and further visualized in \ref{fig:chap3.2.4.1.2}. The drawdown is also calculated as seen in plot \ref{fig:chap3.2.4.1.3}. Notice that the visualization is from the starting date 2015-10-30, which is randomly chosen for explaining the optimization process.
 
-
-```{r, echo=FALSE, fig.cap="Hyperoptimization", include=F,}
-load("data/R_Files/optim_ma_cross_obj_1_xts.RData")###loadind xts datasets index1 
-load("data/R_Files/optim_ma_cross_obj_1.RData")    #loading perf mat index1
-``` 
 
 ```{r, chap3.2.4.1.1, echo=FALSE, fig.cap="optimization sharpe L1=1 ,L2 = variable", include=T,out.width = "100%",fig.dim=c(16, 7.4)}
 sharpfirst=as.array((ind1_opt$perf_mat)[,2])
-plot(sharpfirst[1:151],type="l",ylab="Max sharpe",xlab="L1 fixed=1, L2 variable on x-axis ",main="filter optimization start 2015  ",col="black")
+plot(sharpfirst[1:151],type="l",ylab="Max sharpe",xlab="L1 fixed=1,    100 < L2 < 250 on x axis ",main="filter optimization start 2015  ",col="black",xaxt='n')
+abline(v=7, col = "green")
+abline(h=1.225, col = "green")
+abline(v=c(0,150), col = "blue",lty=2)
+legend("bottom", inset=.02, legend=c("Sharpe", "Maximum by filter L1= 1, L2 = 106","Boundaries trajectorie L1=1"),
+       col=c("black", "green","blue"), lty=c(1,1,2), cex=0.8, horiz=F)
 ```  
 \newpage
 ```{r, chap3.2.4.1.2, echo=FALSE, fig.cap="sharpe index 1", include=T,out.width = "100%",fig.dim=c(16, 7.4)}
-plot((ind1_opt$perf_mat)[,2],type="l",ylab="Max Sharpe",xlab="",main="filter optimization start: 2015 ")
-abline(h=1.12, col = "red")
+plot((ind1_opt$perf_mat)[,2],type="l",ylab="Sharpe",xlab="",main="filter optimization start: 2015 ",xaxt='n')
+abline(h=1.08, col = "red")
+abline(h=1.225, col = "green")
+abline(v=c(0,150),col="blue",lty=2)
+legend("bottom", inset=.02, legend=c("Sharpe", "Maximum by filter L1= 1, L2 = 106","Boundaries trajectorie L1=1"),
+       col=c("black", "green","blue"), lty=c(1,1,2), cex=0.8, horiz=F)
 
 ```
 &nbsp;
 
 ```{r, chap3.2.4.1.3, echo=FALSE, fig.cap="drawdown index 1", include=T,out.width = "100%",fig.dim=c(16, 7.4)}
-plot((ind1_opt$perf_mat)[,3],type="l",ylab="Max Drawdown",xlab="",main="filter optimization start: 2015 ",col="green")
-abline(h=-0.0069, col = "red")
+plot((ind1_opt$perf_mat)[,3],type="l",ylab="Drawdown",xlab="",main="filter optimization start: 2015 ",col="green")
+abline(h=-0.0069, col = "violet")
+abline(v=17*150)
+abline(v=c(16*150-20,20 * 150+20),col="darkblue",lty=2)
+legend("bottom", inset=.02, legend=c("Drawdown", "Maximum by filter L1= 18, L2 = 102","Cluster"),
+       col=c("green", "black","darkblue"), lty=c(1,1,2), cex=0.8, horiz=F)
 ```
-The pattern we observe in \ref{fig:chap3.2.4.1.2} is the repeating optimization by fixing L1 and variabling L2. The maximum sharpe was found with L1= *1*, L2= *106*, sharpe =  *1.225*. When we look at the red line we can clearly see there are other similar  high spikes in other filter lengths. The green pattern in \ref{fig:chap3.2.4.1.3} shows interesting news. at L1 = 17,18, 19 and 20 we see a cluster of high spikes, all pretty similar. The optimum in this plot is by L1 = *18* and L2 = *102* and a drawdown 6.55e-3, laying in the described cluster . But when we look at the red line drawn, we can clearly see there's another high spike at the beginning of the plot. This spike is identical with the maximum sharpe in \ref{fig:chap3.2.4.1.2}. So these result could just be random and the solution is not finite $_3$.
+
+The pattern we observe in \ref{fig:chap3.2.4.1.2} is the repeating optimization by fixing L1 and vary L2. The maximum sharpe was found with L1= *1*, L2= *106*, sharpe =  *1.225*,which is also visualized in \ref{fig:chap3.2.4.1.2},where the "window" (blue dottet lines) is shown. When we look at the red line we can clearly see there are other similar  high spikes in other filter lengths. The green pattern in \ref{fig:chap3.2.4.1.3} shows interesting news. at L1 = 17,18, 19 and 20 we see a cluster(blue dottet lines) of high spikes, all very similar. The optimum in this plot is by L1 = *18* and L2 = *102* and a drawdown *6.55e-3*, laying in the described cluster . But when we look at the violet line drawn, we can clearly see there's another high spike at the beginning of the plot. This spike is identical with the maximum sharpe in \ref{fig:chap3.2.4.1.2}. So theses results could just be random and the solution is not finite , this problem will be further discussed$_3$.
 
 \newpage
 
 ```{r, chap3.2.4.1.4, echo=FALSE, fig.cap="Hyperoptimization Index 1", include=T,fig.keep = 'last',fig.dim=c(16, 7.1),out.width = "100%"}
 ##################sharpe maxdrow
-plot(optim_ma_cross_obj_1_xts[,1],ylim= c(-2,4),main= "Max Sharpe/Drawdown Hyperoptimization Index 1",col="black")
-lines(optim_ma_cross_obj_1_xts[,4]*100,lwd=2,col="green")
+plot(index_1_onebest_year_with15[,1],ylim= c(-2,4),main= "Max Sharpe/Drawdown Hyperoptimization Index 1",col="black",type="b")
+lines(index_1_onebest_year_with15[,4]*100,lwd=2,col="green",type="b")
 addLegend("topleft", on=1, legend.names = c("Sharpe ", "MaxDrawdown * 100 "), lty=c(1, 1), lwd=c(2, 2),col=c("black","green"))
-events <- xts("Figure 20/21/22", as.Date("2015-01-01"))
+
+
+events <- xts("Figure 20/21/22", as.Date("2015-10-30"))
 addEventLines(events,srt=90,pos=2,lty=2,)
 ```
 &nbsp;
 
 ```{r, chap3.2.4.1.5, echo=FALSE, fig.cap="Hyperoptimization Index 1", include=T,fig.keep = 'last',fig.dim=c(16, 7.1),out.width = "100%"}
 ################## lengths
-plot(optim_ma_cross_obj_1_xts[,2:3],type="l",col= "red",main= "Filterlengths Hyperoptimization Index 1 ",)
-lines(optim_ma_cross_obj_1_xts[,5:6], col=c("blue"),lwd=2)
-addLegend("topleft", on=1, legend.names = c("Sharpe long filter", "Drawdown long filter"), lty=c(1, 1), lwd=c(1, 1),col=c("red","blue"))
-addLegend("bottomleft", on=1, legend.names = c("Sharpe short filter", "Drawdown short filter"), lty=c(1, 1), lwd=c(1, 1),col=c("red","blue"))
+plot(index_1_onebest_year_with15[,2],type="b",col= "red",main= "Filterlengths Hyperoptimization Index 1 ",ylim=c(-10,260))
+
+lines(index_1_onebest_year_with15[,3], col=c("coral"),lwd=2,type="b")
+lines(index_1_onebest_year_with15[,5], col=c("blue"),lwd=2,type="b")
+lines(index_1_onebest_year_with15[,6], col=c("cornflowerblue"),lwd=2,type="b")
+
+addLegend("left", on=1, legend.names = c("long filter sharpe", "long filter drawdown "), lty=c(1, 1), lwd=c(1, 1),col=c("coral","cornflowerblue"))
+
+addLegend("bottomleft", on=1, legend.names = c("short filter sharpe", "short filter Drawdown "), lty=c(1, 1), lwd=c(1, 1),col=c("red","blue"))
+
 addEventLines(events,srt=90,pos=2,lty=2)
 
 ```
 
-By plotting the sharperatio / max drawdown in \ref{fig:chap3.2.4.1.4} and the optimal filterlenghts L1/L2 in \ref{fig:chap3.2.4.1.5}, for every timesstep, the  Hyperoptimization is visualized. 
-In figure \ref{fig:chap3.2.4.1.4} index 1, one can observe a strong upward trend in both sharpe and maxdrawdown $_1$ , narrowing the insample timespan at the end of the plot. In plot \ref{fig:chap3.2.4.1.1} we observe at the end , from 2017 to 2018, nearly the same lengths of the filters in both sharpe and drawdown. Overall the plots do not look the same until 2016 where they get very close. For further analysis we exclude the insample start 2016 2017 and 2018 
-
-
-
-Because of the problem we've mentioned in $_3$ the best result could also be just random. 
-To solve this problem one could do the optimization again, indivdually analyze every in-sample timespan or plot the 5 best filterlenghts for every timestep.
+By plotting the sharperatio / max drawdown$_1$ in \ref{fig:chap3.2.4.1.4} and the optimal filterlenghts L1/L2 in \ref{fig:chap3.2.4.1.5}, for every insample timestep as described at the beginning of [3.5.1.](#macrossingse), the  Hyperoptimization is visualized.The code is linked in the attachement [6.3.5.](#optimizationmacross).The results from the trajectories in \ref{fig:chap3.2.4.1.2} and \ref{fig:chap3.2.4.1.3}
+are showed at the black dotted line.Because of the problem we've mentioned in $_3$ the best result could also be just random.Therefore the ten best results for each insample timesteps are calculated and visualized in \ref{fig:chap3.2.4.1.6} and \ref{fig:chap3.2.4.1.7} to get an idea about the accuracy of these filters and analyze them a bit further.
 
 $_1$ Note: maxdrawdown is scaled by the factor 100 to visualize it in the same plot 
 \newpage
-As noticed the Visualizations are only done for index one, We've done the same optimization for all indexes the result are shown in referenz auf tabelle
+```{r, chap3.2.4.1.6, echo=FALSE, fig.cap="Hyperoptimization 10 best Index 1", include=T,fig.keep = 'last',fig.dim=c(16, 7.1),out.width = "100%"}
+##################sharpe maxdrow 10
+plot(index_1_tenbest_year[,1],ylim= c(-2,4),main= "Max Sharpe/Drawdown 10 best Hyperoptimization Index 1",col="black",type="p",major.ticks="auto",format.labels="%b-%Y")
+lines(index_1_tenbest_year[,4]*100,lwd=2,col="green",type="p")
+addLegend("topleft", on=1, legend.names = c("Sharpe ", "MaxDrawdown * 100 "), lty=c(1, 1), lwd=c(2, 2),col=c("black","green"))
+
+```
+
+```{r, chap3.2.4.1.7, echo=FALSE, fig.cap="Hyperoptimization 10 best Index 1", include=T,fig.keep = 'last',fig.dim=c(16, 7.1),out.width = "100%"}
+################## lengths
+plot(index_1_tenbest_year[,2],type="p",col= "red",main= "Filterlengths 10 best Hyperoptimization Index 1  ",ylim=c(-10,260),format.labels="%b-%Y")
+lines(index_1_tenbest_year[,3], col=c("coral"),lwd=2,type="p")
+lines(index_1_tenbest_year[,5], col=c("blue"),lwd=2,type="p")
+lines(index_1_tenbest_year[,6], col=c("cornflowerblue"),lwd=2,type="p")
+
+addLegend("left", on=1, legend.names = c("long filter sharpe", "long filter drawdown "), lty=c(1, 1), lwd=c(1, 1),col=c("coral","cornflowerblue"))
+addLegend("bottomleft", on=1, legend.names = c("short filter sharpe", "short filter Drawdown "), lty=c(1, 1), lwd=c(1, 1),col=c("red","blue"))
+
+```
+
+Whilst the ten best sharperatios / drawdowns in \ref{fig:chap3.2.4.1.6} are always very close together, the filterplot \ref{fig:chap3.2.4.1.6}  shows a completely different and interesting image. We can observe differences, specially in the long filters in 2009(financial crisis?) 2010 2011 the result nearly diverge 150 units. Also in the timespan 2011 to 2018 the filters fluctuate strongly. What further catches the eye, are the long- and the shortfilter sharpes from 2003 to 2011. They are all concentrated at their upper limits of 50 and 250, which indicates that they actually wanted to be longer than the restriction. The same behaviour is observed for the short drawdown from 2011 to 2018 where the observations are concentrated around length 1. The plot would shurely look different if the restrictions of the filterlengths would be greater. Also the steps of the insample timespan are always one year. Changing the restriction would have a massive impact on the optimization time and would most likely deliver different results. But we take the risk in good knowledge of maybe not finding the right filterlenght and use this optimization for trading the series in the next section.
+
+
+
+
+
 
 \newpage
+#### 3.5.2 Trading
 &nbsp;
 
-```{r, chap3.2.2, echo=FALSE, fig.cap="conversion data", include=T, fig.keep = 'last'}
-n1=15
-n2 =135
-mobidat= data[,4] # chose the row and horizon
+As noticed the Visualizations in[3.5.1.](#macrossingse)  are only done for index one, the optimal values and their fluctuation are shown in the tables \ref{tab:macrosstable index 1},\ref{tab:macrosstable index 2},\ref{tab:macrosstable index 3},\ref{tab:macrosstable index 4} and \ref{fig:chap3.2.4.1.8},\ref{fig:chap3.2.4.1.9},\ref{fig:chap3.2.4.1.10},\ref{fig:chap3.2.4.1.11},\ref{fig:chap3.2.4.1.12},\ref{fig:chap3.2.4.1.13}.
+
+Based on the optimal filterlenghts calculated in the last section the SMAs are now applied to the "out of sample" span from 2019-01-01 to 2020-04-01. Keeping in mind that the Moving Averages need the same 
+initialization time as the length of filter itself, only the optimal filterlengths from years smaller than 2017 are considered
+
+
+
+
+
+```{r, chap3.5.2.1. , echo=FALSE, include=T }
+return_buy_and_hold_1  =   diff(log(data[,1]))##### buy and hold
+return_buy_and_hold_2  =   diff(log(data[,2]))
+return_buy_and_hold_3  =   diff(log(data[,3]))
+return_buy_and_hold_4  =   diff(log(data[,4]))
+```
+
+```{r, chap3.5.2.2. , echo=FALSE, fig.cap="conversion data", include=T, fig.keep = 'last'}
+n1=17
+n2 =111
+mobidat= data[,2] # chose the row and horizon
 start="2019-01-01"
 end = "2020-04-31"
 horizon=paste(start,"::",end,sep = "")
@@ -702,7 +758,7 @@ names(ret)="filter"
 The intuition says that this strategy may not be so bad , why leaving a trend market instead of buy and hold?
 
 Keeping in mind that the filterlengths L need the same 
-initializationtime as the length of filter  itself. For example when the optimization
+initialization time as the length of filter  itself. For example when the optimization
 \newpage
 
 ```{r, chap3.2.3, echo=FALSE, fig.cap="conversion data",include=T,fig.keep = 'last'}
@@ -713,4 +769,5 @@ initializationtime as the length of filter  itself. For example when the optimiz
 charts.PerformanceSummary(ret, main="Naive Buy Rule")
 #SharpeRatio(data,FUN="StdDev")
 #ames(ret)="filter"
+
 ```
