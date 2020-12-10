@@ -729,6 +729,11 @@ perfplot_sma_opt <- function(xall, insamp, res_obj, inx) {
   print(lines(MSE_signal, on=NA, ylim=c(-1.5, 1.5), col="#61D04F", lwd=2))
 }
 
+
+
+
+
+
 #.####
 # Ind 1 ALL####
 res1 <- loop_sma(x=ind.lr, inx=1, insamp = "2019-01-01", minyear=3, maxyear=16)
@@ -1014,3 +1019,113 @@ for (i in 0:13) {
 
 # Ind 4 Opt-Plot####
 perfplot_sma_opt(xall=ind.lr, insamp="2019-01-01", res_obj=res4, inx=4)
+
+
+
+
+
+
+#.####
+# Trading with invest####
+loop_sma_trading <- function(x, inx, min_L=5, max_L=500, insamp = "2019-01-01", invest_amount=1000000, tradingcosts=190) {
+  
+  
+  filler <- 1
+  res_mat <- matrix(1:((length(min_L:max_L))*3), ncol=3,
+                    dimnames = list(1:(length(min_L:max_L)), c("L", "SMA-Return", "Trades")))
+  
+  pb <- txtProgressBar(min = min_L, max = max_L, style = 3)
+  
+  for (L in min_L:max_L) {
+    # SMA L<-328
+    sma_full <- SMA(x[,inx], n=L)
+    
+    # Cut init
+    sma_cut <- sma_full[paste(insamp, "/", sep="")]
+    
+    # Perf (daily)
+    perf <- lag(sign(sma_cut))*x[,inx][paste(insamp, "/", sep="")]
+    trade_sig <- lag(sign(sma_cut))
+    
+    sma_trade_count <- trading_counter(as.numeric(na.exclude(trade_sig)))
+    
+    
+    sma_ret <- tail((cumsum(na.exclude(perf)) * invest_amount) - (sma_trade_count * tradingcosts), 1)
+    bnh_ret <- cumsum(x[,inx][paste(insamp, "/", sep="")]) * invest_amount
+    
+    
+    res_mat[filler,] <- c(L, sma_ret, sma_trade_count)
+    
+    filler <- filler + 1
+    
+    setTxtProgressBar(pb, L)
+  }
+  close(pb)
+  return(res_mat)
+}
+res_trade_1 <- loop_sma_trading(x=ind.lr, inx=1, min_L=5, max_L=500, insamp = "2019-01-01", invest_amount=1000000, tradingcosts=190)
+res_trade_2 <- loop_sma_trading(x=ind.lr, inx=2, min_L=5, max_L=500, insamp = "2019-01-01", invest_amount=1000000, tradingcosts=190)
+res_trade_3 <- loop_sma_trading(x=ind.lr, inx=3, min_L=5, max_L=500, insamp = "2019-01-01", invest_amount=1000000, tradingcosts=190)
+res_trade_4 <- loop_sma_trading(x=ind.lr, inx=4, min_L=5, max_L=500, insamp = "2019-01-01", invest_amount=1000000, tradingcosts=190)
+
+
+# 1####
+# Buy and Hold: 63642.12
+bnh_trading_ret_1 <- as.numeric(tail(cumsum(ind.lr[, 1]["2019-01-01/"]) * 1000000, 1) - 190)
+sum(res_trade_1[,2] > bnh_trading_ret_1)
+# 0
+res_trade_1[,2] > bnh_trading_ret_1
+res_trade_1[res_trade_1[,2] > bnh_trading_ret_1, ]
+
+
+
+# 2####
+# Buy and Hold: 105865.3
+bnh_trading_ret_2 <- as.numeric(tail(cumsum(ind.lr[, 2]["2019-01-01/"]) * 1000000, 1) - 190)
+sum(res_trade_2[,2] > bnh_trading_ret_2)
+# 5
+res_trade_2[,2] > bnh_trading_ret_2
+res_trade_2[res_trade_2[,2] > bnh_trading_ret_2, ]
+# L SMA-Return Trades
+# 36   40   106720.3     11
+# 38   42   109481.3     13
+# 349 353   107075.7      3
+# 350 354   110658.9      3
+# 353 357   106337.8      3
+
+
+# 3####
+# Buy and Hold: 143100.6
+bnh_trading_ret_3 <- as.numeric(tail(cumsum(ind.lr[, 3]["2019-01-01/"]) * 1000000, 1) - 190)
+sum(res_trade_3[,2] > bnh_trading_ret_3)
+# 10
+res_trade_3[,2] > bnh_trading_ret_3
+res_trade_3[res_trade_3[,2] > bnh_trading_ret_3, ]
+# L SMA-Return Trades
+# 35   39   150456.0     13
+# 36   40   159343.2     13
+# 37   41   150723.3     11
+# 38   42   155602.6     11
+# 343 347   143347.6      3
+# 344 348   143830.0      4
+# 348 352   147161.7      3
+# 379 383   144498.8      3
+# 380 384   146086.0      3
+# 381 385   144307.9      3
+
+# 4####
+# Buy and Hold: 184467.3
+bnh_trading_ret_4 <- as.numeric(tail(cumsum(ind.lr[, 4]["2019-01-01/"]) * 1000000, 1) - 190)
+sum(res_trade_4[,2] > bnh_trading_ret_4)
+# 8
+res_trade_4[,2] > bnh_trading_ret_4
+res_trade_4[res_trade_4[,2] > bnh_trading_ret_4, ]
+# L SMA-Return Trades
+# 36   40   189309.3     17
+# 38   42   195937.3     11
+# 41   45   185488.6     11
+# 343 347   185816.7      4
+# 398 402   185573.5      3
+# 403 407   185703.7      9
+# 404 408   185543.1      5
+# 410 414   188192.7      3
