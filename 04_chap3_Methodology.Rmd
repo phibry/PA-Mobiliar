@@ -593,24 +593,18 @@ Figure \ref{fig:chap3.2.4.1.1} visualizes one iteration of the optimization. For
 
 
 ```{r, echo=FALSE, fig.cap="Hyperoptimization", include=F,}
-load("data/R_Files/optim_ma_cross_obj_1_with_xts.RData")
-load("data/R_Files/optim_ma_cross_obj_2_with_xts.RData")
-load("data/R_Files/optim_ma_cross_obj_3_with_xts.RData")
-load("data/R_Files/optim_ma_cross_obj_4_with_xts.RData")###loadind xts datasets index1 
+#load("data/R_Files/optim_ma_cross_obj_1_with_xts.RData")
+#load("data/R_Files/optim_ma_cross_obj_2_with_xts.RData")
+#load("data/R_Files/optim_ma_cross_obj_3_with_xts.RData")
+#load("data/R_Files/optim_ma_cross_obj_4_with_xts.RData")###loadind xts datasets index1 
 
 load("data/R_Files/optim_ma_cross_obj_1.RData")
-load("data/R_Files/optim_ma_cross_obj_2.RData")
-load("data/R_Files/optim_ma_cross_obj_3.RData")
-load("data/R_Files/optim_ma_cross_obj_4.RData")#loading perf mat index1
-
-
-load("data/R_Files/index_1_tenbest_year.RData")#loading tenbest
-
-
-
+#load("data/R_Files/optim_ma_cross_obj_2.RData")
+#load("data/R_Files/optim_ma_cross_obj_3.RData")
+#load("data/R_Files/optim_ma_cross_obj_4.RData")#loading perf mat index1
+#load("data/R_Files/index_1_tenbest_year.RData")#loading tenbest
 
 load("data/R_Files/index_1_onebest_yearwith15.RData")#loading one best
-
 load("data/R_Files/index_1_onebest_year.RData")
 load("data/R_Files/index_2_onebest_year.RData")
 load("data/R_Files/index_3_onebest_year.RData")
@@ -704,11 +698,11 @@ addLegend("bottomleft", on=1, legend.names = c("short filter sharpe", "short fil
 
 ```
 
-Whilst the ten best sharperatios / drawdowns in \ref{fig:chap3.2.4.1.6} are always very close together, the filterplot \ref{fig:chap3.2.4.1.6}  shows a completely different and interesting image. We can observe differences, specially in the long filters in 2009 2010 2011 the result nearly diverge 150 units. Also in the timespan 2011 to 2018 the filters fluctuate strongly. What further catches the eye are the long and the short filter sharpes from 2003 to 2011. They are all concentrated at their upper limits of 50 and 250, which indicates that they actually wanted to be longer than the restriction. The same behaviour is observed for the short drawdown from 2011 to 2018 where the observations are concentrated around length 1. The plot would shurely look different if the restrictions of the filterlengths would be higher. Also the steps of the insample timespan are always one year. Changeing the restriction would have a massive impact on the optimization time and would most likely deliver different results. But we take the risk in good knowledge of maybe not finding the right filterlenght and use this optimization for trading the series in the next section.
+Whilst the ten best sharperatios / drawdowns in \ref{fig:chap3.2.4.1.6} are always very close together, the filterplot \ref{fig:chap3.2.4.1.6}  shows a completely different and interesting image. We can observe differences, specially in the long filters in 2009 2010 2011 the result nearly diverge 150 units. Also in the timespan 2011 to 2018 the filters fluctuate strongly. What further catches the eye, are the long- and the shortfilter sharpes from 2003 to 2011. They are all concentrated at their upper limits of 50 and 250, which indicates that they actually wanted to be longer than the restriction. The same behaviour is observed for the short drawdown from 2011 to 2018 where the observations are concentrated around length 1. The plot would shurely look different if the restrictions of the filterlengths would be greater. Also the steps of the insample timespan are always one year. Changing the restriction would have a massive impact on the optimization time and would most likely deliver different results. But we take the risk in good knowledge of maybe not finding the right filterlenght and use this optimization for trading the series in the next section.
 
 
 \newpage
-As noticed the Visualizations  are only done for index one, the are shown in the tables \ref{tab:macrosstable index 1},\ref{tab:macrosstable index 2},\ref{tab:macrosstable index 3},\ref{tab:macrosstable index 4}. For 
+As noticed the Visualizations  are only done for index one, they are shown in the tables \ref{tab:macrosstable index 1},\ref{tab:macrosstable index 2},\ref{tab:macrosstable index 3},\ref{tab:macrosstable index 4}. For 
 
 ```{r macrosstable index 1, echo=FALSE}
 index_1_onebest_year=as.data.frame(index_1_onebest_year)
@@ -724,8 +718,6 @@ kbl(index_1_onebest_year, caption="index 1 best", booktabs = T, linesep = "") %>
 Based on the optimal filterlenghts calculatet in the last section the SMAs are now applied to the "out of sample" span from 2019-01-01 to 2020-04-01. Keeping in mind that the Moving Averages need the same 
 initialization time as the length of filter itself, the initialization phase of the filter is taken out of sample.
 
-
-The 
 ```{r, chap3.2.2, echo=FALSE, fig.cap="conversion data", include=T, fig.keep = 'last'}
 n1=15
 n2 =135
