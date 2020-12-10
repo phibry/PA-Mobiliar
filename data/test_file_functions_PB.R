@@ -303,16 +303,16 @@ cross_optim_easy_v3 <- function(x, start, end = "2018-12-31", L1min = 1, L1max =
 
 
 index_1_tenbest_year=loop_func_v3(data=data[,1], minyear=3, maxyear=18,returnmax=10)
-save(index_1_tenbest_year, file="data/R_Files/index_1_tenbesthead_year.RData")
+save(index_1_tenbest_year, file="data/R_Files/index_1_tenbest_year.RData")
 
-index_2_tenbest_year=loop_func_v3(data=data[,2], insamp="2019-01-01", minyear=3, maxyear=18,returnmax=10)
-save(index_2_tenbest_year, file="data/R_Files/index_2_tenbesthead_year.RData")
+index_2_tenbest_year=loop_func_v3(data=data[,2],  minyear=3, maxyear=18,returnmax=10)
+save(index_2_tenbest_year, file="data/R_Files/index_2_tenbest_year.RData")
 
-index_3_tenbest_year=loop_func_v3(data=data[,3], insamp="2019-01-01", minyear=3, maxyear=18,returnmax=10)
-save(index_3_tenbest_year, file="data/R_Files/index_3_tenbesthead_year.RData")
+index_3_tenbest_year=loop_func_v3(data=data[,3],  minyear=3, maxyear=18,returnmax=10)
+save(index_3_tenbest_year, file="data/R_Files/index_3_tenbest_year.RData")
 
-index_4_tenbest_year=loop_func_v3(data=data[,4], insamp="2019-01-01", minyear=3, maxyear=18,returnmax=10)
-save(index_4_tenbest_year, file="data/R_Files/index_4_tenbesthead_year.RData")
+index_4_tenbest_year=loop_func_v3(data=data[,4],  minyear=3, maxyear=18,returnmax=10)
+save(index_4_tenbest_year, file="data/R_Files/index_4_tenbest_year.RData")
 
 ###################################################onebest#####################################
 index_1_onebest_year=loop_func_v3(data=data[,1], minyear=3, maxyear=18,returnmax=1)

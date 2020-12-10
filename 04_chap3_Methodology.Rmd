@@ -592,23 +592,8 @@ Parameters$_2$:
 Figure \ref{fig:chap3.2.4.1.1} visualizes one iteration of the optimization. For the fixed L1 =1, L2 is variable and the optimal sharpe is calculated. This procedure is done for every filterlenght as described in $_2$ and further visualized in \ref{fig:chap3.2.4.1.2}. The drawdown is also calculated as seen in plot \ref{fig:chap3.2.4.1.3}. Notice that the visualization is from the starting date 2015-10-30, which is randomly chosen for explaining the optimization process.
 
 
-```{r, echo=FALSE, fig.cap="Hyperoptimization", include=F,}
-#load("data/R_Files/optim_ma_cross_obj_1_with_xts.RData")
-#load("data/R_Files/optim_ma_cross_obj_2_with_xts.RData")
-#load("data/R_Files/optim_ma_cross_obj_3_with_xts.RData")
-#load("data/R_Files/optim_ma_cross_obj_4_with_xts.RData")###loadind xts datasets index1 
+```{r, echo=FALSE, include=F,}
 
-load("data/R_Files/optim_ma_cross_obj_1.RData")
-#load("data/R_Files/optim_ma_cross_obj_2.RData")
-#load("data/R_Files/optim_ma_cross_obj_3.RData")
-#load("data/R_Files/optim_ma_cross_obj_4.RData")#loading perf mat index1
-#load("data/R_Files/index_1_tenbest_year.RData")#loading tenbest
-
-load("data/R_Files/index_1_onebest_yearwith15.RData")#loading one best
-load("data/R_Files/index_1_onebest_year.RData")
-load("data/R_Files/index_2_onebest_year.RData")
-load("data/R_Files/index_3_onebest_year.RData")
-load("data/R_Files/index_4_onebest_year.RData")
 ``` 
 
 ```{r, chap3.2.4.1.1, echo=FALSE, fig.cap="optimization sharpe L1=1 ,L2 = variable", include=T,out.width = "100%",fig.dim=c(16, 7.4)}

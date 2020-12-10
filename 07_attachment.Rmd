@@ -6,13 +6,14 @@ geometry: margin = 1in
 ## 6. Attachment
 
 
+### 6.3.3 AR 
 
-
+### 6.3.4 Single Ma
 
 ### 6.3.5 Best ma crossings
 
 #### 6.3.5 Optimization code
-```{r, chap 6.3.5.1. , echo=FALSE, fig.cap="", include=T}
+```{r, chap 6.3.5.1 , echo=T, eval=FALSE,include=T}
 loop_func_v3 <- function(data, minyear=3, maxyear=18,returnmax=10){
   #This function uses the cross_optim_easy_v2 function an loops the function through the insample timespan and returns a data    frame 
   
