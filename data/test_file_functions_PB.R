@@ -388,3 +388,64 @@ charts.PerformanceSummary(ret, main="Naive Buy Rule")
 #SharpeRatio(data,FUN="StdDev")
 #ames(ret)="filter"
 
+
+
+##best for 1
+ 2017 37  189  dd   2017 1 171
+ 
+##best for 2
+
+s2016   17 111 dd 2014  17 106
+
+##best for 3
+2016  18 103     dd 19 101
+
+##best for 4
+2016 12 134    dd 2016 12 100
+
+#############1##############
+n1=19
+n2  = 101
+mobidat= data[,4] # chose the row and horizon
+start="2019-01-01"
+end = "2020-04-31"
+horizon=paste(start,"::",end,sep = "")
+sma1 <-SMA(mobidat,n=n1)
+sma2 <-SMA(mobidat,n=n2)
+signal <-rep(0,length(sma1))
+signal[which(sma1>sma2&lag(sma1)<lag(sma2))]<-1
+signal[which(sma1<sma2&lag(sma1)>lag(sma2))]<--1
+signal[which(sma1>sma2)]<-1
+signal[which(sma1<sma2)]<--1
+signal=reclass(signal,sma1)
+chartSeries(mobidat,subset=horizon,theme=chartTheme("white", bg.col="#FFFFFF"),name= "sMa",type="")
+addSMA(n=n1,on=1,col = "blue")
+addSMA(n=n2,on=1,col = "red")
+addTA(signal,type="S",col="red")
+trade   =   Lag(signal[horizon],1)
+return  =   diff(log(mobidat))
+ret = return*trade
+
+
+head(ret)
+
+ret=return[horizon]
+
+names(ret)="filter"
+
+sqrt(255)*SharpeRatio(ret,FUN="StdDev")
+
+chart.Bar(ret,main="returns daily")
+chart.CumReturns(ret, main="Naive Rule: Cum Returns")
+
+#chart.Drawdown(ret,main="Naive Rule: Percentage Drawdown")
+chart.CumReturns(ret, main="Naive Rule: Cum Returns")
+addTA(ret)
+charts.PerformanceSummary(ret, main="Naive Buy Rule")
+#SharpeRatio(data,FUN="StdDev")
+#ames(ret)="filter"
+
+
+##########################################
+
+
