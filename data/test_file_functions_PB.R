@@ -341,17 +341,21 @@ lines(index_1_tenbest_year[,3], col=c("coral"),lwd=2,type="p")
 lines(index_1_tenbest_year[,5], col=c("blue"),lwd=2,type="p")
 lines(index_1_tenbest_year[,6], col=c("cornflowerblue"),lwd=2,type="p")
 
+lines(index_1_onebest_year[,c(2,3,5,6)],type="p",pch=3,lwd= 3,cex=2 ,col= c("red","coral","blue","cornflowerblue"))
+
 addLegend("left", on=1, legend.names = c("long filter sharpe", "long filter drawdown "), lty=c(1, 1), lwd=c(1, 1),col=c("coral","cornflowerblue"))
 addLegend("bottomleft", on=1, legend.names = c("short filter sharpe", "short filter Drawdown "), lty=c(1, 1), lwd=c(1, 1),col=c("red","blue"))
+addLegend("topright", on=1, legend.names = c("maximum values"), pch=3,box=T)
+
 ################################################################################################
 return_buy_and_hold_1  =   diff(log(data[,1]))##### buy and hold
 return_buy_and_hold_2  =   diff(log(data[,2]))
 return_buy_and_hold_3  =   diff(log(data[,3]))
 return_buy_and_hold_4  =   diff(log(data[,4]))
-
-n1=12
-n2 =134
-mobidat= data[,4] # chose the row and horizon
+##############################index 1############################
+n1=49
+n2 =246
+mobidat= data[,1] # chose the row and horizon
 start="2019-01-01"
 end = "2020-04-31"
 horizon=paste(start,"::",end,sep = "")
@@ -371,10 +375,9 @@ trade   =   Lag(signal[horizon],1)
 return  =   diff(log(mobidat))
 ret = return*trade
 names(ret)="filter"
-
-ret_buy_and_hold_1 = return*trade
-
-
+cumsu
+plot(Cumsum(ret))
+lines(return_buy_and_hold_1,col="red")
 #SharpeRatio(ret,FUN="StdDev")
 chart.Bar(ret,main="returns daily")
 chart.CumReturns(ret, main="Naive Rule: Cum Returns")

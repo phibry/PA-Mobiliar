@@ -149,7 +149,7 @@ For the following models a good comparability should be achieved. To ensure this
 
 &nbsp;
 
-By focussing on trading we build a portfolio for the 4 indexes. One approach would be the equally weighted portfolio with weights for every index of $\frac{1}{4}$. As we've seen in figure \ref{fig:chap3.1.3} The volatility of the indexes strongly differs, meaning that index 4 would have the most impact, nearly 50 %, on the portfolio by weighing it equally. To cancel this effect, it may be useful to size the position with the inverse volatility, so the indexes have the weights seen in the table on the right side.
+By focussing on trading we would build a portfolio for the 4 indexes. One approach would be the equally weighted portfolio with weights for every index of $\frac{1}{4}$. As we've seen in figure \ref{fig:chap3.1.3} The volatility of the indexes strongly differs, meaning that index 4 would have the most impact, nearly 50 %, on the portfolio by weighing it equally. To cancel this effect, it may be useful to size the position with the inverse volatility, so the indexes have the weights seen in the table on the right side.
 
 \begin{equation}
   \label{eq:standardizing vola}
@@ -168,6 +168,7 @@ kbl(perc, caption="shares", booktabs = T) %>%
   kable_styling(latex_options = c("striped", "hold_position"))
 ```
 
+However In the further sections are only single indexes described
 \newpage
 
 ### 3.3. AR trading
