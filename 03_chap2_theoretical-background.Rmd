@@ -604,19 +604,15 @@ Drawdown describes the maximum cumulated loss an investor is going to face if he
 
 Maximum drawdown is used as an indicator for risk or can be used as an optimization criterion[@Maxdrawdown].
 
-&nbsp;
 
-#### 2.7.3. MSE
-
-
---  understandig what it does first
-
-&nbsp;
 
 ### 2.8. Carry
 
+&nbsp;
+
 Carry trades are trading strategies were usually money is borrowed at a lower interest rate, than the investment is giving in return.
 the risk of this strategy is based in the currency risk.
+
 
 
 

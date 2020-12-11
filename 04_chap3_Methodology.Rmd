@@ -18,7 +18,7 @@ ind <- data[,1:4]
 ## 3. Methodology
 
 In this section, different models are created and compared with the buy and hold strategy.
-You start with pure data analysis and then work your way from simple models to more and more complex ones.
+We start with pure data analysis and then work your way from simple models to more and more complex ones.
 
 ### 3.1. Data Analysis
 
@@ -41,7 +41,7 @@ kbl(c, caption="Correlations oft the four indexes", booktabs = T) %>%
 ```
 
 
-#### 3.1.2. transformation, volatility and clusters
+#### 3.1.2. Transformation, volatility and clusters
 
 &nbsp;
 
@@ -73,7 +73,7 @@ kbl(sharp_vola_df, caption="Sharpe Ratio and Volatility of the 4 indexes (log-re
   column_spec(5, color="#2297E6")
 ```
 
-As we can see in the table the volatility of index 4 is as much as  x x xx times higher than the volatility of index 1 and the sharperatio behaves inverse to the risk.
+As we can see in the table the volatility of index 4 is as much as  5 times higher than the volatility of index 1 and the sharperatio behaves inverse to the risk.
 
 &nbsp;
 
@@ -226,8 +226,7 @@ The upper part of figure \ref{fig:chap3.2.2.1} shows the optimal model compared 
 
 The lower part of figure \ref{fig:chap3.2.2.1} shows the trading signals visually. If one were to trade exactly according to the AR(2) forecasts, one would make a trade at each vertical line, a total of `r trade_1` trades would have to be made during out-of-sample periods. If you want to include trading costs in the performance, an AR model with daily trades would have to be much better than this one to outperform buy-and-hold.
 
-But what influence do the trading costs really have? If you assume a fictitious investment amount of 1 million USD and you have to pay 190 USD for each trade, as mentioned in section [3.2.1](#bnh-section). Invest this amount at the beginning of the out-of-sample period. With the buy-and-hold strategy, a return of USD `r return_bnh_1` is achieved by the end of the out-of-sample range. Without trading costs the AR(2) would yield USD `r return_ar_1`, with trading costs only USD `r return_ar_t_1`. To get at least the same return on the investment, the trading costs should not exceed USD 39. Note that in addition to the trading costs, the initial investment amount also matters.
-
+But what influence do the trading costs really have? If you assume a fictitious investment amount of 1 million USD and you have to pay 190 USD for each trade, as mentioned in section [3.2.1](#bnh-section). Invest this amount at the beginning of the out-of-sample period. With the buy-and-hold strategy, a return of USD `r return_bnh_1` is achieved by the end of the out-of-sample range. Without trading costs the AR(2) would yield USD `r return_ar_1`, with trading costs only USD `r return_ar_t_1`. To get at least the same return on the investment, the trading costs should not exceed USD 39. Note that the trading costs and the investment are totally fictious , in the real world lots of other parameters have to be taken in consideration such as, risk, tradeable volume at the exchange, regulations and many others.
 Thus it can be said that for index 1, the buy-and-hold strategy cannot be outperformed by an AR(2) model. Nevertheless, one would like to apply this procedure also to the other indexes, possibly the generated models perform better for the other time-series.
 
 ```{r artable, echo=FALSE}
@@ -354,7 +353,7 @@ for (i in 0:13) {
 }
 ```
 
-asdasd
+
 
 \newpage
 
@@ -716,8 +715,7 @@ Whilst the ten best sharperatios / drawdowns in \ref{fig:chap3.2.4.1.6} are alwa
 
 As noticed the Visualizations in[3.5.1.](#macrossingse)  are only done for index one, the optimal values and their fluctuation are shown in the tables \ref{tab:macrosstable index 1},\ref{tab:macrosstable index 2},\ref{tab:macrosstable index 3},\ref{tab:macrosstable index 4} and \ref{fig:chap3.2.4.1.8},\ref{fig:chap3.2.4.1.9},\ref{fig:chap3.2.4.1.10},\ref{fig:chap3.2.4.1.11},\ref{fig:chap3.2.4.1.12},\ref{fig:chap3.2.4.1.13}.
 
-Based on the optimal filterlenghts calculated in the last section the SMAs are now applied to the "out of sample" span from 2019-01-01 to 2020-04-01. Keeping in mind that the Moving Averages need the same 
-initialization time as the length of filter itself, only the optimal filterlengths from years smaller than 2017 are considered
+Based on the optimal filterlenghts calculated in the last section the SMAs are now applied to the "out of sample" span from 2019-01-01 to 2020-04-01. Keeping in mind that the Moving Averages need the same initialization time as the length of filter itself, only the optimal filterlengths from years smaller than 2017 are considered.
 
 
 
