@@ -1286,3 +1286,288 @@ trade_opt_4 <- as.numeric(res_trade_4[res_trade_4[,2] > bnh_trading_ret_4, ][,1]
 for (L in trade_opt_4) {
   print(plot_sma(x=ind.lr, inx=4, L=L, insamp = "2019-01-01"))
 }
+
+
+
+
+# Only SHARPE####
+
+loop_sma_sharpe <- function(x, inx, min_L=5, max_L=500, insamp = "2018-12-31") {
+  
+  
+  filler <- 1
+  res_mat <- matrix(1:((length(min_L:max_L))*3), ncol=3,
+                    dimnames = list(1:(length(min_L:max_L)), c("L", "Trades", "Sharpe")))
+  
+  pb <- txtProgressBar(min = min_L, max = max_L, style = 3)
+  
+  for (L in min_L:max_L) {
+    # SMA L<-328
+    sma_full <- SMA(x[,inx], n=L)
+    
+    # Cut init
+    sma_cut <- sma_full[paste(insamp, "/", sep="")]
+    
+    # Perf (daily)
+    perf <- lag(sign(sma_cut))*x[,inx][paste(insamp, "/", sep="")]
+    trade_sig <- lag(sign(sma_cut))
+    
+    # Count Trades
+    sma_trade_count <- trading_counter(as.numeric(na.exclude(trade_sig)))
+    
+    # Sharpe
+    sharpe <- sharpe_fun(na.exclude(perf))
+    
+    res_mat[filler,] <- c(L, sma_trade_count, sharpe)
+    
+    filler <- filler + 1
+    
+    setTxtProgressBar(pb, L)
+  }
+  close(pb)
+  res_df <- as.data.frame(res_mat)
+  return(res_df)
+}
+
+
+plot_sma <- function(x, inx, L, insamp = "2018-12-31") {
+  sma_full <- SMA(x[,inx], n=L)
+  
+  # Cut init
+  sma_cut <- sma_full[paste(insamp, "/", sep="")]
+  
+  # Perf (daily)
+  perf <- lag(sign(sma_cut))*x[,inx][paste(insamp, "/", sep="")]
+  trade_sig <- lag(sign(sma_cut))
+  
+  # Trade Counter
+  sma_trade_count <- trading_counter(as.numeric(na.exclude(trade_sig)))
+  
+  # Sharpe
+  bnh_sharpe <- round(sharpe_fun(x[,inx]["2019-01-01/"]), 3)
+  trade_sharpe <- round(sharpe_fun(na.exclude(perf)), 3)
+  
+  bnh_perf <- cumsum(x[,inx]["2019-01-01/"])
+  trade_perf <- cumsum(na.exclude(perf))
+  
+  ymin <- min(c(min(bnh_perf), min(trade_perf)))
+  ymax <- max(c(max(bnh_perf), max(trade_perf)))
+  
+  plot(bnh_perf, main=paste("Out-of-sample-Index: ",inx), lwd=2,
+       ylim=c(ymin-0.1*abs(ymin), ymax+0.1*ymax))
+  lines(trade_perf, col="#E413A3", lty=3, lwd=2)
+  
+  
+  addLegend("topleft", legend.names = c(paste("Buy & Hold | Sharpe=", bnh_sharpe),
+                                        paste("Trading-Opt.=",trade_sharpe, "| L=",L, "| Trades n=", sma_trade_count)),
+            lty=c(1, 3),
+            lwd=c(2, 2),
+            col=c("#000000", "#E413A3"),
+            cex=0.8)
+  
+  print(lines(trade_sig, on=NA, ylim=c(-1.5, 1.5), col="#E413A3", lwd=2))
+}
+plot_sma2 <- function(x, inx, L1, L2, insamp = "2018-12-31") {
+  sma_full1 <- SMA(x[,inx], n=L1)
+  sma_full2 <- SMA(x[,inx], n=L2)
+  
+  # Cut init
+  sma_cut1 <- sma_full1[paste(insamp, "/", sep="")]
+  sma_cut2 <- sma_full2[paste(insamp, "/", sep="")]
+  
+  # Perf (daily)
+  perf1 <- lag(sign(sma_cut1))*x[,inx][paste(insamp, "/", sep="")]
+  perf2 <- lag(sign(sma_cut2))*x[,inx][paste(insamp, "/", sep="")]
+  trade_sig1 <- lag(sign(sma_cut1))
+  trade_sig2 <- lag(sign(sma_cut2))
+  
+  # Trade Counter
+  sma_trade_count1 <- trading_counter(as.numeric(na.exclude(trade_sig1)))
+  sma_trade_count2 <- trading_counter(as.numeric(na.exclude(trade_sig2)))
+  
+  # Sharpe
+  bnh_sharpe <- round(sharpe_fun(x[,inx]["2019-01-01/"]), 3)
+  trade_sharpe1 <- round(sharpe_fun(na.exclude(perf1)), 3)
+  trade_sharpe2 <- round(sharpe_fun(na.exclude(perf2)), 3)
+  
+  bnh_perf <- cumsum(x[,inx]["2019-01-01/"])
+  trade_perf1 <- cumsum(na.exclude(perf1))
+  trade_perf2 <- cumsum(na.exclude(perf2))
+  
+  ymin <- min(c(min(bnh_perf), min(trade_perf1), min(trade_perf2)))
+  ymax <- max(c(max(bnh_perf), max(trade_perf1), max(trade_perf2)))
+  
+  plot(bnh_perf, main=paste("Out-of-sample-Index: ",inx), lwd=2,
+       ylim=c(ymin-0.1*abs(ymin), ymax+0.1*ymax))
+  lines(trade_perf1, col="#E413A3", lty=3, lwd=2)
+  lines(trade_perf2, col="#14C29A", lty=2, lwd=2)
+  
+  
+  addLegend("topleft", legend.names = c(paste("Buy & Hold | Sharpe=", bnh_sharpe),
+                                        paste("Trading-Opt.=",trade_sharpe1, "| L=",L1, "| Trades n=", sma_trade_count1),
+                                        paste("Trading-Opt.=",trade_sharpe2, "| L=",L2, "| Trades n=", sma_trade_count2)),
+            lty=c(1, 3, 2),
+            lwd=c(2, 2, 2),
+            col=c("#000000", "#E413A3", "#14C29A"),
+            cex=0.8)
+  
+  lines(trade_sig1, on=NA, ylim=c(-1.5, 1.5), col="#E413A3", lwd=2)
+  print(lines(trade_sig2, on=NA, ylim=c(-1.5, 1.5), col="#14C29A", lwd=2))
+}
+
+
+# Index 1####
+oof_sma_opt_1 <- loop_sma_sharpe(x=ind.lr, inx=1, min_L=5, max_L=500, insamp = "2018-12-31")
+save(oof_sma_opt_1, file="data/R_Files/oof_sma_opt_1.RData")
+
+bnh_sharpe_1 <- sharpe_fun(ind.lr[, 1]["2019-01-01/"])
+# 3.504957
+
+# How many are better than BnH
+sum(oof_sma_opt_1$Sharpe > bnh_sharpe_1)
+
+# df of better models
+oof_sma_opt_1[oof_sma_opt_1$Sharpe > bnh_sharpe_1, ]
+#    L       Trades   Sharpe
+# 42 46      7        3.535024
+# 51 55      5        3.509224
+ind1_outperf <- oof_sma_opt_1[oof_sma_opt_1$Sharpe > bnh_sharpe_1, ]
+plot(oof_sma_opt_1$Sharpe, type="l", main="SMA-Sharpe-Optimisation | Index 1", ylab="Sharpe Ratio", xlab="L", xaxt="n", col="#DF536B")
+axis(1, at=c(1, 96, 196, 296, 396, 496), labels=c("5", "100", "200", "300", "400", "500"))
+points(ind1_outperf$L-4, ind1_outperf$Sharpe, pch=19, col="#DF536B")
+
+
+plot_sma2(x=ind.lr, inx=1, L1=46, L2=55, insamp = "2018-12-31")
+
+
+
+
+
+# Index 2####
+oof_sma_opt_2 <- loop_sma_sharpe(x=ind.lr, inx=2, min_L=5, max_L=500, insamp = "2018-12-31")
+save(oof_sma_opt_2, file="data/R_Files/oof_sma_opt_2.RData")
+
+bnh_sharpe_2 <- sharpe_fun(ind.lr[, 2]["2019-01-01/"])
+# 2.475576
+
+# How many are better than BnH
+sum(oof_sma_opt_2$Sharpe > bnh_sharpe_2)
+
+# df of better models
+oof_sma_opt_2[oof_sma_opt_2$Sharpe > bnh_sharpe_2, ]
+#      L      Trades   Sharpe
+# 36   40     11       2.541531
+# 38   42     13       2.616882
+# 52   56      9       2.488370
+# 105 109      3       2.484579
+# 349 353      3       2.513635
+# 350 354      3       2.599536
+# 353 357      3       2.495972
+# 356 360      5       2.486452
+ind2_outperf <- oof_sma_opt_2[oof_sma_opt_2$Sharpe > bnh_sharpe_2, ]
+plot(oof_sma_opt_2$Sharpe, type="l", main="SMA-Sharpe-Optimisation | Index 2", ylab="Sharpe Ratio", xlab="L", xaxt="n", col="#DF536B")
+axis(1, at=c(1, 96, 196, 296, 396, 496), labels=c("5", "100", "200", "300", "400", "500"))
+points(ind2_outperf$L-4, ind2_outperf$Sharpe, pch=19, col="#DF536B")
+
+
+plot_sma2(x=ind.lr, inx=2, L1=42, L2=354, insamp = "2018-12-31")
+
+
+
+# Index 3####
+oof_sma_opt_3 <- loop_sma_sharpe(x=ind.lr, inx=3, min_L=5, max_L=500, insamp = "2018-12-31")
+save(oof_sma_opt_3, file="data/R_Files/oof_sma_opt_3.RData")
+
+bnh_sharpe_3 <- sharpe_fun(ind.lr[, 3]["2019-01-01/"])
+# 2.155228
+
+# How many are better than BnH
+sum(oof_sma_opt_3$Sharpe > bnh_sharpe_3)
+
+# df of better models
+oof_sma_opt_3[oof_sma_opt_3$Sharpe > bnh_sharpe_3, ]
+#      L      Trades   Sharpe
+# 35   39     13       2.303138
+# 36   40     13       2.440090
+# 37   41     11       2.301404
+# 38   42     11       2.376526
+# 43   47     17       2.168269
+# 71   75     13       2.171351
+# 343 347      4       2.164834
+# 344 348      5       2.175140
+# 345 349      6       2.166313
+# 348 352      3       2.223331
+# 379 383      3       2.182480
+# 380 384      3       2.206823
+# 381 385      3       2.179554
+ind3_outperf <- oof_sma_opt_3[oof_sma_opt_3$Sharpe > bnh_sharpe_3, ]
+plot(oof_sma_opt_3$Sharpe, type="l", main="SMA-Sharpe-Optimisation | Index 3", ylab="Sharpe Ratio", xlab="L", xaxt="n", col="#DF536B")
+axis(1, at=c(1, 96, 196, 296, 396, 496), labels=c("5", "100", "200", "300", "400", "500"))
+points(ind3_outperf$L-4, ind3_outperf$Sharpe, pch=19, col="#DF536B")
+
+
+plot_sma2(x=ind.lr, inx=3, L1=40, L2=352, insamp = "2018-12-31")
+
+
+
+
+
+
+
+
+# Index 4####
+oof_sma_opt_4 <- loop_sma_sharpe(x=ind.lr, inx=4, min_L=5, max_L=500, insamp = "2018-12-31")
+save(oof_sma_opt_4, file="data/R_Files/oof_sma_opt_4.RData")
+
+bnh_sharpe_4 <- sharpe_fun(ind.lr[, 4]["2019-01-01/"])
+# 1.944616
+
+# How many are better than BnH
+sum(oof_sma_opt_4$Sharpe > bnh_sharpe_4)
+
+# df of better models
+oof_sma_opt_4[oof_sma_opt_4$Sharpe > bnh_sharpe_4, ]
+#      L      Trades   Sharpe
+# 36   40     17       2.028963
+# 38   42     11       2.087792
+# 39   43     11       1.948564
+# 41   45     11       1.975857
+# 42   46     15       1.965345
+# 44   48     11       1.955923
+# 343 347      4       1.965141
+# 389 393      7       1.956801
+# 398 402      3       1.960507
+# 403 407      9       1.974093
+# 404 408      5       1.964247
+# 410 414      3       1.988528
+ind4_outperf <- oof_sma_opt_4[oof_sma_opt_4$Sharpe > bnh_sharpe_4, ]
+plot(oof_sma_opt_4$Sharpe, type="l", main="SMA-Sharpe-Optimisation | Index 4", ylab="Sharpe Ratio", xlab="L", xaxt="n", col="#DF536B")
+axis(1, at=c(1, 96, 196, 296, 396, 496), labels=c("5", "100", "200", "300", "400", "500"))
+points(ind4_outperf$L-4, ind4_outperf$Sharpe, pch=19, col="#DF536B")
+
+
+plot_sma2(x=ind.lr, inx=4, L1=42, L2=414, insamp = "2018-12-31")
+
+
+
+# AIO-Sharope####
+plot(oof_sma_opt_1$Sharpe, type="l", main="SMA-Sharpe-Optimization", ylab="Sharpe Ratio", xlab="L", xaxt="n", col="#000000", ylim=c(-0.5, 3.5))
+axis(1, at=c(1, 96, 196, 296, 396, 496), labels=c("5", "100", "200", "300", "400", "500"))
+points(ind1_outperf$L-4, ind1_outperf$Sharpe, pch=19, col="#000000")
+abline(h=bnh_sharpe_1, lty=2,col="#000000")
+legend("bottomright", legend=c("Index 1", "Index 2", "Index 3", "Index 4"),
+       col=c("#000000", "#DF536B", "#61D04F", "#2297E6"), lty=c(1,1, 1, 1), cex=0.8,
+       bty = "n")
+
+abline(h=bnh_sharpe_2, lty=2,col="#DF536B")
+lines(oof_sma_opt_2$Sharpe, type="l", col="#DF536B")
+points(ind2_outperf$L-4, ind2_outperf$Sharpe, pch=19, col="#DF536B")
+
+abline(h=bnh_sharpe_3, lty=2,col="#61D04F")
+lines(oof_sma_opt_3$Sharpe, type="l", col="#61D04F")
+points(ind3_outperf$L-4, ind3_outperf$Sharpe, pch=19, col="#61D04F")
+
+abline(h=bnh_sharpe_4, lty=2,col="#2297E6")
+lines(oof_sma_opt_4$Sharpe, type="l", col="#2297E6")
+points(ind4_outperf$L-4, ind4_outperf$Sharpe, pch=19, col="#2297E6")
+
