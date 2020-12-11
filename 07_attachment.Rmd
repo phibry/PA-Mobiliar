@@ -383,7 +383,7 @@ plot_sma <- function(x, inx, L, insamp = "2018-12-31") {
 
 \newpage
 
-#### 6.3.4.2. Plots & Tables
+#### 6.3.4.2. Plots & Tables {#sma-appendix}
 
 &nbsp;
 

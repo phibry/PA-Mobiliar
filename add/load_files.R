@@ -34,7 +34,12 @@ load("data/R_Files/optim_sma_3.RData")
 load("data/R_Files/optim_sma_4.RData")
 
 
-load("data/R_Files/res_trade_1.RData")
-load("data/R_Files/res_trade_2.RData")
-load("data/R_Files/res_trade_3.RData")
-load("data/R_Files/res_trade_4.RData")
+load("data/R_Files/oof_sma_opt_1.RData")
+load("data/R_Files/oof_sma_opt_2.RData")
+load("data/R_Files/oof_sma_opt_3.RData")
+load("data/R_Files/oof_sma_opt_4.RData")
+
+# load("data/R_Files/res_trade_1.RData")
+# load("data/R_Files/res_trade_2.RData")
+# load("data/R_Files/res_trade_3.RData")
+# load("data/R_Files/res_trade_4.RData")
