@@ -764,6 +764,7 @@ lines(index_1_tenbest_year[,4]*100,lwd=2,col="green",type="p")
 addLegend("topleft", on=1, legend.names = c("Sharpe ", "MaxDrawdown * 100 "), lty=c(1, 1), lwd=c(2, 2),col=c("black","green"))
 
 ```
+
 ```{r, chap3.2.4.1.13, echo=FALSE, fig.cap="Hyperoptimization 10 best Index 4", include=T,fig.keep = 'last',fig.dim=c(16, 7.1),out.width = "100%"}
 ################## lengths
 plot(index_4_tenbest_year[,2],type="p",col= "red",main= "Filterlengths 10 best Hyperoptimization Index 4 ",ylim=c(-10,260),format.labels="%b-%Y")
@@ -776,4 +777,10 @@ addLegend("left", on=1, legend.names = c("long filter sharpe", "long filter draw
 addLegend("bottomleft", on=1, legend.names = c("short filter sharpe", "short filter Drawdown "), lty=c(1, 1), lwd=c(1, 1),col=c("red","blue"))
 addLegend("topright", on=1, legend.names = c("maximum values"), pch=3,col="black")
 
+```
+\newpage
+```{r macrosstable 1000 x 1000  index 4, echo=FALSE}
+rolf1=(as.data.frame(rolf1))[,c(1,2,3)]
+kbl(as.data.frame(rolf1), caption="index 4 10 best", booktabs = T, linesep = "") %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
 ```

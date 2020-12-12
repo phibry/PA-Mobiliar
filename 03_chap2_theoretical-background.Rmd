@@ -21,8 +21,7 @@ geometry: margin = 1in
 
 ## 2. Theory
 
-It is assumed that the reader of this paper already has basic knowledge of the mathematical principles of time series analysis. Therefore, this section will only briefly describe the mathematical models and processes.
-
+It is assumed that the reader of this paper already has basic knowledge of the mathematical principles of time series analysis. Therefore, this section will only briefly describe the mathematical models and processes. This theory part is justified by the presentation of the different models and goes beyond the applied models in methodology.
 ### 2.1. Time-Series
 
 Almost anything with a data point to a given timestamp can be named a time-series. The monthly gross domestic product, the weekly US gasoline production, or daily stock price movements. In this paper lies the focus of the analysis of financial time series. Due to trades often only take place during the week, there are gaps in the time series on the weekends, an exception would be the trading of cryptocurrencies like Bitcoin which are also tradeable at the weekends.
@@ -604,19 +603,15 @@ Drawdown describes the maximum cumulated loss an investor is going to face if he
 
 Maximum drawdown is used as an indicator for risk or can be used as an optimization criterion[@Maxdrawdown].
 
-&nbsp;
 
-#### 2.7.3. MSE
-
-
---  understandig what it does first
-
-&nbsp;
 
 ### 2.8. Carry
 
+&nbsp;
+
 Carry trades are trading strategies were usually money is borrowed at a lower interest rate, than the investment is giving in return.
 the risk of this strategy is based in the currency risk.
+
 
 
 
