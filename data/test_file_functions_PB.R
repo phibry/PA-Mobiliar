@@ -267,7 +267,7 @@ cross_optim_easy_v3 <- function(x, start, end = "2018-12-31", L1min = 1, L1max =
       # Signals
       signal <- rep(0,length(sma1))
       signal[which(sma1>sma2&lag(sma1)<lag(sma2))] <- 1
-      signal[which(sma1<sma2&lag(sma1)>lag(sma2))]< - -1
+      signal[which(sma1<sma2&lag(sma1)>lag(sma2))]< - -1m
       signal[which(sma1>sma2)] <- 1
       signal[which(sma1<sma2)] <- -1
       signal <- reclass(signal,sma1)
@@ -404,8 +404,8 @@ s2016   17 111 dd 2014  17 106
 2016 12 134    dd 2016 12 100
 
 #############1##############
-n1=19
-n2  = 101
+n1=50
+n2  = 250
 mobidat= data[,4] # chose the row and horizon
 start="2019-01-01"
 end = "2020-04-31"

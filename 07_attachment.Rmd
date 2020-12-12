@@ -4,7 +4,18 @@ geometry: margin = 1in
 ---
 
 ## 6. Attachment
+This project work is created  with R-4.0.2 , RStudio Version 1.4.904 and RMarkdown in collaborative working via Git / Github
 
+```{r,echo=T, eval=FALSE, include=T}
+#libraries
+library(xts)
+library(PerformanceAnalytics)
+library(kableExtra)
+library(dplyr)
+library(quantmod)
+library(forecast)
+library(fGarch)
+```
 
 ### 6.3.3. AR 
 
@@ -12,7 +23,7 @@ geometry: margin = 1in
 
 &nbsp;
 
-```{r, chap6.3.3.1 ,echo=T, eval=FALSE, include=T}
+```{r, chap6.3.3.1, echo=T, eval=FALSE, include=T}
 # AR-Optim####
 performante_ar <- function(xin, xout) {
   # AR-Model Order p -> 1:8
@@ -779,8 +790,25 @@ addLegend("topright", on=1, legend.names = c("maximum values"), pch=3,col="black
 
 ```
 \newpage
-```{r macrosstable 1000 x 1000  index 4, echo=FALSE}
+```{r macrosstable 1000 x 1000 index 4.1, echo=FALSE}
 rolf1=(as.data.frame(rolf1))[,c(1,2,3)]
-kbl(as.data.frame(rolf1), caption="index 4 10 best", booktabs = T, linesep = "") %>%
+
+
+kbl(rolf1[1:40,] , caption="index 4 10 best", booktabs = T, linesep = "") %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
+```
+\newpage
+```{r macrosstable 1000 x 1000 index 4.2, echo=FALSE}
+kbl(rolf1[41:80,], caption="index 4 10 best", booktabs = T, linesep = "") %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
+```
+\newpage
+```{r macrosstable 1000 x 1000 index 4.3, echo=FALSE}
+kbl(rolf1[81:120,], caption="index 4 10 best", booktabs = T, linesep = "") %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
+```
+\newpage
+```{r macrosstable 1000 x 1000 index 4.4, echo=FALSE}
+kbl(rolf1[121:160,], caption="index 4 10 best", booktabs = T, linesep = "") %>%
   kable_styling(latex_options = c("striped", "hold_position"))
 ```

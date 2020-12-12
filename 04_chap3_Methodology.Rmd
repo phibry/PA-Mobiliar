@@ -627,29 +627,24 @@ addLegend("bottomleft", on=1, legend.names = c("short filter sharpe", "short fil
 
 Whilst the ten best sharperatios / drawdowns in \ref{fig:chap3.2.4.1.6} are always very close together, the filterplot \ref{fig:chap3.2.4.1.6}  shows a completely different and interesting image. We can observe differences, specially in the long filters in 2009(financial crisis?) 2010 2011 the result nearly diverge 150 units. Also in the timespan 2011 to 2018 the filters fluctuate strongly. What further catches the eye, are the long- and the shortfilter sharpes from 2003 to 2011. They are all concentrated at their upper limits of 50 and 250, which indicates that they actually wanted to be longer than the restriction. The same behaviour is observed for the short drawdown from 2011 to 2018 where the observations are concentrated around length 1. The plot would shurely look different if the restrictions of the filterlengths would be greater. Also the steps of the insample timespan are always one year. Changing the restriction would have a massive impact on the optimization time and would most likely deliver different results.
 
-Curiostiy leads us to recreate the optimization for $1 < L1 \le 1000$ and $1 < L2 \le 1000$  which calculates 16 million sharpes.  Now L2 can be smaller than L1 but the trading rule stays the same.
-
-macrosstable 1000 x 1000  index 4
-
+Curiosity leads us to recreate the optimization for $1 < L1 \le 1000$ and $1 < L2 \le 1000$  which calculates 16 million sharpes.  Now L2 can be smaller than L1 while the trading rule stays the same. The numeric results can be found in \ref{tab:macrosstable 1000 x 1000 index 4.1}
 
 ```{r, chap3.2.4.1.14, echo=FALSE, fig.cap="Hyperoptimization 1000 x 1000 Index 4", include=T,fig.keep = 'last',fig.dim=c(16, 7.1),out.width = "100%"}
-##################sharpe maxdrow 10
-
-plot(rolf1[,1],ylim= c(-2,4),col="black",type="p",format.labels="%b-%Y",main=" =Optimization with 1000x1000 index 4")
-
+plot(rolf1[,1],ylim= c(-2,4),col="black",type="p",format.labels="%b-%Y",main="Optimization with 1000x1000 index 4")
 addLegend("topleft", on=1, legend.names ="Sharpe " ,lty=1, lwd=2,col="black")
-
 ```
+
 ```{r, chap3.2.4.1.15, echo=FALSE, fig.cap="Hyperoptimization 10 best Index 4", include=T,fig.keep = 'last',fig.dim=c(16, 7.1),out.width = "100%"}
-################## lengths
-plot(rolf1[,2],type="p",col= "red",main= "Filterlengths 10 best Hyperoptimization Index 4 ",ylim=c(-200,1010),format.labels="%b-%Y")
+plot(rolf1[,2],type="p",col= "red",main= "Optimization with 1000x1000 index 4 ",ylim=c(-200,1010),format.labels="%b-%Y")
 lines(rolf1[,3], col=c("blue"),lwd=2,type="p")
-
 addLegend("left", on=1, legend.names = c("long filter sharpe", "long filter drawdown "), lty=c(1, 1), lwd=c(1, 1),col=c("red","blue"))
-
 ```
 
-But we take the risk in good knowledge of maybe not finding the right filterlenght and use this optimization for trading the series in the next section.
+In figure \ref{fig:chap3.2.4.1.14} the sharpes of the 10 best models look all very similar in each step except for 2009 and 2012 de vary a bit. Until 2015 they are all slightly under 1. Very important is the cat that a filterlength of 100 means 4 years which is a very long time. The results narrowing Jan-2019 are close to or directly buy and hold, therefore the sharpe rises to nearly 3. Interesting are also the result in figure \ref{fig:chap3.2.4.1.15}. From 2002 to 2011 the long and the short filter are always very close together. This plot could lead to a more interesting analysis. Due the time time and length limitation this optimization is closed here and not further discussed.
+
+
+In good knowledge we're taking the risk of maybe not finding the right filterlenght and use the result of the optimizations for trading the series in the next section.
+
 
 
 
@@ -724,4 +719,7 @@ names(ret)="filter"
 #charts.PerformanceSummary(ret, main="Naive Buy Rule")
 #sqrt(255)*SharpeRatio(ret,FUN="StdDev")  # 1.761906 L1=12 ,L2 =134
 ```
-As endresult buy and hold stays better than the Ma crossing, at least with the parameter restrictions we implied. The intuition says that this strategy may not be so bad, why leaving a trend market
+
+Also neither of the results from \ref{fig:chap3.2.4.1.15} are clearly satisfying
+
+As endresult buy and hold stays better as the combinations of ma crossigs, at least with the parameter restrictions we implied. The intuition , and also thh common used filters L1=50 / L2=250 equals buy and hold. This strategy may not be so bad, why leaving a trend market instead of profiting from it.
