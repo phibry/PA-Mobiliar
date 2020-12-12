@@ -637,7 +637,7 @@ names(ret)="filter"
 \newpage
 Regarding the other indexes, the results  look all very similiar. None of the Moving average crossing are able to outperform buy and hold. For visualizing we use only the fourth index with *2016-01-01 0.998 12 134*. For this index we have leastways two trades \ref{fig:chap3.5.2.3}. Following the longer filter (red) from the left side, it crosses the blue line ( L1 ) in the beginning of 2020, that's where a selling is executed. Shortly after the buy signals comes with the red line crossing the blue from above. With this signals we get a sharpe of *1.761906*, in comparison to the buy and hold sharpe index-4 *1.963966*.
 &nbsp;
-```{r, chap3.5.2.3 , echo=FALSE, fig.cap="Macrossing index 4 L1 = 12 L2 = 134", include=T, fig.keep = 'last',out.width="100%"}
+```{r, chap3.5.2.3, echo=FALSE, fig.cap="Macrossing index 4 L1 = 12 L2 = 134", include=T, fig.keep = 'last',out.width="100%"}
 n1=12
 n2 =134
 mobidat= data[,4] # chose the row and horizon
