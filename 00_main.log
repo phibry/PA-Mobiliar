@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.9.20)  12 DEC 2020 16:32
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.9.20)  12 DEC 2020 16:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1068,516 +1068,527 @@ l.1521 \newpage
 File: 00_main_files/figure-latex/chap3.2.3.1-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.3.1-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.3.1-1.pdf  used on 
-input line 1554.
+input line 1558.
 (pdftex.def)             Requested size: 469.75801pt x 242.65645pt.
 [27pdfTeX warning (ext4): destination with the same identifier (name{figure.20}
 ) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.1576 \newpage
+l.1580 \newpage
                 <./00_main_files/figure-latex/chap3.2.3.1-1.pdf>] [28pdfTeX war
 ning (ext4): destination with the same identifier (name{table.9}) has been alre
 ady used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.1626 \newpage
+l.1630 \newpage
                ]
-<00_main_files/figure-latex/chap3.2.3.2-1.pdf, id=607, 752.8125pt x 404.51125pt
+<00_main_files/figure-latex/chap3.2.3.2-1.pdf, id=610, 752.8125pt x 404.51125pt
 >
 File: 00_main_files/figure-latex/chap3.2.3.2-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.3.2-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.3.2-1.pdf  used on 
-input line 1645.
+input line 1651.
 (pdftex.def)             Requested size: 469.77148pt x 252.42387pt.
 [29pdfTeX warning (ext4): destination with the same identifier (name{figure.21}
 ) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.1669 \newpage
+l.1663 \newpage
                 <./00_main_files/figure-latex/chap3.2.3.2-1.pdf>]
-<00_main_files/figure-latex/chap3.2.3.3-1.pdf, id=622, 765.86125pt x 391.4625pt
+<00_main_files/figure-latex/chap3.2.3.3-1.pdf, id=626, 765.86125pt x 391.4625pt
 >
 File: 00_main_files/figure-latex/chap3.2.3.3-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.3.3-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.3.3-1.pdf  used on 
-input line 1673.
+input line 1697.
 (pdftex.def)             Requested size: 469.75731pt x 240.11185pt.
 [30pdfTeX warning (ext4): destination with the same identifier (name{figure.22}
 ) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.1680 \newpage
+l.1722 \newpage
                 <./00_main_files/figure-latex/chap3.2.3.3-1.pdf>]
-<00_main_files/figure-latex/chap3.2.3.4-1.pdf, id=636, 752.8125pt x 402.50375pt
+Overfull \hbox (11.79932pt too wide) in paragraph at lines 1733--1755
+ [][] 
+ []
+
+[31pdfTeX warning (ext4): destination with the same identifier (name{table.10})
+ has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.1757 \newpage
+               ]
+<00_main_files/figure-latex/chap3.2.3.4-1.pdf, id=649, 752.8125pt x 402.50375pt
 >
 File: 00_main_files/figure-latex/chap3.2.3.4-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.3.4-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.3.4-1.pdf  used on 
-input line 1684.
+input line 1761.
 (pdftex.def)             Requested size: 469.77148pt x 251.17114pt.
-[31pdfTeX warning (ext4): destination with the same identifier (name{figure.23}
+[32pdfTeX warning (ext4): destination with the same identifier (name{figure.23}
 ) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.1691 \newpage
+l.1768 \newpage
                 <./00_main_files/figure-latex/chap3.2.3.4-1.pdf>]
-<00_main_files/figure-latex/chap3.2.4.1.1-1.pdf, id=654, 1127.21124pt x 495.852
+<00_main_files/figure-latex/chap3.2.4.1.1-1.pdf, id=667, 1127.21124pt x 495.852
 5pt>
 File: 00_main_files/figure-latex/chap3.2.4.1.1-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.4.1.1-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.4.1.1-1.pdf  used o
-n input line 1746.
+n input line 1823.
 (pdftex.def)             Requested size: 469.76193pt x 206.64505pt.
-[32pdfTeX warning (ext4): destination with the same identifier (name{figure.24}
+[33pdfTeX warning (ext4): destination with the same identifier (name{figure.24}
 ) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.1752 \newpage
+l.1829 \newpage
                 <./00_main_files/figure-latex/chap3.2.4.1.1-1.pdf>]
-<00_main_files/figure-latex/chap3.2.4.1.2-1.pdf, id=672, 1123.19624pt x 437.635
+<00_main_files/figure-latex/chap3.2.4.1.2-1.pdf, id=687, 1123.19624pt x 437.635
 pt>
 File: 00_main_files/figure-latex/chap3.2.4.1.2-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.4.1.2-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.4.1.2-1.pdf  used o
-n input line 1755.
+n input line 1832.
 (pdftex.def)             Requested size: 469.75113pt x 183.03082pt.
-<00_main_files/figure-latex/chap3.2.4.1.3-1.pdf, id=673, 1123.19624pt x 463.732
+<00_main_files/figure-latex/chap3.2.4.1.3-1.pdf, id=688, 1123.19624pt x 463.732
 5pt>
 File: 00_main_files/figure-latex/chap3.2.4.1.3-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.4.1.3-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.4.1.3-1.pdf  used o
-n input line 1766.
+n input line 1843.
 (pdftex.def)             Requested size: 469.75113pt x 193.9455pt.
-[33pdfTeX warning (ext4): destination with the same identifier (name{figure.25}
+[34pdfTeX warning (ext4): destination with the same identifier (name{figure.25}
 ) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.1789 \newpage
+l.1866 \newpage
                pdfTeX warning (ext4): destination with the same identifier (nam
 e{figure.26}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.1789 \newpage
+l.1866 \newpage
                 <./00_main_files/figure-latex/chap3.2.4.1.2-1.pdf> <./00_main_f
 iles/figure-latex/chap3.2.4.1.3-1.pdf>]
-<00_main_files/figure-latex/chap3.2.4.1.4-1.pdf, id=700, 1069.9975pt x 462.7287
+<00_main_files/figure-latex/chap3.2.4.1.4-1.pdf, id=713, 1069.9975pt x 462.7287
 4pt>
 File: 00_main_files/figure-latex/chap3.2.4.1.4-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.4.1.4-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.4.1.4-1.pdf  used o
-n input line 1793.
+n input line 1870.
 (pdftex.def)             Requested size: 469.75543pt x 203.14938pt.
-<00_main_files/figure-latex/chap3.2.4.1.5-1.pdf, id=701, 1082.0425pt x 462.7287
+<00_main_files/figure-latex/chap3.2.4.1.5-1.pdf, id=714, 1082.0425pt x 462.7287
 4pt>
 File: 00_main_files/figure-latex/chap3.2.4.1.5-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.4.1.5-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.4.1.5-1.pdf  used o
-n input line 1804.
+n input line 1881.
 (pdftex.def)             Requested size: 469.74358pt x 200.88292pt.
-[34pdfTeX warning (ext4): destination with the same identifier (name{figure.27}
+[35pdfTeX warning (ext4): destination with the same identifier (name{figure.27}
 ) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.1825 the same plot \newpage
+l.1902 the same plot \newpage
                              pdfTeX warning (ext4): destination with the same i
 dentifier (name{figure.28}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.1825 the same plot \newpage
+l.1902 the same plot \newpage
                               <./00_main_files/figure-latex/chap3.2.4.1.4-1.pdf
 > <./00_main_files/figure-latex/chap3.2.4.1.5-1.pdf>]
-<00_main_files/figure-latex/chap3.2.4.1.6-1.pdf, id=735, 1069.9975pt x 462.7287
+<00_main_files/figure-latex/chap3.2.4.1.6-1.pdf, id=748, 1069.9975pt x 462.7287
 4pt>
 File: 00_main_files/figure-latex/chap3.2.4.1.6-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.4.1.6-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.4.1.6-1.pdf  used o
-n input line 1829.
+n input line 1906.
 (pdftex.def)             Requested size: 469.75543pt x 203.14938pt.
-<00_main_files/figure-latex/chap3.2.4.1.7-1.pdf, id=736, 1082.0425pt x 462.7287
+<00_main_files/figure-latex/chap3.2.4.1.7-1.pdf, id=749, 1082.0425pt x 462.7287
 4pt>
 File: 00_main_files/figure-latex/chap3.2.4.1.7-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.4.1.7-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.4.1.7-1.pdf  used o
-n input line 1838.
+n input line 1915.
 (pdftex.def)             Requested size: 469.74358pt x 200.88292pt.
-<00_main_files/figure-latex/chap3.2.4.1.14-1.pdf, id=739, 1069.9975pt x 462.728
+<00_main_files/figure-latex/chap3.2.4.1.14-1.pdf, id=752, 1069.9975pt x 462.728
 74pt>
 File: 00_main_files/figure-latex/chap3.2.4.1.14-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.4.1.14-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.4.1.14-1.pdf  used 
-on input line 1869.
+on input line 1946.
 (pdftex.def)             Requested size: 469.75543pt x 203.14938pt.
-<00_main_files/figure-latex/chap3.2.4.1.15-1.pdf, id=740, 1093.08376pt x 462.72
+<00_main_files/figure-latex/chap3.2.4.1.15-1.pdf, id=753, 1093.08376pt x 462.72
 874pt>
 File: 00_main_files/figure-latex/chap3.2.4.1.15-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.4.1.15-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.4.1.15-1.pdf  used 
-on input line 1877.
+on input line 1954.
 (pdftex.def)             Requested size: 469.74998pt x 198.8565pt.
-[35pdfTeX warning (ext4): destination with the same identifier (name{figure.29}
+[36pdfTeX warning (ext4): destination with the same identifier (name{figure.29}
 ) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.1887 
+l.1964 
        pdfTeX warning (ext4): destination with the same identifier (name{figure
 .30}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.1887 
+l.1964 
         <./00_main_files/figure-latex/chap3.2.4.1.6-1.pdf> <./00_main_files/fig
-ure-latex/chap3.2.4.1.7-1.pdf>] [36pdfTeX warning (ext4): destination with the 
+ure-latex/chap3.2.4.1.7-1.pdf>] [37pdfTeX warning (ext4): destination with the 
 same identifier (name{figure.31}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.1887 
+l.1964 
        pdfTeX warning (ext4): destination with the same identifier (name{figure
 .32}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.1887 
+l.1964 
         <./00_main_files/figure-latex/chap3.2.4.1.14-1.pdf> <./00_main_files/fi
-gure-latex/chap3.2.4.1.15-1.pdf>] [37]
-<00_main_files/figure-latex/chap3.5.2.2. -1.pdf, id=798, 447.6725pt x 307.1475p
+gure-latex/chap3.2.4.1.15-1.pdf>] [38]
+<00_main_files/figure-latex/chap3.5.2.2. -1.pdf, id=811, 447.6725pt x 307.1475p
 t>
 File: 00_main_files/figure-latex/chap3.5.2.2. -1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.5.2.2. -1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.5.2.2. -1.pdf  used o
-n input line 1917.
+n input line 1994.
 (pdftex.def)             Requested size: 447.69872pt x 307.16548pt.
-[38pdfTeX warning (ext4): destination with the same identifier (name{figure.33}
+[39pdfTeX warning (ext4): destination with the same identifier (name{figure.33}
 ) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.1923 \newpage
+l.2000 \newpage
                 <./00_main_files/figure-latex/chap3.5.2.2. -1.pdf>]
-<00_main_files/figure-latex/chap3.5.2.3-1.pdf, id=825, 455.7025pt x 307.1475pt>
+<00_main_files/figure-latex/chap3.5.2.3-1.pdf, id=840, 455.7025pt x 307.1475pt>
 
 File: 00_main_files/figure-latex/chap3.5.2.3-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.5.2.3-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.5.2.3-1.pdf  used on 
-input line 1938.
+input line 2015.
 (pdftex.def)             Requested size: 455.72917pt x 307.16548pt.
-[39pdfTeX warning (ext4): destination with the same identifier (name{figure.34}
+[40pdfTeX warning (ext4): destination with the same identifier (name{figure.34}
 ) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.1949 \newpage
-                <./00_main_files/figure-latex/chap3.5.2.3-1.pdf>] [40] [41]
+l.2026 \newpage
+                <./00_main_files/figure-latex/chap3.5.2.3-1.pdf>] [41] [42]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 2
-042.
+119.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 2044.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 2121.
 
-Underfull \vbox (badness 10000) detected at line 2165
+Underfull \vbox (badness 10000) detected at line 2242
  []
 
-[42]
-Underfull \vbox (badness 10000) detected at line 2165
- []
-
-
-Underfull \vbox (badness 10000) detected at line 2165
- []
-
-[43] [44]
-Underfull \vbox (badness 4341) detected at line 2448
- []
-
-[45]
-Underfull \vbox (badness 10000) detected at line 2448
+[43]
+Underfull \vbox (badness 10000) detected at line 2242
  []
 
 
-Underfull \vbox (badness 10000) detected at line 2448
+Underfull \vbox (badness 10000) detected at line 2242
+ []
+
+[44] [45]
+Underfull \vbox (badness 4341) detected at line 2525
  []
 
 [46]
-Underfull \vbox (badness 10000) detected at line 2448
+Underfull \vbox (badness 10000) detected at line 2525
  []
 
 
-Underfull \vbox (badness 10000) detected at line 2448
+Underfull \vbox (badness 10000) detected at line 2525
  []
 
 [47]
-Underfull \vbox (badness 10000) detected at line 2448
+Underfull \vbox (badness 10000) detected at line 2525
  []
 
 
-Underfull \vbox (badness 10000) detected at line 2448
+Underfull \vbox (badness 10000) detected at line 2525
  []
 
 [48]
-Underfull \vbox (badness 10000) detected at line 2448
+Underfull \vbox (badness 10000) detected at line 2525
  []
 
 
-Underfull \vbox (badness 10000) detected at line 2448
+Underfull \vbox (badness 10000) detected at line 2525
  []
 
-[49] [50]
-<00_main_files/figure-latex/chap6.3.4.1-1.pdf, id=923, 757.83125pt x 391.4625pt
+[49]
+Underfull \vbox (badness 10000) detected at line 2525
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 2525
+ []
+
+[50] [51]
+<00_main_files/figure-latex/chap6.3.4.1-1.pdf, id=937, 757.83125pt x 391.4625pt
 >
 File: 00_main_files/figure-latex/chap6.3.4.1-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap6.3.4.1-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap6.3.4.1-1.pdf  used on 
-input line 2459.
+input line 2536.
 (pdftex.def)             Requested size: 469.75801pt x 242.65645pt.
-[51pdfTeX warning (ext4): destination with the same identifier (name{figure.35}
+[52pdfTeX warning (ext4): destination with the same identifier (name{figure.35}
 ) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.2492 \newpage
-               pdfTeX warning (ext4): destination with the same identifier (nam
-e{table.10}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.2492 \newpage
-                <./00_main_files/figure-latex/chap6.3.4.1-1.pdf>]
-<00_main_files/figure-latex/chap6.3.4.2-1.pdf, id=940, 752.8125pt x 404.51125pt
->
-File: 00_main_files/figure-latex/chap6.3.4.2-1.pdf Graphic file (type pdf)
-<use 00_main_files/figure-latex/chap6.3.4.2-1.pdf>
-Package pdftex.def Info: 00_main_files/figure-latex/chap6.3.4.2-1.pdf  used on 
-input line 2496.
-(pdftex.def)             Requested size: 469.77148pt x 252.42387pt.
-[52pdfTeX warning (ext4): destination with the same identifier (name{figure.36}
-) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.2503 \newpage
-                <./00_main_files/figure-latex/chap6.3.4.2-1.pdf>]
-<00_main_files/figure-latex/chap6.3.4.3-1.pdf, id=955, 757.83125pt x 391.4625pt
->
-File: 00_main_files/figure-latex/chap6.3.4.3-1.pdf Graphic file (type pdf)
-<use 00_main_files/figure-latex/chap6.3.4.3-1.pdf>
-Package pdftex.def Info: 00_main_files/figure-latex/chap6.3.4.3-1.pdf  used on 
-input line 2507.
-(pdftex.def)             Requested size: 469.75801pt x 242.65645pt.
-[53pdfTeX warning (ext4): destination with the same identifier (name{figure.37}
-) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.2540 \newpage
+l.2569 \newpage
                pdfTeX warning (ext4): destination with the same identifier (nam
 e{table.11}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.2540 \newpage
-                <./00_main_files/figure-latex/chap6.3.4.3-1.pdf>]
-<00_main_files/figure-latex/chap6.3.4.4-1.pdf, id=970, 752.8125pt x 404.51125pt
+l.2569 \newpage
+                <./00_main_files/figure-latex/chap6.3.4.1-1.pdf>]
+<00_main_files/figure-latex/chap6.3.4.2-1.pdf, id=954, 752.8125pt x 404.51125pt
 >
-File: 00_main_files/figure-latex/chap6.3.4.4-1.pdf Graphic file (type pdf)
-<use 00_main_files/figure-latex/chap6.3.4.4-1.pdf>
-Package pdftex.def Info: 00_main_files/figure-latex/chap6.3.4.4-1.pdf  used on 
-input line 2544.
+File: 00_main_files/figure-latex/chap6.3.4.2-1.pdf Graphic file (type pdf)
+<use 00_main_files/figure-latex/chap6.3.4.2-1.pdf>
+Package pdftex.def Info: 00_main_files/figure-latex/chap6.3.4.2-1.pdf  used on 
+input line 2573.
 (pdftex.def)             Requested size: 469.77148pt x 252.42387pt.
-[54pdfTeX warning (ext4): destination with the same identifier (name{figure.38}
+[53pdfTeX warning (ext4): destination with the same identifier (name{figure.36}
 ) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.2551 \newpage
-                <./00_main_files/figure-latex/chap6.3.4.4-1.pdf>]
-<00_main_files/figure-latex/chap6.3.4.5-1.pdf, id=984, 757.83125pt x 391.4625pt
+l.2580 \newpage
+                <./00_main_files/figure-latex/chap6.3.4.2-1.pdf>]
+<00_main_files/figure-latex/chap6.3.4.3-1.pdf, id=968, 757.83125pt x 391.4625pt
 >
-File: 00_main_files/figure-latex/chap6.3.4.5-1.pdf Graphic file (type pdf)
-<use 00_main_files/figure-latex/chap6.3.4.5-1.pdf>
-Package pdftex.def Info: 00_main_files/figure-latex/chap6.3.4.5-1.pdf  used on 
-input line 2555.
+File: 00_main_files/figure-latex/chap6.3.4.3-1.pdf Graphic file (type pdf)
+<use 00_main_files/figure-latex/chap6.3.4.3-1.pdf>
+Package pdftex.def Info: 00_main_files/figure-latex/chap6.3.4.3-1.pdf  used on 
+input line 2584.
 (pdftex.def)             Requested size: 469.75801pt x 242.65645pt.
-[55pdfTeX warning (ext4): destination with the same identifier (name{figure.39}
+[54pdfTeX warning (ext4): destination with the same identifier (name{figure.37}
 ) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.2588 \newpage
+l.2617 \newpage
                pdfTeX warning (ext4): destination with the same identifier (nam
 e{table.12}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.2588 \newpage
-                <./00_main_files/figure-latex/chap6.3.4.5-1.pdf>]
-<00_main_files/figure-latex/chap6.3.4.6-1.pdf, id=999, 752.8125pt x 404.51125pt
+l.2617 \newpage
+                <./00_main_files/figure-latex/chap6.3.4.3-1.pdf>]
+<00_main_files/figure-latex/chap6.3.4.4-1.pdf, id=983, 752.8125pt x 404.51125pt
 >
-File: 00_main_files/figure-latex/chap6.3.4.6-1.pdf Graphic file (type pdf)
-<use 00_main_files/figure-latex/chap6.3.4.6-1.pdf>
-Package pdftex.def Info: 00_main_files/figure-latex/chap6.3.4.6-1.pdf  used on 
-input line 2592.
+File: 00_main_files/figure-latex/chap6.3.4.4-1.pdf Graphic file (type pdf)
+<use 00_main_files/figure-latex/chap6.3.4.4-1.pdf>
+Package pdftex.def Info: 00_main_files/figure-latex/chap6.3.4.4-1.pdf  used on 
+input line 2621.
 (pdftex.def)             Requested size: 469.77148pt x 252.42387pt.
-[56pdfTeX warning (ext4): destination with the same identifier (name{figure.40}
+[55pdfTeX warning (ext4): destination with the same identifier (name{figure.38}
 ) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.2598 \newpage
+l.2628 \newpage
+                <./00_main_files/figure-latex/chap6.3.4.4-1.pdf>]
+<00_main_files/figure-latex/chap6.3.4.5-1.pdf, id=997, 757.83125pt x 391.4625pt
+>
+File: 00_main_files/figure-latex/chap6.3.4.5-1.pdf Graphic file (type pdf)
+<use 00_main_files/figure-latex/chap6.3.4.5-1.pdf>
+Package pdftex.def Info: 00_main_files/figure-latex/chap6.3.4.5-1.pdf  used on 
+input line 2632.
+(pdftex.def)             Requested size: 469.75801pt x 242.65645pt.
+[56pdfTeX warning (ext4): destination with the same identifier (name{figure.39}
+) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.2665 \newpage
+               pdfTeX warning (ext4): destination with the same identifier (nam
+e{table.13}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.2665 \newpage
+                <./00_main_files/figure-latex/chap6.3.4.5-1.pdf>]
+<00_main_files/figure-latex/chap6.3.4.6-1.pdf, id=1012, 752.8125pt x 404.51125p
+t>
+File: 00_main_files/figure-latex/chap6.3.4.6-1.pdf Graphic file (type pdf)
+<use 00_main_files/figure-latex/chap6.3.4.6-1.pdf>
+Package pdftex.def Info: 00_main_files/figure-latex/chap6.3.4.6-1.pdf  used on 
+input line 2669.
+(pdftex.def)             Requested size: 469.77148pt x 252.42387pt.
+[57pdfTeX warning (ext4): destination with the same identifier (name{figure.40}
+) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.2675 \newpage
                 <./00_main_files/figure-latex/chap6.3.4.6-1.pdf>]
 LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
-2653.
+2730.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-Underfull \vbox (badness 4341) detected at line 2712
+Underfull \vbox (badness 4341) detected at line 2789
  []
 
-[57] [58] [59pdfTeX warning (ext4): destination with the same identifier (name{
-table.13}) has been already used, duplicate ignored
+[58] [59] [60pdfTeX warning (ext4): destination with the same identifier (name{
+table.14}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.2775 \newpage
+l.2852 \newpage
                pdfTeX warning (ext4): destination with the same identifier (nam
-e{table.14}) has been already used, duplicate ignored
+e{table.15}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.2775 \newpage
-               ] [60pdfTeX warning (ext4): destination with the same identifier
- (name{table.15}) has been already used, duplicate ignored
+l.2852 \newpage
+               ] [61pdfTeX warning (ext4): destination with the same identifier
+ (name{table.16}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.2830 \newpage
+l.2907 \newpage
                pdfTeX warning (ext4): destination with the same identifier (nam
-e{table.16}) has been already used, duplicate ignored
+e{table.17}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.2830 \newpage
+l.2907 \newpage
                ]
-<00_main_files/figure-latex/chap3.2.4.1.8-1.pdf, id=1035, 1072.005pt x 462.7287
+<00_main_files/figure-latex/chap3.2.4.1.8-1.pdf, id=1048, 1072.005pt x 462.7287
 4pt>
 File: 00_main_files/figure-latex/chap3.2.4.1.8-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.4.1.8-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.4.1.8-1.pdf  used o
-n input line 2833.
+n input line 2910.
 (pdftex.def)             Requested size: 469.75348pt x 202.76811pt.
-<00_main_files/figure-latex/chap3.2.4.1.9-1.pdf, id=1036, 1082.0425pt x 462.728
+<00_main_files/figure-latex/chap3.2.4.1.9-1.pdf, id=1049, 1082.0425pt x 462.728
 74pt>
 File: 00_main_files/figure-latex/chap3.2.4.1.9-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.4.1.9-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.4.1.9-1.pdf  used o
-n input line 2841.
+n input line 2918.
 (pdftex.def)             Requested size: 469.74358pt x 200.88292pt.
-[61pdfTeX warning (ext4): destination with the same identifier (name{figure.41}
+[62pdfTeX warning (ext4): destination with the same identifier (name{figure.41}
 ) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.2847 \newpage
+l.2924 \newpage
                pdfTeX warning (ext4): destination with the same identifier (nam
 e{figure.42}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.2847 \newpage
+l.2924 \newpage
                 <./00_main_files/figure-latex/chap3.2.4.1.8-1.pdf> <./00_main_f
 iles/figure-latex/chap3.2.4.1.9-1.pdf>]
-<00_main_files/figure-latex/chap3.2.4.1.10-1.pdf, id=1057, 1072.005pt x 462.728
+<00_main_files/figure-latex/chap3.2.4.1.10-1.pdf, id=1070, 1072.005pt x 462.728
 74pt>
 File: 00_main_files/figure-latex/chap3.2.4.1.10-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.4.1.10-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.4.1.10-1.pdf  used 
-on input line 2850.
+on input line 2927.
 (pdftex.def)             Requested size: 469.75348pt x 202.76811pt.
-<00_main_files/figure-latex/chap3.2.4.1.11-1.pdf, id=1058, 1082.0425pt x 462.72
+<00_main_files/figure-latex/chap3.2.4.1.11-1.pdf, id=1071, 1082.0425pt x 462.72
 874pt>
 File: 00_main_files/figure-latex/chap3.2.4.1.11-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.4.1.11-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.4.1.11-1.pdf  used 
-on input line 2858.
+on input line 2935.
 (pdftex.def)             Requested size: 469.74358pt x 200.88292pt.
-[62pdfTeX warning (ext4): destination with the same identifier (name{figure.43}
+[63pdfTeX warning (ext4): destination with the same identifier (name{figure.43}
 ) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.2864 \newpage
+l.2941 \newpage
                pdfTeX warning (ext4): destination with the same identifier (nam
 e{figure.44}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.2864 \newpage
+l.2941 \newpage
                 <./00_main_files/figure-latex/chap3.2.4.1.10-1.pdf> <./00_main_
 files/figure-latex/chap3.2.4.1.11-1.pdf>]
-<00_main_files/figure-latex/chap3.2.4.1.12-1.pdf, id=1080, 1069.9975pt x 462.72
+<00_main_files/figure-latex/chap3.2.4.1.12-1.pdf, id=1094, 1069.9975pt x 462.72
 874pt>
 File: 00_main_files/figure-latex/chap3.2.4.1.12-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.4.1.12-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.4.1.12-1.pdf  used 
-on input line 2867.
+on input line 2944.
 (pdftex.def)             Requested size: 469.75543pt x 203.14938pt.
-<00_main_files/figure-latex/chap3.2.4.1.13-1.pdf, id=1081, 1082.0425pt x 462.72
+<00_main_files/figure-latex/chap3.2.4.1.13-1.pdf, id=1095, 1082.0425pt x 462.72
 874pt>
 File: 00_main_files/figure-latex/chap3.2.4.1.13-1.pdf Graphic file (type pdf)
 <use 00_main_files/figure-latex/chap3.2.4.1.13-1.pdf>
 Package pdftex.def Info: 00_main_files/figure-latex/chap3.2.4.1.13-1.pdf  used 
-on input line 2876.
+on input line 2953.
 (pdftex.def)             Requested size: 469.74358pt x 200.88292pt.
-[63pdfTeX warning (ext4): destination with the same identifier (name{figure.45}
+[64pdfTeX warning (ext4): destination with the same identifier (name{figure.45}
 ) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.2882 \newpage
+l.2959 \newpage
                pdfTeX warning (ext4): destination with the same identifier (nam
 e{figure.46}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.2882 \newpage
+l.2959 \newpage
                 <./00_main_files/figure-latex/chap3.2.4.1.12-1.pdf> <./00_main_
 files/figure-latex/chap3.2.4.1.13-1.pdf>]
 
-LaTeX Warning: Float too large for page by 1321.60022pt on input line 3053.
+LaTeX Warning: Float too large for page by 1321.60022pt on input line 3130.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3055.
-[64pdfTeX warning (ext4): destination with the same identifier (name{table.17})
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3132.
+[65pdfTeX warning (ext4): destination with the same identifier (name{table.18})
  has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.3055 \end{document}
+l.3132 \end{document}
                      ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 3055.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 3132.
 (./00_main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 3055.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 3055.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 3132.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 3132.
  ) 
 Here is how much of TeX's memory you used:
- 16594 strings out of 480608
- 252618 string characters out of 5903630
- 607031 words of memory out of 5000000
- 31684 multiletter control sequences out of 15000+600000
+ 16603 strings out of 480608
+ 252700 string characters out of 5903630
+ 607112 words of memory out of 5000000
+ 31687 multiletter control sequences out of 15000+600000
  580658 words of font info for 120 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,18n,43p,806b,452s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1608,10 +1619,10 @@ al/texlive/2020/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive
 -dist/fonts/type1/public/lm/lmtk10.pfb></usr/local/texlive/2020/texmf-dist/font
 s/type1/public/lm/lmtt10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/pu
 blic/lm/lmtti10.pfb>
-Output written on 00_main.pdf (68 pages, 1997986 bytes).
+Output written on 00_main.pdf (69 pages, 2001274 bytes).
 PDF statistics:
- 1302 PDF objects out of 1440 (max. 8388607)
- 1033 compressed objects within 11 object streams
- 269 named destinations out of 1000 (max. 500000)
+ 1316 PDF objects out of 1440 (max. 8388607)
+ 1046 compressed objects within 11 object streams
+ 275 named destinations out of 1000 (max. 500000)
  8671 words of extra memory for PDF output out of 10000 (max. 10000000)
 
