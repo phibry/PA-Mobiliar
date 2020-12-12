@@ -781,6 +781,6 @@ addLegend("topright", on=1, legend.names = c("maximum values"), pch=3,col="black
 \newpage
 ```{r macrosstable 1000 x 1000  index 4, echo=FALSE}
 rolf1=(as.data.frame(rolf1))[,c(1,2,3)]
-kbl(index_1_onebest_year, caption="index 4 10 best", booktabs = T, linesep = "") %>%
+kbl(as.data.frame(rolf1), caption="index 4 10 best", booktabs = T, linesep = "") %>%
   kable_styling(latex_options = c("striped", "hold_position"))
 ```
