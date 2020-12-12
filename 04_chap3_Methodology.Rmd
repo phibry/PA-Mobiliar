@@ -405,7 +405,7 @@ Different in-sample lengths have been used to try to find an optimal in-sample m
 
 Note, however, that this is only possible here because you know the real values of the out-of-sample range. If this procedure finds filter lengths that outperform buy-and-hold, these cannot be applied in reality. The filters could only be found by the out-of-sample data, which we do not know in reality. Here, we only investigate whether it is at all possible to outperform buy-and-hold.
 
-In figure \ref{fig:chap3.2.3.3}, one can see the results of the out-of-sample Sharpe ratios of the different filter lengths of the 4 indexes. The dashed horizontal line reflects the buy-and-hold Sharpe of the indexes. The dots indicate Sharpe ratios that have a higher value than buy-and-hold, i.e. filter lengths that lead to an outperformance.
+In figure \ref{fig:chap3.2.3.3}, one can see the results of the out-of-sample Sharpe ratios of the different filter lengths of the 4 indexes. The dashed horizontal lines reflects the buy-and-hold Sharpe of the indexes. The dots indicate Sharpe ratios that have a higher value than buy-and-hold, i.e. filter lengths that lead to an outperformance.
 
 ```{r, chap3.2.3.3, echo=FALSE, fig.cap="Out-of-sample Sharpe for each Index.", fig.dim=c(11, 6), out.width = "100%"}
 bnh_sharpe_1 <- sharpe_fun(log_ret_ind[, 1]["2019-01-01/"])
