@@ -17,8 +17,7 @@ geometry: margin = 1in
 
 ## 3. Methodology
 
-In this section, different models are created and compared with the buy and hold strategy.
-We start with pure data analysis and then work your way from simple models to more and more complex ones.
+In this section, different models are applied to the time series and compared with the benchamrk buy and hold. First, the 4 indeces are analyzed in more detail, followed by 3 approaches based on the discussed theory
 
 ### 3.1. Data Analysis
 
@@ -579,7 +578,7 @@ addLegend("bottomleft", on=1, legend.names = c("short filter sharpe", "short fil
 addLegend("topright", on=1, legend.names = c("maximum values"), pch=3,col="black")
 ```
 
-Whilst the ten best sharperatios / drawdowns in \ref{fig:chap3.2.4.1.6} are always very close together, the filterplot \ref{fig:chap3.2.4.1.6}  shows a completely different and interesting image. We can observe differences, specially in the long filters in 2009 2010 2011 the result nearly diverge 150 units. The maximum values are market with crosses. Also in the timespan 2011 to 2018 the filters fluctuate strongly. What further catches the eye, are the long- and the shortfilter sharpes from 2003 to 2011. They are all concentrated at their upper limits of 50 and 250, which indicates that they actually wanted to be longer than the restriction. The same behaviour is observed for the short drawdown from 2011 to 2018 where the observations are concentrated around length 1. The plot would shurely look different if the restrictions of the filterlengths would be greater. Also the steps of the insample timespan are always one year. Changing the restriction would have a massive impact on the optimization time and would most likely deliver different results. But we take the risk in good knowledge of maybe not finding the right filterlenght and use this optimization for trading the series in the next section.
+Whilst the ten best sharperatios / drawdowns in \ref{fig:chap3.2.4.1.6} are always very close together, the filterplot \ref{fig:chap3.2.4.1.6}  shows a completely different and interesting image. We can observe differences, specially in the long filters in 2009 2010 2011 the result nearly diverge 150 units. The maximum values are market with crosses. Also in the timespan 2011 to 2018 the filters fluctuate strongly. What further catches the eye, are the long- and the shortfilter sharpes from 2003 to 2011. They are all concentrated at their upper limits of 50 and 250, which indicates that they actually wanted to be longer than the restriction. The same behaviour is observed for the short drawdown from 2011 to 2018 where the observations are concentrated around length 1. The plot would most likely look different if the restrictions of the filterlengths would be greater. Also the steps of the insample timespan are always one year. Changing the restriction certailny a massive impact on the optimization time and would most likely deliver different results. But we take the risk in good knowledge of maybe not finding the right filterlenght and use this optimization for trading the series in the next section.
 
 
 
