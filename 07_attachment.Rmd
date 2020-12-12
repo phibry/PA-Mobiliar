@@ -4,7 +4,18 @@ geometry: margin = 1in
 ---
 
 ## 6. Attachment
+This project work is created  with R-4.0.2 , RStudio Version 1.4.904 and RMarkdown in collaborative working via Git / Github
 
+```{r, chap6.3.3.1 ,echo=T, eval=FALSE, include=T}
+#libraries
+library(xts)
+library(PerformanceAnalytics)
+library(kableExtra)
+library(dplyr)
+library(quantmod)
+library(forecast)
+library(fGarch)
+```
 
 ### 6.3.3. AR 
 
@@ -781,6 +792,17 @@ addLegend("topright", on=1, legend.names = c("maximum values"), pch=3,col="black
 \newpage
 ```{r macrosstable 1000 x 1000  index 4, echo=FALSE}
 rolf1=(as.data.frame(rolf1))[,c(1,2,3)]
-kbl(as.data.frame(rolf1), caption="index 4 10 best", booktabs = T, linesep = "") %>%
+
+
+kbl(rolf1[1:50,] , caption="index 4 10 best", booktabs = T, linesep = "") %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
+
+kbl(rolf1[51:100,], caption="index 4 10 best", booktabs = T, linesep = "") %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
+
+kbl(rolf1[101:150,], caption="index 4 10 best", booktabs = T, linesep = "") %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
+
+kbl(rolf1[151:160,], caption="index 4 10 best", booktabs = T, linesep = "") %>%
   kable_styling(latex_options = c("striped", "hold_position"))
 ```
