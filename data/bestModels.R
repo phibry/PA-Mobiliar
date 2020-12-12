@@ -1550,7 +1550,7 @@ plot_sma2(x=ind.lr, inx=4, L1=42, L2=414, insamp = "2018-12-31")
 
 
 
-# AIO-Sharope####
+# AIO-Sharpe####
 plot(oof_sma_opt_1$Sharpe, type="l", main="SMA-Sharpe-Optimization", ylab="Sharpe Ratio", xlab="L", xaxt="n", col="#000000", ylim=c(-0.5, 3.5))
 axis(1, at=c(1, 96, 196, 296, 396, 496), labels=c("5", "100", "200", "300", "400", "500"))
 points(ind1_outperf$L-4, ind1_outperf$Sharpe, pch=19, col="#000000")
@@ -1571,3 +1571,99 @@ abline(h=bnh_sharpe_4, lty=2,col="#2297E6")
 lines(oof_sma_opt_4$Sharpe, type="l", col="#2297E6")
 points(ind4_outperf$L-4, ind4_outperf$Sharpe, pch=19, col="#2297E6")
 
+abline(v=1, lty=2, col="#E413A3")
+abline(v=119, lty=2, col="#E413A3")
+
+abline(v=280, lty=2, col="#14C29A")
+abline(v=446, lty=2, col="#14C29A")
+
+text((119-1)/2, -0.2, "Phase 1", col="#E413A3")
+text(((446-280)/2)+280, -0.2, "Phase 2", col="#14C29A")
+
+
+# AIO-Table####
+ind1_outperf
+
+ind2_outperf
+
+ind3_outperf
+
+ind4_outperf
+
+
+##
+ind1_outperf$Sharpe <- round(ind1_outperf$Sharpe, 3)
+rownames(ind1_outperf) <- NULL
+
+kbl(ind1_outperf, caption="SMA-Optima | Index 1", booktabs = T, linesep = "") %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
+
+##
+ind2_outperf$Sharpe <- round(ind2_outperf$Sharpe, 3)
+rownames(ind2_outperf) <- NULL
+
+kbl(ind2_outperf, caption="SMA-Optima | Index 2", booktabs = T, linesep = "") %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
+
+##
+ind3_outperf$Sharpe <- round(ind3_outperf$Sharpe, 3)
+rownames(ind3_outperf) <- NULL
+
+kbl(ind3_outperf, caption="SMA-Optima | Index 3", booktabs = T, linesep = "") %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
+
+##
+ind4_outperf$Sharpe <- round(ind4_outperf$Sharpe, 3)
+rownames(ind4_outperf) <- NULL
+
+kbl(ind4_outperf, caption="SMA-Optima | Index 4", booktabs = T, linesep = "") %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
+
+
+
+tab1 <- ind1_outperf
+tab1$Sharpe <- round(tab1$Sharpe, 3)
+tab2 <- ind2_outperf
+tab2$Sharpe <- round(tab2$Sharpe, 3)
+tab3 <- ind3_outperf
+tab3$Sharpe <- round(tab3$Sharpe, 3)
+tab4 <- ind4_outperf
+tab4$Sharpe <- round(tab4$Sharpe, 3)
+
+while (dim(tab1)[1] != 13) {
+  tab1 <- rbind(tab1, c("", "", ""))
+}
+
+while (dim(tab2)[1] != 13) {
+  tab2 <- rbind(tab2, c("", "", ""))
+}
+
+while (dim(tab3)[1] != 13) {
+  tab3 <- rbind(tab3, c("", "", ""))
+}
+
+while (dim(tab4)[1] != 13) {
+  tab4 <- rbind(tab4, c("", "", ""))
+}
+# BnH
+tab1 <- rbind(c(1, 1, round(bnh_sharpe_1, 3)), tab1)
+tab2 <- rbind(c(1, 1, round(bnh_sharpe_2, 3)), tab2)
+tab3 <- rbind(c(1, 1, round(bnh_sharpe_3, 3)), tab3)
+tab4 <- rbind(c(1, 1, round(bnh_sharpe_4, 3)), tab4)
+
+tab1["|"] <- rep("|", 14)
+tab2["|"] <- rep("|", 14)
+tab3["|"] <- rep("|", 14)
+
+
+df_tab <- cbind(tab1, tab2, tab3, tab4)
+rownames(df_tab) <- NULL
+
+kbl(df_tab, caption="Solution of the AR-Model calculation.", booktabs = T, linesep = "") %>%
+  add_header_above(c("Index 1"=3, " "=1, "Index 2"=3, " "=1, "Index 3"=3, " "=1, "Index 4"=3)) %>%
+  kable_styling(latex_options = c("striped", "hold_position")) %>%
+  row_spec(1, background="#F4F4F4") %>%
+  column_spec(1:3, color = c("#000000", rep("#E413A3", 2), rep("#000000", 11))) %>%
+  column_spec(5:7, color = c("#000000", rep("#E413A3", 4), rep("#14C29A", 4), rep("#000000", 5))) %>%
+  column_spec(9:11, color = c("#000000", rep("#E413A3", 6), rep("#14C29A", 7))) %>%
+  column_spec(13:15, color = c("#000000", rep("#E413A3", 6), rep("#14C29A", 6), "#000000")) 
