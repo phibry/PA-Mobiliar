@@ -5,11 +5,11 @@ geometry: margin = 1in
 
 ## 1. Introduction
 
-The main purpose of trading is buying and selling stocks, bonds, or other financial instruments with increasing the returns of the investments in mind while maintaining relatively low risk. With the help of a trading strategy, an investor can try to improve his performance. One can simply divide the strategies into passive and active. The praised and well established passive strategy buy-and-hold takes no short price movements into account. Positioning and trading based on these short price movements are considered active trading.
+The main purpose of trading is buying and selling stocks, bonds, or other financial instruments with increasing returns of the investments in mind, while maintaining relatively low risk. With the help of a trading strategy, an investor can try to improve his performance. One can simply divide the strategies into passive and active. The praised and well established passive strategy buy-and-hold takes no short price movements into account. Positioning and trading based on these short price movements are considered active trading.
 
 This paper applies time-series analysis to these short price movements to create active trading strategies. The objective of these developed strategies is to outperform the buy-and-hold strategy.
 
-### 1.1. Data Analysis
+### 1.1. Data Analysis{#ts-analysis}
 
 The dataset which will be analyzed in this paper contains 4 tradeable indexes, a visualization of the data is shown below in figure \ref{fig:chap1.1}.
 
@@ -46,7 +46,7 @@ kbl(int.table, caption="Summary of the 8 interest rates.", booktabs = T, linesep
 ```
 
 
-A typical characteristic of interest rates is shown in the given data. A bond with longer maturities is often associated with higher returns compared with those with shorter maturities. An investor which invests in short-term treasury bonds will have his gain earlier but will be confronted with a lower return.
+A typical characteristic of interest rates is shown in the given data. A bond with longer maturities is often associated with higher returns compared to those with shorter maturities. An investor which invests in short-term treasury bonds will have his gain earlier but will be confronted with a lower return.
 
 A more in depth analysis of the four indexes in the given dataset will follow in section [3.1](#ts-analysis).
 
@@ -55,8 +55,8 @@ A more in depth analysis of the four indexes in the given dataset will follow in
 
 The objective of this paper is to trade these 4 indexes with an active trading strategy. The main objective is trying to outperform the passive buy-and-hold strategy. Methods such as the Moving-Average-Filter or the ARMA-GARCH-Model provide signals for either long or short the position to maximize the return of the investments in these indexes.
 
-The performance of these strategies are build upon various different parameters and conditions. The lengths of the filters applied to a Moving-Average may result in different solutions. Models could perform differently for any given length of the in-sample or out-of-sample scope. The necessity of including a historical crisis in the starting-sample can decide if a model performs better or worse than another. The correct validation of model parameters could have a significant impact on the forecasts.
+The performance of these strategies are build upon various parameters and conditions. The lengths of the filters applied to a Moving-Average may result in different solutions. Models could perform differently for any given length of the in-sample or out-of-sample scope. The necessity of including a historical crisis in the starting-sample can decide if a model performs better or worse than another. The correct validation of model parameters could have a significant impact on the forecasts.
 
-In addition to all criteria and conditions, strategies can be further customized by creating differently weighted portfolios, estimated predicted volatility can be used to modulate the position size to mitigate the risk.. For the sake of completeness, we address this only superficially in the paper, but do not elaborate further on it. Estimated predicted volatility can be used to modulate the position size to mitigate the risk.
+In addition to all criteria and conditions, strategies can be further customized by creating differently weighted portfolios, estimated predicted volatility can be used to modulate the position size to mitigate the risk. For the sake of completeness, we address this only superficially in the paper, but do not elaborate further on it. Estimated predicted volatility can be used to modulate the position size to mitigate the risk.
 
 Challenging will be finding the most optimal model in this wide field of conditions and parameters. The buy-and-hold strategy will be used as a benchmark to be compared with the developed active trading strategies. Computing and comparing the Sharpe ratios of each model can serve as an indicator to rely on for better or worse models.

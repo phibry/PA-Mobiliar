@@ -20,7 +20,7 @@ geometry: margin = 1in
 In this section, different models are created and compared with the buy and hold strategy.
 You start with pure data analysis and then work your way from simple models to more and more complex ones.
 
-### 3.1. Data Analysis
+### 3.1. Data Analysis{#ts-analysis depth}
 
 As mentioned in section [1.1](#ts-analysis) we are now going to analyze the data further to gain as much information as possible just by using some simple tools and comparisons.
 
