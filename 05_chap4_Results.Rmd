@@ -3,7 +3,7 @@ output: pdf_document
 geometry: margin = 1in
 ---
 
-## 4. Conlusion 
+## 4. Conclusion 
 
 The results of the applied models can be seen in the individual sections, so here we briefly explain what we have experienced and venture an outlook on further work.
 

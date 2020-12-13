@@ -724,6 +724,8 @@ names(ret)="filter"
 #sqrt(255)*SharpeRatio(ret,FUN="StdDev")  # 1.761906 L1=12 ,L2 =134
 ```
 
+&nbsp;
+
 Also neither of the results from \ref{fig:chap3.2.4.1.15} are clearly satisfying
 
 As endresult buy and hold stays better as the combinations of ma crossigs, at least with the parameter restrictions we implied. The intuition , and also thh common used filters L1=50 / L2=250 equals buy and hold. This strategy may not be so bad, why leaving a trend market instead of profiting from it.
