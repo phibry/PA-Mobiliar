@@ -253,8 +253,8 @@ plot_sma2 <- function(x, inx, L1, L2, insamp = "2018-12-31") {
   
   
   addLegend("topleft", legend.names = c(paste("Buy & Hold | Sharpe=", bnh_sharpe),
-                                        paste("Trading-Opt.=",trade_sharpe1, "| L=",L1, "| Trades n=", sma_trade_count1),
-                                        paste("Trading-Opt.=",trade_sharpe2, "| L=",L2, "| Trades n=", sma_trade_count2)),
+                                        paste("Phase 1-Filter=",trade_sharpe1, "| L=",L1, "| Trades n=", sma_trade_count1),
+                                        paste("Phase 2-Filter=",trade_sharpe2, "| L=",L2, "| Trades n=", sma_trade_count2)),
             lty=c(1, 3, 2),
             lwd=c(2, 2, 2),
             col=c("#000000", "#E413A3", "#14C29A"),

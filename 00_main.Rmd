@@ -54,7 +54,7 @@ source("add/load_files.R")
 
 \newpage
 
-```{r child = '05_chap4_Results.Rmd'}
+```{r child = '05_chap4_Conclusion.Rmd'}
 ```
 
 \newpage

@@ -20,7 +20,7 @@ geometry: margin = 1in
 In this section, different models are created and compared with the buy and hold strategy.
 You start with pure data analysis and then work your way from simple models to more and more complex ones.
 
-### 3.1. Data Analysis{#ts-analysis depth}
+### 3.1. Data Analysis {#ts-analysis-depth}
 
 As mentioned in section [1.1](#ts-analysis) we are now going to analyze the data further to gain as much information as possible just by using some simple tools and comparisons.
 
@@ -41,7 +41,7 @@ kbl(c, caption="Correlations oft the four indexes", booktabs = T) %>%
 ```
 
 
-#### 3.1.2. transformation, volatility and clusters {#vola-sharpe}
+#### 3.1.2. Transformation, Volatility and Clusters {#vola-sharpe}
 
 &nbsp;
 
@@ -83,7 +83,7 @@ plot(log_ret_ind, main="Log_returns indexes",legend.loc="topleft") #plot log ret
 
 \newpage
 
-##### 3.1.2.1. Autocorrelation of log returns
+##### 3.1.2.1. Autocorrelation of log-returns
 
 &nbsp;
 
@@ -295,7 +295,7 @@ So it can be said that with very simple autoregressive models, a tool has been f
 
 \newpage
 
-### 3.4. Single Simple Moving average trading
+### 3.4. Single Simple Moving Average Trading
 
 Next thing to look at is the optimization with a single simple moving average. For AR models, the start date is a hyperparameter, as is the model order *p*. For SMA models there is no model order but a filter length *L*. The filter length is here limited to $5<L<500$.
 
@@ -506,14 +506,29 @@ kbl(df_tab, caption="Best ouf-of-sample filterlengths.", booktabs = T, linesep =
   column_spec(13:15, color = c("#000000", rep("#E413A3", 6), rep("#14C29A", 6), "#000000")) 
 ```
 
+&nbsp;
+
+The short filters (pink) lead to more trades compared to the long filters (green). This also makes sense, short filters react faster and tend to lead to a higher number of trading signals. Some models found are also only marginally better than buy-and-hold, some would lose relevance when trading costs are taken into account.
+
+Lastly, one would just like to investigate how the generated signals of the short and long filters differ. In the following figure \ref{fig:chap3.2.3.4} two models with different filter lengths of index 2 are shown as an example.
+
 \newpage
+
+The two chosen filters are the most optimal for index 2. Both lead to a similar result. Over the entire out-of-sample period, the long filter (green) generates a single signal in mid-January 2019, which leads to an outperformance. The short filter (pink) generates a signal in March 2019 that leads to nothing. Only towards the end of 2019 to the beginning of 2020 several consecutive trading signals are generated, which finally lead to a similar result as the long filter.
+
+&nbsp;
 
 ```{r, chap3.2.3.4, echo=FALSE, fig.cap="Two good models | Index 2", fig.dim=c(11, 6), out.width = "100%"}
 plot_sma2(x=log_ret_ind, inx=2, L1=42, L2=354, insamp = "2018-12-31")
 ```
 
+&nbsp;
+
+Thus, it would be proven that buy-and-hold can be outperformed with a single simple moving average. However, this could only be done by meeting some conditions. The optimal filters could only be found by knowing the out-of-sample data, which is not known in reality. If the used time series would take a different course, the solutions with the used filters could look completely different.
+
 \newpage
-### 3.5. Moving average crossings trading {#macrossingse}
+
+### 3.5. Moving Average Crossings Trading {#macrossingse}
  
 As a third approach we apply 2 SMAs on every time series and trade them with the common Ma crossings rules introduced in [2.3.3](#macross-section).
 With an optimaztion we are trying to find the best filterlengths for the 2 SMA's.

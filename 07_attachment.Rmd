@@ -144,9 +144,9 @@ optim_ar <- function(x.lr, inx, insamp="2019-01-01", minyear=3, maxyear=18) {
 
 \newpage
 
-### 6.3.4. Single Ma
+### 6.3.4. SMA
 
-#### 6.3.4.1. Optimization code
+#### 6.3.4.1. Optimization Code
 
 &nbsp;
 
@@ -601,9 +601,9 @@ kbl(tab4, caption="SMA-Optima by performance indicators | Index 4", booktabs = T
 perfplot_sma_opt(xall=log_ret_ind, insamp="2019-01-01", res_obj=res4, inx=4)
 ```
 \newpage
-### 6.3.5. Best ma crossings
+### 6.3.5. MA Crossings
 
-#### 6.3.5.1. Optimization code {#optimizationmacross}
+#### 6.3.5.1. Optimization Code {#optimizationmacross}
 
 &nbsp;
 
