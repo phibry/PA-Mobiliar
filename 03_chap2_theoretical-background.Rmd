@@ -22,6 +22,7 @@ geometry: margin = 1in
 ## 2. Theory
 
 It is assumed that the reader of this paper already has basic knowledge of the mathematical principles of time series analysis. Therefore, this section will only briefly describe the mathematical models and processes. This theory part is justified by the presentation of the different models and goes beyond the applied models in methodology.
+
 ### 2.1. Time-Series
 
 Almost anything with a data point to a given timestamp can be named a time-series. The monthly gross domestic product, the weekly US gasoline production, or daily stock price movements. In this paper lies the focus of the analysis of financial time series. Due to trades often only take place during the week, there are gaps in the time series on the weekends, an exception would be the trading of cryptocurrencies like Bitcoin which are also tradeable at the weekends.
@@ -378,7 +379,10 @@ EqMA
 
 
 
-#####  2.3.1.1 Momentum
+#####  2.3.1.1. Momentum
+
+&nbsp;
+
 Momentum is an indicator wether a market is bullish or bearish, it measures the "speed" of the trend direction in the market.
 for a timespan $k$ the last price $p_k$, $k$ timesteps ago is subtracted from the last price. This is equivalent to applying and EqMA on the returns of a series. 
 
