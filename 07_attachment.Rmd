@@ -6,7 +6,11 @@ geometry: margin = 1in
 ## 6. Attachment
 This project work is created  with R-4.0.2 , RStudio Version 1.4.904 and RMarkdown in collaborative working via Git / Github
 
+<<<<<<< HEAD
+```{r, chap6.1 ,echo=T, eval=FALSE, include=T}
+=======
 ```{r,echo=T, eval=FALSE, include=T}
+>>>>>>> main
 #libraries
 library(xts)
 library(PerformanceAnalytics)
