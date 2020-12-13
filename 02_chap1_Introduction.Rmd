@@ -48,12 +48,12 @@ kbl(int.table, caption="Summary of the 8 interest rates.", booktabs = T, linesep
 
 A typical characteristic of interest rates is shown in the given data. A bond with longer maturities is often associated with higher returns compared to those with shorter maturities. An investor which invests in short-term treasury bonds will have his gain earlier but will be confronted with a lower return.
 
-A more in depth analysis of the four indexes in the given dataset will follow in section [3.1](#ts-analysis).
+A more in depth analysis of the four indexes in the given dataset will follow in section [3.1](#ts-analysis depth).
 
 
 ### 1.2. Ojective of this paper
 
-The objective of this paper is to trade these 4 indexes with an active trading strategy. The main objective is trying to outperform the passive buy-and-hold strategy. Methods such as the Moving-Average-Filter or the ARMA-GARCH-Model provide signals for either long or short the position to maximize the return of the investments in these indexes.
+The objective of this paper is to trade these 4 indexes with an active trading strategy. The main objective is trying to outperform the passive buy-and-hold strategy. Methods such as the Moving-Average-Filter or the ARMA-GARCH-Model provide signals for either long or short the position to maximize the return of investments in these indexes.
 
 The performance of these strategies are build upon various parameters and conditions. The lengths of the filters applied to a Moving-Average may result in different solutions. Models could perform differently for any given length of the in-sample or out-of-sample scope. The necessity of including a historical crisis in the starting-sample can decide if a model performs better or worse than another. The correct validation of model parameters could have a significant impact on the forecasts.
 

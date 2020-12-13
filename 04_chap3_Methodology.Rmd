@@ -600,8 +600,8 @@ addEventLines(events,srt=90,pos=2,lty=2)
 
 ```
 
-By plotting the sharperatio / max drawdown$_1$ in \ref{fig:chap3.2.4.1.4} and the optimal filterlenghts L1/L2 in \ref{fig:chap3.2.4.1.5}, for every insample timestep as described at the beginning of [3.5.1.](#macrossingse), the  Hyperoptimization is visualized.The code is linked in the attachement [6.3.5.](#optimizationmacross).The results from the trajectories in \ref{fig:chap3.2.4.1.2} and \ref{fig:chap3.2.4.1.3}
-are showed at the black dotted line.Because of the problem we've mentioned in $_3$ the best result could also be just random.Therefore the ten best results for each insample timesteps are calculated and visualized in \ref{fig:chap3.2.4.1.6} and \ref{fig:chap3.2.4.1.7} to get an idea about the accuracy of these filters and analyze them a bit further.
+By plotting the sharperatio / max drawdown$_1$ in \ref{fig:chap3.2.4.1.4} and the optimal filterlenghts L1/L2 in \ref{fig:chap3.2.4.1.5}, for every insample timestep as described at the beginning of [3.5.1](#macrossingse), the  Hyperoptimization is visualized.The code is linked in the attachement [6.3.5](#optimizationmacross). The results from the trajectories in \ref{fig:chap3.2.4.1.2} and \ref{fig:chap3.2.4.1.3}
+are showed at the black dotted line.Because of the problem we've mentioned in $_3$ the best result could also be just random. Therefore the ten best results for each insample timesteps are calculated and visualized in \ref{fig:chap3.2.4.1.6} and \ref{fig:chap3.2.4.1.7} to get an idea about the accuracy of these filters and analyze them a bit further.
 
 $_1$ Note: maxdrawdown is scaled by the factor 100 to visualize it in the same plot 
 \newpage
@@ -625,7 +625,7 @@ addLegend("bottomleft", on=1, legend.names = c("short filter sharpe", "short fil
 
 ```
 
-Whilst the ten best sharperatios / drawdowns in \ref{fig:chap3.2.4.1.6} are always very close together, the filterplot \ref{fig:chap3.2.4.1.6}  shows a completely different and interesting image. We can observe differences, specially in the long filters in 2009(financial crisis?) 2010 2011 the result nearly diverge 150 units. Also in the timespan 2011 to 2018 the filters fluctuate strongly. What further catches the eye, are the long- and the shortfilter sharpes from 2003 to 2011. They are all concentrated at their upper limits of 50 and 250, which indicates that they actually wanted to be longer than the restriction. The same behaviour is observed for the short drawdown from 2011 to 2018 where the observations are concentrated around length 1. The plot would shurely look different if the restrictions of the filterlengths would be greater. Also the steps of the insample timespan are always one year. Changing the restriction would have a massive impact on the optimization time and would most likely deliver different results.
+Whilst the ten best sharperatios / drawdowns in \ref{fig:chap3.2.4.1.6} are always very close together, the filterplot \ref{fig:chap3.2.4.1.6}  shows a completely different and interesting image. We can observe differences, specially in the long filters in 2009, 2010, 2011 the result nearly diverge 150 units. Also in the timespan 2011 to 2018 the filters fluctuate strongly. What further catches the eye, are the long- and the shortfilter sharpes from 2003 to 2011. They are all concentrated at their upper limits of 50 and 250, which indicates that they actually wanted to be longer than the restriction. The same behaviour is observed for the short drawdown from 2011 to 2018 where the observations are concentrated around length 1. The plot would shurely look different if the restrictions of the filterlengths would be greater. Also the steps of the insample timespan are always one year. Changing the restriction would have a massive impact on the optimization time and would most likely deliver different results.
 
 Curiosity leads us to recreate the optimization for $1 < L1 \le 1000$ and $1 < L2 \le 1000$  which calculates 16 million sharpes.  Now L2 can be smaller than L1 while the trading rule stays the same. The numeric results can be found in \ref{tab:macrosstable 1000 x 1000 index 4.1}
 
@@ -640,7 +640,7 @@ lines(rolf1[,3], col=c("blue"),lwd=2,type="p")
 addLegend("left", on=1, legend.names = c("long filter sharpe", "long filter drawdown "), lty=c(1, 1), lwd=c(1, 1),col=c("red","blue"))
 ```
 
-In figure \ref{fig:chap3.2.4.1.14} the sharpes of the 10 best models look all very similar in each step except for 2009 and 2012 de vary a bit. Until 2015 they are all slightly under 1. Very important is the cat that a filterlength of 100 means 4 years which is a very long time. The results narrowing Jan-2019 are close to or directly buy and hold, therefore the sharpe rises to nearly 3. Interesting are also the result in figure \ref{fig:chap3.2.4.1.15}. From 2002 to 2011 the long and the short filter are always very close together. This plot could lead to a more interesting analysis. Due the time time and length limitation this optimization is closed here and not further discussed.
+In figure \ref{fig:chap3.2.4.1.14} the sharpes of the 10 best models look all very similar in each step except for 2009 and 2012 they vary a little bit. Until 2015 they are all slightly under 1. Very important is the fact that a filterlength of 100 means 4 years which is a very long time. The results narrowing Jan-2019 are close to or directly buy and hold, therefore the sharpe rises to nearly 3. Interesting are also the result in figure \ref{fig:chap3.2.4.1.15}. From 2002 to 2011 the long and the short filter are always very close together. This plot could lead to a more interesting analysis. Due the time time and length limitation this optimization is closed here and not further discussed.
 
 
 In good knowledge we're taking the risk of maybe not finding the right filterlenght and use the result of the optimizations for trading the series in the next section.
@@ -656,7 +656,7 @@ In good knowledge we're taking the risk of maybe not finding the right filterlen
 &nbsp;
 
 
-As noticed the Visualizations in [3.5.1.](#macrossingse)  are only done for index one, the optimal values and their fluctuation are shown in the tables \ref{tab:macrosstable index 1},\ref{tab:macrosstable index 2},\ref{tab:macrosstable index 3},\ref{tab:macrosstable index 4} and \ref{fig:chap3.2.4.1.8},\ref{fig:chap3.2.4.1.9},\ref{fig:chap3.2.4.1.10},\ref{fig:chap3.2.4.1.11},\ref{fig:chap3.2.4.1.12},\ref{fig:chap3.2.4.1.13}.
+As noticed the Visualizations in [3.5.1](#macrossingse)  are only done for index one, the optimal values and their fluctuation are shown in the tables \ref{tab:macrosstable index 1},\ref{tab:macrosstable index 2},\ref{tab:macrosstable index 3},\ref{tab:macrosstable index 4} and \ref{fig:chap3.2.4.1.8},\ref{fig:chap3.2.4.1.9},\ref{fig:chap3.2.4.1.10},\ref{fig:chap3.2.4.1.11},\ref{fig:chap3.2.4.1.12},\ref{fig:chap3.2.4.1.13}.
 ```{r, chap3.5.2.1. , echo=FALSE, include=T }
 return_buy_and_hold_1  =   diff(log(data[,1]))##### buy and hold
 return_buy_and_hold_2  =   diff(log(data[,2]))
@@ -665,7 +665,9 @@ return_buy_and_hold_4  =   diff(log(data[,4]))
 ```
 Based on the optimal filterlenghts calculated in the last section, the SMAs are now applied to the "out of sample" span from 2019-01-01 to 2020-04-01. Keeping in mind that the Moving Averages need the same initialization time as the length of filter itself, only the optimal filterlengths from years smaller than 2017 are considered.
 Index one brings us the optimal maximum sharpe *1.275* at end of the series *2016* with filterlengths *L1 = 1 / L2=106* applying this filters to the put opf sample leads us to buy and hold no trades are executed. Even considering the filters from the earlier timesspans *2006-01-01 sharpe = 1.529 L1= 49 L2= 243*  brings no other result than buy and hold. Trying the maximum drawdown filters leads to the same result. 
+
 &nbsp;
+
 ```{r, chap3.5.2.2. , echo=FALSE, fig.cap="Macrossing index 1 L1 = 1 L2 = 106", include=T, fig.keep = 'last',out.width="100%"}
 n1=1
 n2 =106
@@ -692,7 +694,9 @@ names(ret)="filter"
 ```
 \newpage
 Regarding the other indexes, the results  look all very similiar. None of the Moving average crossing are able to outperform buy and hold. For visualizing we use only the fourth index with *2016-01-01 0.998 12 134*. For this index we have leastways two trades \ref{fig:chap3.5.2.3}. Following the longer filter (red) from the left side, it crosses the blue line ( L1 ) in the beginning of 2020, that's where a selling is executed. Shortly after the buy signals comes with the red line crossing the blue from above. With this signals we get a sharpe of *1.761906*, in comparison to the buy and hold sharpe index-4 *1.963966*.
+
 &nbsp;
+
 ```{r, chap3.5.2.3, echo=FALSE, fig.cap="Macrossing index 4 L1 = 12 L2 = 134", include=T, fig.keep = 'last',out.width="100%"}
 n1=12
 n2 =134
