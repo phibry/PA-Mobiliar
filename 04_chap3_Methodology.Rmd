@@ -73,7 +73,7 @@ kbl(sharp_vola_df, caption="Sharpe Ratio and Volatility of the 4 indexes (log-re
   column_spec(5, color="#2297E6")
 ```
 
-As we can see in the table the volatility of index 4 is as much as  x x xx times higher than the volatility of index 1 and the sharperatio behaves inverse to the risk.
+As we can see in the table the volatility of index 4 is as much as  5 times higher than the volatility of index 1 and the sharperatio behaves inverse to the risk.
 
 &nbsp;
 
