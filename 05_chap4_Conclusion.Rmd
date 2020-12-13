@@ -1,0 +1,12 @@
+---
+output: pdf_document
+geometry: margin = 1in
+---
+
+## 4. Conclusion 
+
+The results of the applied models can be seen in the individual sections, so here we briefly explain what we have experienced and venture an outlook on further work.
+
+Despite mentioning buy and hold once again, we emphasize that it is probably the best strategy in a growing market.
+
+Furthermore, we can report that all the models explained should be taken with caution, since no one can foresee the future, it is necessary to have a certain confidence in your models and take the risk of failure.

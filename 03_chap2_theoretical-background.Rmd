@@ -598,7 +598,7 @@ For comparing different series often the sharpe ratio is annualized with $\sqrt{
 
 #### 2.7.2. Drawdown
 
-Drawdown describes the maximum cumulated loss an investor is going to face if he isnt leaving a falling market at the turning point from rise to fall of an index. 
+Drawdown describes the maximum cumulated loss an investor is going to face if he is not leaving a falling market at the turning point from rise to fall of an index. 
 
 \begin{equation}
   \label{eq:Maximum Drawdown}
@@ -615,10 +615,3 @@ Maximum drawdown is used as an indicator for risk or can be used as an optimizat
 
 Carry trades are trading strategies were usually money is borrowed at a lower interest rate, than the investment is giving in return.
 the risk of this strategy is based in the currency risk.
-
-
-
-
-\newpage
-
-
