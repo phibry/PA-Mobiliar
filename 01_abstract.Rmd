@@ -9,5 +9,4 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Abstract
 
-In this project, 4 time-series are investigated with quantitative methods. With different technical approaches, we try to outperform the well established and often used to buy and hold strategy. In the beginning, the used theory is explained superficially. In the search for the best parameters, specific optimizations are calculated according to three approaches and the results are discussed.
-
+In this project, 4 time-series are investigated with quantitative methods. Different technical approaches are used to try to outperform the established and often used buy-and-hold strategy. In the beginning, the theory is explained superficially. In search of the best parameters, specific optimizations are calculated according to three approaches and the results are discussed. Many of the models found lead to the conclusion that buy-and-hold is the more profitable strategy for these time series. Only with the rather simple autoregressive processes, we could find models which are able to outperform buy-and-hold in performance.
