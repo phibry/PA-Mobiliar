@@ -155,7 +155,7 @@ By focussing on trading one could build a portfolio for the 4 indexes. One appro
 
 \begin{equation}
   \label{eq:standardizing vola}
- procentual  share \sigma_k = \frac{\sigma_k}{\sum_{k=1}^{4}\sigma_k}
+ \textnormal{procentual}\:\textnormal{share}\:\sigma_k = \frac{\sigma_k}{\sum_{k=1}^{4}\sigma_k}
 \end{equation}
 
 ```{r, chap3.2.1, echo=FALSE,include=T}
@@ -164,10 +164,11 @@ sigmas_1=1/sigmas
 sigma_shares=as.matrix(100*sigmas/sum(sigmas))
 sigma_shares_1=as.matrix(100*sigmas_1/sum(sigmas_1))
 perc=cbind(sigma_shares,sigma_shares_1)
-colnames(perc) <- c("percentage of vola when equally weighted","weights when weigthed with inverse vola")
+colnames(perc) <- c("Weight 1","Weight 2")
 perc=as.data.frame(perc)
 kbl(perc, caption="Shares", booktabs = T) %>%
-  kable_styling(latex_options = c("striped", "hold_position"))
+  kable_styling(latex_options = c("striped", "hold_position")) %>%
+  footnote(number=c("Weight 1: Equally weighted volatility in %", "Weight 2: Weighted with inverse volatility"))
 ```
 
 \newpage
@@ -185,7 +186,7 @@ kbl(cbind(part1, part2), caption="Solution of the AR-Model calculation.", bookta
   kable_styling(latex_options = c("striped", "hold_position"))
 ```
 
-With these calculations, the optimal model is an AR(2) with the start date 2018-01-01. Note that the Index 1 series has a very flat rising trend and a rising upward trend towards the end of 2018, so only a short in-sample is needed for this optimal model. It is interesting that the long in-sample ranges (2003 to 2007) also lead to relatively good performances. This probably has something to do with the fact that trend at the beginning of the series has a greater influence on the model than the middle part.
+With these calculations, the optimal model is an AR(2) with the start date 2018-01-01. Note that the Index 1 series has a very flat rising trend and a rising upward trend towards the end of 2018, so only a short in-sample is needed for this optimal model. It is interesting that the long in-sample ranges (2003 to 2007) also lead to relatively good performances. This probably has something to do with the fact that the trend at the beginning of the series has a greater influence on the models than the middle part.
 
 ```{r, chap3.2.2.1, echo=FALSE, fig.cap="Visualization of the optimal AR(2)-Model.", fig.dim=c(11, 6), out.width = "90%"}
 op2 <- c(as.character(opt_ar_1[which.max(opt_ar_1[,2]),][1]),
@@ -219,11 +220,11 @@ The upper part of figure \ref{fig:chap3.2.2.1} shows the optimal model compared 
 
 \newpage
 
-The lower part of figure \ref{fig:chap3.2.2.1} shows the trading signals visually. If one were to trade exactly according to the AR(2) forecasts, one would make a trade at each vertical line, a total of `r trade_1` trades would have to be made during out-of-sample periods. If you want to include trading costs in the performance, an AR model with daily trades would have to be much better than this one to outperform buy-and-hold.
+The lower part of figure \ref{fig:chap3.2.2.1} shows the trading signals visually. If one were to trade exactly according to the AR(2) forecasts, one would make a trade at each vertical line, a total of `r trade_1` trades would have to be made during the out-of-sample period. If you want to include trading costs in the performance, an AR model with daily trades would have to be much better than this one to outperform buy-and-hold.
 
 But what influence do the trading costs really have? If you assume a fictitious investment amount of 1 million USD and you have to pay 190 USD for each trade, as mentioned in section [3.2.1](#bnh-section). Invest this amount at the beginning of the out-of-sample period. With the buy-and-hold strategy, a return of USD `r return_bnh_1` is achieved by the end of the out-of-sample range. Without trading costs the AR(2) would yield USD `r return_ar_1`, with trading costs only USD `r return_ar_t_1`. To get at least the same return on the investment, the trading costs should not exceed USD 39. Note that in addition to the trading costs, the initial investment amount also matters.
 
-Thus it can be said that for index 1, the buy-and-hold strategy cannot be outperformed by an AR(2) model. Nevertheless, one would like to apply this procedure also to the other indexes, possibly the generated models perform better for the other time-series.
+Thus it can be said that for index 1, the buy-and-hold strategy cannot be outperformed by an AR(2) model if trading costs are taken into account. Nevertheless, one would like to apply this procedure also to the other indexes, possibly the generated models perform better for the other time-series.
 
 ```{r artable, echo=FALSE}
 p2 <- perfplot_ar(optim_ar_obj=opt_ar_2, lr_series=log_ret_ind, inx=2, insamp="2019-01-01", plotter=FALSE)
@@ -244,7 +245,7 @@ kbl(para, caption="Optimal AR-Models.", booktabs = T, linesep = "") %>%
 ```
 Table \ref{tab:artable} shows the solutions of all 4 indexes. The algorithm finds an optimal AR model with model order 1 for all 3 remaining time-series. In contrast to index 1, it is noticeable that a much longer in-sample range is required for the optimal model. This also makes sense because the indexes show an increasing trend during the complete in-sample range. Index 1 is less volatile and has a less strong trend compared to the others, so a strong increase in the trend (spring 2018) has a greater effect on model performance. The other 3 series are more volatile, have larger peaks and therefore the model performance is less influenced by single events (like the increasing trend in spring 2018). The number of trades is much smaller for all models than for the first one. The out-of-sample performances are better than the corresponding buy-and-hold performances for all AR models.
 
-Because of the trading costs, it has been seen with index 1 that the AR model, despite better performance, generates a lower return than buy-and-hold. But what about the other indexes. You choose the same investment amount and trading costs as before and you get the following table \ref{tab:artable2}.
+Because of the trading costs, it has been seen with index 1 that the AR model, despite the better performance, generates a lower return than buy-and-hold. But what about the other indexes. You choose the same investment amount and trading costs as before and you get the following table \ref{tab:artable2}.
 
 ```{r artable2, echo=FALSE}
 return_bnh_2 <- round(tail(p2$perf_bnh, 1) * 1000000)
@@ -275,7 +276,7 @@ Despite the trading costs, daily trading with the indexes 2-4 generates a higher
 
 \newpage
 
-Figure \ref{fig:chap3.2.2.2} shows the out-of-sample performance of the second index. Right at the beginning of the series, the AR model signals a trade (one goes short and immediately long again). This trade immediately leads to an increase in performance which already outperforms the passive strategy. Further signaled trades will only occur again later. During the Corona crisis (spring 2020), one can see several close consecutive trades. The volatility increases sharply during this period, the AR model catches this event well and remains positive.
+Figure \ref{fig:chap3.2.2.2} shows the out-of-sample performance of the second index. Right at the beginning of the series, the AR model signals a trade (one goes short and immediately long again). This trade immediately leads to an increase in performance which already outperforms the passive strategy. Further signaled trades will only occur again later. During the Covid19 crisis (spring 2020), one can see several close consecutive trades. The volatility increases sharply during this period, the AR model catches this event well and remains positive.
 
 ```{r, chap3.2.2.2, echo=FALSE, fig.cap="Visualization of the optimal Index 2 AR(1)-Model.", fig.dim=c(11, 6), out.width = "85%"}
 ar_plotter(perf_bnh=p2$perf_bnh, perf_ar=p2$perf_ar, start_date=op2[2], inx=2, p=op4[2], sharpe_bnh=op1[2], sharpe_ar=op3[2], signal=p2$signal)
@@ -293,7 +294,7 @@ The fourth index, which is shown in the lower figure \ref{fig:chap3.2.2.3}, is i
 ```{r, chap3.2.2.4, echo=FALSE, fig.cap="Visualization of the optimal Index 4 AR(1)-Model.", fig.dim=c(11, 6), out.width = "85%"}
 ar_plotter(perf_bnh=p4$perf_bnh, perf_ar=p4$perf_ar, start_date=op2[4], inx=4, p=op4[4], sharpe_bnh=op1[4], sharpe_ar=op3[4], signal=p4$signal)
 ```
-So it can be said that with very simple autoregressive models, a tool has been found with which it is possible to outperform the popular buy-and-hold strategy. Consider that this is only the case in this example with defined conditions. Depending on how high the trading costs and the amount of investment are, the returns can vary greatly. In addition to the buy-and-hold strategy, where you only buy-and-hold, you have to trade effectively with an active trading strategy.
+So it can be said that with very simple autoregressive models, a tool has been found with which it is possible to outperform the popular buy-and-hold strategy. Consider that this is only the case in this example with defined conditions. Depending on how high the trading costs and the amount of investment are, the returns can vary greatly. In addition to the buy-and-hold strategy, where you only buy the financial instrument and then hold it, you have to trade effectively with an active trading strategy.
 
 \newpage
 
