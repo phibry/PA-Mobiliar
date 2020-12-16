@@ -17,10 +17,14 @@ geometry: margin = 1in
 
 ## 3. Methodology
 
-In this section, different models are created and compared with the buy and hold strategy.
+In this section, different models are created and compared with the buy-and-hold strategy.
 You start with pure data analysis and then work your way from simple models to more and more complex ones.
 
+<<<<<<< HEAD
 ### 3.1. Data Analysis {#ts-analysis depth}
+=======
+### 3.1. Data Analysis {#ts-analysis-depth}
+>>>>>>> main
 
 As mentioned in section [1.1](#ts-analysis) we are now going to analyze the data further to gain as much information as possible just by using some simple tools and comparisons.
 
@@ -33,7 +37,7 @@ One could nearly tell just by looking at the indexes how strong they're correlat
 ```{r cortable, echo=FALSE}
 
 log_ind <-    log(ind)      #logarithm of the series
-log_ret_ind <- na.exclude(diff(log_ind)) #log returns of the se
+log_ret_ind <- na.exclude(diff(log_ind)) #log-returns of the se
 x<-as.data.frame(log_ind)
 c <- as.data.frame(cor(x))  # showing corelations
 kbl(c, caption="Correlations oft the four indexes", booktabs = T) %>%
@@ -41,7 +45,7 @@ kbl(c, caption="Correlations oft the four indexes", booktabs = T) %>%
 ```
 
 
-#### 3.1.2. transformation, volatility and clusters {#vola-sharpe}
+#### 3.1.2. Transformation, Volatility and Clusters {#vola-sharpe}
 
 &nbsp;
 
@@ -55,8 +59,7 @@ plot(log(ind), main="Indexes 1-4", col=1:4, lwd=1, legend.loc="topleft") #plotti
 
 \newpage
 
-By taking the returns of the transformed series we can visualize volatility clusters as seen in figure \ref{fig:chap3.1.3}. The first value of the series is eliminated because of the differences,
-Clearly visible are the high spikes in the times of the financial crisis 2007-2009. Also at the end of the series, the impact of COVID19 in march 2020 is remarkable.
+By taking the returns of the transformed series we can visualize volatility clusters as seen in figure \ref{fig:chap3.1.3}. The first value of the series is eliminated because of the differences. Clearly visible are the high spikes in the times of the financial crisis 2007-2009. Also at the end of the series, the impact of Covid19 in march 2020 is remarkable.
 
 ```{r sharp_vola_table, echo=FALSE}
 sd_vec <- apply(log_ret_ind, MARGIN = 2, FUN = sd)
@@ -73,24 +76,24 @@ kbl(sharp_vola_df, caption="Sharpe Ratio and Volatility of the 4 indexes (log-re
   column_spec(5, color="#2297E6")
 ```
 
-As we can see in the table the volatility of index 4 is as much as  5 times higher than the volatility of index 1 and the sharperatio behaves inverse to the risk.
+As we can see in the table the volatility of index 4 is as much as  5 times higher than the volatility of index 1 and the Sharpe ratio behaves inverse to the risk.
 
 &nbsp;
 
-```{r, chap3.1.3, include=T, echo = F,message=F,  fig.cap="Log returns"}
-plot(log_ret_ind, main="Log_returns indexes",legend.loc="topleft") #plot log returns
+```{r, chap3.1.3, include=T, echo = F,message=F,  fig.cap="log-returns"}
+plot(log_ret_ind, main="Log_returns indexes",legend.loc="topleft") #plot log-returns
 ```
 
 \newpage
 
-##### 3.1.2.1. Autocorrelation of log returns
+##### 3.1.2.1. Autocorrelation of log-returns
 
 &nbsp;
 
 By computing the ACF of the squared log-returns we see that the volatility cluster has very long dependency structures.
 
 
-```{r,chap3.1.2.1,include=T, echo = F,message=F, fig.cap="ACF log returns",fig.dim=c(15,10)}
+```{r,chap3.1.2.1,include=T, echo = F,message=F, fig.cap="ACF log-returns",fig.dim=c(15,10)}
 par(mfrow=c(2,2))
 x1= log_ret_ind[,1]
 x2= log_ret_ind[,2]
@@ -102,13 +105,16 @@ acf(abs(x2^2),lag.max = 50,main= "ACF INDEX 2 ,10-2003/03-2020" )
 acf(abs(x3^2),lag.max = 50,main= "ACF INDEX 3 ,10-2003/03-2020" )
 acf(abs(x4^2),lag.max = 50,main= "ACF INDEX 4 ,10-2003/03-2020" )
 
-```
+# chart.ACF(abs(x1^2),main= "ACF INDEX 1 ,10-2003/03-2020")
+# chart.ACF(abs(x2^2),main= "ACF INDEX 2 ,10-2003/03-2020")
+# chart.ACF(abs(x3^2),main= "ACF INDEX 3 ,10-2003/03-2020")
+# chart.ACF(abs(x4^2),main= "ACF INDEX 4 ,10-2003/03-2020")
 
-For further analysis, we concentrate on different timespans, because in most models it makes little sense to consider the whole time-series from 2003 till today.
+```
 
 \newpage
 
-```{r,chap3.1.4, include=F, echo = F,message=F,fig.dim=c(15,15), fig.cap="Visualization log returns"}
+```{r,chap3.1.4, include=F, echo = F,message=F,fig.dim=c(15,15), fig.cap="Visualization log-returns"}
 par(mfrow=c(4,2))
 start_date="2018-01-01"
 in_sample ="2018-01-01"
@@ -131,15 +137,15 @@ plot(y_ind[,4],main=paste("Log index 4,","vola=",vola_y_ind[4],sep=" "),col = 4)
 
 ### 3.2. Trading
 
-In section 2 we have learned different indicators and models for time-series-analysis. Some of these models and indicators are now used to trade the indexes we've introduced in the previous section.
+In section [2](#theory) we have learned different indicators and models for time-series-analysis. Some of these models and indicators are now used to trade the indexes we have introduced in the previous section.
 
-To do so we need to create trading signals based on the models and indicators. For example, we are using the MA Crossings, as mentioned [2.3.3.](#macross-section) the points where the two MAs cross, are now used to create a trading signal. when the longer MA comes from below to the crossing we are going long the asset and if it approaches the point from above we're shorting the position. Technically we apply a 1 to a vector at each crossing, where we intend to buy and apply a -1 at the points we want to sell.
+To do so we need to create trading signals based on the models and indicators. For example, we are using the MA Crossings, as mentioned [2.3.3.](#macross-section) the points where the two MAs cross, are now used to create a trading signal. when the longer MA comes from below to the crossing we are going long the asset and if it approaches the point from above we are shorting the position. Technically we apply a 1 to a vector at each crossing, where we intend to buy and apply a -1 at the points we want to sell.
 
-#### 3.2.1. Buy and Hold Performance {#bnh-section}
+#### 3.2.1. Buy-and-Hold Performance {#bnh-section}
 
 &nbsp;
 
-As mentioned earlier the goal of this work is trying to outperform the buy and hold strategy. Because the series all have a strong upward trend this task is very tricky. Buy and hold has very low trading costs because the underlying is just bought once. According to swissquote [@swissquote] costs for asset trades over 50k, are 190 USD per trade $_1$, so these costs should also be taken into consideration for choosing the strategy. In this work, we've excluded these costs and only concentrate on the trades themselves.
+As mentioned earlier the goal of this work is trying to outperform the buy-and-hold strategy. Because the series all have a strong upward trend, this task is very tricky. Buy-and-hold has very low trading costs because the underlying is just bought once. According to swissquote [@swissquote] costs for asset trades over 50k, are 190 USD per trade $_1$, so these costs should also be taken into consideration for choosing the strategy. In this work, we have excluded these costs and only concentrate on the trades themselves.
 
 $_1$ notice: This fee is only for private investors, conditions may differ for institutions.
 
@@ -149,7 +155,7 @@ For the following models a good comparability should be achieved. To ensure this
 
 &nbsp;
 
-By focussing on trading we build a portfolio for the 4 indexes. One approach would be the equally weighted portfolio with weights for every index of $\frac{1}{4}$. As we've seen in figure \ref{fig:chap3.1.3} The volatility of the indexes strongly differs, meaning that index 4 would have the most impact, nearly 50 %, on the portfolio by weighing it equally. To cancel this effect, it may be useful to size the position with the inverse volatility, so the indexes have the weights seen in the table on the right side.
+By focussing on trading one could build a portfolio for the 4 indexes. One approach would be the equally weighted portfolio with weights for every index of $\frac{1}{4}$. As we have seen in figure \ref{fig:chap3.1.3} the volatility of the indexes strongly differs, meaning that index 4 would have the most impact, nearly 50 %, on the portfolio by weighing it equally. To cancel this effect, it may be useful to size the position with the inverse volatility, so the indexes have the weights seen in the table on the right side.
 
 \begin{equation}
   \label{eq:standardizing vola}
@@ -164,7 +170,7 @@ sigma_shares_1=as.matrix(100*sigmas_1/sum(sigmas_1))
 perc=cbind(sigma_shares,sigma_shares_1)
 colnames(perc) <- c("percentage of vola when equally weighted","weights when weigthed with inverse vola")
 perc=as.data.frame(perc)
-kbl(perc, caption="shares", booktabs = T) %>%
+kbl(perc, caption="Shares", booktabs = T) %>%
   kable_styling(latex_options = c("striped", "hold_position"))
 ```
 
@@ -172,7 +178,7 @@ kbl(perc, caption="shares", booktabs = T) %>%
 
 ### 3.3. AR trading
 
-As with the theory data set, these 4 indexes are non-stationary series. For the AR models, the stationary log-returns of the time series are used. First we look at index 1, the series with the lowest volatility but with the highest sharpe ratio (highest return with lowest risk). To find the best possible AR model, different AR(*p*) models are fitted with different model orders *p* for different in-sample ranges. The parameters *p* and start date are so called hyper parameters, parameters which are set before modelling. For each model the out-of-sample sharpe is calculated. The execution of this calculation leads to the solution shown in table \ref{tab:ar1table}.
+As with the theory data set, these 4 indexes are non-stationary series. For the AR models, the stationary log-returns of the time-series are used. First we look at index 1, the series with the lowest volatility but with the highest sharpe ratio (highest return with lowest risk). To find the best possible AR model, different AR(*p*) models are fitted with different model orders *p* for different in-sample ranges. The parameters *p* and start date are so called hyper parameters, parameters which are set before modelling. For each model the out-of-sample sharpe is calculated. The execution of this calculation leads to the solution shown in table \ref{tab:ar1table}.
 
 ```{r ar1table, echo=FALSE}
 part1 <- opt_ar_1[1:8,]
@@ -213,7 +219,7 @@ return_ar_t_1 <- round((tail(p1$perf_ar, 1) * 1000000) - trade_1*190)
 ar_plotter(perf_bnh=p1$perf_bnh, perf_ar=p1$perf_ar, start_date=op2[2], inx=1, p=op4[1], sharpe_bnh=op1[1], sharpe_ar=op3[1], signal=p1$signal)
 ```
 
-The upper part of figure \ref{fig:chap3.2.2.1} shows the optimal model compared to buy and hold. The AR(2) has a higher sharpe than buy and hold. Regarding performance, it should be mentioned that the sharpe optimization of the algorithm is based on daily trades. The signals for a trade are newly generated with each daily forecast and could lead to high trading costs (positive signals = long, negative signals = short).
+The upper part of figure \ref{fig:chap3.2.2.1} shows the optimal model compared to buy-and-hold. The AR(2) has a higher sharpe than buy-and-hold. Regarding performance, it should be mentioned that the sharpe optimization of the algorithm is based on daily trades. The signals for a trade are newly generated with each daily forecast and could lead to high trading costs (positive signals = long, negative signals = short).
 
 \newpage
 
@@ -269,7 +275,7 @@ kbl(para, caption="Out-of-Sample Returns.", booktabs = T, linesep = "") %>%
   kable_styling(latex_options = c("striped", "hold_position"))
 ```
 
-Despite the trading costs, daily trading with the indexes 2-4 generates a higher return than the passive buy and hold strategy.
+Despite the trading costs, daily trading with the indexes 2-4 generates a higher return than the passive buy-and-hold strategy.
 
 \newpage
 
@@ -291,11 +297,11 @@ The fourth index, which is shown in the lower figure \ref{fig:chap3.2.2.3}, is i
 ```{r, chap3.2.2.4, echo=FALSE, fig.cap="Visualization of the optimal Index 4 AR(1)-Model.", fig.dim=c(11, 6), out.width = "85%"}
 ar_plotter(perf_bnh=p4$perf_bnh, perf_ar=p4$perf_ar, start_date=op2[4], inx=4, p=op4[4], sharpe_bnh=op1[4], sharpe_ar=op3[4], signal=p4$signal)
 ```
-So it can be said that with very simple autoregressive models, a tool has been found with which it is possible to outperform the popular buy-and-hold strategy. Consider that this is only the case in this example with defined conditions. Depending on how high the trading costs and the amount of investment are, the returns can vary greatly. In addition to the buy-and-hold strategy, where you only buy and hold, you have to trade effectively with an active trading strategy.
+So it can be said that with very simple autoregressive models, a tool has been found with which it is possible to outperform the popular buy-and-hold strategy. Consider that this is only the case in this example with defined conditions. Depending on how high the trading costs and the amount of investment are, the returns can vary greatly. In addition to the buy-and-hold strategy, where you only buy-and-hold, you have to trade effectively with an active trading strategy.
 
 \newpage
 
-### 3.4. Single Simple Moving average trading
+### 3.4. Single Simple Moving Average Trading
 
 Next thing to look at is the optimization with a single simple moving average. For AR models, the start date is a hyperparameter, as is the model order *p*. For SMA models there is no model order but a filter length *L*. The filter length is here limited to $5<L<500$.
 
@@ -381,11 +387,11 @@ Note that a little trickery was used for the out-of-sample calculation. If SMA i
 
 \newpage
 
-Applying the filter lengths of the best indicators to index 1, the following out-of-sample solutions are obtained \ref{fig:chap3.2.3.2}. For the MSE (green), a very long filter L=486 was chosen as the optimal filter. This reacts very late to fluctuations in the time series. The index 1 shows a constantly rising trend, which leads to the fact that the MSE filter does not signal any trades.
+Applying the filter lengths of the best indicators to index 1, the following out-of-sample solutions are obtained \ref{fig:chap3.2.3.2}. For the MSE (green), a very long filter L=486 was chosen as the optimal filter. This reacts very late to fluctuations in the time-series. The index 1 shows a constantly rising trend, which leads to the fact that the MSE filter does not signal any trades.
 
 Sharpe and drawdown lead to the exact same filter length of L=69 with the same in-sample range with start date 2016-01-01. At the beginning of December 2019 a trade is signaled, which leads to a decline in performance.
 
-With none of the found optimal filter lengths and in-sample ranges the passive buy and hold strategy could be outperformed.
+With none of the found optimal filter lengths and in-sample ranges the passive buy-and-hold strategy could be outperformed.
 
 &nbsp;
 
@@ -393,7 +399,7 @@ With none of the found optimal filter lengths and in-sample ranges the passive b
 perfplot_sma_opt(xall=log_ret_ind, insamp="2019-01-01", res_obj=res1, inx=1)
 ```
 
-Applying the optimization algorithm to the other 3 time series leads to similar results, which can be seen in the appendix [6.3.4.2](#sma-appendix). It seems almost impossible to outperform the highly praised buy and hold strategy with an SMA.
+Applying the optimization algorithm to the other 3 time-series leads to similar results, which can be seen in the appendix [6.3.4.2](#sma-appendix). It seems almost impossible to outperform the highly praised buy-and-hold strategy with an SMA.
 
 \newpage
 
@@ -401,7 +407,7 @@ Applying the optimization algorithm to the other 3 time series leads to similar 
 
 &nbsp;
 
-Different in-sample lengths have been used to try to find an optimal in-sample model, which should lead to satisfying solutions in the out-of-sample area. This was not possible with the methods used. Now one would like to examine additionally whether it would be at all possible to find good solutions in the out-of-sample range. Therefore we investigate the out-of-sample area directly. For the entire runtime of the time series, filtered SMAs are generated for all filter lengths $5<L<500$. However, one considers only the out-of-sample range for the analysis. One limits oneself here to the performance indicator Sharpe and calculates this for each *L*.
+Different in-sample lengths have been used to try to find an optimal in-sample model, which should lead to satisfying solutions in the out-of-sample area. This was not possible with the methods used. Now one would like to examine additionally whether it would be at all possible to find good solutions in the out-of-sample range. Therefore we investigate the out-of-sample area directly. For the entire runtime of the time-series, filtered SMAs are generated for all filter lengths $5<L<500$. However, one considers only the out-of-sample range for the analysis. One limits oneself here to the performance indicator Sharpe and calculates this for each *L*.
 
 Note, however, that this is only possible here because you know the real values of the out-of-sample range. If this procedure finds filter lengths that outperform buy-and-hold, these cannot be applied in reality. The filters could only be found by the out-of-sample data, which we do not know in reality. Here, we only investigate whether it is at all possible to outperform buy-and-hold.
 
@@ -449,7 +455,7 @@ text((119-1)/2, -0.2, "Phase 1", col="#E413A3")
 text(((446-280)/2)+280, -0.2, "Phase 2", col="#14C29A")
 
 ```
-Here one can see again a typical characteristic of these time series. In chapter [3.1.2.](#vola-sharpe) we compared the volatility with the Sharpe Ratios, here we can see this phenomenon well. The index 1 leads to higher Sharpe ratios than for example the index 4, but is less volatile. The Sharpe ratio of index 4 shows very strong volatile phases in comparison.
+Here one can see again a typical characteristic of these time-series. In chapter [3.1.2.](#vola-sharpe) we compared the volatility with the Sharpe Ratios, here we can see this phenomenon well. The index 1 leads to higher Sharpe ratios than for example the index 4, but is less volatile. The Sharpe ratio of index 4 shows very strong volatile phases in comparison.
 
 Up to a filter length of about 40, the Sharpe ratios fluctuate very strongly. This is followed by a volatile phase until the filter Sharpe converges to the buy-and-hold Sharpe (from about L=120). At high filter lengths the Sharpe ratios for indexes 2,3 and 4 start to fluctuate again, the more volatile the original index is, the earlier the volatile phase starts and the longer it is. What is noticeable is that there are 2 phases which leads to good models. On the one hand you can find SMA's with short filters (phase 1) and on the other hand with long ones (phase 2). In both phases models are found, which can lead to an outperformance (they are above the dashed buy-and-hold line).
 
@@ -506,16 +512,31 @@ kbl(df_tab, caption="Best ouf-of-sample filterlengths.", booktabs = T, linesep =
   column_spec(13:15, color = c("#000000", rep("#E413A3", 6), rep("#14C29A", 6), "#000000")) 
 ```
 
+&nbsp;
+
+The short filters (pink) lead to more trades compared to the long filters (green). This also makes sense, short filters react faster and tend to lead to a higher number of trading signals. Some models found are also only marginally better than buy-and-hold, some would lose relevance when trading costs are taken into account.
+
+Lastly, one would just like to investigate how the generated signals of the short and long filters differ. In the following figure \ref{fig:chap3.2.3.4} two models with different filter lengths of index 2 are shown as an example.
+
 \newpage
+
+The two chosen filters are the most optimal for index 2. Both lead to a similar result. Over the entire out-of-sample period, the long filter (green) generates a single signal in mid-January 2019, which leads to an outperformance. The short filter (pink) generates a signal in March 2019 that leads to nothing. Only towards the end of 2019 to the beginning of 2020 several consecutive trading signals are generated, which finally lead to a similar result as the long filter.
+
+&nbsp;
 
 ```{r, chap3.2.3.4, echo=FALSE, fig.cap="Two good models | Index 2", fig.dim=c(11, 6), out.width = "100%"}
 plot_sma2(x=log_ret_ind, inx=2, L1=42, L2=354, insamp = "2018-12-31")
 ```
 
+&nbsp;
+
+Thus, it would be proven that buy-and-hold can be outperformed with a single simple moving average. However, this could only be done by meeting some conditions. The optimal filters could only be found by knowing the out-of-sample data, which is not known in reality. If the used time-series would take a different course, the solutions with the used filters could look completely different.
+
 \newpage
-### 3.5. Moving average crossings trading {#macrossingse}
+
+### 3.5. Moving Average Crossings Trading {#macrossingse}
  
-As a third approach we apply 2 SMAs on every time series and trade them with the common Ma crossings rules introduced in [2.3.3](#macross-section).
+As a third approach we apply 2 SMAs on every time-series and trade them with the common Ma crossings rules introduced in [2.3.3](#macross-section).
 With an optimaztion we are trying to find the best filterlengths for the 2 SMA's.
 
 #### 3.5.1. Optimization
@@ -640,7 +661,7 @@ lines(rolf1[,3], col=c("blue"),lwd=2,type="p")
 addLegend("left", on=1, legend.names = c("long filter sharpe", "long filter drawdown "), lty=c(1, 1), lwd=c(1, 1),col=c("red","blue"))
 ```
 
-In figure \ref{fig:chap3.2.4.1.14} the sharpes of the 10 best models look all very similar in each step except for 2009 and 2012 they vary a little bit. Until 2015 they are all slightly under 1. Very important is the fact that a filterlength of 100 means 4 years which is a very long time. The results narrowing Jan-2019 are close to or directly buy and hold, therefore the sharpe rises to nearly 3. Interesting are also the result in figure \ref{fig:chap3.2.4.1.15}. From 2002 to 2011 the long and the short filter are always very close together. This plot could lead to a more interesting analysis. Due the time time and length limitation this optimization is closed here and not further discussed.
+In figure \ref{fig:chap3.2.4.1.14} the sharpes of the 10 best models look all very similar in each step except for 2009 and 2012 they vary a little bit. Until 2015 they are all slightly under 1. Very important is the fact that a filterlength of 100 means 4 years which is a very long time. The results narrowing Jan-2019 are close to or directly buy-and-hold, therefore the sharpe rises to nearly 3. Interesting are also the result in figure \ref{fig:chap3.2.4.1.15}. From 2002 to 2011 the long and the short filter are always very close together. This plot could lead to a more interesting analysis. Due the time time and length limitation this optimization is closed here and not further discussed.
 
 
 In good knowledge we're taking the risk of maybe not finding the right filterlenght and use the result of the optimizations for trading the series in the next section.
@@ -658,13 +679,13 @@ In good knowledge we're taking the risk of maybe not finding the right filterlen
 
 As noticed the Visualizations in [3.5.1](#macrossingse)  are only done for index one, the optimal values and their fluctuation are shown in the tables \ref{tab:macrosstable index 1},\ref{tab:macrosstable index 2},\ref{tab:macrosstable index 3},\ref{tab:macrosstable index 4} and \ref{fig:chap3.2.4.1.8},\ref{fig:chap3.2.4.1.9},\ref{fig:chap3.2.4.1.10},\ref{fig:chap3.2.4.1.11},\ref{fig:chap3.2.4.1.12},\ref{fig:chap3.2.4.1.13}.
 ```{r, chap3.5.2.1. , echo=FALSE, include=T }
-return_buy_and_hold_1  =   diff(log(data[,1]))##### buy and hold
+return_buy_and_hold_1  =   diff(log(data[,1]))##### buy-and-hold
 return_buy_and_hold_2  =   diff(log(data[,2]))
 return_buy_and_hold_3  =   diff(log(data[,3]))
 return_buy_and_hold_4  =   diff(log(data[,4]))
 ```
 Based on the optimal filterlenghts calculated in the last section, the SMAs are now applied to the "out of sample" span from 2019-01-01 to 2020-04-01. Keeping in mind that the Moving Averages need the same initialization time as the length of filter itself, only the optimal filterlengths from years smaller than 2017 are considered.
-Index one brings us the optimal maximum sharpe *1.275* at end of the series *2016* with filterlengths *L1 = 1 / L2=106* applying this filters to the put opf sample leads us to buy and hold no trades are executed. Even considering the filters from the earlier timesspans *2006-01-01 sharpe = 1.529 L1= 49 L2= 243*  brings no other result than buy and hold. Trying the maximum drawdown filters leads to the same result. 
+Index one brings us the optimal maximum sharpe *1.275* at end of the series *2016* with filterlengths *L1 = 1 / L2=106* applying this filters to the put opf sample leads us to buy-and-hold no trades are executed. Even considering the filters from the earlier timesspans *2006-01-01 sharpe = 1.529 L1= 49 L2= 243*  brings no other result than buy-and-hold. Trying the maximum drawdown filters leads to the same result. 
 
 &nbsp;
 
@@ -693,7 +714,7 @@ ret = return*trade
 names(ret)="filter"
 ```
 \newpage
-Regarding the other indexes, the results  look all very similiar. None of the Moving average crossing are able to outperform buy and hold. For visualizing we use only the fourth index with *2016-01-01 0.998 12 134*. For this index we have leastways two trades \ref{fig:chap3.5.2.3}. Following the longer filter (red) from the left side, it crosses the blue line ( L1 ) in the beginning of 2020, that's where a selling is executed. Shortly after the buy signals comes with the red line crossing the blue from above. With this signals we get a sharpe of *1.761906*, in comparison to the buy and hold sharpe index-4 *1.963966*.
+Regarding the other indexes, the results  look all very similiar. None of the Moving average crossing are able to outperform buy-and-hold. For visualizing we use only the fourth index with *2016-01-01 0.998 12 134*. For this index we have leastways two trades \ref{fig:chap3.5.2.3}. Following the longer filter (red) from the left side, it crosses the blue line ( L1 ) in the beginning of 2020, that's where a selling is executed. Shortly after the buy signals comes with the red line crossing the blue from above. With this signals we get a sharpe of *1.761906*, in comparison to the buy-and-hold sharpe index-4 *1.963966*.
 
 &nbsp;
 
@@ -728,4 +749,4 @@ names(ret)="filter"
 
 Also neither of the results from \ref{fig:chap3.2.4.1.15} are clearly satisfying
 
-As endresult buy and hold stays better as the combinations of ma crossigs, at least with the parameter restrictions we implied. The intuition , and also thh common used filters L1=50 / L2=250 equals buy and hold. This strategy may not be so bad, why leaving a trend market instead of profiting from it.
+As endresult buy-and-hold stays better as the combinations of ma crossigs, at least with the parameter restrictions we implied. The intuition , and also thh common used filters L1=50 / L2=250 equals buy-and-hold. This strategy may not be so bad, why leaving a trend market instead of profiting from it.
