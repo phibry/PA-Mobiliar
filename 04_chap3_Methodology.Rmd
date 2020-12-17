@@ -178,8 +178,7 @@ kbl(perc, caption="Shares", booktabs = T) %>%
 
 ### 3.3. AR trading
 
-As with the theory data set, these 4 indexes are non-stationary series. For the AR models, the stationary log-returns of the time-series are used. First we look at index 1, the series with the lowest volatility but with the highest sharpe ratio (highest return with lowest risk). To find the best possible AR model, different AR(*p*) models are fitted with different model orders *p* for different in-sample ranges. The parameters *p* and start date are so called hyper parameters, parameters which are set before modelling. F
-or each model the out-of-sample sharpe is calculated. The execution of this calculation leads to the solution shown in table \ref{tab:ar1table}.
+As with the theory data set, these 4 indexes are non-stationary series. For the AR models, the stationary log-returns of the time-series are used. First we look at index 1, the series with the lowest volatility but with the highest sharpe ratio (highest return with lowest risk). To find the best possible AR model, different AR(*p*) models are fitted with different model orders *p* for different in-sample ranges. The parameters *p* and start date are so called hyper parameters, parameters which are set before modelling. For each model the out-of-sample sharpe is calculated. The execution of this calculation leads to the solution shown in table \ref{tab:ar1table}.
 
 ```{r ar1table, echo=FALSE}
 part1 <- opt_ar_1[1:8,]
@@ -190,7 +189,7 @@ kbl(cbind(part1, part2), caption="Solution of the AR-Model calculation.", bookta
   kable_styling(latex_options = c("striped", "hold_position"))
 ```
 
-With these calculations, the optimal model is an AR(2) with the start date 2018-01-01. Note that the Index 1 series has a very flat rising trend and a rising upward trend towards the end of 2018, so only a short in-sample is needed for this optimal model. It is interesting that the long in-sample ranges (2003 to 2007) also lead to relatively good performances. This probably has something to do with the fact that the trend at the beginning of the series has a greater influence on the models than the middle part.
+With these calculations, the optimal model is an AR(2) with the start date 2018-01-01. Note that the index 1 series has a very flat rising trend and a rising upward trend towards the end of 2018, so only a short in-sample is needed for this optimal model. It is interesting that the long in-sample ranges (2003 to 2007) also lead to relatively good performances. This probably has something to do with the fact that the trend at the beginning of the series has a higher influence on the models than the middle part.
 
 ```{r, chap3.2.2.1, echo=FALSE, fig.cap="Visualization of the optimal AR(2)-Model.", fig.dim=c(11, 6), out.width = "90%"}
 op2 <- c(as.character(opt_ar_1[which.max(opt_ar_1[,2]),][1]),
@@ -226,7 +225,7 @@ The upper part of figure \ref{fig:chap3.2.2.1} shows the optimal model compared 
 
 The lower part of figure \ref{fig:chap3.2.2.1} shows the trading signals visually. If one were to trade exactly according to the AR(2) forecasts, one would make a trade at each vertical line, a total of `r trade_1` trades would have to be made during the out-of-sample period. If you want to include trading costs in the performance, an AR model with daily trades would have to be much better than this one to outperform buy-and-hold.
 
-But what influence do the trading costs really have? If you assume a fictitious investment amount of 1 million USD and you have to pay 190 USD for each trade, as mentioned in section [3.2.1](#bnh-section). Invest this amount at the beginning of the out-of-sample period. With the buy-and-hold strategy, a return of USD `r return_bnh_1` is achieved by the end of the out-of-sample range. Without trading costs the AR(2) would yield USD `r return_ar_1`, with trading costs only USD `r return_ar_t_1`. To get at least the same return on the investment, the trading costs should not exceed USD 39. Note that all the parameters have to be taken in consideration for real life trading such as : trading costs, realizable trading volume, restrictions at the exchange, governmental restrictions,  so on and so forth.
+But what influence do the trading costs really have? If you assume a fictitious investment amount of 1 million USD and you have to pay 190 USD for each trade, as mentioned in section [3.2.1](#bnh-section). Invest this amount at the beginning of the out-of-sample period. With the buy-and-hold strategy, a return of USD `r return_bnh_1` is achieved by the end of the out-of-sample range. Without trading costs the AR(2) would yield USD `r return_ar_1`, with trading costs only USD `r return_ar_t_1`. To get at least the same return on the investment, the trading costs should not exceed USD 39. Note that all the parameters have to be taken in consideration for real life trading such as: trading costs, realizable trading volume, restrictions at the exchange, governmental restrictions, so on and so forth.
 
 Thus it can be said that for index 1, the buy-and-hold strategy cannot be outperformed by an AR(2) model if trading costs are taken into account. Nevertheless, one would like to apply this procedure also to the other indexes, possibly the generated models perform better for the other time-series.
 
@@ -293,7 +292,7 @@ ar_plotter(perf_bnh=p3$perf_bnh, perf_ar=p3$perf_ar, start_date=op2[3], inx=3, p
 
 \newpage
 
-The fourth index, which is shown in the lower figure \ref{fig:chap3.2.2.3}, is interesting again. The optimal AR model predicts almost the same behavior as buy-and-hold for almost the entire duration. Only during the highly volatile phase of the Corona crisis are the same trades listed as for index 2 and 3.
+The fourth index, which is shown in the lower figure \ref{fig:chap3.2.2.3}, is interesting again. The optimal AR model predicts almost the same behavior as buy-and-hold for almost the entire duration. Only during the highly volatile phase of the Covid19 crisis are the same trades listed as for index 2 and 3.
 
 ```{r, chap3.2.2.4, echo=FALSE, fig.cap="Visualization of the optimal Index 4 AR(1)-Model.", fig.dim=c(11, 6), out.width = "85%"}
 ar_plotter(perf_bnh=p4$perf_bnh, perf_ar=p4$perf_ar, start_date=op2[4], inx=4, p=op4[4], sharpe_bnh=op1[4], sharpe_ar=op3[4], signal=p4$signal)
@@ -304,7 +303,7 @@ So it can be said that with very simple autoregressive models, a tool has been f
 
 ### 3.4. Single Simple Moving Average Trading
 
-Next thing to look at is the optimization with a single simple moving average. For AR models, the start date is a hyperparameter, as is the model order *p*. For SMA models there is no model order but a filter length *L*. The filter length is here limited to $5<L<500$.
+Next thing to look at is the optimization with a single simple moving average. For AR models, the start date is a hyperparameter, as is the model order *p*. For SMA models there is no model order but a filter length *L*. Limit the filter length here to $5<L<500$, since the out-of-sample range is only 350 days long.
 
 Additionally the in-sample range is varied again. For each start date the in-sample performances are calculated for each filter length in the interval $5<L<500$. The AR model was only limited to the performance indicator sharpe ratio. This time we are adding the drawdown and MSE indicators. Thus, for each start date, for each filter length *L*, the three different indicators are calculated and an optimal model can be choosen.
 
@@ -456,7 +455,7 @@ text((119-1)/2, -0.2, "Phase 1", col="#E413A3")
 text(((446-280)/2)+280, -0.2, "Phase 2", col="#14C29A")
 
 ```
-Here one can see again a typical characteristic of these time-series. In chapter [3.1.2.](#vola-sharpe) we compared the volatility with the Sharpe Ratios, here we can see this phenomenon well. The index 1 leads to higher Sharpe ratios than for example the index 4, but is less volatile. The Sharpe ratio of index 4 shows very strong volatile phases in comparison.
+Here one can see again a typical characteristic of these time-series. In chapter [3.1.2.](#vola-sharpe) we compared the volatility with the Sharpe ratios, here we can see this phenomenon well. The index 1 leads to higher Sharpe ratios than for example the index 4, but is less volatile. The Sharpe ratio of index 4 shows very strong volatile phases in comparison.
 
 Up to a filter length of about 40, the Sharpe ratios fluctuate very strongly. This is followed by a volatile phase until the filter Sharpe converges to the buy-and-hold Sharpe (from about L=120). At high filter lengths the Sharpe ratios for indexes 2,3 and 4 start to fluctuate again, the more volatile the original index is, the earlier the volatile phase starts and the longer it is. What is noticeable is that there are 2 phases which leads to good models. On the one hand you can find SMA's with short filters (phase 1) and on the other hand with long ones (phase 2). In both phases models are found, which can lead to an outperformance (they are above the dashed buy-and-hold line).
 
@@ -537,32 +536,32 @@ Thus, it would be proven that buy-and-hold can be outperformed with a single sim
 
 ### 3.5. Moving Average Crossings Trading {#macrossingse}
  
-As a third approach we apply 2 SMAs on every time-series and trade them with the common Ma crossings rules introduced in [2.3.3](#macross-section).
-With an optimaztion we are trying to find the best filterlengths for the 2 SMA's.
+As a third approach we apply 2 SMA's on every time-series and trade them with the common Ma crossings rules introduced in [2.3.3](#macross-section).
+With an optimization we are trying to find the best filterlengths for the 2 SMA's.
 
 #### 3.5.1. Optimization
 
 &nbsp;
 
-For the Optimization the same procedure as in the previous sections gets executed.
+For the optimization the same procedure as in the previous sections gets executed.
 
-The optimization has two levels, the "first level" or outer level is  narrowing the insample timespan  from (2003-01 / 01-2019) to (01-2018 / 01-2019). In the inner level "second level" the real optimization is calculated by finding the optimal combination of filters, regarding maximum sharpe and maximum drowndown trading them with the common crossing trading rules.
+The optimization has two levels, the "first level" or outer level is  narrowing the in-sample timespan  from (2003-01 / 01-2019) to (01-2018 / 01-2019). In the inner level "second level" the real optimization is calculated by finding the optimal combination of filters, regarding maximum Sharpe and maximum drawdown trading them with the common crossing trading rules.
 
 Hyperparameter:
 
-- $\textnormal{date}$ = startdate for the insample timespan $\textnormal{2003-01-01} < \textnormal{date} \le \textnormal{2018-01-01}\textnormal{, by 1 trading year}$
+- $\textnormal{Date}$ = startdate for the in-sample timespan $\textnormal{2003-01-01} < \textnormal{date} \le \textnormal{2018-01-01}\textnormal{, by 1 trading year}$
 
 Parameters$_2$:
 
 - $L1$ = length of shorter SMA  with $1 < L1 \le  50$ 
 - $L2$ = length of longer  SMA with  $100 < L1 \le 250$
 
-Figure \ref{fig:chap3.2.4.1.1} visualizes one iteration of the optimization. For the fixed L1 =1, L2 is variable and the optimal sharpe is calculated. This procedure is done for every filterlenght as described in $_2$ and further visualized in \ref{fig:chap3.2.4.1.2}. The drawdown is also calculated as seen in plot \ref{fig:chap3.2.4.1.3}. Notice that the visualization is from the starting date 2015-10-30, which is randomly chosen for explaining the optimization process.
+Figure \ref{fig:chap3.2.4.1.1} visualizes one iteration of the optimization. For the fixed L1=1, L2 is variable and the optimal sharpe is calculated. This procedure is done for every filterlength as described in $_2$ and further visualized in \ref{fig:chap3.2.4.1.2}. The drawdown is also calculated as seen in plot \ref{fig:chap3.2.4.1.3}. Notice that the visualization is from the starting date 2015-10-30, which is randomly chosen for explaining the optimization process.
 
 
-```{r, chap3.2.4.1.1, echo=FALSE, fig.cap="optimization sharpe L1=1 ,L2 = variable", include=T,out.width = "100%",fig.dim=c(16, 7.4)}
+```{r, chap3.2.4.1.1, echo=FALSE, fig.cap="Optimization Sharpe L1=1 ,L2=variable", include=T,out.width = "100%",fig.dim=c(16, 7.4)}
 sharpfirst=as.array((ind1_opt$perf_mat)[,2])
-plot(sharpfirst[1:151],type="l",ylab="Max sharpe",xlab="L1 fixed=1,    100 < L2 < 250 on x axis ",main="filter optimization start 2015  ",col="black",xaxt='n')
+plot(sharpfirst[1:151],type="l",ylab="Max sharpe",xlab="L1 fixed=1,    100 < L2 < 250 on x axis ",main="Filter optimization start 2015  ",col="black",xaxt='n')
 abline(v=7, col = "green")
 abline(h=1.225, col = "green")
 abline(v=c(0,150), col = "blue",lty=2)
@@ -570,8 +569,8 @@ legend("bottom", inset=.02, legend=c("Sharpe", "Maximum by filter L1= 1, L2 = 10
        col=c("black", "green","blue"), lty=c(1,1,2), cex=0.8, horiz=F)
 ```  
 \newpage
-```{r, chap3.2.4.1.2, echo=FALSE, fig.cap="sharpe index 1", include=T,out.width = "100%",fig.dim=c(16, 7.4)}
-plot((ind1_opt$perf_mat)[,2],type="l",ylab="Sharpe",xlab="",main="filter optimization start: 2015 ",xaxt='n')
+```{r, chap3.2.4.1.2, echo=FALSE, fig.cap="Sharpe index 1", include=T,out.width = "100%",fig.dim=c(16, 7.4)}
+plot((ind1_opt$perf_mat)[,2],type="l",ylab="Sharpe",xlab="",main="Filter optimization start: 2015 ",xaxt='n')
 abline(h=1.08, col = "red")
 abline(h=1.225, col = "green")
 abline(v=c(0,150),col="blue",lty=2)
@@ -581,8 +580,8 @@ legend("bottom", inset=.02, legend=c("Sharpe", "Maximum by filter L1= 1, L2 = 10
 ```
 &nbsp;
 
-```{r, chap3.2.4.1.3, echo=FALSE, fig.cap="drawdown index 1", include=T,out.width = "100%",fig.dim=c(16, 7.4)}
-plot((ind1_opt$perf_mat)[,3],type="l",ylab="Drawdown",xlab="",main="filter optimization start: 2015 ",col="green")
+```{r, chap3.2.4.1.3, echo=FALSE, fig.cap="Drawdown index 1", include=T,out.width = "100%",fig.dim=c(16, 7.4)}
+plot((ind1_opt$perf_mat)[,3],type="l",ylab="Drawdown",xlab="",main="Filter optimization start: 2015 ",col="green")
 abline(h=-0.0069, col = "violet")
 abline(v=17*150)
 abline(v=c(16*150-20,20 * 150+20),col="darkblue",lty=2)
@@ -590,7 +589,7 @@ legend("bottom", inset=.02, legend=c("Drawdown", "Maximum by filter L1= 18, L2 =
        col=c("green", "black","darkblue"), lty=c(1,1,2), cex=0.8, horiz=F)
 ```
 
-The pattern we observe in \ref{fig:chap3.2.4.1.2} is the repeating optimization by fixing L1 and vary L2. The maximum sharpe was found with L1= *1*, L2= *106*, sharpe =  *1.225*,which is also visualized in \ref{fig:chap3.2.4.1.2},where the "window" (blue dottet lines) is shown. When we look at the red line we can clearly see there are other similar  high spikes in other filter lengths. The green pattern in \ref{fig:chap3.2.4.1.3} shows interesting news. at L1 = 17,18, 19 and 20 we see a cluster(blue dottet lines) of high spikes, all very similar. The optimum in this plot is by L1 = *18* and L2 = *102* and a drawdown *6.55e-3*, laying in the described cluster . But when we look at the violet line drawn, we can clearly see there's another high spike at the beginning of the plot. This spike is identical with the maximum sharpe in \ref{fig:chap3.2.4.1.2}. So theses results could just be random and the solution is not finite , this problem will be further discussed$_3$.
+The pattern we observe in \ref{fig:chap3.2.4.1.2} is the repeating optimization by fixing L1 and vary L2. The maximum Sharpe was found with L1=*1*, L2=*106*, Sharpe=*1.225*, which is also visualized in \ref{fig:chap3.2.4.1.2}, where the "window" (blue dotted lines) is shown. When we look at the red line we can clearly see there are other similar high spikes in other filter lengths. The green pattern in \ref{fig:chap3.2.4.1.3} shows interesting news. At L1 = 17, 18, 19 and 20 we see a cluster(blue dotted lines) of high spikes, all very similar. The optimum in this plot is by L1=*18* and L2=*102* and a drawdown *6.55e-3*, laying in the described cluster. But when we look at the violet line drawn, we can clearly see there is another high spike at the beginning of the plot. This spike is identical with the maximum Sharpe in \ref{fig:chap3.2.4.1.2}. So these results could just be random and the solution is not finite, this problem will be further discussed$_3$.
 
 \newpage
 
@@ -622,10 +621,10 @@ addEventLines(events,srt=90,pos=2,lty=2)
 
 ```
 
-By plotting the sharperatio / max drawdown$_1$ in \ref{fig:chap3.2.4.1.4} and the optimal filterlenghts L1/L2 in \ref{fig:chap3.2.4.1.5}, for every insample timestep as described at the beginning of [3.5.1](#macrossingse), the  Hyperoptimization is visualized.The code is linked in the attachement [6.3.5](#optimizationmacross). The results from the trajectories in \ref{fig:chap3.2.4.1.2} and \ref{fig:chap3.2.4.1.3}
-are showed at the black dotted line.Because of the problem we've mentioned in $_3$ the best result could also be just random. Therefore the ten best results for each insample timesteps are calculated and visualized in \ref{fig:chap3.2.4.1.6} and \ref{fig:chap3.2.4.1.7} to get an idea about the accuracy of these filters and analyze them a bit further.
+By plotting the Sharpe ratio / max drawdown$_1$ in \ref{fig:chap3.2.4.1.4} and the optimal filterlenghts L1/L2 in \ref{fig:chap3.2.4.1.5}, for every in-sample timestep as described at the beginning of [3.5.1](#macrossingse), the hyperoptimization is visualized. The code is linked in the attachement [6.3.5](#optimizationmacross). The results from the trajectories in \ref{fig:chap3.2.4.1.2} and \ref{fig:chap3.2.4.1.3}
+are showed at the black dotted line. Because of the problem we have mentioned in $_3$ the best result could also be just random. Therefore the ten best results for each in-sample timesteps are calculated and visualized in \ref{fig:chap3.2.4.1.6} and \ref{fig:chap3.2.4.1.7} to get an idea about the accuracy of these filters and analyze them a bit further.
 
-$_1$ Note: maxdrawdown is scaled by the factor 100 to visualize it in the same plot 
+$_1$ Note: maxdrawdown is scaled by the factor 100 to visualize it in the same plot.
 \newpage
 ```{r, chap3.2.4.1.6, echo=FALSE, fig.cap="Hyperoptimization 10 best Index 1", include=T,fig.keep = 'last',fig.dim=c(16, 7.1),out.width = "100%"}
 ##################sharpe maxdrow 10
@@ -647,9 +646,9 @@ addLegend("bottomleft", on=1, legend.names = c("short filter sharpe", "short fil
 
 ```
 
-Whilst the ten best sharperatios / drawdowns in \ref{fig:chap3.2.4.1.6} are always very close together, the filterplot \ref{fig:chap3.2.4.1.6}  shows a completely different and interesting image. We can observe differences, specially in the long filters in 2009, 2010, 2011 the result nearly diverge 150 units. Also in the timespan 2011 to 2018 the filters fluctuate strongly. What further catches the eye, are the long- and the shortfilter sharpes from 2003 to 2011. They are all concentrated at their upper limits of 50 and 250, which indicates that they actually wanted to be longer than the restriction. The same behaviour is observed for the short drawdown from 2011 to 2018 where the observations are concentrated around length 1. The plot would shurely look different if the restrictions of the filterlengths would be greater. Also the steps of the insample timespan are always one year. Changing the restriction would have a massive impact on the optimization time and would most likely deliver different results.
+Whilst the ten best Sharpe ratios / drawdowns in \ref{fig:chap3.2.4.1.6} are always very close together, the filterplot \ref{fig:chap3.2.4.1.6}  shows a completely different and interesting image. We can observe differences, specially in the long filters in 2009, 2010, 2011 the result nearly diverge 150 units. Also in the timespan 2011 to 2018 the filters fluctuate strongly. What further catches the eye, are the long- and the shortfilter sharpes from 2003 to 2011. They are all concentrated at their upper limits of 50 and 250, which indicates that they actually have to be longer than the restriction. The same behaviour is observed for the short drawdown from 2011 to 2018 where the observations are concentrated around length 1. The plot would surely look different if the restrictions of the filterlengths would be greater. Also the steps of the in-sample timespan are always one year. Changing the restriction would have a massive impact on the optimization time and would most likely deliver different results.
 
-Curiosity leads us to recreate the optimization for $1 < L1 \le 1000$ and $1 < L2 \le 1000$  which calculates 16 million sharpes.  Now L2 can be smaller than L1 while the trading rule stays the same. The numeric results can be found in \ref{tab:macrosstable 1000 x 1000 index 4.1}
+Curiosity leads us to recreate the optimization for $1 < L1 \le 1000$ and $1 < L2 \le 1000$  which calculates 16 million Sharpes.  Now L2 can be smaller than L1 while the trading rule stays the same. The numeric results can be found in \ref{tab:macrosstable 1000 x 1000 index 4.1}.
 
 ```{r, chap3.2.4.1.14, echo=FALSE, fig.cap="Hyperoptimization 1000 x 1000 Index 4", include=T,fig.keep = 'last',fig.dim=c(16, 7.1),out.width = "100%"}
 plot(rolf1[,1],ylim= c(-2,4),col="black",type="p",format.labels="%b-%Y",main="Optimization with 1000x1000 index 4")
@@ -662,10 +661,10 @@ lines(rolf1[,3], col=c("blue"),lwd=2,type="p")
 addLegend("left", on=1, legend.names = c("long filter sharpe", "long filter drawdown "), lty=c(1, 1), lwd=c(1, 1),col=c("red","blue"))
 ```
 
-In figure \ref{fig:chap3.2.4.1.14} the sharpes of the 10 best models look all very similar in each step except for 2009 and 2012 they vary a little bit. Until 2015 they are all slightly under 1. Very important is the fact that a filterlength of 100 means 4 years which is a very long time. The results narrowing Jan-2019 are close to or directly buy-and-hold, therefore the sharpe rises to nearly 3. Interesting are also the result in figure \ref{fig:chap3.2.4.1.15}. From 2002 to 2011 the long and the short filter are always very close together. This plot could lead to a more interesting analysis. Due the time time and length limitation this optimization is closed here and not further discussed.
+In figure \ref{fig:chap3.2.4.1.14} the Sharpes of the 10 best models look all very similar in each step except for 2009 and 2012 they vary a little bit. Until 2015 they are all slightly under 1. Very important is the fact that a filterlength of 100 means 4 years which is a very long time. The results narrowing Jan-2019 are close to or directly buy-and-hold, therefore the sharpe rises to nearly 3. Interesting are also the result in figure \ref{fig:chap3.2.4.1.15}. From 2002 to 2011 the long and the short filter are always very close together. This plot could lead to a more interesting analysis. Due the time and length limitation this optimization is closed here and not further discussed.
 
 
-In good knowledge we're taking the risk of maybe not finding the right filterlenght and use the result of the optimizations for trading the series in the next section.
+In good knowledge we are taking the risk of maybe not finding the right filterlength and use the result of the optimizations for trading the series in the next section.
 
 
 
@@ -678,15 +677,15 @@ In good knowledge we're taking the risk of maybe not finding the right filterlen
 &nbsp;
 
 
-As noticed the Visualizations in [3.5.1](#macrossingse)  are only done for index one, the optimal values and their fluctuation are shown in the tables \ref{tab:macrosstable index 1},\ref{tab:macrosstable index 2},\ref{tab:macrosstable index 3},\ref{tab:macrosstable index 4} and \ref{fig:chap3.2.4.1.8},\ref{fig:chap3.2.4.1.9},\ref{fig:chap3.2.4.1.10},\ref{fig:chap3.2.4.1.11},\ref{fig:chap3.2.4.1.12},\ref{fig:chap3.2.4.1.13}.
+As noticed the Visualizations in [3.5.1](#macrossingse)  are only done for index 1, the optimal values and their fluctuation are shown in the tables \ref{tab:macrosstable index 1},\ref{tab:macrosstable index 2},\ref{tab:macrosstable index 3},\ref{tab:macrosstable index 4} and \ref{fig:chap3.2.4.1.8},\ref{fig:chap3.2.4.1.9},\ref{fig:chap3.2.4.1.10},\ref{fig:chap3.2.4.1.11},\ref{fig:chap3.2.4.1.12},\ref{fig:chap3.2.4.1.13}.
 ```{r, chap3.5.2.1. , echo=FALSE, include=T }
 return_buy_and_hold_1  =   diff(log(data[,1]))##### buy-and-hold
 return_buy_and_hold_2  =   diff(log(data[,2]))
 return_buy_and_hold_3  =   diff(log(data[,3]))
 return_buy_and_hold_4  =   diff(log(data[,4]))
 ```
-Based on the optimal filterlenghts calculated in the last section, the SMAs are now applied to the "out of sample" span from 2019-01-01 to 2020-04-01. Keeping in mind that the Moving Averages need the same initialization time as the length of filter itself, only the optimal filterlengths from years smaller than 2017 are considered.
-Index one brings us the optimal maximum sharpe *1.275* at end of the series *2016* with filterlengths *L1 = 1 / L2=106* applying this filters to the put opf sample leads us to buy-and-hold no trades are executed. Even considering the filters from the earlier timesspans *2006-01-01 sharpe = 1.529 L1= 49 L2= 243*  brings no other result than buy-and-hold. Trying the maximum drawdown filters leads to the same result. 
+Based on the optimal filterlenghts calculated in the last section, the SMAs are now applied to the "out-of-sample" span from 2019-01-01 to 2020-04-01. Keeping in mind that the Moving Averages need the same initialization time as the length of filter itself, only the optimal filterlengths from years smaller than 2017 are considered.
+Index 1 brings us the optimal maximum Sharpe *1.275* at end of the series *2016* with filterlengths *L1 = 1 / L2=106* applying this filters to the put opf sample leads us to buy-and-hold no trades are executed. Even considering the filters from the earlier timesspans *2006-01-01 sharpe = 1.529 L1= 49 L2= 243*  brings no other result than buy-and-hold. Trying the maximum drawdown filters leads to the same result. 
 
 &nbsp;
 
@@ -705,7 +704,7 @@ signal[which(sma1<sma2&lag(sma1)>lag(sma2))]<--1
 signal[which(sma1>sma2)]<-1
 signal[which(sma1<sma2)]<--1
 signal=reclass(signal,sma1)
-chartSeries(mobidat,subset=horizon,theme=chartTheme("white", bg.col="#FFFFFF"),name= "sMa",type="")
+chartSeries(mobidat,subset=horizon,theme=chartTheme("white", bg.col="#FFFFFF"),name= "SMA",type="")
 addSMA(n=n1,on=1,col = "blue")
 addSMA(n=n2,on=1,col = "red")
 addTA(signal,type="S",col="red")
@@ -715,7 +714,7 @@ ret = return*trade
 names(ret)="filter"
 ```
 \newpage
-Regarding the other indexes, the results  look all very similiar. None of the Moving average crossing are able to outperform buy-and-hold. For visualizing we use only the fourth index with *2016-01-01 0.998 12 134*. For this index we have leastways two trades \ref{fig:chap3.5.2.3}. Following the longer filter (red) from the left side, it crosses the blue line ( L1 ) in the beginning of 2020, that's where a selling is executed. Shortly after the buy signals comes with the red line crossing the blue from above. With this signals we get a sharpe of *1.761906*, in comparison to the buy-and-hold sharpe index-4 *1.963966*.
+Regarding the other indexes, the results  look all very similiar. None of the Moving Average Crossing are able to outperform buy-and-hold. For visualizing we use only the fourth index with *2016-01-01* Sharpe=0.998, L1=12, L2=134. For this index we have leastways two trades \ref{fig:chap3.5.2.3}. Following the longer filter (red) from the left side, it crosses the blue line ( L1 ) in the beginning of 2020, that is where a selling is executed. Shortly after the buy signals comes with the red line crossing the blue from above. With this signals we get a Sharpe of *1.761906*, in comparison to the buy-and-hold Sharpe index 4 *1.963966*.
 
 &nbsp;
 
@@ -734,7 +733,7 @@ signal[which(sma1<sma2&lag(sma1)>lag(sma2))]<--1
 signal[which(sma1>sma2)]<-1
 signal[which(sma1<sma2)]<--1
 signal=reclass(signal,sma1)
-chartSeries(mobidat,subset=horizon,theme=chartTheme("white", bg.col="#FFFFFF"),name= "sMa",type="")
+chartSeries(mobidat,subset=horizon,theme=chartTheme("white", bg.col="#FFFFFF"),name= "SMA",type="")
 addSMA(n=n1,on=1,col = "blue")
 addSMA(n=n2,on=1,col = "red")
 addTA(signal,type="S",col="red")
@@ -748,6 +747,6 @@ names(ret)="filter"
 
 &nbsp;
 
-Also neither of the results from \ref{fig:chap3.2.4.1.15} are clearly satisfying
+Also neither of the results from \ref{fig:chap3.2.4.1.15} are clearly satisfying.
 
-As endresult buy-and-hold stays better as the combinations of ma crossigs, at least with the parameter restrictions we implied. The intuition , and also thh common used filters L1=50 / L2=250 equals buy-and-hold. This strategy may not be so bad, why leaving a trend market instead of profiting from it.
+As endresult buy-and-hold stays better as the combinations of MA Crossigs, at least with the parameter restrictions we implied. The intuition, and also the common used filters L1=50 / L2=250 equals buy-and-hold. This strategy may not be so bad, why leaving a trend market instead of profiting from it.
