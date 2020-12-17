@@ -20,7 +20,10 @@ geometry: margin = 1in
 In this section, different models are created and compared with the buy-and-hold strategy.
 You start with pure data analysis and then work your way from simple models to more and more complex ones.
 
+
+
 ### 3.1. Data Analysis {#ts-analysis-depth}
+
 
 As mentioned in section [1.1](#ts-analysis) we are now going to analyze the data further to gain as much information as possible just by using some simple tools and comparisons.
 
@@ -141,7 +144,7 @@ To do so we need to create trading signals based on the models and indicators. F
 
 &nbsp;
 
-As mentioned earlier the goal of this work is trying to outperform the buy-and-hold strategy. Because the series all have a strong upward trend, this task is very tricky. Buy-and-hold has very low trading costs because the underlying is just bought once. According to swissquote [@swissquote] costs for asset trades over 50k, are 190 USD per trade $_1$, so these costs should also be taken into consideration for choosing the strategy. In this work, we have excluded these costs and only concentrate on the trades themselves.
+As mentioned earlier the goal of this work is trying to outperform the buy-and-hold strategy. Because the series all have a strong upward trend, this task is very tricky. Buy-and-hold has very low trading costs because the underlying is just bought once. According to swissquote [@swissquote] costs for asset trades over 50k, are 190 USD per trade $_1$, so these costs should also be taken into consideration for choosing the strategy. In this work, we have mostly excluded these costs and only concentrate on the trades themselves.
 
 $_1$ notice: This fee is only for private investors, conditions may differ for institutions.
 
@@ -175,7 +178,8 @@ kbl(perc, caption="Shares", booktabs = T) %>%
 
 ### 3.3. AR trading
 
-As with the theory data set, these 4 indexes are non-stationary series. For the AR models, the stationary log-returns of the time-series are used. First we look at index 1, the series with the lowest volatility but with the highest sharpe ratio (highest return with lowest risk). To find the best possible AR model, different AR(*p*) models are fitted with different model orders *p* for different in-sample ranges. The parameters *p* and start date are so called hyper parameters, parameters which are set before modelling. For each model the out-of-sample sharpe is calculated. The execution of this calculation leads to the solution shown in table \ref{tab:ar1table}.
+As with the theory data set, these 4 indexes are non-stationary series. For the AR models, the stationary log-returns of the time-series are used. First we look at index 1, the series with the lowest volatility but with the highest sharpe ratio (highest return with lowest risk). To find the best possible AR model, different AR(*p*) models are fitted with different model orders *p* for different in-sample ranges. The parameters *p* and start date are so called hyper parameters, parameters which are set before modelling. F
+or each model the out-of-sample sharpe is calculated. The execution of this calculation leads to the solution shown in table \ref{tab:ar1table}.
 
 ```{r ar1table, echo=FALSE}
 part1 <- opt_ar_1[1:8,]
@@ -222,7 +226,7 @@ The upper part of figure \ref{fig:chap3.2.2.1} shows the optimal model compared 
 
 The lower part of figure \ref{fig:chap3.2.2.1} shows the trading signals visually. If one were to trade exactly according to the AR(2) forecasts, one would make a trade at each vertical line, a total of `r trade_1` trades would have to be made during the out-of-sample period. If you want to include trading costs in the performance, an AR model with daily trades would have to be much better than this one to outperform buy-and-hold.
 
-But what influence do the trading costs really have? If you assume a fictitious investment amount of 1 million USD and you have to pay 190 USD for each trade, as mentioned in section [3.2.1](#bnh-section). Invest this amount at the beginning of the out-of-sample period. With the buy-and-hold strategy, a return of USD `r return_bnh_1` is achieved by the end of the out-of-sample range. Without trading costs the AR(2) would yield USD `r return_ar_1`, with trading costs only USD `r return_ar_t_1`. To get at least the same return on the investment, the trading costs should not exceed USD 39. Note that in addition to the trading costs, the initial investment amount also matters.
+But what influence do the trading costs really have? If you assume a fictitious investment amount of 1 million USD and you have to pay 190 USD for each trade, as mentioned in section [3.2.1](#bnh-section). Invest this amount at the beginning of the out-of-sample period. With the buy-and-hold strategy, a return of USD `r return_bnh_1` is achieved by the end of the out-of-sample range. Without trading costs the AR(2) would yield USD `r return_ar_1`, with trading costs only USD `r return_ar_t_1`. To get at least the same return on the investment, the trading costs should not exceed USD 39. Note that all the parameters have to be taken in consideration for real life trading such as : trading costs, realizable trading volume, restrictions at the exchange, governmental restrictions,  so on and so forth.
 
 Thus it can be said that for index 1, the buy-and-hold strategy cannot be outperformed by an AR(2) model if trading costs are taken into account. Nevertheless, one would like to apply this procedure also to the other indexes, possibly the generated models perform better for the other time-series.
 
