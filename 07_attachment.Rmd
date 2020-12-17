@@ -4,16 +4,10 @@ geometry: margin = 1in
 ---
 
 ## 6. Attachment
+
 This project work is created  with R-4.0.2 , RStudio Version 1.4.904 and RMarkdown in collaborative working via Git / Github
 
-<<<<<<< HEAD
-
-```{r,echo=T, eval=FALSE, include=T}
-
-=======
 ```{r, chap6.1 ,echo=T, eval=FALSE, include=T}
-```{r,echo=T, eval=FALSE, include=T}
->>>>>>> main
 #libraries
 library(xts)
 library(PerformanceAnalytics)
@@ -24,9 +18,9 @@ library(forecast)
 library(fGarch)
 ```
 
-### 6.3.3. AR 
+#### 6.3.3. AR 
 
-#### 6.3.3.1. Optimization code
+##### 6.3.3.1. Optimization code
 
 &nbsp;
 
@@ -150,9 +144,9 @@ optim_ar <- function(x.lr, inx, insamp="2019-01-01", minyear=3, maxyear=18) {
 
 \newpage
 
-### 6.3.4. SMA
+#### 6.3.4. SMA
 
-#### 6.3.4.1. Optimization Code
+##### 6.3.4.1. Optimization Code
 
 &nbsp;
 
@@ -401,7 +395,7 @@ plot_sma <- function(x, inx, L, insamp = "2018-12-31") {
 
 \newpage
 
-#### 6.3.4.2. Plots & Tables {#sma-appendix}
+##### 6.3.4.2. Plots & Tables {#sma-appendix}
 
 &nbsp;
 
@@ -607,9 +601,9 @@ kbl(tab4, caption="SMA-Optima by performance indicators | Index 4", booktabs = T
 perfplot_sma_opt(xall=log_ret_ind, insamp="2019-01-01", res_obj=res4, inx=4)
 ```
 \newpage
-### 6.3.5. MA Crossings
+#### 6.3.5. MA Crossings
 
-#### 6.3.5.1. Optimization Code {#optimizationmacross}
+##### 6.3.5.1. Optimization Code {#optimizationmacross}
 
 &nbsp;
 
@@ -704,7 +698,7 @@ cross_optim_easy_v3 <- function(x, start, end = "2018-12-31", L1min = 1, L1max =
 ```
 \newpage
 
-#### 6.3.5.2. Plots & Tables
+##### 6.3.5.2. Plots & Tables
 
 &nbsp;
 

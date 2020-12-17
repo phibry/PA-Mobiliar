@@ -536,8 +536,8 @@ Thus, it would be proven that buy-and-hold can be outperformed with a single sim
 
 ### 3.5. Moving Average Crossings Trading {#macrossingse}
  
-As a third approach we apply 2 SMA's on every time-series and trade them with the common Ma crossings rules introduced in [2.3.3](#macross-section).
-With an optimization we are trying to find the best filterlengths for the 2 SMA's.
+As a third approach we apply 2 SMAs on every time-series and trade them with the common Ma crossings rules introduced in [2.3.3](#macross-section).
+With an optimization we are trying to find the best filterlengths for the 2 SMAs.
 
 #### 3.5.1. Optimization
 
@@ -600,7 +600,7 @@ lines(index_1_onebest_year_with15[,4]*100,lwd=2,col="green",type="b")
 addLegend("topleft", on=1, legend.names = c("Sharpe ", "MaxDrawdown * 100 "), lty=c(1, 1), lwd=c(2, 2),col=c("black","green"))
 
 
-events <- xts("Figure 20/21/22", as.Date("2015-10-30"))
+events <- xts("Figure 24/25/26", as.Date("2015-10-30"))
 addEventLines(events,srt=90,pos=2,lty=2,)
 ```
 &nbsp;

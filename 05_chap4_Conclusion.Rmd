@@ -5,8 +5,10 @@ geometry: margin = 1in
 
 ## 4. Conclusion 
 
-The results of the applied models can be seen in the individual sections, so here we briefly explain what we have experienced and venture an outlook on further work.
+Only the simple AR models, of the methods we use, lead to the outperforming of the buy-and-hold strategy under parameter restrictions. In contrast to the Moving Average Filter, the AR methods can handle short-term, strong volatility fluctuations (e.g. Covid 19) well, which is why the filter methods remain long in strongly growing phases.
+The optimizations of the moving average filters did not lead to better results despite the detailed and very exciting applications.
+All methods used are very interesting in themselves and would be worthwhile to pursue further. For example, the out-of-sample time could be adjusted somewhat to better test the models mentioned. It would also be interesting to look at the period after April 2020 until today to see if the Ar models would have maintained the performance.
 
-Despite mentioning buy and hold once again, we emphasize that it is probably the best strategy in a growing market.
+In the theory section, we have presented many, but by no means all, models. Since the choice of models is huge and the application of them almost infinite, it would be an extremely exciting work to outperform buy-and-hold with further methods. Furthermore, a portfolio could have been created from the different approaches and weightings, which did not make it into the thesis, as it would go beyond the scope of this work.
 
-Furthermore, we can report that all the models explained should be taken with caution, since no one can foresee the future, it is necessary to have a certain confidence in your models and take the risk of failure.
+This work serves as the basis for a more advanced bachelor thesis. While the focus here was on the analysis of the data and the application of rather simpler models, more complex approaches from the field of machine learning or artificial intelligence can be applied in a further step.
