@@ -24,7 +24,7 @@ source("add/load_files.R")
 \pagenumbering{gobble}
 
 ```{=tex}
-\includepdf{add/titlepage.pdf}
+\includepdf{add/titlepage_DIE.pdf}
 \includepdf{add/declaration.pdf}
 ```
 
