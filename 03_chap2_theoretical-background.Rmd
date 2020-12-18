@@ -382,7 +382,7 @@ Momentum:
 
 &nbsp;
 
-Since not all observations have the same influence on the future value, we can apply a weight to past observations. One method will be Exponentially-weighted Moving average. So we choose an optimal parameter to give past observations weights decreasing by $\alpha^{k}$. In comparison to the SMA [2.3.1.](#SMA) [@EMA], an EMA from the same length $L$, reacts faster than to price changes.
+Since not all observations have the same influence on the future value, we can apply a weight to past observations. One method will be Exponentially-weighted Moving average. So we choose an optimal parameter to give past observations weights decreasing by $\alpha^{k}$. In comparison to the SMA [2.3.1](#SMA) [@EMA], an EMA from the same length $L$, reacts faster than to price changes.
 
 A skillful trader chooses an optimal $\alpha$ to increase the performance of the measurement. Weights could also be given individually by adding a weight vector to the filter.
 
@@ -420,7 +420,7 @@ MA Crossing:
 
 \newpage
 
-An example of MA crossings with 2 SMAs of different length is visualized in figure \ref{fig:chap2.3.3}. The prices are in \textcolor{ForestGreen}{green} while the \textcolor{blue}{blue line} represents a \textcolor{blue}{50} day SMA an the \textcolor{red}{red line} a  \textcolor{red}{250 (1 year)} SMA. The crossing points of those two SMAs could now be used as trading signals. In this example these crossings would not perform very well, therefore as mentioned earlier, finding the right length of the filter depends on each timeseries, their behavior and the preferences of the trader. 
+An example of MA crossings with 2 SMAs of different length is visualized in figure \ref{fig:chap2.3.3}. The prices are in \textcolor{ForestGreen}{green} while the \textcolor{blue}{blue line} represents a \textcolor{blue}{50} day SMA an the \textcolor{red}{red line} a  \textcolor{red}{250 (1 year)} SMA. The crossing points of those two SMAs could now be used as trading signals. In this example these crossings would not perform very well, therefore as mentioned earlier, finding the right length of the filter depends on each time-series, their behavior and the preferences of the trader. 
 
 &nbsp;
 
@@ -451,7 +451,7 @@ The scale goes from 0 to 100. [@slide_trading_indicators_univariate].
   D_{t}=\begin{cases}1, \textnormal{if }  x_t < x_{t-1}\\0, \textnormal{otherwise} \end{cases}
 \end{equation}
 
-- ${X_t}$    = Original timeseries 
+- ${X_t}$    = Original time-series 
 
 &nbsp;
 
@@ -581,7 +581,7 @@ Drawdown describes the maximum cumulated loss an investor is going to face if he
   \mathrm{MDD}=\frac{\textnormal{bottomvalue}-\textnormal{peakvalue}}{\textnormal{peakvalue}}
 \end{equation}
 
-Maximum drawdown is used as an indicator for risk or can be used as an optimization criterion[@Maxdrawdown].
+Maximum drawdown is used as an indicator for risk or can be used as an optimization criterion [@Maxdrawdown].
 
 
 

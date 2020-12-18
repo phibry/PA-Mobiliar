@@ -7,7 +7,7 @@ geometry: margin = 1in
 
 Only the simple AR models, of the methods we use, lead to the outperforming of the buy-and-hold strategy under parameter restrictions. In contrast to the Moving Average Filter, the AR methods can handle short-term, strong volatility fluctuations (e.g. Covid 19) well, which is why the filter methods remain long in strongly growing phases.
 The optimizations of the moving average filters did not lead to better results despite the detailed and very exciting applications.
-All methods used are very interesting in themselves and would be worthwhile to pursue further. For example, the out-of-sample time could be adjusted somewhat to better test the models mentioned. It would also be interesting to look at the period after April 2020 until today to see if the Ar models would have maintained the performance.
+All methods used are very interesting in themselves and would be worthwhile to pursue further. For example, the out-of-sample time could be adjusted somewhat to better test the models mentioned. It would also be interesting to look at the period after April 2020 until today to see if the AR models would have maintained the performance.
 
 In the theory section, we have presented many, but by no means all, models. Since the choice of models is huge and the application of them almost infinite, it would be an extremely exciting work to outperform buy-and-hold with further methods. Furthermore, a portfolio could have been created from the different approaches and weightings, which did not make it into the thesis, as it would go beyond the scope of this work.
 
