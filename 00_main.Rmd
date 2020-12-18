@@ -24,8 +24,8 @@ source("add/load_files.R")
 \pagenumbering{gobble}
 
 ```{=tex}
-\includepdf{add/titlepage_DIE.pdf}
-\includepdf{add/declaration.pdf}
+\includepdf{add/titlepage.pdf}
+\includepdf{add/declaration2.pdf}
 ```
 
 \setcounter{tocdepth}{4}
