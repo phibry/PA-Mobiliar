@@ -341,7 +341,7 @@ The actual challenge in using Moving-Average-Filters, is to figure out which len
 
 &nbsp;
 
-SMA stands for Simple Moving Average, depending on the length of the filter($L$), $L$ observations since the last noted observation will be considered. The observations are getting summarized and divided by the filterlength $L$. As stated in the name, all past observations are weighted equally. For every timestep, a new observation is considered and the last one eliminated [@SMA]. SMA's are very easily customized by changeing the length of the filter.
+SMA stands for Simple Moving Average, depending on the length of the filter($L$), $L$ observations since the last noted observation will be considered. The observations are getting summarized and divided by the filterlength $L$. As stated in the name, all past observations are weighted equally. For every timestep, a new observation is considered and the last one eliminated [@SMA]. SMAs are very easily customized by changeing the length of the filter.
 
 
 EqMA:
@@ -363,18 +363,18 @@ EqMA:
 &nbsp;
 
 Momentum is an indicator wether a market is bullish or bearish, it measures the "speed" of the trend direction in the market.
-For a timespan $k$ the last price $p_k$, $k$ timesteps ago is subtracted from the last price. This is equivalent to applying and EqMA on the returns of a series. 
+For a timespan $k$ the last price $p_t$, $k$ timesteps ago is subtracted from the last price. This is equivalent to applying and EqMA on the returns of a series. 
 
 
 Momentum:
 
 \begin{equation}
   \label{eq:momentum}
-  y_{t}=p_t - p_{t-K}
+  y_{t}=p_t - p_{t-k}
 \end{equation}
 
 - ${p_t}$ = Prices of the series
-- ${K}$   = Lag
+- ${k}$   = Lag
 
 \newpage
 
@@ -402,7 +402,7 @@ EMA:
 
 &nbsp;
 
-Moving-Average-Crossings are basically just different MA's with different lengths applied to a time-series. The points the filters then cross, will be used as a trading signal to go long, short or hold.
+Moving-Average-Crossings are basically just different MAs with different lengths applied to a time-series. The points the filters then cross, will be used as a trading signal to go long, short or hold.
 The "death" and "golden" cross are very popular trading patterns [@EMA]. If a shorter MA crosses the longer MA from above, its called a "golden cross" it is an indicator that the price will rise in the future and can be used to create the buy signal. In contrast stands the "death cross" vise versa, a shorter MA (popular L = 50) crosses a longer MA (popular L = 200) from below, signalizing that further losses are in store.
 
 
@@ -482,7 +482,7 @@ addRSI(n=14,maType="EMA")
 
 ### 2.5. Moving Average Convergence Divergence
 
-The MACD is also a commonly used filter. The basic principle is to subtract a longer EMA with length $L$ as in section   [2.3.3](#macross-section) from a shorter EMA from length $S$  then smooth the result with another EMA with length $R$. As a result we can use the crossing of the 2 generated curves for trading. As an alternative we could use SMA's instead of EMA's
+The MACD is also a commonly used filter. The basic principle is to subtract a longer EMA with length $L$ as in section   [2.3.3](#macross-section) from a shorter EMA from length $S$  then smooth the result with another EMA with length $R$. As a result we can use the crossing of the 2 generated curves for trading. As an alternative we could use SMAs instead of EMAs
 
 \begin{equation}
   \label{eq:MACD}

@@ -31,7 +31,7 @@ As mentioned in section [1.1](#ts-analysis) we are now going to analyze the data
 
 &nbsp;
 
-One could nearly tell just by looking at the indexes how strong they're correlated. The correlation matrix in table \ref{tab:cortable} confirms the assumption, the correlation is nearly 1 for every index to each other.
+One could nearly tell just by looking at the indexes how strong they are correlated. The correlation matrix in table \ref{tab:cortable} confirms the assumption, the correlation is nearly 1 for every index to each other.
 
 ```{r cortable, echo=FALSE}
 
@@ -457,7 +457,7 @@ text(((446-280)/2)+280, -0.2, "Phase 2", col="#14C29A")
 ```
 Here one can see again a typical characteristic of these time-series. In chapter [3.1.2](#vola-sharpe) we compared the volatility with the Sharpe ratios, here we can see this phenomenon well. The index 1 leads to higher Sharpe ratios than for example the index 4, but is less volatile. The Sharpe ratio of index 4 shows very strong volatile phases in comparison.
 
-Up to a filter length of about 40, the Sharpe ratios fluctuate very strongly. This is followed by a volatile phase until the filter Sharpe converges to the buy-and-hold Sharpe (from about L=120). At high filter lengths the Sharpe ratios for indexes 2,3 and 4 start to fluctuate again, the more volatile the original index is, the earlier the volatile phase starts and the longer it is. What is noticeable is that there are 2 phases which leads to good models. On the one hand you can find SMA's with short filters (phase 1) and on the other hand with long ones (phase 2). In both phases models are found, which can lead to an outperformance (they are above the dashed buy-and-hold line).
+Up to a filter length of about 40, the Sharpe ratios fluctuate very strongly. This is followed by a volatile phase until the filter Sharpe converges to the buy-and-hold Sharpe (from about L=120). At high filter lengths the Sharpe ratios for indexes 2,3 and 4 start to fluctuate again, the more volatile the original index is, the earlier the volatile phase starts and the longer it is. What is noticeable is that there are 2 phases which leads to good models. On the one hand you can find SMAs with short filters (phase 1) and on the other hand with long ones (phase 2). In both phases models are found, which can lead to an outperformance (they are above the dashed buy-and-hold line).
 
 \newpage
 
@@ -564,13 +564,14 @@ sharpfirst=as.array((ind1_opt$perf_mat)[,2])
 plot(sharpfirst[1:151],type="l",ylab="Max sharpe",xlab="L1 fixed=1,    100 < L2 < 250 on x axis ",main="Filter optimization start 2015  ",col="black",xaxt='n')
 abline(v=7, col = "green")
 abline(h=1.225, col = "green")
-abline(v=c(0,150), col = "blue",lty=2)
+abline(v=c(1,151), col = "blue",lty=2)
 legend("bottom", inset=.02, legend=c("Sharpe", "Maximum by filter L1= 1, L2 = 106","Boundaries trajectorie L1=1"),
        col=c("black", "green","blue"), lty=c(1,1,2), cex=0.8, horiz=F)
+axis(1, at=c(1, 76, 151), labels=c("100", "175","250"))
 ```  
 \newpage
 ```{r, chap3.2.4.1.2, echo=FALSE, fig.cap="Sharpe Index 1.", include=T,out.width = "100%",fig.dim=c(16, 7.4)}
-plot((ind1_opt$perf_mat)[,2],type="l",ylab="Sharpe",xlab="",main="Filter optimization start: 2015 ",xaxt='n')
+plot((ind1_opt$perf_mat)[,2],type="l",ylab="Sharpe",xlab="",main="Filter optimization start: 2015 ")
 abline(h=1.08, col = "red")
 abline(h=1.225, col = "green")
 abline(v=c(0,150),col="blue",lty=2)
