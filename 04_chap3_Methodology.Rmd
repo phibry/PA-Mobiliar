@@ -89,7 +89,7 @@ plot(log_ret_ind, main="Log_returns indexes",legend.loc="topleft") #plot log-ret
 
 &nbsp;
 
-By computing the ACF of the squared log-returns we see that the volatility cluster has very long dependency structures.
+By computing the ACF of the squared log-returns we see that the volatility cluster have very long dependency structures.
 
 
 ```{r,chap3.1.2.1,include=T, echo = F,message=F, fig.cap="ACF log-returns",fig.dim=c(15,10)}
@@ -138,7 +138,7 @@ plot(y_ind[,4],main=paste("Log index 4,","vola=",vola_y_ind[4],sep=" "),col = 4)
 
 In section [2](#theory) we have learned different indicators and models for time-series-analysis. Some of these models and indicators are now used to trade the indexes we have introduced in the previous section.
 
-To do so we need to create trading signals based on the models and indicators. For example, we are using the MA Crossings, as mentioned [2.3.3.](#macross-section) the points where the two MAs cross, are now used to create a trading signal. when the longer MA comes from below to the crossing we are going long the asset and if it approaches the point from above we are shorting the position. Technically we apply a 1 to a vector at each crossing, where we intend to buy and apply a -1 at the points we want to sell.
+To do so we need to create trading signals based on the models and indicators. For example, we are using the MA Crossings, as mentioned [2.3.3](#macross-section) the points where the two MAs cross, are now used to create a trading signal. when the longer MA comes from below to the crossing we are going long the asset and if it approaches the point from above we are shorting the position. Technically we apply a 1 to a vector at each crossing, where we intend to buy and apply a -1 at the points we want to sell.
 
 #### 3.2.1. Buy-and-Hold Performance {#bnh-section}
 
@@ -455,7 +455,7 @@ text((119-1)/2, -0.2, "Phase 1", col="#E413A3")
 text(((446-280)/2)+280, -0.2, "Phase 2", col="#14C29A")
 
 ```
-Here one can see again a typical characteristic of these time-series. In chapter [3.1.2.](#vola-sharpe) we compared the volatility with the Sharpe ratios, here we can see this phenomenon well. The index 1 leads to higher Sharpe ratios than for example the index 4, but is less volatile. The Sharpe ratio of index 4 shows very strong volatile phases in comparison.
+Here one can see again a typical characteristic of these time-series. In chapter [3.1.2](#vola-sharpe) we compared the volatility with the Sharpe ratios, here we can see this phenomenon well. The index 1 leads to higher Sharpe ratios than for example the index 4, but is less volatile. The Sharpe ratio of index 4 shows very strong volatile phases in comparison.
 
 Up to a filter length of about 40, the Sharpe ratios fluctuate very strongly. This is followed by a volatile phase until the filter Sharpe converges to the buy-and-hold Sharpe (from about L=120). At high filter lengths the Sharpe ratios for indexes 2,3 and 4 start to fluctuate again, the more volatile the original index is, the earlier the volatile phase starts and the longer it is. What is noticeable is that there are 2 phases which leads to good models. On the one hand you can find SMA's with short filters (phase 1) and on the other hand with long ones (phase 2). In both phases models are found, which can lead to an outperformance (they are above the dashed buy-and-hold line).
 
