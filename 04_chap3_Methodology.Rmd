@@ -650,6 +650,8 @@ Whilst the ten best Sharpe ratios / drawdowns in \ref{fig:chap3.2.4.1.6} are alw
 
 Curiosity leads us to recreate the optimization for $1 < L1 \le 1000$ and $1 < L2 \le 1000$  which calculates 16 million Sharpes.  Now L2 can be smaller than L1 while the trading rule stays the same. The numeric results can be found in \ref{tab:macrosstable 1000 x 1000 index 4.1}.
 
+\newpage
+
 ```{r, chap3.2.4.1.14, echo=FALSE, fig.cap="Hyperoptimization 1000 x 1000 Index 4", include=T,fig.keep = 'last',fig.dim=c(16, 7.1),out.width = "100%"}
 plot(rolf1[,1],ylim= c(-2,4),col="black",type="p",format.labels="%b-%Y",main="Optimization with 1000x1000 index 4")
 addLegend("topleft", on=1, legend.names ="Sharpe " ,lty=1, lwd=2,col="black")
@@ -660,6 +662,8 @@ plot(rolf1[,2],type="p",col= "red",main= "Optimization with 1000x1000 index 4 ",
 lines(rolf1[,3], col=c("blue"),lwd=2,type="p")
 addLegend("left", on=1, legend.names = c("long filter sharpe", "long filter drawdown "), lty=c(1, 1), lwd=c(1, 1),col=c("red","blue"))
 ```
+
+\newpage
 
 In figure \ref{fig:chap3.2.4.1.14} the Sharpes of the 10 best models look all very similar in each step except for 2009 and 2012 they vary a little bit. Until 2015 they are all slightly under 1. Very important is the fact that a filterlength of 100 means 4 years which is a very long time. The results narrowing Jan-2019 are close to or directly buy-and-hold, therefore the sharpe rises to nearly 3. Interesting are also the result in figure \ref{fig:chap3.2.4.1.15}. From 2002 to 2011 the long and the short filter are always very close together. This plot could lead to a more interesting analysis. Due the time and length limitation this optimization is closed here and not further discussed.
 
@@ -673,11 +677,10 @@ In good knowledge we are taking the risk of maybe not finding the right filterle
 
 
 \newpage
-#### 3.5.2 Trading
+#### 3.5.2. Trading
 &nbsp;
 
-
-As noticed the Visualizations in [3.5.1](#macrossingse)  are only done for index 1, the optimal values and their fluctuation are shown in the tables \ref{tab:macrosstable index 1},\ref{tab:macrosstable index 2},\ref{tab:macrosstable index 3},\ref{tab:macrosstable index 4} and \ref{fig:chap3.2.4.1.8},\ref{fig:chap3.2.4.1.9},\ref{fig:chap3.2.4.1.10},\ref{fig:chap3.2.4.1.11},\ref{fig:chap3.2.4.1.12},\ref{fig:chap3.2.4.1.13}.
+As noticed the Visualizations in [3.5.1](#macrossingse) are only done for index 1, the optimal values and their fluctuation are shown in the tables \ref{tab:macrosstable index 1},\ref{tab:macrosstable index 2},\ref{tab:macrosstable index 3},\ref{tab:macrosstable index 4} and \ref{fig:chap3.2.4.1.8},\ref{fig:chap3.2.4.1.9},\ref{fig:chap3.2.4.1.10},\ref{fig:chap3.2.4.1.11},\ref{fig:chap3.2.4.1.12},\ref{fig:chap3.2.4.1.13}.
 ```{r, chap3.5.2.1. , echo=FALSE, include=T }
 return_buy_and_hold_1  =   diff(log(data[,1]))##### buy-and-hold
 return_buy_and_hold_2  =   diff(log(data[,2]))
@@ -689,7 +692,7 @@ Index 1 brings us the optimal maximum Sharpe *1.275* at end of the series *2016*
 
 &nbsp;
 
-```{r, chap3.5.2.2. , echo=FALSE, fig.cap="Macrossing index 1 L1 = 1 L2 = 106", include=T, fig.keep = 'last',out.width="100%"}
+```{r, chap3.5.2.2. , echo=FALSE, fig.cap="MA Crossing index 1, L1 = 1, L2 = 106", include=T, fig.keep = 'last',out.width="100%"}
 n1=1
 n2 =106
 mobidat= data[,1] # chose the row and horizon
@@ -718,7 +721,7 @@ Regarding the other indexes, the results  look all very similiar. None of the Mo
 
 &nbsp;
 
-```{r, chap3.5.2.3, echo=FALSE, fig.cap="Macrossing index 4 L1 = 12 L2 = 134", include=T, fig.keep = 'last',out.width="100%"}
+```{r, chap3.5.2.3, echo=FALSE, fig.cap="MA Crossing index 4, L1 = 12, L2 = 134", include=T, fig.keep = 'last',out.width="100%"}
 n1=12
 n2 =134
 mobidat= data[,4] # chose the row and horizon
