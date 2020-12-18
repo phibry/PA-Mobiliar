@@ -13,7 +13,7 @@ This paper applies time-series analysis to these short price movements to create
 
 The dataset which will be analyzed in this paper contains 4 tradeable indexes, a visualization of the data is shown below in figure \ref{fig:chap1.1}.
 
-```{r, chap1.1, echo=FALSE, fig.cap="Visualization of the 4 indexes"}
+```{r, chap1.1, echo=FALSE, fig.cap="Visualization of the 4 indexes."}
 load("data/data_mobi")
 
 ind <- data[,1:4]
@@ -51,7 +51,7 @@ A typical characteristic of interest rates is shown in the given data. A bond wi
 A more in-depth analysis of the four indexes in the given dataset will follow in section [3.1](#ts-analysis-depth).
 
 
-### 1.2. Ojective of this paper
+### 1.2. Objective of this paper
 
 The objective of this paper is to trade these 4 indexes with an active trading strategy. The main objective is trying to outperform the passive buy-and-hold strategy. Methods such as the Moving-Average-Filter or the ARMA-GARCH-Model provide signals for either long or short the position to maximize the return of investments in these indexes.
 

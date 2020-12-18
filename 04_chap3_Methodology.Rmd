@@ -39,7 +39,7 @@ log_ind <-    log(ind)      #logarithm of the series
 log_ret_ind <- na.exclude(diff(log_ind)) #log-returns of the se
 x<-as.data.frame(log_ind)
 c <- as.data.frame(cor(x))  # showing corelations
-kbl(c, caption="Correlations oft the four indexes", booktabs = T) %>%
+kbl(c, caption="Correlations oft the four indexes.", booktabs = T) %>%
   kable_styling(latex_options = c("striped", "hold_position"))
 ```
 
@@ -51,7 +51,7 @@ kbl(c, caption="Correlations oft the four indexes", booktabs = T) %>%
 Applying the natural logarithm to the series is an approach to cancel out increasing volatility \ref{fig:chap3.1.2}. The strong upward drift is still visible, the original series has more than doubled to its original price over the whole timespan (index 4) \ref{fig:chap1.1}. 
 
 
-```{r, chap3.1.2, echo = F, fig.dim=c(7,3.0), fig.cap="Visualization log indizes"}
+```{r, chap3.1.2, echo = F, fig.dim=c(7,3.0), fig.cap="Visualization log indizes."}
 par(mfrow=c(1,1))
 plot(log(ind), main="Indexes 1-4", col=1:4, lwd=1, legend.loc="topleft") #plotting original data
 ```
@@ -79,7 +79,7 @@ As we can see in the table the volatility of index 4 is as much as  5 times high
 
 &nbsp;
 
-```{r, chap3.1.3, include=T, echo = F,message=F,  fig.cap="log-returns"}
+```{r, chap3.1.3, include=T, echo = F,message=F,  fig.cap="Log-Returns."}
 plot(log_ret_ind, main="Log_returns indexes",legend.loc="topleft") #plot log-returns
 ```
 
@@ -92,7 +92,7 @@ plot(log_ret_ind, main="Log_returns indexes",legend.loc="topleft") #plot log-ret
 By computing the ACF of the squared log-returns we see that the volatility cluster have very long dependency structures.
 
 
-```{r,chap3.1.2.1,include=T, echo = F,message=F, fig.cap="ACF log-returns",fig.dim=c(15,10)}
+```{r,chap3.1.2.1,include=T, echo = F,message=F, fig.cap="ACF log-returns.", fig.dim=c(15,10)}
 par(mfrow=c(2,2))
 x1= log_ret_ind[,1]
 x2= log_ret_ind[,2]
@@ -113,7 +113,7 @@ acf(abs(x4^2),lag.max = 50,main= "ACF INDEX 4 ,10-2003/03-2020" )
 
 \newpage
 
-```{r,chap3.1.4, include=F, echo = F,message=F,fig.dim=c(15,15), fig.cap="Visualization log-returns"}
+```{r,chap3.1.4, include=F, echo = F,message=F,fig.dim=c(15,15), fig.cap="Visualization log-returns."}
 par(mfrow=c(4,2))
 start_date="2018-01-01"
 in_sample ="2018-01-01"
@@ -169,7 +169,7 @@ sigma_shares_1=as.matrix(100*sigmas_1/sum(sigmas_1))
 perc=cbind(sigma_shares,sigma_shares_1)
 colnames(perc) <- c("Weight 1","Weight 2")
 perc=as.data.frame(perc)
-kbl(perc, caption="Shares", booktabs = T) %>%
+kbl(perc, caption="Shares.", booktabs = T) %>%
   kable_styling(latex_options = c("striped", "hold_position")) %>%
   footnote(number=c("Weight 1: Equally weighted volatility in %", "Weight 2: Weighted with inverse volatility"))
 ```
@@ -286,7 +286,7 @@ ar_plotter(perf_bnh=p2$perf_bnh, perf_ar=p2$perf_ar, start_date=op2[2], inx=2, p
 ```
 The optimal AR model for the third index shows almost the same behavior as index 2 (as seen in figure \ref{fig:chap3.2.2.3}), the only difference being an additional trade in spring 2019.
 
-```{r, chap3.2.2.3, echo=FALSE, fig.cap="Visualization of the optimal Index 3 AR(1)-Model..", fig.dim=c(11, 6), out.width = "85%"}
+```{r, chap3.2.2.3, echo=FALSE, fig.cap="Visualization of the optimal Index 3 AR(1)-Model.", fig.dim=c(11, 6), out.width = "85%"}
 ar_plotter(perf_bnh=p3$perf_bnh, perf_ar=p3$perf_ar, start_date=op2[3], inx=3, p=op4[3], sharpe_bnh=op1[3], sharpe_ar=op3[3], signal=p3$signal)
 ```
 
@@ -371,7 +371,7 @@ tab1$Sharpe <- round(tab1$Sharpe, 2)
 tab1$Drawdown <- round(tab1$Drawdown, 6)
 tab1$MSE <- round(tab1$MSE, 3)
 
-kbl(tab1, caption="SMA-Optima by performance indicators | Index 1", booktabs = T, linesep = "") %>%
+kbl(tab1, caption="SMA-Optima by performance indicators | Index 1.", booktabs = T, linesep = "") %>%
   kable_styling(latex_options = c("striped", "hold_position")) %>%
   column_spec(2:3, color = "#DF536B",
               background = c(rep("#FFFFFF", 13), "#F4DBDF")) %>%
@@ -524,7 +524,7 @@ The two chosen filters are the most optimal for index 2. Both lead to a similar 
 
 &nbsp;
 
-```{r, chap3.2.3.4, echo=FALSE, fig.cap="Two good models | Index 2", fig.dim=c(11, 6), out.width = "100%"}
+```{r, chap3.2.3.4, echo=FALSE, fig.cap="Two good models | Index 2.", fig.dim=c(11, 6), out.width = "100%"}
 plot_sma2(x=log_ret_ind, inx=2, L1=42, L2=354, insamp = "2018-12-31")
 ```
 
@@ -559,7 +559,7 @@ Parameters$_2$:
 Figure \ref{fig:chap3.2.4.1.1} visualizes one iteration of the optimization. For the fixed L1=1, L2 is variable and the optimal sharpe is calculated. This procedure is done for every filterlength as described in $_2$ and further visualized in figure \ref{fig:chap3.2.4.1.2}. The drawdown is also calculated as seen in plot \ref{fig:chap3.2.4.1.3}. Notice that the visualization is from the starting date 2015-10-30, which is randomly chosen for explaining the optimization process.
 
 
-```{r, chap3.2.4.1.1, echo=FALSE, fig.cap="Optimization Sharpe L1=1 ,L2=variable", include=T,out.width = "100%",fig.dim=c(16, 7.4)}
+```{r, chap3.2.4.1.1, echo=FALSE, fig.cap="Optimization Sharpe L1=1 ,L2=variable.", include=T,out.width = "100%",fig.dim=c(16, 7.4)}
 sharpfirst=as.array((ind1_opt$perf_mat)[,2])
 plot(sharpfirst[1:151],type="l",ylab="Max sharpe",xlab="L1 fixed=1,    100 < L2 < 250 on x axis ",main="Filter optimization start 2015  ",col="black",xaxt='n')
 abline(v=7, col = "green")
@@ -569,7 +569,7 @@ legend("bottom", inset=.02, legend=c("Sharpe", "Maximum by filter L1= 1, L2 = 10
        col=c("black", "green","blue"), lty=c(1,1,2), cex=0.8, horiz=F)
 ```  
 \newpage
-```{r, chap3.2.4.1.2, echo=FALSE, fig.cap="Sharpe index 1", include=T,out.width = "100%",fig.dim=c(16, 7.4)}
+```{r, chap3.2.4.1.2, echo=FALSE, fig.cap="Sharpe Index 1.", include=T,out.width = "100%",fig.dim=c(16, 7.4)}
 plot((ind1_opt$perf_mat)[,2],type="l",ylab="Sharpe",xlab="",main="Filter optimization start: 2015 ",xaxt='n')
 abline(h=1.08, col = "red")
 abline(h=1.225, col = "green")
@@ -580,7 +580,7 @@ legend("bottom", inset=.02, legend=c("Sharpe", "Maximum by filter L1= 1, L2 = 10
 ```
 &nbsp;
 
-```{r, chap3.2.4.1.3, echo=FALSE, fig.cap="Drawdown index 1", include=T,out.width = "100%",fig.dim=c(16, 7.4)}
+```{r, chap3.2.4.1.3, echo=FALSE, fig.cap="Drawdown Index 1.", include=T,out.width = "100%",fig.dim=c(16, 7.4)}
 plot((ind1_opt$perf_mat)[,3],type="l",ylab="Drawdown",xlab="",main="Filter optimization start: 2015 ",col="green")
 abline(h=-0.0069, col = "violet")
 abline(v=17*150)
@@ -593,7 +593,7 @@ The pattern we observe in figure \ref{fig:chap3.2.4.1.2} is the repeating optimi
 
 \newpage
 
-```{r, chap3.2.4.1.4, echo=FALSE, fig.cap="Hyperoptimization Index 1", include=T,fig.keep = 'last',fig.dim=c(16, 7.1),out.width = "100%"}
+```{r, chap3.2.4.1.4, echo=FALSE, fig.cap="Hyperoptimization Index 1.", include=T,fig.keep = 'last',fig.dim=c(16, 7.1),out.width = "100%"}
 ##################sharpe maxdrow
 plot(index_1_onebest_year_with15[,1],ylim= c(-2,4),main= "Max Sharpe/Drawdown Hyperoptimization Index 1",col="black",type="b")
 lines(index_1_onebest_year_with15[,4]*100,lwd=2,col="green",type="b")
@@ -605,7 +605,7 @@ addEventLines(events,srt=90,pos=2,lty=2,)
 ```
 &nbsp;
 
-```{r, chap3.2.4.1.5, echo=FALSE, fig.cap="Hyperoptimization Index 1", include=T,fig.keep = 'last',fig.dim=c(16, 7.1),out.width = "100%"}
+```{r, chap3.2.4.1.5, echo=FALSE, fig.cap="Hyperoptimization Index 1.", include=T,fig.keep = 'last',fig.dim=c(16, 7.1),out.width = "100%"}
 ################## lengths
 plot(index_1_onebest_year_with15[,2],type="b",col= "red",main= "Filterlengths Hyperoptimization Index 1 ",ylim=c(-10,260))
 
@@ -626,7 +626,7 @@ are showed at the black dotted line. Because of the problem we have mentioned in
 
 $_1$ Note: maxdrawdown is scaled by the factor 100 to visualize it in the same plot.
 \newpage
-```{r, chap3.2.4.1.6, echo=FALSE, fig.cap="Hyperoptimization 10 best Index 1", include=T,fig.keep = 'last',fig.dim=c(16, 7.1),out.width = "100%"}
+```{r, chap3.2.4.1.6, echo=FALSE, fig.cap="Hyperoptimization 10 best Index 1.", include=T,fig.keep = 'last',fig.dim=c(16, 7.1),out.width = "100%"}
 ##################sharpe maxdrow 10
 plot(index_1_tenbest_year[,1],ylim= c(-2,4),main= "Max Sharpe/Drawdown 10 best Hyperoptimization Index 1",col="black",type="p",major.ticks="auto",format.labels="%b-%Y")
 lines(index_1_tenbest_year[,4]*100,lwd=2,col="green",type="p")
@@ -634,7 +634,7 @@ addLegend("topleft", on=1, legend.names = c("Sharpe ", "MaxDrawdown * 100 "), lt
 
 ```
 
-```{r, chap3.2.4.1.7, echo=FALSE, fig.cap="Hyperoptimization 10 best Index 1", include=T,fig.keep = 'last',fig.dim=c(16, 7.1),out.width = "100%"}
+```{r, chap3.2.4.1.7, echo=FALSE, fig.cap="Hyperoptimization 10 best Index 1.", include=T,fig.keep = 'last',fig.dim=c(16, 7.1),out.width = "100%"}
 ################## lengths
 plot(index_1_tenbest_year[,2],type="p",col= "red",main= "Filterlengths 10 best Hyperoptimization Index 1  ",ylim=c(-10,260),format.labels="%b-%Y")
 lines(index_1_tenbest_year[,3], col=c("coral"),lwd=2,type="p")
@@ -652,12 +652,12 @@ Curiosity leads us to recreate the optimization for $1 < L1 \le 1000$ and $1 < L
 
 \newpage
 
-```{r, chap3.2.4.1.14, echo=FALSE, fig.cap="Hyperoptimization 1000 x 1000 Index 4", include=T,fig.keep = 'last',fig.dim=c(16, 7.1),out.width = "100%"}
+```{r, chap3.2.4.1.14, echo=FALSE, fig.cap="Hyperoptimization 1000 x 1000 Index 4.", include=T,fig.keep = 'last',fig.dim=c(16, 7.1),out.width = "100%"}
 plot(rolf1[,1],ylim= c(-2,4),col="black",type="p",format.labels="%b-%Y",main="Optimization with 1000x1000 index 4")
 addLegend("topleft", on=1, legend.names ="Sharpe " ,lty=1, lwd=2,col="black")
 ```
 
-```{r, chap3.2.4.1.15, echo=FALSE, fig.cap="Hyperoptimization 10 best Index 4", include=T,fig.keep = 'last',fig.dim=c(16, 7.1),out.width = "100%"}
+```{r, chap3.2.4.1.15, echo=FALSE, fig.cap="Hyperoptimization 10 best Index 4.", include=T,fig.keep = 'last',fig.dim=c(16, 7.1),out.width = "100%"}
 plot(rolf1[,2],type="p",col= "red",main= "Optimization with 1000x1000 index 4 ",ylim=c(-200,1010),format.labels="%b-%Y")
 lines(rolf1[,3], col=c("blue"),lwd=2,type="p")
 addLegend("left", on=1, legend.names = c("long filter sharpe", "long filter drawdown "), lty=c(1, 1), lwd=c(1, 1),col=c("red","blue"))
@@ -680,7 +680,7 @@ In good knowledge we are taking the risk of maybe not finding the right filterle
 #### 3.5.2. Trading
 &nbsp;
 
-As noticed the Visualizations in [3.5.1](#macrossingse) are only done for index 1, the optimal values and their fluctuation are shown in the tables: \ref{tab:macrosstable index 1},\ref{tab:macrosstable index 2},\ref{tab:macrosstable index 3},\ref{tab:macrosstable index 4} and figures:  \ref{fig:chap3.2.4.1.8},\ref{fig:chap3.2.4.1.9},\ref{fig:chap3.2.4.1.10},\ref{fig:chap3.2.4.1.11},\ref{fig:chap3.2.4.1.12},\ref{fig:chap3.2.4.1.13}.
+As noticed the Visualizations in [3.5.1](#macrossingse) are only done for index 1, the optimal values and their fluctuation are shown in the tables: \ref{tab:macrosstable index 1}, \ref{tab:macrosstable index 2}, \ref{tab:macrosstable index 3}, \ref{tab:macrosstable index 4} and figures:  \ref{fig:chap3.2.4.1.8}, \ref{fig:chap3.2.4.1.9}, \ref{fig:chap3.2.4.1.10}, \ref{fig:chap3.2.4.1.11}, \ref{fig:chap3.2.4.1.12}, \ref{fig:chap3.2.4.1.13}.
 ```{r, chap3.5.2.1. , echo=FALSE, include=T }
 return_buy_and_hold_1  =   diff(log(data[,1]))##### buy-and-hold
 return_buy_and_hold_2  =   diff(log(data[,2]))
@@ -688,11 +688,11 @@ return_buy_and_hold_3  =   diff(log(data[,3]))
 return_buy_and_hold_4  =   diff(log(data[,4]))
 ```
 Based on the optimal filterlenghts calculated in the last section, the SMAs are now applied to the "out-of-sample" span from 2019-01-01 to 2020-04-01. Keeping in mind that the Moving Averages need the same initialization time as the length of filter itself, only the optimal filterlengths from years smaller than 2017 are considered.
-Index 1 brings us the optimal maximum Sharpe *1.275* at end of the series *2016* with filterlengths *L1 = 1 / L2=106* applying this filters to the put opf sample leads us to buy-and-hold no trades are executed. Even considering the filters from the earlier timesspans *2006-01-01 sharpe = 1.529 L1= 49 L2= 243*  brings no other result than buy-and-hold. Trying the maximum drawdown filters leads to the same result. 
+Index 1 brings us the optimal maximum Sharpe *1.275* at end of the series *2016* with filterlengths *L1=1, L2=106* applying this filters to the put opf sample leads us to buy-and-hold no trades are executed. Even considering the filters from the earlier timesspans *2006-01-01, Sharpe=1.529, L1=49, L2=243*  brings no other result than buy-and-hold. Trying the maximum drawdown filters leads to the same result. 
 
 &nbsp;
 
-```{r, chap3.5.2.2. , echo=FALSE, fig.cap="MA Crossing index 1, L1 = 1, L2 = 106", include=T, fig.keep = 'last',out.width="100%"}
+```{r, chap3.5.2.2. , echo=FALSE, fig.cap="MA Crossing index 1, L1 = 1, L2 = 106.", include=T, fig.keep = 'last',out.width="100%"}
 n1=1
 n2 =106
 mobidat= data[,1] # chose the row and horizon
@@ -717,11 +717,11 @@ ret = return*trade
 names(ret)="filter"
 ```
 \newpage
-Regarding the other indexes, the results  look all very similiar. None of the Moving Average Crossing are able to outperform buy-and-hold. For visualizing we use only the fourth index with *2016-01-01* Sharpe=0.998, L1=12, L2=134.As seen in figure \ref{fig:chap3.5.2.3} we have leastways two trades for this index. Following the longer filter (red) from the left side, it crosses the blue line ( L1 ) in the beginning of 2020, that is where a selling is executed. Shortly after, the buy signals comes with the red line crossing the blue from above. With this signals we get a Sharpe of *1.761906*, in comparison to the buy-and-hold Sharpe index 4: *1.963966*.
+Regarding the other indexes, the results  look all very similiar. None of the Moving Average Crossing are able to outperform buy-and-hold. For visualizing we use only the fourth index with *2016-01-01*, Sharpe=0.998, L1=12, L2=134. As seen in figure \ref{fig:chap3.5.2.3} we have leastways two trades for this index. Following the longer filter (red) from the left side, it crosses the blue line (L1) in the beginning of 2020, that is where a selling is executed. Shortly after, the buy signals comes with the red line crossing the blue from above. With this signals we get a Sharpe of *1.761906*, in comparison to the buy-and-hold Sharpe index 4: *1.963966*.
 
 &nbsp;
 
-```{r, chap3.5.2.3, echo=FALSE, fig.cap="MA Crossing index 4, L1 = 12, L2 = 134", include=T, fig.keep = 'last',out.width="100%"}
+```{r, chap3.5.2.3, echo=FALSE, fig.cap="MA Crossing index 4, L1 = 12, L2 = 134.", include=T, fig.keep = 'last',out.width="100%"}
 n1=12
 n2 =134
 mobidat= data[,4] # chose the row and horizon
@@ -752,4 +752,4 @@ names(ret)="filter"
 
 Also neither of the results from figure \ref{fig:chap3.2.4.1.15} are clearly satisfying.
 
-As endresult buy-and-hold stays better as the combinations of MA Crossigs, at least with the parameter restrictions we implied. The intuition, and also the common used filters L1=50 / L2=250 equals buy-and-hold. This strategy may not be so bad, why leaving a trend market instead of profiting from it.
+As endresult buy-and-hold stays better as the combinations of MA Crossigs, at least with the parameter restrictions we implied. The intuition, and also the common used filters L1=50, L2=250 equals buy-and-hold. This strategy may not be so bad, why leaving a trend market instead of profiting from it.

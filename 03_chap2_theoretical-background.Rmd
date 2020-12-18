@@ -50,7 +50,7 @@ $$\mathrm{LogReturn} = \mathrm{log}(x_{t})-\mathrm{log}(x_{t-1})$$
 
 The result is the so-called log-returns.
 
-```{r chap2.2, echo=FALSE, fig.cap="Visualization of the Log-Returns"}
+```{r chap2.2, echo=FALSE, fig.cap="Visualization of the Log-Returns."}
 g.adj.lr <- na.exclude(diff(log(g.adj)))
 plot(g.adj.lr, main="Log-Returns of Adj. Prices ~ Google")
 ```
@@ -424,7 +424,7 @@ An example of MA crossings with 2 SMAs of different length is visualized in figu
 
 &nbsp;
 
-```{r, chap2.3.3, fig.cap="Moving Average Crossing", echo=FALSE,warning=FALSE, message=FALSE, fig.keep = 'last'}
+```{r, chap2.3.3, fig.cap="Moving Average Crossing.", echo=FALSE,warning=FALSE, message=FALSE, fig.keep = 'last'}
 par(mfrow=c(1,2))
 n1=50
 n2=250
@@ -473,7 +473,7 @@ Usually when the RSI is going over 70 it suppose that the asset is overvalued an
 &nbsp;
 
 
-```{r,chap2.4 ,fig.cap="RSI", echo=FALSE, warning=FALSE, message=FALSE, fig.keep = 'last',fig.dim=c(7,4)}
+```{r,chap2.4 ,fig.cap="RSI.", echo=FALSE, warning=FALSE, message=FALSE, fig.keep = 'last',fig.dim=c(7,4)}
 
 chartSeries(GOOGL, subset="2020-01::2020-10",type="line",theme=chartTheme("white", bg.col="#FFFFFF"),name = "RSI EMA Google Nasdag",TA=NULL)
 addRSI(n=14,maType="EMA")
@@ -508,7 +508,7 @@ $_1$ short and long in the meaning s<l, not buy sell
 &nbsp;
 
 
-```{r,chap2.5, fig.cap="MACD", echo=FALSE, warning=FALSE, message=FALSE, fig.keep = 'last',fig.dim=c(7,4)}
+```{r,chap2.5, fig.cap="MACD.", echo=FALSE, warning=FALSE, message=FALSE, fig.keep = 'last',fig.dim=c(7,4)}
 chartSeries(Cl(GOOGL),subset="2007-05::2009-01",theme=chartTheme("white", bg.col="#FFFFFF"),name= "MACD EMA GOOGL Closing")
 addMACD(fast=12,slow=26,signal=9,type="EMA")
 ```
@@ -540,7 +540,7 @@ The calculated ${\sigma_t}$  could be problematic because it is derived from the
 
 &nbsp;
 
-```{r,chap2.6 ,fig.cap="Bollinger Bands", echo=FALSE, warning=FALSE, message=FALSE, fig.keep = 'last',fig.dim=c(7,4)}
+```{r,chap2.6 ,fig.cap="Bollinger Bands.", echo=FALSE, warning=FALSE, message=FALSE, fig.keep = 'last',fig.dim=c(7,4)}
 n=20
 k=2
 chartSeries(GOOGL,subset="2007-05::2009-01",theme=chartTheme("white", bg.col="#FFFFFF"),name= "bollinger bands")
