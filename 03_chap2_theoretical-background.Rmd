@@ -66,7 +66,7 @@ The autocorrelation function (ACF) reveals how the correlation between any two d
 
 In the following figure \ref{fig:chap2.1.2} are ACF and PACF of the non-stationary adjusted Google stock visualized. Both graphics show the typical pattern of a non-stationary time-series. The plot above shows the dependence structure of the time-series. This means that it takes a long time until the series changes. Often a large value is followed by another large value, which indicates a strong trend. This property of the series can be seen in figure \ref{fig:chap2.1} as the long upward drift. The plot below indicates a significant partial autocorrelation at lag $k=1$.
 
-In the following section [2.2.](#models-section) the characteristics of the autocorrelation function can be used for the verification of ARIMA and ARCH-processes.
+In the following section [2.2](#models-section) the characteristics of the autocorrelation function can be used for the verification of ARIMA and ARCH-processes.
 
 ```{r chap2.1.2, echo=FALSE, fig.cap="ACF and PACF of the Adjusted Prices of Google."}
 par(mfrow=c(1,1))
@@ -167,7 +167,7 @@ The volatility clustering mentioned in section [2.1.1](#stationarity) can be han
   \sigma_{t}^{2} &=c \sigma^{2}+\sum_{j=1}^{n}\alpha_{j}\sigma_{t-j}^{2}+\sum_{k=1}^{m}\beta_{k}\epsilon_{t-k}^{2} \nonumber
 \end{align}
 
-with
+with:
 
 - $x_{t}$ is the original data (often non-stationary)
 - $\epsilon_{t}$ is the stationary log-return
@@ -204,7 +204,7 @@ The following parameter restrictions are also examined:
   c+\sum_{j=1}^{n}\alpha_{j}+\sum_{k=1}^{m}\beta_{k}=1
 \end{equation}
 
-with
+with:
 
 $$c>0, \alpha_{k}\geq0, j=1,...,n, \beta_{k}\geq0, 1,...,m $$
 
@@ -216,7 +216,7 @@ Calculate $c$ with:
 
 $$c=\frac{\omega}{\sigma^{2}}$$
 
-and then check for the restriction in \ref{eq:para_restriction}.
+and then check for the restriction in formula \ref{eq:para_restriction}.
 
 For the coefficients of GARCH(*1*,*1*) the restrictions are fulfilled. You can see that $c = 1-\alpha_{1}-\beta_{1}$. So this restriction can be determined easily with:
 
@@ -315,7 +315,7 @@ The last model that is considered as a forecast model in this thesis, is the so-
   \epsilon_{t} &= \sigma_{t}u_{t} \nonumber
 \end{align}
 
-where
+where:
 
 - $x_{t}$ is the original data (typically non-stationary)
 - $r_{t}$ are the log-returns (stationary)
@@ -331,7 +331,7 @@ $$\hat{r}_{t+1}=\hat{\mu}+\hat{e}\hat{\sigma}_{t+1}$$
 
 ### 2.3. Moving Average Filters
 
-Moving-Average-Filters are basically used to identify trends and smooth out price fluctuations. As a commonly used tool, Moving-Average-Filters are very simple in their usage, historical data from a timeframe $L$ gets summarized and divided by the length of the filter ($L$). Depending on the length of the filter, the MA gets shifted, longer filters have a higher shift then shorter ones, we visualize this behavior in \ref{fig:chap2.3.3}.
+Moving-Average-Filters are basically used to identify trends and smooth out price fluctuations. As a commonly used tool, Moving-Average-Filters are very simple in their usage, historical data from a timeframe $L$ gets summarized and divided by the length of the filter ($L$). Depending on the length of the filter, the MA gets shifted, longer filters have a higher shift then shorter ones, we visualize this behavior in figure \ref{fig:chap2.3.3}.
 Many different indicators are built upon the Moving-Average principle, mostly they are used in combinations of different lengths to create signals. In the following section, we introduce some of the most popular indicators based on the MA principle.
 
 The actual challenge in using Moving-Average-Filters, is to figure out which length of the filter brings the most useful information.
@@ -344,7 +344,7 @@ The actual challenge in using Moving-Average-Filters, is to figure out which len
 SMA stands for Simple Moving Average, depending on the length of the filter($L$), $L$ observations since the last noted observation will be considered. The observations are getting summarized and divided by the filterlength $L$. As stated in the name, all past observations are weighted equally. For every timestep, a new observation is considered and the last one eliminated [@SMA]. SMA's are very easily customized by changeing the length of the filter.
 
 
-EqMA
+EqMA:
 
 \begin{equation}
   \label{eq:eqma}
@@ -366,7 +366,7 @@ Momentum is an indicator wether a market is bullish or bearish, it measures the 
 For a timespan $k$ the last price $p_k$, $k$ timesteps ago is subtracted from the last price. This is equivalent to applying and EqMA on the returns of a series. 
 
 
-Momentum
+Momentum:
 
 \begin{equation}
   \label{eq:momentum}
@@ -386,7 +386,7 @@ Since not all observations have the same influence on the future value, we can a
 
 A skillful trader chooses an optimal $\alpha$ to increase the performance of the measurement. Weights could also be given individually by adding a weight vector to the filter.
 
-EMA
+EMA:
 
 \begin{equation}
   \label{eq:ema}
@@ -407,7 +407,7 @@ The "death" and "golden" cross are very popular trading patterns [@EMA]. If a sh
 
 
 
-MA Crossing
+MA Crossing:
 
 \begin{equation}
   \label{eq:mac}
@@ -451,7 +451,7 @@ The scale goes from 0 to 100. [@slide_trading_indicators_univariate].
   D_{t}=\begin{cases}1, \textnormal{if }  x_t < x_{t-1}\\0, \textnormal{otherwise} \end{cases}
 \end{equation}
 
-- ${X_t}$    =Original timeseries 
+- ${X_t}$    = Original timeseries 
 
 &nbsp;
 
@@ -482,7 +482,7 @@ addRSI(n=14,maType="EMA")
 
 ### 2.5. Moving Average Convergence Divergence
 
-The MACD is also a commonly used filter. The basic principle is to subtract a longer EMA with length $L$ as in section   [2.3.3](#EMA) from a shorter EMA from length $S$  then smooth the result with another EMA with length $R$. As a result we can use the crossing of the 2 generated curves for trading. As an alternative we could use SMA's instead of EMA's
+The MACD is also a commonly used filter. The basic principle is to subtract a longer EMA with length $L$ as in section   [2.3.3](#macross-section) from a shorter EMA from length $S$  then smooth the result with another EMA with length $R$. As a result we can use the crossing of the 2 generated curves for trading. As an alternative we could use SMA's instead of EMA's
 
 \begin{equation}
   \label{eq:MACD}
@@ -530,7 +530,7 @@ The variance from Bollingers theory is calculated by:
   \mathrm{\sigma_{t}^2}=\frac{1}{N}\sum_{k=0}^{N-1}(x_{t-k} -MA_t)^2
 \end{equation}
 
-The calculated ${\sigma_t}$  could be problematic because it is derived from the original series and increases with the level, it is non-stationary. Therefore an other method to calculate the standard deviation could be used. As done in  section [2.2.2.](#garch-section) $\sigma_t$ could be provided by a GARCH, which would handle the increasing volatility.
+The calculated ${\sigma_t}$  could be problematic because it is derived from the original series and increases with the level, it is non-stationary. Therefore an other method to calculate the standard deviation could be used. As done in  section [2.2.2](#garch-section) $\sigma_t$ could be provided by a GARCH, which would handle the increasing volatility.
 
 - ${N}$ = usually the filterlength and the length considered for ${\sigma}$ are the same
 - ${K}$ = Constant usually equals 2

@@ -89,7 +89,7 @@ plot(log_ret_ind, main="Log_returns indexes",legend.loc="topleft") #plot log-ret
 
 &nbsp;
 
-By computing the ACF of the squared log-returns we see that the volatility cluster has very long dependency structures.
+By computing the ACF of the squared log-returns we see that the volatility cluster have very long dependency structures.
 
 
 ```{r,chap3.1.2.1,include=T, echo = F,message=F, fig.cap="ACF log-returns",fig.dim=c(15,10)}
@@ -138,7 +138,7 @@ plot(y_ind[,4],main=paste("Log index 4,","vola=",vola_y_ind[4],sep=" "),col = 4)
 
 In section [2](#theory) we have learned different indicators and models for time-series-analysis. Some of these models and indicators are now used to trade the indexes we have introduced in the previous section.
 
-To do so we need to create trading signals based on the models and indicators. For example, we are using the MA Crossings, as mentioned [2.3.3.](#macross-section) the points where the two MAs cross, are now used to create a trading signal. when the longer MA comes from below to the crossing we are going long the asset and if it approaches the point from above we are shorting the position. Technically we apply a 1 to a vector at each crossing, where we intend to buy and apply a -1 at the points we want to sell.
+To do so we need to create trading signals based on the models and indicators. For example, we are using the MA Crossings, as mentioned in section [2.3.3](#macross-section) the points where the two MAs cross, are now used to create a trading signal. when the longer MA comes from below to the crossing we are going long the asset and if it approaches the point from above we are shorting the position. Technically we apply a 1 to a vector at each crossing, where we intend to buy and apply a -1 at the points we want to sell.
 
 #### 3.2.1. Buy-and-Hold Performance {#bnh-section}
 
@@ -455,7 +455,7 @@ text((119-1)/2, -0.2, "Phase 1", col="#E413A3")
 text(((446-280)/2)+280, -0.2, "Phase 2", col="#14C29A")
 
 ```
-Here one can see again a typical characteristic of these time-series. In chapter [3.1.2.](#vola-sharpe) we compared the volatility with the Sharpe ratios, here we can see this phenomenon well. The index 1 leads to higher Sharpe ratios than for example the index 4, but is less volatile. The Sharpe ratio of index 4 shows very strong volatile phases in comparison.
+Here one can see again a typical characteristic of these time-series. In chapter [3.1.2](#vola-sharpe) we compared the volatility with the Sharpe ratios, here we can see this phenomenon well. The index 1 leads to higher Sharpe ratios than for example the index 4, but is less volatile. The Sharpe ratio of index 4 shows very strong volatile phases in comparison.
 
 Up to a filter length of about 40, the Sharpe ratios fluctuate very strongly. This is followed by a volatile phase until the filter Sharpe converges to the buy-and-hold Sharpe (from about L=120). At high filter lengths the Sharpe ratios for indexes 2,3 and 4 start to fluctuate again, the more volatile the original index is, the earlier the volatile phase starts and the longer it is. What is noticeable is that there are 2 phases which leads to good models. On the one hand you can find SMA's with short filters (phase 1) and on the other hand with long ones (phase 2). In both phases models are found, which can lead to an outperformance (they are above the dashed buy-and-hold line).
 
@@ -556,7 +556,7 @@ Parameters$_2$:
 - $L1$ = length of shorter SMA  with $1 < L1 \le  50$ 
 - $L2$ = length of longer  SMA with  $100 < L1 \le 250$
 
-Figure \ref{fig:chap3.2.4.1.1} visualizes one iteration of the optimization. For the fixed L1=1, L2 is variable and the optimal sharpe is calculated. This procedure is done for every filterlength as described in $_2$ and further visualized in \ref{fig:chap3.2.4.1.2}. The drawdown is also calculated as seen in plot \ref{fig:chap3.2.4.1.3}. Notice that the visualization is from the starting date 2015-10-30, which is randomly chosen for explaining the optimization process.
+Figure \ref{fig:chap3.2.4.1.1} visualizes one iteration of the optimization. For the fixed L1=1, L2 is variable and the optimal sharpe is calculated. This procedure is done for every filterlength as described in $_2$ and further visualized in figure \ref{fig:chap3.2.4.1.2}. The drawdown is also calculated as seen in plot \ref{fig:chap3.2.4.1.3}. Notice that the visualization is from the starting date 2015-10-30, which is randomly chosen for explaining the optimization process.
 
 
 ```{r, chap3.2.4.1.1, echo=FALSE, fig.cap="Optimization Sharpe L1=1 ,L2=variable", include=T,out.width = "100%",fig.dim=c(16, 7.4)}
@@ -589,7 +589,7 @@ legend("bottom", inset=.02, legend=c("Drawdown", "Maximum by filter L1= 18, L2 =
        col=c("green", "black","darkblue"), lty=c(1,1,2), cex=0.8, horiz=F)
 ```
 
-The pattern we observe in \ref{fig:chap3.2.4.1.2} is the repeating optimization by fixing L1 and vary L2. The maximum Sharpe was found with L1=*1*, L2=*106*, Sharpe=*1.225*, which is also visualized in \ref{fig:chap3.2.4.1.2}, where the "window" (blue dotted lines) is shown. When we look at the red line we can clearly see there are other similar high spikes in other filter lengths. The green pattern in \ref{fig:chap3.2.4.1.3} shows interesting news. At L1 = 17, 18, 19 and 20 we see a cluster(blue dotted lines) of high spikes, all very similar. The optimum in this plot is by L1=*18* and L2=*102* and a drawdown *6.55e-3*, laying in the described cluster. But when we look at the violet line drawn, we can clearly see there is another high spike at the beginning of the plot. This spike is identical with the maximum Sharpe in \ref{fig:chap3.2.4.1.2}. So these results could just be random and the solution is not finite, this problem will be further discussed$_3$.
+The pattern we observe in figure \ref{fig:chap3.2.4.1.2} is the repeating optimization by fixing L1 and vary L2. The maximum Sharpe was found with L1=*1*, L2=*106*, Sharpe=*1.225*, which is also visualized in figure \ref{fig:chap3.2.4.1.2}, where the "window" (blue dotted lines) is shown. When we look at the red line we can clearly see there are other similar high spikes in other filter lengths. The green pattern in figure \ref{fig:chap3.2.4.1.3} shows interesting news. At L1 = 17, 18, 19 and 20 we see a cluster(blue dotted lines) of high spikes, all very similar. The optimum in this plot is by L1=*18* and L2=*102* and a drawdown *6.55e-3*, laying in the described cluster. But when we look at the violet line drawn, we can clearly see there is another high spike at the beginning of the plot. This spike is identical with the maximum Sharpe in figure \ref{fig:chap3.2.4.1.2}. So these results could just be random and the solution is not finite, this problem will be further discussed$_3$.
 
 \newpage
 
@@ -621,8 +621,8 @@ addEventLines(events,srt=90,pos=2,lty=2)
 
 ```
 
-By plotting the Sharpe ratio / max drawdown$_1$ in \ref{fig:chap3.2.4.1.4} and the optimal filterlenghts L1/L2 in \ref{fig:chap3.2.4.1.5}, for every in-sample timestep as described at the beginning of [3.5.1](#macrossingse), the hyperoptimization is visualized. The code is linked in the attachement [6.3.5](#optimizationmacross). The results from the trajectories in \ref{fig:chap3.2.4.1.2} and \ref{fig:chap3.2.4.1.3}
-are showed at the black dotted line. Because of the problem we have mentioned in $_3$ the best result could also be just random. Therefore the ten best results for each in-sample timesteps are calculated and visualized in \ref{fig:chap3.2.4.1.6} and \ref{fig:chap3.2.4.1.7} to get an idea about the accuracy of these filters and analyze them a bit further.
+By plotting the Sharpe ratio / max drawdown$_1$ in figure \ref{fig:chap3.2.4.1.4} and the optimal filterlenghts L1/L2 in figure \ref{fig:chap3.2.4.1.5}, for every in-sample timestep as described at the beginning of [3.5.1](#macrossingse), the hyperoptimization is visualized. The code is linked in the attachement [6.3.5](#optimizationmacross). The results from the trajectories in figure \ref{fig:chap3.2.4.1.2} and figure \ref{fig:chap3.2.4.1.3}
+are showed at the black dotted line. Because of the problem we have mentioned in $_3$ the best result could also be just random. Therefore the ten best results for each in-sample timesteps are calculated and visualized in figures \ref{fig:chap3.2.4.1.6} and \ref{fig:chap3.2.4.1.7} to get an idea about the accuracy of these filters and analyze them a bit further.
 
 $_1$ Note: maxdrawdown is scaled by the factor 100 to visualize it in the same plot.
 \newpage
@@ -646,9 +646,9 @@ addLegend("bottomleft", on=1, legend.names = c("short filter sharpe", "short fil
 
 ```
 
-Whilst the ten best Sharpe ratios / drawdowns in \ref{fig:chap3.2.4.1.6} are always very close together, the filterplot \ref{fig:chap3.2.4.1.6}  shows a completely different and interesting image. We can observe differences, specially in the long filters in 2009, 2010, 2011 the result nearly diverge 150 units. Also in the timespan 2011 to 2018 the filters fluctuate strongly. What further catches the eye, are the long- and the shortfilter sharpes from 2003 to 2011. They are all concentrated at their upper limits of 50 and 250, which indicates that they actually have to be longer than the restriction. The same behaviour is observed for the short drawdown from 2011 to 2018 where the observations are concentrated around length 1. The plot would surely look different if the restrictions of the filterlengths would be greater. Also the steps of the in-sample timespan are always one year. Changing the restriction would have a massive impact on the optimization time and would most likely deliver different results.
+Whilst the ten best Sharpe ratios / drawdowns in figure \ref{fig:chap3.2.4.1.6} are always very close together, the filterplot \ref{fig:chap3.2.4.1.6}  shows a completely different and interesting image. We can observe differences, specially in the long filters in 2009, 2010, 2011 the result nearly diverge 150 units. Also in the timespan 2011 to 2018 the filters fluctuate strongly. What further catches the eye, are the long- and the shortfilter sharpes from 2003 to 2011. They are all concentrated at their upper limits of 50 and 250, which indicates that they actually have to be longer than the restriction. The same behaviour is observed for the short drawdown from 2011 to 2018 where the observations are concentrated around length 1. The plot would surely look different if the restrictions of the filterlengths would be greater. Also the steps of the in-sample timespan are always one year. Changing the restriction would have a massive impact on the optimization time and would most likely deliver different results.
 
-Curiosity leads us to recreate the optimization for $1 < L1 \le 1000$ and $1 < L2 \le 1000$  which calculates 16 million Sharpes.  Now L2 can be smaller than L1 while the trading rule stays the same. The numeric results can be found in \ref{tab:macrosstable 1000 x 1000 index 4.1}.
+Curiosity leads us to recreate the optimization for $1 < L1 \le 1000$ and $1 < L2 \le 1000$  which calculates 16 million Sharpes.  Now L2 can be smaller than L1 while the trading rule stays the same. The numeric results can be found in table \ref{tab:macrosstable 1000 x 1000 index 4.1}.
 
 \newpage
 
@@ -680,7 +680,7 @@ In good knowledge we are taking the risk of maybe not finding the right filterle
 #### 3.5.2. Trading
 &nbsp;
 
-As noticed the Visualizations in [3.5.1](#macrossingse) are only done for index 1, the optimal values and their fluctuation are shown in the tables \ref{tab:macrosstable index 1},\ref{tab:macrosstable index 2},\ref{tab:macrosstable index 3},\ref{tab:macrosstable index 4} and \ref{fig:chap3.2.4.1.8},\ref{fig:chap3.2.4.1.9},\ref{fig:chap3.2.4.1.10},\ref{fig:chap3.2.4.1.11},\ref{fig:chap3.2.4.1.12},\ref{fig:chap3.2.4.1.13}.
+As noticed the Visualizations in [3.5.1](#macrossingse) are only done for index 1, the optimal values and their fluctuation are shown in the tables: \ref{tab:macrosstable index 1},\ref{tab:macrosstable index 2},\ref{tab:macrosstable index 3},\ref{tab:macrosstable index 4} and figures:  \ref{fig:chap3.2.4.1.8},\ref{fig:chap3.2.4.1.9},\ref{fig:chap3.2.4.1.10},\ref{fig:chap3.2.4.1.11},\ref{fig:chap3.2.4.1.12},\ref{fig:chap3.2.4.1.13}.
 ```{r, chap3.5.2.1. , echo=FALSE, include=T }
 return_buy_and_hold_1  =   diff(log(data[,1]))##### buy-and-hold
 return_buy_and_hold_2  =   diff(log(data[,2]))
@@ -717,7 +717,7 @@ ret = return*trade
 names(ret)="filter"
 ```
 \newpage
-Regarding the other indexes, the results  look all very similiar. None of the Moving Average Crossing are able to outperform buy-and-hold. For visualizing we use only the fourth index with *2016-01-01* Sharpe=0.998, L1=12, L2=134. For this index we have leastways two trades \ref{fig:chap3.5.2.3}. Following the longer filter (red) from the left side, it crosses the blue line ( L1 ) in the beginning of 2020, that is where a selling is executed. Shortly after the buy signals comes with the red line crossing the blue from above. With this signals we get a Sharpe of *1.761906*, in comparison to the buy-and-hold Sharpe index 4 *1.963966*.
+Regarding the other indexes, the results  look all very similiar. None of the Moving Average Crossing are able to outperform buy-and-hold. For visualizing we use only the fourth index with *2016-01-01* Sharpe=0.998, L1=12, L2=134.As seen in figure \ref{fig:chap3.5.2.3} we have leastways two trades for this index. Following the longer filter (red) from the left side, it crosses the blue line ( L1 ) in the beginning of 2020, that is where a selling is executed. Shortly after, the buy signals comes with the red line crossing the blue from above. With this signals we get a Sharpe of *1.761906*, in comparison to the buy-and-hold Sharpe index 4: *1.963966*.
 
 &nbsp;
 
@@ -750,6 +750,6 @@ names(ret)="filter"
 
 &nbsp;
 
-Also neither of the results from \ref{fig:chap3.2.4.1.15} are clearly satisfying.
+Also neither of the results from figure \ref{fig:chap3.2.4.1.15} are clearly satisfying.
 
 As endresult buy-and-hold stays better as the combinations of MA Crossigs, at least with the parameter restrictions we implied. The intuition, and also the common used filters L1=50 / L2=250 equals buy-and-hold. This strategy may not be so bad, why leaving a trend market instead of profiting from it.
